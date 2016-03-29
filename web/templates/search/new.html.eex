@@ -1,0 +1,11 @@
+<h1>Search</h1>
+
+More to follow
+
+<!-- none of this works yet
+<% form_for @conn, search_path(@conn, :create), [as: :search], fn f -> %>
+  <div class="form-group">
+    <%= text_input f, :name, placeholder: "Name", class: "form-control"  %>
+  </div>
+<% end %>
+-->
