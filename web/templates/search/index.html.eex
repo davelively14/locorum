@@ -1,9 +1,15 @@
 <h1>All Searches</h1>
 
 <table class="table">
+  <tr>
+    <th>Business Name</th>
+    <th>Zip</th>
+    <th></th>
+  </tr>
   <%= for search <- @searches do %>
     <tr>
       <td><%= search.biz %></td>
+      <td><%= search.zip %></td>
       <td><%= link "Run", to: search_path(@conn, :show, search.id), class: "btn btn-default btn-xs" %></td>
     </tr>
   <% end %>
