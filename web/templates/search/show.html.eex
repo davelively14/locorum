@@ -1,0 +1,8 @@
+<h1>Search Results</h1>
+
+<div class="container">
+  <ul>
+    <li>Business name: <%= @search.biz %></li>
+    <li>Business zip: <%= @search.zip %></li>
+  </ul>
+</div>
