@@ -2,7 +2,7 @@ defmodule Locorum.SearchController do
   use Locorum.Web, :controller
   alias Locorum.Search
 
-  def new(conn, _) do
+  def new(conn, _params) do
     changeset = Search.changeset(%Search{})
     render conn, "new.html", changeset: changeset
   end
@@ -20,5 +20,10 @@ defmodule Locorum.SearchController do
   def show(conn, %{"id" => id}) do
     search = Repo.get(Locorum.Search, id)
     render conn, "show.html", search: search
+  end
+
+  def index(conn, _params) do
+    searches = Repo.all(Locorum.Search)
+    render conn, "index.html", searches: searches
   end
 end

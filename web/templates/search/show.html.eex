@@ -6,3 +6,5 @@
     <li>Business zip: <%= @search.zip %></li>
   </ul>
 </div>
+
+<%= link "View All Searches", to: search_path(@conn, :index), class: "btn btn-primary" %>

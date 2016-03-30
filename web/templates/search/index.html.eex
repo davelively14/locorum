@@ -1,0 +1,12 @@
+<h1>All Searches</h1>
+
+<table class="table">
+  <%= for search <- @searches do %>
+    <tr>
+      <td><%= search.biz %></td>
+      <td><%= link "Run", to: search_path(@conn, :show, search.id), class: "btn btn-default btn-xs" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "New Search", to: search_path(@conn, :new), class: "btn btn-primary" %>

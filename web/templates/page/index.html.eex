@@ -10,7 +10,7 @@
     <h4>Resources</h4>
     <ul>
       <li><%= link "New Search", to: search_path(@conn, :new) %></li>
-      <li>Not sure what goes here</li>
+      <li><%= link "View Saved Searches", to: search_path(@conn, :index) %></li>
     </ul>
   </div>
 
@@ -18,7 +18,6 @@
     <h4>Help</h4>
     <ul>
       <li>More things</li>
-      <li>For Sara</li>
     </ul>
   </div>
 </div>
