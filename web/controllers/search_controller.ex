@@ -26,4 +26,10 @@ defmodule Locorum.SearchController do
     searches = Repo.all(Locorum.Search)
     render conn, "index.html", searches: searches
   end
+
+  def delete(conn, %{"id" => id}) do
+    search = Repo.get(Locorum.Search, id)
+    Repo.delete search
+    redirect(conn, to: search_path(conn, :index))
+  end
 end
