@@ -5,14 +5,13 @@
     <th>Business Name</th>
     <th>Zip</th>
     <th></th>
-    <th></th>
   </tr>
   <%= for search <- @searches do %>
     <tr>
       <td><%= search.biz %></td>
       <td><%= search.zip %></td>
       <td>
-        <%= link "Run", to: search_path(@conn, :show, search.id), class: "btn btn-default btn-xs" %>
+        <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
