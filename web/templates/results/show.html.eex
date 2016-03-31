@@ -1,0 +1,31 @@
+<h3><strong>Search Results</strong></h3>
+
+<div class="row">
+  <div class="col-sm-4">
+    <address>
+      <strong><%= link @search.biz, to: search_path(@conn, :show, @search.id) %></strong><br>
+      <%= @search.address1 || "(street address)"%>
+      <% if @search.address2 do %>
+        , <%= @search.address2 %>
+      <% end %>
+      <br>
+      <%= @search.city || "(city)" %>, <%= @search.state || "(state)" %> <%= @search.zip %>
+      <br>
+      <br>
+      <%= link "New Search", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
+    </address>
+  </div>
+  <div class="col-sm-8">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3><a href="<%= "http://www.whitepages.com" %>">White Pages</a></h3>
+      </div>
+      <div class="panel-body">
+        Test
+      </div>
+      <div class="panel-footer">
+        <a href="<%= "http://www.google.com" %>">Test</a>
+      </div>
+    </div>
+  </div>
+</div>

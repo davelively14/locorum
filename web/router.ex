@@ -18,6 +18,7 @@ defmodule Locorum.Router do
 
     get "/", PageController, :index
     resources "/search", SearchController, only: [:new, :create, :show, :index, :delete]
+    get "/results/:id", ResultsController, :show
   end
 
   # Other scopes may use custom stacks.

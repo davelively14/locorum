@@ -11,7 +11,8 @@
       <td><%= search.biz %></td>
       <td><%= search.zip %></td>
       <td>
-        <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-default btn-xs" %>
+        <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
+        <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
         <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
