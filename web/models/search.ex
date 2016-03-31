@@ -13,9 +13,10 @@ defmodule Locorum.Search do
     timestamps
   end
 
-  @required_fields ~w(biz zip)
-  @optional_fields ~w(name address1 address2 city state)
+  @required_fields ~w(biz zip city state)
+  @optional_fields ~w(name address1 address2)
 
+  # TODO: Fix cast issues, allowed to cast without required params
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)

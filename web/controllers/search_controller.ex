@@ -2,6 +2,8 @@ defmodule Locorum.SearchController do
   use Locorum.Web, :controller
   alias Locorum.Search
 
+  plug :scrub_params, "search" when action in [:create]
+
   def new(conn, _params) do
     changeset = Search.changeset(%Search{})
     render conn, "new.html", changeset: changeset
@@ -14,6 +16,8 @@ defmodule Locorum.SearchController do
         conn
         |> put_flash(:info, "search ran!")
         |> redirect(to: search_path(conn, :show, search))
+      {:error, changeset} ->
+        render conn, "new.html", changeset: changeset
     end
   end
 
