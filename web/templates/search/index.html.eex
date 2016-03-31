@@ -18,4 +18,4 @@
   <% end %>
 </table>
 
-<%= link "New Search", to: search_path(@conn, :new), class: "btn btn-primary" %>
+<%= link "Create New Search", to: search_path(@conn, :new), class: "btn btn-primary" %>

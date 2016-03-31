@@ -9,7 +9,7 @@
   <div class="col-lg-6">
     <h4>Resources</h4>
     <ul>
-      <li><%= link "New Search", to: search_path(@conn, :new) %></li>
+      <li><%= link "Create New Search", to: search_path(@conn, :new) %></li>
       <li><%= link "View Saved Searches", to: search_path(@conn, :index) %></li>
     </ul>
   </div>
