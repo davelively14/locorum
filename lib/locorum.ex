@@ -13,6 +13,7 @@ defmodule Locorum do
       supervisor(Locorum.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Locorum.Worker, [arg1, arg2, arg3]),
+      supervisor(Locorum.BackendSys.Supervisor, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
