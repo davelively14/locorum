@@ -5,8 +5,15 @@ defmodule Locorum.BackendSys.WhitePages do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(_query, _query_ref, _owner, _limit) do
-    pull_data("atlanta", "ga", "lucas group")
+  def fetch(query, _query_ref, _owner, _limit) do
+    city = query.city
+    state = query.state
+    biz =
+      query.biz
+      |> String.downcase
+      |> String.replace(~r/[^\w-]+/, "-")
+
+    pull_data(city, state, biz)
   end
 
   defp get_url(city, state, biz) do
