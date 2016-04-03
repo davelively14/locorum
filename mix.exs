@@ -37,6 +37,7 @@ defmodule Locorum.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:httpoison, "~> 0.8.0"},
+     {:floki, "~> 0.8"},
      {:cowboy, "~> 1.0"}]
   end
 
