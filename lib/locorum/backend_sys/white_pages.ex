@@ -18,10 +18,6 @@ defmodule Locorum.BackendSys.WhitePages do
     |> parse_data()
   end
 
-  defp get_url(city, state, biz) do
-    "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
-  end
-
   defp pull_data(city, state, biz) do
     case HTTPoison.get(get_url(city, state, biz)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
@@ -35,14 +31,22 @@ defmodule Locorum.BackendSys.WhitePages do
     end
   end
 
+  defp get_url(city, state, biz) do
+    "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
+  end
+
   def parse_data(body) do
-    [{_,[{_,_},{_,_}],[name]}] = Floki.find(body, "p[itemprop=name]")
-    [{_,[{_,_}],[address]}] = Floki.find(body, "span[itemprop=streetAddress]")
-    [{_,[{_,_}],[city]}] = Floki.find(body, "span[itemprop=addressLocality]")
-    [{_,[{_,_}],[state]}] = Floki.find(body, "span[itemprop=addressRegion]")
-    [{_,[{_,_}],[zip]}] = Floki.find(body, "span[itemprop=postalCode]")
+    name = parse_item(Floki.find(body, "p[itemprop=name]"))
+    address = parse_item(Floki.find(body, "span[itemprop=streetAddress]"))
+    city = parse_item(Floki.find(body, "span[itemprop=addressLocality]"))
+    state = parse_item(Floki.find(body, "span[itemprop=addressRegion]"))
+    zip = parse_item(Floki.find(body, "span[itemprop=postalCode]"))
     %Search{biz: name, address1: address, city: city, state: state, zip: zip }
   end
+
+  def parse_item([]), do: []
+  def parse_item([{_,[{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
+  def parse_item([{_,[{_,_},{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
 
   def test_pull() do
     pull_data("atlanta", "GA", "lucas-group")
