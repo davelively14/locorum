@@ -15,7 +15,7 @@
       <td>Address</td>
       <td><%= @search.address1 %></td>
     </tr>
-    <% if @search.address2 do %>
+    <%= if @search.address2 do %>
       <tr>
         <td>Address (continued)</td>
         <td><%= @search.address2 %></td>
