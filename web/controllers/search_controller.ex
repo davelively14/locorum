@@ -14,7 +14,7 @@ defmodule Locorum.SearchController do
     case Repo.insert(changeset) do
       {:ok, search} ->
         conn
-        |> put_flash(:info, "search ran!")
+        |> put_flash(:info, "Search created")
         |> redirect(to: search_path(conn, :show, search))
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
