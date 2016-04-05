@@ -20,7 +20,7 @@ defmodule Locorum.Search do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> validate_length(:address1, min: 1, max: 50)
-    |> validate_length(:address2, min: 1, max: 50)
+    |> validate_length(:address1, min: 4, max: 50)
+    |> validate_length(:address2, min: 4, max: 50)
   end
 end
