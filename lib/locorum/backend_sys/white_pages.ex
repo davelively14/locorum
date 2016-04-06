@@ -1,5 +1,5 @@
 defmodule Locorum.BackendSys.WhitePages do
-  alias Locorum.Search
+  alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -14,12 +14,12 @@ defmodule Locorum.BackendSys.WhitePages do
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "-")
 
-    pull_data(city, state, biz)
+    fetch_html(city, state, biz)
     |> parse_data()
     |> send_results(query_ref, owner)
   end
 
-  defp pull_data(city, state, biz) do
+  defp fetch_html(city, state, biz) do
     case HTTPoison.get(get_url(city, state, biz)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
@@ -40,7 +40,7 @@ defmodule Locorum.BackendSys.WhitePages do
     state = parse_item(Floki.find(body, "span[itemprop=addressRegion]"))
     zip = parse_item(Floki.find(body, "span[itemprop=postalCode]"))
 
-    add_to_search(List.zip([name, address, city, state, zip]))
+    add_to_result(List.zip([name, address, city, state, zip]))
   end
 
   defp get_url(city, state, biz) do
@@ -56,8 +56,8 @@ defmodule Locorum.BackendSys.WhitePages do
   defp parse_item([{_,[{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
   defp parse_item([{_,[{_,_},{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
 
-  defp add_to_search([]), do: []
-  defp add_to_search([{name, address, city, state, zip} | tail]) do
-    [[%Search{biz: name, address1: address, city: city, state: state, zip: zip } | add_to_search(tail)]]
+  defp add_to_result([]), do: []
+  defp add_to_result([{name, address, city, state, zip} | tail]) do
+    [[%Result{biz: name, address: address, city: city, state: state, zip: zip, backend: "White Pages" } | add_to_result(tail)]]
   end
 end

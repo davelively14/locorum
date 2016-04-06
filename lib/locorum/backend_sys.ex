@@ -1,9 +1,13 @@
 defmodule Locorum.BackendSys do
+  def start(_type, _args) do
+    Locorum.BackendSys.start_link()
+  end
+
   # TODO: replace this with a Repo call to backends persisted in db?
   @backends [Locorum.BackendSys.WhitePages]
 
   defmodule Result do
-    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil
+    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil, backend: nil
   end
 
   def start_link(backend, query, query_ref, owner, limit) do
