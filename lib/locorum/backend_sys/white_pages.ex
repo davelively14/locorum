@@ -58,6 +58,6 @@ defmodule Locorum.BackendSys.WhitePages do
 
   defp add_to_result([]), do: []
   defp add_to_result([{name, address, city, state, zip} | tail]) do
-    [%Result{biz: name, address: address, city: city, state: state, zip: zip, backend: "White Pages" } | add_to_result(tail)]
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, backend: "white_pages" } | add_to_result(tail)]
   end
 end
