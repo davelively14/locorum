@@ -53,8 +53,8 @@ defmodule Locorum.BackendSys.WhitePages do
   end
 
   defp parse_item([]), do: []
-  defp parse_item([{_,[{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
-  defp parse_item([{_,[{_,_},{_,_}],[item]} | tail]), do: [item | parse_item(tail)]
+  defp parse_item([{_,[{_,_}],[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
+  defp parse_item([{_,[{_,_},{_,_}],[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
 
   defp add_to_result([]), do: []
   defp add_to_result([{name, address, city, state, zip} | tail]) do
