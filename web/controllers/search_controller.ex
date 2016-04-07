@@ -15,7 +15,7 @@ defmodule Locorum.SearchController do
       {:ok, search} ->
         conn
         |> put_flash(:info, "Search created")
-        |> redirect(to: search_path(conn, :show, search))
+        |> redirect(to: results_path(conn, :show, search))
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
     end
