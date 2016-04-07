@@ -1,4 +1,4 @@
-<h1>Search</h1>
+<h1>New Search</h1>
 
 <%= form_for @changeset, search_path(@conn, :create), fn f -> %>
   <%= if @changeset.action do %>

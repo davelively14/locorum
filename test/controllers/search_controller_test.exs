@@ -17,4 +17,10 @@ defmodule Locorum.SearchControllerTest do
     assert redirected_to(conn) == search_path(conn, :index)
     refute Repo.get(Search, search.id)
   end
+
+  test "does not create a new search with invalid attributes", %{conn: conn} do
+    conn = post conn, search_path(conn, :create), search: @invalid_attrs
+    assert html_response(conn, 200) =~ "New Search"
+    refute Repo.get_by(Search, @invalid_attrs)
+  end
 end
