@@ -8,16 +8,18 @@ defmodule Locorum.BackendSys.WhitePages do
   end
 
   def fetch(query, query_ref, owner, _limit) do
-    city = query.city
-    state = query.state
+    city =
+      query.city
+      |> String.downcase
+      |> String.replace(~r/[^\w-]+/, "-")
     biz =
       query.biz
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "-")
 
-    fetch_html(city, state, biz)
+    fetch_html(city, query.state, biz)
     |> parse_data()
-    |> send_results(query_ref, owner, get_url(city, state, biz))
+    |> send_results(query_ref, owner, get_url(city, query.state, biz))
   end
 
   defp fetch_html(city, state, biz) do
