@@ -1,5 +1,6 @@
 defmodule Locorum.BackendSys.WhitePages do
   alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.Header
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -16,14 +17,14 @@ defmodule Locorum.BackendSys.WhitePages do
 
     fetch_html(city, state, biz)
     |> parse_data()
-    |> send_results(query_ref, owner)
+    |> send_results(query_ref, owner, get_url(city, state, biz))
   end
 
   defp fetch_html(city, state, biz) do
     case HTTPoison.get(get_url(city, state, biz)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
-      # TODO: Determine if we need these error reports or not? Maybe just log?
+      # TODO: Determine if we need these error reports or not? Maybe just let it crash?
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "404"}
       {:ok, %HTTPoison.Response{status_code: 403}} ->
@@ -47,9 +48,10 @@ defmodule Locorum.BackendSys.WhitePages do
     "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
   end
 
-  defp send_results(nil, query_ref, owner), do: send(owner, {:results, query_ref, []})
-  defp send_results(results, query_ref, owner) do
-    send(owner, {:results, query_ref, results})
+  # TODO: determine what to do for blank results
+  defp send_results(nil, query_ref, owner, _url), do: send(owner, {:ignore, query_ref, []})
+  defp send_results(results, query_ref, owner, url) do
+    send(owner, {:results, query_ref, %Header{backend: "white_pages", url: url}, results})
   end
 
   defp parse_item([]), do: []
