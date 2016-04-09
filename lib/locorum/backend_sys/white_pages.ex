@@ -8,23 +8,15 @@ defmodule Locorum.BackendSys.WhitePages do
   end
 
   def fetch(query, query_ref, owner, _limit) do
-    city =
-      query.city
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "-")
-    biz =
-      query.biz
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "-")
-
-    fetch_html(city, query.state, biz)
-    |> parse_data()
-    |> send_results(query_ref, owner, get_url(city, query.state, biz))
+    get_url(query.city, query.state, query.biz)
+    |> fetch_html
+    |> parse_data
+    |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
   end
 
   # TODO: REFACTOR. Pass URL here. get_url should be called from fetch
-  defp fetch_html(city, state, biz) do
-    case HTTPoison.get(get_url(city, state, biz)) do
+  defp fetch_html(url) do
+    case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
       # TODO: Add error logging for these responses upon REFACTOR.
@@ -48,6 +40,14 @@ defmodule Locorum.BackendSys.WhitePages do
   end
 
   defp get_url(city, state, biz) do
+    city =
+      city
+      |> String.downcase
+      |> String.replace(~r/[^\w-]+/, "-")
+    biz =
+      biz
+      |> String.downcase
+      |> String.replace(~r/[^\w-]+/, "-")
     "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
   end
 
