@@ -7,12 +7,9 @@ defmodule Locorum.BackendSys do
   @backends [Locorum.BackendSys.WhitePages, Locorum.BackendSys.Local]
 
   defmodule Result do
-    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil, backend: nil
+    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil
   end
 
-  # Do we want a header? Or just track the backend? Seems inefficient to maintain
-  # each backend.
-  # TODO: impelement Header return for backend info
   defmodule Header do
     defstruct backend: nil, url: nil
   end
