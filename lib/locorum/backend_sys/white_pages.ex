@@ -14,7 +14,6 @@ defmodule Locorum.BackendSys.WhitePages do
     |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
   end
 
-  # TODO: REFACTOR. Pass URL here. get_url should be called from fetch
   defp fetch_html(url) do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
