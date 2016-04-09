@@ -22,11 +22,12 @@ defmodule Locorum.BackendSys.WhitePages do
     |> send_results(query_ref, owner, get_url(city, query.state, biz))
   end
 
+  # TODO: REFACTOR. Pass URL here. get_url should be called from fetch
   defp fetch_html(city, state, biz) do
     case HTTPoison.get(get_url(city, state, biz)) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
-      # TODO: Determine if we need these error reports or not? Maybe just let it crash?
+      # TODO: Add error logging for these responses upon REFACTOR.
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         {:error, "404"}
       {:ok, %HTTPoison.Response{status_code: 403}} ->
