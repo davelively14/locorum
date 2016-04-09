@@ -1,18 +1,18 @@
 defmodule Locorum.BackendSys.Local do
   require Logger
   alias Locorum.BackendSys.Result
-  # alias Locorum.BackendSys.Header
+  alias Locorum.BackendSys.Header
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, _query_ref, _owner, _limit) do
+  def fetch(query, query_ref, owner, _limit) do
     get_url(query.city, query.state, query.biz)
      |> fetch_html
      |> parse_data
-
+     |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
   end
 
   defp fetch_html(url) do
@@ -85,5 +85,10 @@ defmodule Locorum.BackendSys.Local do
   def add_to_result([]), do: []
   def add_to_result([{name, address, city, state} | tail]) do
     [%Result{biz: name, address: address, city: city, state: state } | add_to_result(tail)]
+  end
+
+  def send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
+  def send_results(results, query_ref, owner, url) do
+    send(owner, {:results, query_ref, %Header{backend: "local", url: url}, results})
   end
 end
