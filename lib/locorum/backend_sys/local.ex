@@ -1,6 +1,6 @@
 defmodule Locorum.BackendSys.Local do
   require Logger
-  # alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.Result
   # alias Locorum.BackendSys.Header
 
   def start_link(query, query_ref, owner, limit) do
@@ -10,7 +10,9 @@ defmodule Locorum.BackendSys.Local do
 
   def fetch(query, _query_ref, _owner, _limit) do
     get_url(query.city, query.state, query.biz)
-    |> fetch_html()
+     |> fetch_html
+     |> parse_data
+
   end
 
   defp fetch_html(url) do
@@ -55,20 +57,33 @@ defmodule Locorum.BackendSys.Local do
     address = parse_item(Floki.find(body, "span.street-address"))
     [city, state] =
       parse_item(Floki.find(body, "span.locality"))
-      |> parse_city_state
-    # List.zip([address, List.zip(location)])
-    List.zip([address, city, state])
+      |> extract_city_state
+    biz = extract_title(Floki.find(body, "h2.title"))
+
+    add_to_result(List.zip([biz, address, city, state]))
   end
 
-  defp parse_item([]), do: []
-  defp parse_item([{_,[{_,_}],[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
-  defp parse_item([{_,[{_,_},{_,_}],[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
-  # defp parse_item(blank), do: blank
+  def parse_item([]), do: []
+  def parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
+  def parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
 
-  def parse_city_state(initial_value), do: parse_city_state(initial_value, [], [])
-  def parse_city_state([head|tail], city, state) do
+  def extract_city_state(initial_value), do: extract_city_state(initial_value, [], [])
+  def extract_city_state([head|tail], city, state) do
     [new_city|new_state] = String.split(head, ", ")
-    parse_city_state(tail, city ++ [new_city], state ++ new_state)
+    extract_city_state(tail, city ++ [new_city], state ++ new_state)
   end
-  def parse_city_state([], city, state), do: [city, state]
+  def extract_city_state([], city, state), do: [city, state]
+
+  # TODO: why does this leave behind a [] residue?
+  def extract_title([]), do: []
+  def extract_title([{_, _, item} | tail]), do: [join_string_elements(parse_item(item)) | extract_title(tail)]
+
+  def join_string_elements(list), do: join_string_elements(list, "")
+  def join_string_elements([head|tail], acc), do: join_string_elements(tail, "#{acc} #{head}")
+  def join_string_elements([], acc), do: String.strip(acc)
+
+  def add_to_result([]), do: []
+  def add_to_result([{name, address, city, state} | tail]) do
+    [%Result{biz: name, address: address, city: city, state: state } | add_to_result(tail)]
+  end
 end
