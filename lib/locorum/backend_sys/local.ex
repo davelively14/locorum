@@ -53,7 +53,7 @@ defmodule Locorum.BackendSys.Local do
     "http://www.local.com#{redirect}"
   end
 
-  def parse_data(body) do
+  defp parse_data(body) do
     address = parse_item(Floki.find(body, "span.street-address"))
     [city, state] =
       parse_item(Floki.find(body, "span.locality"))
@@ -63,32 +63,31 @@ defmodule Locorum.BackendSys.Local do
     add_to_result(List.zip([biz, address, city, state]))
   end
 
-  def parse_item([]), do: []
-  def parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
-  def parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
+  defp parse_item([]), do: []
+  defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
+  defp parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
 
-  def extract_city_state(initial_value), do: extract_city_state(initial_value, [], [])
-  def extract_city_state([head|tail], city, state) do
+  defp extract_city_state(initial_value), do: extract_city_state(initial_value, [], [])
+  defp extract_city_state([head|tail], city, state) do
     [new_city|new_state] = String.split(head, ", ")
     extract_city_state(tail, city ++ [new_city], state ++ new_state)
   end
-  def extract_city_state([], city, state), do: [city, state]
+  defp extract_city_state([], city, state), do: [city, state]
 
-  # TODO: why does this leave behind a [] residue?
-  def extract_title([]), do: []
-  def extract_title([{_, _, item} | tail]), do: [join_string_elements(parse_item(item)) | extract_title(tail)]
+  defp extract_title([]), do: []
+  defp extract_title([{_, _, item} | tail]), do: [join_string_elements(parse_item(item)) | extract_title(tail)]
 
-  def join_string_elements(list), do: join_string_elements(list, "")
-  def join_string_elements([head|tail], acc), do: join_string_elements(tail, "#{acc} #{head}")
-  def join_string_elements([], acc), do: String.strip(acc)
+  defp join_string_elements(list), do: join_string_elements(list, "")
+  defp join_string_elements([head|tail], acc), do: join_string_elements(tail, "#{acc} #{head}")
+  defp join_string_elements([], acc), do: String.strip(acc)
 
-  def add_to_result([]), do: []
-  def add_to_result([{name, address, city, state} | tail]) do
+  defp add_to_result([]), do: []
+  defp add_to_result([{name, address, city, state} | tail]) do
     [%Result{biz: name, address: address, city: city, state: state } | add_to_result(tail)]
   end
 
-  def send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
-  def send_results(results, query_ref, owner, url) do
+  defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
+  defp send_results(results, query_ref, owner, url) do
     send(owner, {:results, query_ref, %Header{backend: "local", url: url}, results})
   end
 end
