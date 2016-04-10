@@ -19,6 +19,6 @@ defmodule Locorum.SearchChannel do
   end
 
   def handle_in("ignore") do
-
+    
   end
 end

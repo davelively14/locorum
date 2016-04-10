@@ -11,7 +11,7 @@ defmodule Locorum.BackendSys do
   end
 
   defmodule Header do
-    defstruct backend: nil, url: nil
+    defstruct backend: nil, url_search: nil, url_site: nil
   end
 
   def start_link(backend, query, query_ref, owner, limit) do

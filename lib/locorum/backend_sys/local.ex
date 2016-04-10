@@ -3,6 +3,8 @@ defmodule Locorum.BackendSys.Local do
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
 
+  @backend_url "http://www.local.com/"
+
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -88,6 +90,6 @@ defmodule Locorum.BackendSys.Local do
 
   defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: "local", url: url}, results})
+    send(owner, {:results, query_ref, %Header{backend: "local", url_search: url, url_site: @backend_url}, results})
   end
 end

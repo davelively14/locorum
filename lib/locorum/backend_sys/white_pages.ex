@@ -2,6 +2,8 @@ defmodule Locorum.BackendSys.WhitePages do
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
 
+  @backend_url "http://www.whitepages.com/"
+
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -53,7 +55,7 @@ defmodule Locorum.BackendSys.WhitePages do
   # TODO: determine what to do for blank results
   defp send_results(nil, query_ref, owner, _url), do: send(owner, {:ignore, query_ref, []})
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: "white_pages", url: url}, results})
+    send(owner, {:results, query_ref, %Header{backend: "white_pages", url_search: url, url_site: @backend_url}, results})
   end
 
   defp parse_item([]), do: []
