@@ -18,7 +18,8 @@ defmodule Locorum.SearchChannel do
     {:ok, resp, assign(socket, :search_id, search_id)}
   end
 
-  def handle_in("ignore") do
-    
+  # Do we need this one?
+  def handle_in("result", params, socket) do
+    _ = [params, socket]
   end
 end
