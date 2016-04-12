@@ -17,28 +17,30 @@
       <%= link "New Search", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
     </address>
   </div>
-  <div class="col-sm-8">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h3><a href="<%= "http://www.whitepages.com" %>">White Pages</a></h3>
-      </div>
-      <div class="panel-body">
-        <address>
-          <strong>
-            <div id="res-biz">
-              biz
+  <div class="col-sm-8" id="">
+    <div class="container" id="result-container">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h3><a href="<%= "http://www.whitepages.com" %>">White Pages</a></h3>
+        </div>
+        <div class="panel-body">
+          <address>
+            <strong>
+              <div id="res-biz">
+                biz
+              </div>
+            </strong>
+            <div id="res-address">
+              address
             </div>
-          </strong>
-          <div id="res-address">
-            address
-          </div>
-          <span id="res-city">city</span>, <span id="res-state">state</span> <span id="res-zip">zip</span>
+            <span id="res-city">city</span>, <span id="res-state">state</span> <span id="res-zip">zip</span>
 
-        </address>
-      </div>
-      <button id="test-fill" class="btn btn-primary form-control" type="submit">Test</button>
-      <div class="panel-footer">
-        <a href="<%= "http://www.google.com" %>">Test</a>
+          </address>
+        </div>
+        <button id="test-fill" class="btn btn-primary form-control" type="submit">Test</button>
+        <div class="panel-footer">
+          <a href="<%= "http://www.google.com" %>">Test</a>
+        </div>
       </div>
     </div>
   </div>
