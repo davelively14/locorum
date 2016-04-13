@@ -1,6 +1,7 @@
 let Results = {
 
   init(socket, element){ if(!element){ return }
+    let searchId = element.getAttribute("data-id")
     socket.connect()
     this.onReady(searchId, socket)
   },
