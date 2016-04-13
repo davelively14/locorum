@@ -25,7 +25,6 @@ defmodule Locorum.BackendSys.Local do
         [headers|_] = headers
         headers = elem(headers, 1)
         fetch_html(get_url(headers))
-      # TODO: Determine if we need these error reports or not? Maybe just let it crash?
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         Logger.error("404 redirect, Local backend, #{inspect url}")
         {:error, "404"}

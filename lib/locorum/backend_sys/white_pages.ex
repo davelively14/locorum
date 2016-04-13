@@ -1,4 +1,5 @@
 defmodule Locorum.BackendSys.WhitePages do
+  require Logger
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
 
@@ -20,12 +21,14 @@ defmodule Locorum.BackendSys.WhitePages do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         body
-      # TODO: Add error logging for these responses upon REFACTOR.
       {:ok, %HTTPoison.Response{status_code: 404}} ->
+        Logger.error("404 redirect, White Pages backend, #{inspect url}")
         {:error, "404"}
       {:ok, %HTTPoison.Response{status_code: 403}} ->
+        Logger.error("403 redirect, White Pages backend, #{inspect url}")
         {:error, "403"}
       {:error, %HTTPoison.Error{reason: reason}} ->
+        Logger.error("HTTPoison error: #{inspect reason}, White Pages backend, #{inspect url}")
         {:error, reason}
     end
   end

@@ -37,7 +37,7 @@ defmodule Locorum.BackendSys do
 
   # Children are the resulting processes with monitors. Will this run all the
   # processes simultaneously, or will it run one at a time?
-  # TODO: determine if this will only run one at a time, or concurrently
+  # TODO: do we want BackendSys to handle and pass results as they come in, or let each backend send to the channel?
   defp handle_results(child, _opts) do
     {pid, monitor_ref, query_ref} = child
 
