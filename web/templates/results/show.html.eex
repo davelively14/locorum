@@ -18,7 +18,7 @@
     </address>
   </div>
   <div class="col-sm-8" id="">
-    <div class="container" id="result-container">
+    <div class="container" id="results">
       <div class="panel panel-info">
         <div class="panel-heading">
           <h3><a href="<%= "http://www.whitepages.com" %>">White Pages</a></h3>

@@ -22,8 +22,4 @@ defmodule Locorum.SearchChannel do
   def handle_in("result", params, socket) do
     _ = [params, socket]
   end
-
-  def function_name do
-
-  end
 end

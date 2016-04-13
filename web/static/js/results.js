@@ -1,6 +1,6 @@
 let Results = {
 
-  init(socket, searchId){
+  init(socket, element){ if(!element){ return }
     socket.connect()
     this.onReady(searchId, socket)
   },
