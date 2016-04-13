@@ -18,7 +18,9 @@
     </address>
   </div>
   <div class="col-sm-8" id="">
-    <div class="container" id="results">
+    <%= content_tag :div, id: "results", data: [id: @search.id] do %>
+    <% end %>
+    <div class="container" id="temp">
       <div class="panel panel-info">
         <div class="panel-heading">
           <h3><a href="<%= "http://www.whitepages.com" %>">White Pages</a></h3>
