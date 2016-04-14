@@ -2,7 +2,7 @@ defmodule Locorum.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", Locorum.RoomChannel
+  channel "searches:*", Locorum.SearchChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
