@@ -9,7 +9,12 @@ let Results = {
   onReady(searchId, socket){
     let resultContainer = document.getElementById("result-container")
     let searchChannel   = socket.channel("searches:" + searchId)
-    // TODO join the search channel
+
+    searchChannel.join()
+      .receive("ok", resp => console.log("Joined searchChannel", resp))
+      .receive("error", resp => console.log("Join failed", reason))
+
+    searchChannel.on("ping", ({count}) => console.log("PING", count))
   },
 }
 export default Results

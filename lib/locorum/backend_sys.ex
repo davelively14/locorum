@@ -18,11 +18,13 @@ defmodule Locorum.BackendSys do
     backend.start_link(query, query_ref, owner, limit)
   end
 
+  # TODO receive search_channel socket here
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
 
     backends
+    # TODO remove handle_results function...spawn_query should receive and pass socket of search_channel
     |> Enum.map(&spawn_query(&1, query, limit))
     |> Enum.map(&handle_results(&1, opts))
   end
