@@ -19,6 +19,7 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO receive search_channel socket here
+  # TODO test this out on a separate
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
