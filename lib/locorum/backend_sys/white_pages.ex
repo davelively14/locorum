@@ -60,7 +60,7 @@ defmodule Locorum.BackendSys.WhitePages do
   # TODO send the header information separate, allow search_channel to prepare the backend container
   # TODO send each result separately back to the search channel
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: "white_pages", url_search: url, url_site: @backend_url}, results})
+    send(owner, {:results, query_ref, %Header{backend: "white_pages", backend_str: "White Pages", url_search: url, url_site: @backend_url}, results})
   end
 
   defp parse_item([]), do: []

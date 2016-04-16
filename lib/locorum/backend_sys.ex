@@ -11,7 +11,7 @@ defmodule Locorum.BackendSys do
   end
 
   defmodule Header do
-    defstruct backend: nil, url_search: nil, url_site: nil
+    defstruct backend: nil, backend_str: nil, url_search: nil, url_site: nil
   end
 
   def start_link(backend, query, query_ref, owner, limit) do
@@ -52,7 +52,7 @@ defmodule Locorum.BackendSys do
         Process.demonitor(monitor_ref, [:flush])
         # [first|_] = results
         # {String.to_atom(first.backend), results}
-        { String.to_atom(header.backend), header, results }
+        { header, results }
       {:DOWN, ^monitor_ref, :process, ^pid, _reason} ->
         kill(pid, monitor_ref)
       :timedout ->

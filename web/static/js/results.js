@@ -10,11 +10,10 @@ let Results = {
     let resultsContainer = document.getElementById("results")
     let backendListContainer = document.getElementById("list_backends")
     let runSearch = document.getElementById("run-search")
-    let addResult = document.getElementById("add-result")
     let searchChannel   = socket.channel("searches:" + searchId)
 
     runSearch.addEventListener("click", e => {
-      searchChannel.push("run_test")
+      searchChannel.push("run_search")
                    .receive("error", e => console.log(e) )
     })
 

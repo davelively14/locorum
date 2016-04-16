@@ -1,8 +1,11 @@
 defmodule Locorum.SearchChannel do
+  alias Locorum.Search
+  alias Locorum.Repo
   use Locorum.Web, :channel
 
-  def join("searches:" <> _search_id, _params, socket) do
-    {:ok, socket}
+  def join("searches:" <> search_id, _params, socket) do
+
+    {:ok, assign(socket, :search_id, search_id)}
   end
 
   def handle_in("run_test", _params, socket) do
@@ -45,4 +48,37 @@ defmodule Locorum.SearchChannel do
     {:reply, :ok, socket}
   end
 
+  def handle_in("run_search", _params, socket) do
+    search = Repo.get!(Search, socket.assigns.search_id)
+    Task.start_link(fn -> get_results(search, socket) end)
+    {:reply, :ok, socket}
+  end
+
+  def handle_in("test_rec", _params, socket) do
+    broadcast! socket, "another_result", %{
+      name: "Test worked"
+    }
+  end
+
+  defp get_results(search, socket) do
+    for { header, results } <- Locorum.BackendSys.compute(search) do
+      broadcast! socket, "backend", %{
+        backend: header.backend,
+        backend_str: header.backend_str,
+        backend_url: header.url_site,
+        results_url: header.url_search
+      }
+
+      for result <- results do
+        broadcast! socket, "result", %{
+          backend: header.backend,
+          biz: result.biz,
+          address: result.address,
+          city: result.city,
+          state: result.state,
+          zip: result.zip
+        }
+      end
+    end
+  end
 end
