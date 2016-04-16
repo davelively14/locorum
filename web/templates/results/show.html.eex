@@ -19,6 +19,9 @@
       <br>
       <%= link "New Search", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
     </address>
+    <h4>Backends loading:</h4>
+    <div id="list_backends">
+    </div>
   </div>
   <div class="col-sm-8" id="">
     <%= content_tag :div, id: "results", data: [id: @search.id] do %>

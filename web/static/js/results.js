@@ -8,6 +8,7 @@ let Results = {
 
   onReady(searchId, socket){
     let resultsContainer = document.getElementById("results")
+    let backendListContainer = document.getElementById("list_backends")
     let runSearch = document.getElementById("run-search")
     let addResult = document.getElementById("add-result")
     let searchChannel   = socket.channel("searches:" + searchId)
@@ -18,7 +19,7 @@ let Results = {
     })
 
     searchChannel.on("backend", (resp) => {
-      this.renderBackend(resultsContainer, resp)
+      this.renderBackend(resultsContainer, backendListContainer, resp)
     })
 
     searchChannel.on("result", (resp) => {
@@ -37,7 +38,7 @@ let Results = {
 
   },
 
-  renderBackend(resultsContainer, {backend, backend_str, backend_url, results_url}){
+  renderBackend(resultsContainer, backendListContainer, {backend, backend_str, backend_url, results_url}){
     let template = document.createElement("div")
     template.setAttribute("class", "panel panel-info")
     template.innerHTML = `
@@ -50,6 +51,11 @@ let Results = {
     </div>
     `
     resultsContainer.appendChild(template)
+    let new_result = document.createElement("div")
+    new_result.innerHTML = `
+    ${backend_str}
+    `
+    backendListContainer.appendChild(new_result)
   },
 
   renderResult(backendContainer, {backend, biz, address, city, state, zip}){
