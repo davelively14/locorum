@@ -55,9 +55,10 @@ defmodule Locorum.BackendSys.WhitePages do
     "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
   end
 
-  # TODO determine what to do for blank results
+  # TODO create a backendContainer with information on search
   defp send_results(nil, query_ref, owner, _url), do: send(owner, {:ignore, query_ref, []})
-  # TODO send this to back to the channel instead of the supervisor? Requires socket to be passed
+  # TODO send the header information separate, allow search_channel to prepare the backend container
+  # TODO send each result separately back to the search channel
   defp send_results(results, query_ref, owner, url) do
     send(owner, {:results, query_ref, %Header{backend: "white_pages", url_search: url, url_site: @backend_url}, results})
   end
