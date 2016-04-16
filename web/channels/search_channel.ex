@@ -9,6 +9,10 @@ defmodule Locorum.SearchChannel do
   end
 
   def handle_in("run_test", _params, socket) do
+    broadcast! socket, "clear_results", %{
+      id: nil
+    }
+
     broadcast! socket, "backend", %{
       backend: "white_pages",
       backend_str: "White Pages",
@@ -49,6 +53,10 @@ defmodule Locorum.SearchChannel do
   end
 
   def handle_in("run_search", _params, socket) do
+    broadcast! socket, "clear_results", %{
+      id: nil
+    }
+    
     search = Repo.get!(Search, socket.assigns.search_id)
     Task.start_link(fn -> get_results(search, socket) end)
     {:reply, :ok, socket}

@@ -31,6 +31,14 @@ let Results = {
       this.renderNoResult(backendContainer)
     })
 
+    searchChannel.on("clear_results", (resp) => {
+      let resultsContainer = document.getElementById("results")
+      let backendListContainer = document.getElementById("list_backends")
+
+      resultsContainer.innerHTML = ``
+      backendListContainer.innerHTML = ``
+    })
+
     searchChannel.join()
       .receive("ok", resp => console.log("Joined search channel", resp))
       .receive("error", reason => console.log("Join failed", reason))
