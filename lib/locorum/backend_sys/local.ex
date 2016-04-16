@@ -87,7 +87,9 @@ defmodule Locorum.BackendSys.Local do
     [%Result{biz: name, address: address, city: city, state: state } | add_to_result(tail)]
   end
 
+  # TODO handle nil results
   defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
+  # TODO send back to the channel instead of supervisor
   defp send_results(results, query_ref, owner, url) do
     send(owner, {:results, query_ref, %Header{backend: "local", url_search: url, url_site: @backend_url}, results})
   end
