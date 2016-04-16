@@ -19,8 +19,12 @@
       <br>
       <%= link "New Search", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
     </address>
-    <h4>Backends loading:</h4>
-    <div id="list_backends">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4>Backends:</h4>
+      </div>
+      <div id="list_backends" class="panel-body">
+      </div>
     </div>
   </div>
   <div class="col-sm-8" id="">
