@@ -23,4 +23,15 @@ defmodule Locorum.TestData do
         "Invalid Format"
     end
   end
+
+  def json(format) do
+    case format do
+      "yahoo" ->
+        """
+        {"query":{"count":3,"created":"2016-04-17T01:54:32Z","lang":"en-US","results":{"Result":[{"id":"195240549","xmlns":"urn:yahoo:lcl","Title":"Nebo Agency","Address":"1000 Marietta St Nw, Ste 270","City":"Atlanta","State":"GA","Phone":"(404) 885-1201","Latitude":"33.7786","Longitude":"-84.41066","Rating":{"AverageRating":"NaN","TotalRatings":"0","TotalReviews":"0","LastReviewDate":null,"LastReviewIntro":null},"Distance":"2.13","Url":"https://local.yahoo.com/info-195240549-nebo-agency-atlanta","ClickUrl":"https://local.yahoo.com/info-195240549-nebo-agency-atlanta","MapUrl":"https://local.yahoo.com/info-195240549-nebo-agency-atlanta?viewtype=map","BusinessUrl":null,"BusinessClickUrl":null,"Categories":{"Category":[{"id":"96926908","content":"Internet Access Provider"},{"id":"96926913","content":"Web Service"},{"id":"96930848","content":"Advertising Agency"}]}},{"id":"192349709","xmlns":"urn:yahoo:lcl","Title":"Nebo Agency LLC","Address":"1000 Marietta St Nw, #270","City":"Atlanta","State":"GA","Phone":"(404) 885-1201","Latitude":"33.7786","Longitude":"-84.41066","Rating":{"AverageRating":"NaN","TotalRatings":"0","TotalReviews":"0","LastReviewDate":null,"LastReviewIntro":null},"Distance":"2.13","Url":"https://local.yahoo.com/info-192349709-nebo-agency-llc-atlanta","ClickUrl":"https://local.yahoo.com/info-192349709-nebo-agency-llc-atlanta","MapUrl":"https://local.yahoo.com/info-192349709-nebo-agency-llc-atlanta?viewtype=map","BusinessUrl":"http://www.neboagency.com","BusinessClickUrl":"http://www.neboagency.com","Categories":{"Category":[{"id":"96925775","content":"Computer Software"},{"id":"96926913","content":"Web Service"},{"id":"96930848","content":"Advertising Agency"},{"id":"96932690","content":"B2B Computer Retailer"},{"id":"96932693","content":"Computer Communication"},{"id":"96932766","content":"Data Preparation & Processing"},{"id":"96932773","content":"Computer Business Solution"}]}},{"id":"37755281","xmlns":"urn:yahoo:lcl","Title":"Neboweb","Address":"1031 Marietta St Nw","City":"Atlanta","State":"GA","Phone":"(404) 885-1167","Latitude":"33.779615","Longitude":"-84.41123","Rating":{"AverageRating":"NaN","TotalRatings":"0","TotalReviews":"0","LastReviewDate":null,"LastReviewIntro":null},"Distance":"2.07","Url":"https://local.yahoo.com/info-37755281-neboweb-atlanta","ClickUrl":"https://local.yahoo.com/info-37755281-neboweb-atlanta","MapUrl":"https://local.yahoo.com/info-37755281-neboweb-atlanta?viewtype=map","BusinessUrl":"http://www.neboagency.com/","BusinessClickUrl":"http://www.neboagency.com/","Categories":{"Category":[{"id":"96926913","content":"Web Service"},{"id":"96932693","content":"Computer Communication"}]}}]}}}
+        """
+      _ ->
+        "Invalid Format"
+    end
+  end
 end
