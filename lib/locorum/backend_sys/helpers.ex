@@ -6,7 +6,8 @@ defmodule Locorum.BackendSys.Helpers do
       {:ok, %HTTPoison.Response{status_code: 200, body: json}} ->
         json
       {:ok, %HTTPoison.Response{status_code: 301}} ->
-        Logger.error("301 redirect, #{__MODULE__} backend, #{inspect url}")
+        Logger.error("301 redirect, #{__MODULE__} backend, #{inspect url}. Change get call to url, [], follow_redirect: true")
+        {:error, "301"}
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         Logger.error("404 redirect, #{__MODULE__} backend, #{inspect url}")
         {:error, "404"}
@@ -24,13 +25,13 @@ defmodule Locorum.BackendSys.Helpers do
       {:ok, %HTTPoison.Response{status_code: 200, body: html}} ->
         html
       {:ok, %HTTPoison.Response{status_code: 404}} ->
-        Logger.error("404 redirect, Local backend, #{inspect url}")
+        Logger.error("404 redirect, #{__MODULE__} backend, #{inspect url}")
         {:error, "404"}
       {:ok, %HTTPoison.Response{status_code: 403}} ->
-        Logger.error("403 redirect, Local backend, #{inspect url}")
+        Logger.error("403 redirect, #{__MODULE__} backend, #{inspect url}")
         {:error, "403"}
       {:error, %HTTPoison.Error{reason: reason}} ->
-        Logger.error("HTTPoison error: #{inspect reason}, Local backend, #{inspect url}")
+        Logger.error("HTTPoison error: #{inspect reason}, #{__MODULE__} backend, #{inspect url}")
         {:error, reason}
     end
   end
