@@ -38,6 +38,7 @@ defmodule Locorum.Mixfile do
      {:gettext, "~> 0.9"},
      {:httpoison, "~> 0.8.0"},
      {:floki, "~> 0.8"},
+     {:poison, "~> 1.5"},
      {:cowboy, "~> 1.0"}]
   end
 

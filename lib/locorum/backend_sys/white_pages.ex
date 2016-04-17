@@ -4,6 +4,8 @@ defmodule Locorum.BackendSys.WhitePages do
   alias Locorum.BackendSys.Header
 
   @backend_url "http://www.whitepages.com/"
+  @backend "white_pages"
+  @backend_str "White Pages"
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -55,12 +57,10 @@ defmodule Locorum.BackendSys.WhitePages do
     "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
   end
 
-  # TODO create a backendContainer with information on search
+  # TODO handle nil results
   defp send_results(nil, query_ref, owner, _url), do: send(owner, {:ignore, query_ref, []})
-  # TODO send the header information separate, allow search_channel to prepare the backend container
-  # TODO send each result separately back to the search channel
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: "white_pages", backend_str: "White Pages", url_search: url, url_site: @backend_url}, results})
+    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
   end
 
   defp parse_item([]), do: []

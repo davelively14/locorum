@@ -4,6 +4,8 @@ defmodule Locorum.BackendSys.Local do
   alias Locorum.BackendSys.Header
 
   @backend_url "http://www.local.com/"
+  @backend "local"
+  @backend_str "Local"
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -12,9 +14,9 @@ defmodule Locorum.BackendSys.Local do
 
   def fetch(query, query_ref, owner, _limit) do
     get_url(query.city, query.state, query.biz)
-     |> fetch_html
-     |> parse_data
-     |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
+    |> fetch_html
+    |> parse_data
+    |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
   end
 
   defp fetch_html(url) do
@@ -89,8 +91,7 @@ defmodule Locorum.BackendSys.Local do
 
   # TODO handle nil results
   defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
-  # TODO send back to the channel instead of supervisor
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: "local", backend_str: "Local", url_search: url, url_site: @backend_url}, results})
+    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
   end
 end
