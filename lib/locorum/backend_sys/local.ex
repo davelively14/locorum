@@ -1,42 +1,21 @@
 defmodule Locorum.BackendSys.Local do
-  require Logger
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
+  alias Locorum.BackendSys.Helpers
 
   @backend_url "http://www.local.com/"
   @backend "local"
   @backend_str "Local"
 
   def start_link(query, query_ref, owner, limit) do
-    HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
   def fetch(query, query_ref, owner, _limit) do
     get_url(query.city, query.state, query.biz)
-    |> fetch_html
+    |> Helpers.fetch_html
     |> parse_data
     |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
-  end
-
-  defp fetch_html(url) do
-    case HTTPoison.get(url) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
-      {:ok, %HTTPoison.Response{status_code: 301, headers: headers}} ->
-        [headers|_] = headers
-        headers = elem(headers, 1)
-        fetch_html(get_url(headers))
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
-        Logger.error("404 redirect, Local backend, #{inspect url}")
-        {:error, "404"}
-      {:ok, %HTTPoison.Response{status_code: 403}} ->
-        Logger.error("403 redirect, Local backend, #{inspect url}")
-        {:error, "403"}
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        Logger.error("HTTPoison error: #{inspect reason}, Local backend, #{inspect url}")
-        {:error, reason}
-    end
   end
 
   defp get_url(city, state, biz) do
@@ -51,9 +30,6 @@ defmodule Locorum.BackendSys.Local do
       |> String.replace(~r/[^\w-]+/, "%20")
 
     "http://www.local.com/business/results/?keyword=#{biz}&location=#{city}%252C%2520#{state}"
-  end
-  defp get_url(redirect) do
-    "http://www.local.com#{redirect}"
   end
 
   defp parse_data(body) do

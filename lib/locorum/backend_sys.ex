@@ -4,7 +4,7 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO: replace this with a Repo call to backends persisted in db?
-  @backends [Locorum.BackendSys.WhitePages, Locorum.BackendSys.Local, Locorum.BackendSys.Yahoo]
+  @backends [Locorum.BackendSys.Local, Locorum.BackendSys.Yahoo, Locorum.BackendSys.WhitePages]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil
@@ -23,6 +23,7 @@ defmodule Locorum.BackendSys do
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
+    HTTPoison.start
 
     backends
     # TODO remove handle_results function...spawn_query should receive and pass socket of search_channel

@@ -1,38 +1,21 @@
 defmodule Locorum.BackendSys.WhitePages do
-  require Logger
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
+  alias Locorum.BackendSys.Helpers
 
   @backend_url "http://www.whitepages.com/"
   @backend "white_pages"
   @backend_str "White Pages"
 
   def start_link(query, query_ref, owner, limit) do
-    HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
   def fetch(query, query_ref, owner, _limit) do
     get_url(query.city, query.state, query.biz)
-    |> fetch_html
+    |> Helpers.fetch_html
     |> parse_data
     |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
-  end
-
-  defp fetch_html(url) do
-    case HTTPoison.get(url) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
-      {:ok, %HTTPoison.Response{status_code: 404}} ->
-        Logger.error("404 redirect, White Pages backend, #{inspect url}")
-        {:error, "404"}
-      {:ok, %HTTPoison.Response{status_code: 403}} ->
-        Logger.error("403 redirect, White Pages backend, #{inspect url}")
-        {:error, "403"}
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        Logger.error("HTTPoison error: #{inspect reason}, White Pages backend, #{inspect url}")
-        {:error, reason}
-    end
   end
 
   def parse_data(body) do
