@@ -4,7 +4,7 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO: replace this with a Repo call to backends persisted in db?
-  @backends [Locorum.BackendSys.WhitePages, Locorum.BackendSys.Local]
+  @backends [Locorum.BackendSys.WhitePages, Locorum.BackendSys.Local, Locorum.BackendSys.Yahoo]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil

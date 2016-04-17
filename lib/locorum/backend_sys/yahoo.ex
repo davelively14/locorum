@@ -1,7 +1,7 @@
 defmodule Locorum.BackendSys.Yahoo do
   require Logger
   alias Locorum.BackendSys.Result
-  # alias Locorum.BackendSys.Header
+  alias Locorum.BackendSys.Header
 
   @backend_url "https://local.yahoo.com"
   @backend "yahoo"
@@ -9,17 +9,17 @@ defmodule Locorum.BackendSys.Yahoo do
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
-    Poison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, _query_ref, _owner, _limit) do
+  def fetch(query, query_ref, owner, _limit) do
     get_url(query)
     |> fetch_json
     |> parse_data
+    |> send_results(query_ref, owner, get_url(query))
   end
 
-  def get_url(query) do
+  defp get_url(query) do
     zip = query.zip
     biz =
       query.biz
@@ -28,7 +28,7 @@ defmodule Locorum.BackendSys.Yahoo do
     "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20local.search%20where%20zip%3D'#{zip}'%20and%20query%3D'#{biz}'&format=json&callback="
   end
 
-  def fetch_json(url) do
+  defp fetch_json(url) do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: json}} ->
         json
@@ -46,12 +46,19 @@ defmodule Locorum.BackendSys.Yahoo do
     end
   end
 
-  def parse_data(json) do
+  defp parse_data(json) do
     result = Poison.decode!(json)
     add_to_result(result["query"]["results"]["Result"])
   end
+
   defp add_to_result([]), do: []
   defp add_to_result([head|tail]) do
     [%Result{biz: head["Title"], address: head["Address"], city: head["City"], state: head["State"]} | add_to_result(tail)]
+  end
+
+  # TODO handle nil results
+  defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
+  defp send_results(results, query_ref, owner, url) do
+    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
   end
 end
