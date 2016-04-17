@@ -21,8 +21,8 @@ defmodule Locorum.BackendSys.Helpers do
 
   def fetch_html(url) do
     case HTTPoison.get(url, [], follow_redirect: true) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        body
+      {:ok, %HTTPoison.Response{status_code: 200, body: html}} ->
+        html
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         Logger.error("404 redirect, Local backend, #{inspect url}")
         {:error, "404"}
