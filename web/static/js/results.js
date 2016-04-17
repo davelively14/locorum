@@ -67,6 +67,9 @@ let Results = {
 
   renderResult(backendContainer, {backend, biz, address, city, state, zip}){
     let template = document.createElement("div")
+    if (zip == null) {
+      zip = ""
+    }
     template.innerHTML = `
     <b>${biz}</b><br>
     ${address}<br>
