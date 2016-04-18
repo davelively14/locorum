@@ -18,15 +18,13 @@ defmodule Locorum.BackendSys do
     backend.start_link(query, query_ref, owner, limit)
   end
 
-  # TODO receive search_channel socket here
-  # TODO test this out on a separate
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
     HTTPoison.start
 
     backends
-    # TODO remove handle_results function...spawn_query should receive and pass socket of search_channel
+    # TODO should this call a Task.start_link?
     |> Enum.map(&spawn_query(&1, query, limit))
     |> Enum.map(&handle_results(&1, opts))
   end
@@ -39,9 +37,6 @@ defmodule Locorum.BackendSys do
     {pid, monitor_ref, query_ref}
   end
 
-  # Children are the resulting processes with monitors. Will this run all the
-  # processes simultaneously, or will it run one at a time?
-  # TODO: do we want BackendSys to handle and pass results as they come in, or let each backend send to the channel?
   defp handle_results(child, _opts) do
     {pid, monitor_ref, query_ref} = child
 
