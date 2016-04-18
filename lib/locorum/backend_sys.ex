@@ -46,8 +46,6 @@ defmodule Locorum.BackendSys do
     receive do
       {:results, ^query_ref, header, results } ->
         Process.demonitor(monitor_ref, [:flush])
-        # [first|_] = results
-        # {String.to_atom(first.backend), results}
         { header, results }
       {:DOWN, ^monitor_ref, :process, ^pid, _reason} ->
         kill(pid, monitor_ref)
