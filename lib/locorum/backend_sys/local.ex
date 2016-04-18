@@ -12,20 +12,20 @@ defmodule Locorum.BackendSys.Local do
   end
 
   def fetch(query, query_ref, owner, _limit) do
-    get_url(query.city, query.state, query.biz)
+    get_url(query)
     |> Helpers.fetch_html
     |> parse_data
-    |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
+    |> send_results(query_ref, owner, get_url(query))
   end
 
-  defp get_url(city, state, biz) do
+  defp get_url(query) do
     city =
-      city
+      query.city
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "%2520")
-    state = String.downcase(state)
+    state = String.downcase(query.state)
     biz =
-      biz
+      query.biz
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "%20")
 

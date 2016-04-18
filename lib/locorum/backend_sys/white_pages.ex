@@ -12,10 +12,10 @@ defmodule Locorum.BackendSys.WhitePages do
   end
 
   def fetch(query, query_ref, owner, _limit) do
-    get_url(query.city, query.state, query.biz)
+    get_url(query)
     |> Helpers.fetch_html
     |> parse_data
-    |> send_results(query_ref, owner, get_url(query.city, query.state, query.biz))
+    |> send_results(query_ref, owner, get_url(query))
   end
 
   def parse_data(body) do
@@ -28,16 +28,18 @@ defmodule Locorum.BackendSys.WhitePages do
     add_to_result(List.zip([name, address, city, state, zip]))
   end
 
-  defp get_url(city, state, biz) do
+  defp get_url(query) do
     city =
-      city
+      query.city
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "-")
+    state = String.upcase(query.state)
     biz =
-      biz
+      query.biz
       |> String.downcase
       |> String.replace(~r/[^\w-]+/, "-")
-    "http://www.whitepages.com/business/" <> String.upcase(state) <> "/" <> city <> "/" <> biz
+
+    "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
   end
 
   # TODO handle nil results
