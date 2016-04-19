@@ -11,9 +11,7 @@ defmodule Locorum.BackendSys.Local do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.set_header(@backend)
-    |> Helpers.init_backend(owner)
-    |> Helpers.fetch_html
+    |> Helpers.init_html(@backend, owner)
     |> parse_data
     |> Helpers.send_results(@backend, owner)
   end

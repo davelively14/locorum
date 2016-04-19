@@ -12,9 +12,7 @@ defmodule Locorum.BackendSys.Yahoo do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.set_header(@backend)
-    |> Helpers.init_backend(owner)
-    |> Helpers.fetch_json
+    |> Helpers.init_json(@backend, owner)
     |> parse_data
     |> Helpers.send_results(@backend, owner)
   end
