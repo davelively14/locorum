@@ -3,9 +3,7 @@ defmodule Locorum.BackendSys.Yahoo do
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
 
-  @backend_url "https://local.yahoo.com"
-  @backend "yahoo"
-  @backend_str "Yahoo Local"
+  @backend %Header{backend: "yahoo", backend_str: "Yahoo Local", url_site: "http://local.yahoo.com"}
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -16,7 +14,8 @@ defmodule Locorum.BackendSys.Yahoo do
     get_url(query)
     |> Helpers.fetch_json
     |> parse_data
-    |> send_results(query_ref, owner, get_url(query))
+    |> Helpers.make_message(query_ref, @backend, get_url(query))
+    |> Helpers.send_results(owner)
   end
 
   defp get_url(query) do
@@ -36,11 +35,5 @@ defmodule Locorum.BackendSys.Yahoo do
   defp add_to_result([]), do: []
   defp add_to_result([head|tail]) do
     [%Result{biz: head["Title"], address: head["Address"], city: head["City"], state: head["State"]} | add_to_result(tail)]
-  end
-
-  # TODO handle nil results
-  defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
-  defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
   end
 end

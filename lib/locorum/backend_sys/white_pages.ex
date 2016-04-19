@@ -3,9 +3,7 @@ defmodule Locorum.BackendSys.WhitePages do
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
 
-  @backend_url "http://www.whitepages.com/"
-  @backend "white_pages"
-  @backend_str "White Pages"
+  @backend %Header{backend: "white_pages", backend_str: "White Pages", url_site: "http://www.local.com"}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -15,7 +13,8 @@ defmodule Locorum.BackendSys.WhitePages do
     get_url(query)
     |> Helpers.fetch_html
     |> parse_data
-    |> send_results(query_ref, owner, get_url(query))
+    |> Helpers.make_message(query_ref, @backend, get_url(query))
+    |> Helpers.send_results(owner)
   end
 
   def parse_data(body) do
@@ -40,12 +39,6 @@ defmodule Locorum.BackendSys.WhitePages do
       |> String.replace(~r/[^\w-]+/, "-")
 
     "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
-  end
-
-  # TODO handle nil results
-  defp send_results(nil, query_ref, owner, _url), do: send(owner, {:ignore, query_ref, []})
-  defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
   end
 
   defp parse_item([]), do: []
