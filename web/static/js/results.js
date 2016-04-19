@@ -50,11 +50,11 @@ let Results = {
     template.setAttribute("class", "panel panel-info")
     template.innerHTML = `
     <div class="panel-heading">
-    <h4><a href="${backend_url}">${backend_str}</a></h4>
+    <h4><a href="${backend_url}" target="_blank">${backend_str}</a></h4>
     </div>
     <div class="panel-body" id="${backend}"></div>
     <div class="panel-footer">
-    <a href="${results_url}">Go to results on ${backend_str}...</a>
+    <a href="${results_url}" target="_blank">Go to results on ${backend_str}...</a>
     </div>
     `
     resultsContainer.appendChild(template)

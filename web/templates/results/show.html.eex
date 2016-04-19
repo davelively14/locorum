@@ -1,4 +1,4 @@
-<h3 class="text-center"><strong>Search Results</strong></h3>
+<h3 class="text-center"><strong><%= @search.name || @search.biz %> Results</strong></h3>
 <br>
 
 <button id="run-search" class="btn btn-success btn-block" type="submit">Run Search</button>
