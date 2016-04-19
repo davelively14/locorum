@@ -68,6 +68,7 @@ defmodule Locorum.SearchChannel do
     }
   end
 
+  # TODO deal with blank results here
   defp get_results(search, socket) do
     for { header, results } <- Locorum.BackendSys.compute(search) do
       broadcast! socket, "backend", %{
