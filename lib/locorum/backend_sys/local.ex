@@ -3,9 +3,13 @@ defmodule Locorum.BackendSys.Local do
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
 
-  @backend_url "http://www.local.com/"
+  @url_site "http://www.local.com/"
   @backend "local"
   @backend_str "Local"
+
+  def get_backend_info(url) do
+    %Header{backend: @backend, backend_str: @backend_str, url_site: @url_site, url_search: url}
+  end
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -18,7 +22,7 @@ defmodule Locorum.BackendSys.Local do
     |> send_results(query_ref, owner, get_url(query))
   end
 
-  defp get_url(query) do
+  def get_url(query) do
     city =
       query.city
       |> String.downcase
@@ -66,8 +70,8 @@ defmodule Locorum.BackendSys.Local do
   end
 
   # TODO handle nil results
-  defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, url})
+  defp send_results(nil, query_ref, owner, url), do: send(owner, {:ignore, query_ref, get_backend_info(url)})
   defp send_results(results, query_ref, owner, url) do
-    send(owner, {:results, query_ref, %Header{backend: @backend, backend_str: @backend_str, url_search: url, url_site: @backend_url}, results})
+    send(owner, {:results, query_ref, get_backend_info(url), results})
   end
 end
