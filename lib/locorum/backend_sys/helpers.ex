@@ -1,5 +1,6 @@
 defmodule Locorum.BackendSys.Helpers do
   require Logger
+  use Phoenix.Channel
 
   def fetch_json(url) do
     case HTTPoison.get(url) do
@@ -43,5 +44,23 @@ defmodule Locorum.BackendSys.Helpers do
     {:results, query_ref, header, results}
   end
 
-  def send_results(message, owner), do: send(owner, message)
+  def send_results(message, socket) do
+    {_, _, header, results} = message
+    broadcast! socket, "backend", %{
+      backend: header.backend,
+      backend_str: header.backend_str,
+      backend_url: header.url_site,
+      results_url: header.url_search
+    }
+    for result <- results do
+      broadcast! socket, "result", %{
+        backend: header.backend,
+        biz: result.biz,
+        address: result.address,
+        city: result.city,
+        state: result.state,
+        zip: result.zip
+      }
+    end
+  end
 end

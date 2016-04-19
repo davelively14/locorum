@@ -18,36 +18,35 @@ defmodule Locorum.BackendSys do
     backend.start_link(query, query_ref, owner, limit)
   end
 
-  def compute(query, opts \\ []) do
+  def compute(query, socket, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
-    owner = opts[:owner] || self()
     HTTPoison.start
 
     backends
     # TODO should this call a Task.start_link?
-    |> Enum.map(&spawn_query(&1, query, owner, limit))
-    |> Enum.map(&handle_results(&1, opts))
+    |> Enum.map(&spawn_query(&1, query, socket, limit))
+    # |> Enum.map(&monitor_spawns(&1, opts))
   end
 
-  defp spawn_query(backend, query, owner, limit) do
+  defp spawn_query(backend, query, socket, limit) do
     query_ref = make_ref()
-    opts = [backend, query, query_ref, owner, limit]
+    opts = [backend, query, query_ref, socket, limit]
     {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
     monitor_ref = Process.monitor(pid)
     {pid, monitor_ref, query_ref}
   end
 
-  defp handle_results(child, _opts) do
+  # TODO kill processes once they return results
+  defp monitor_spawns(child, _opts) do
     {pid, monitor_ref, query_ref} = child
 
     # timeout = opts[:timeout] || 5000
     # timer = Process.send_after(self(), :timedout, timeout)
 
     receive do
-      {:results, ^query_ref, header, results } ->
+      {:results, ^query_ref, _header, _results } ->
         Process.demonitor(monitor_ref, [:flush])
-        { header, results }
       {:DOWN, ^monitor_ref, :process, ^pid, _reason} ->
         kill(pid, monitor_ref)
       :timedout ->

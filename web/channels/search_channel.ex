@@ -56,9 +56,9 @@ defmodule Locorum.SearchChannel do
     broadcast! socket, "clear_results", %{
       id: nil
     }
-    
+
     search = Repo.get!(Search, socket.assigns.search_id)
-    Task.start_link(fn -> get_results(search, socket) end)
+    Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
     {:reply, :ok, socket}
   end
 
@@ -66,28 +66,5 @@ defmodule Locorum.SearchChannel do
     broadcast! socket, "another_result", %{
       name: "Test worked"
     }
-  end
-
-  # TODO deal with blank results here
-  defp get_results(search, socket) do
-    for { header, results } <- Locorum.BackendSys.compute(search) do
-      broadcast! socket, "backend", %{
-        backend: header.backend,
-        backend_str: header.backend_str,
-        backend_url: header.url_site,
-        results_url: header.url_search
-      }
-
-      for result <- results do
-        broadcast! socket, "result", %{
-          backend: header.backend,
-          biz: result.biz,
-          address: result.address,
-          city: result.city,
-          state: result.state,
-          zip: result.zip
-        }
-      end
-    end
   end
 end
