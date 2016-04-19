@@ -38,24 +38,24 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO kill processes once they return results
-  defp monitor_spawns(child, _opts) do
-    {pid, monitor_ref, query_ref} = child
-
-    # timeout = opts[:timeout] || 5000
-    # timer = Process.send_after(self(), :timedout, timeout)
-
-    receive do
-      {:results, ^query_ref, _header, _results } ->
-        Process.demonitor(monitor_ref, [:flush])
-      {:DOWN, ^monitor_ref, :process, ^pid, _reason} ->
-        kill(pid, monitor_ref)
-      :timedout ->
-        kill(pid, monitor_ref)
-    end
-  end
-
-  defp kill(pid, monitor_ref) do
-    Process.demonitor(monitor_ref, [:flush])
-    Process.exit(pid, :kill)
-  end
+  # defp monitor_spawns(child, _opts) do
+  #   {pid, monitor_ref, query_ref} = child
+  #
+  #   # timeout = opts[:timeout] || 5000
+  #   # timer = Process.send_after(self(), :timedout, timeout)
+  #
+  #   receive do
+  #     {:results, ^query_ref, _header, _results } ->
+  #       Process.demonitor(monitor_ref, [:flush])
+  #     {:DOWN, ^monitor_ref, :process, ^pid, _reason} ->
+  #       kill(pid, monitor_ref)
+  #     :timedout ->
+  #       kill(pid, monitor_ref)
+  #   end
+  # end
+  #
+  # defp kill(pid, monitor_ref) do
+  #   Process.demonitor(monitor_ref, [:flush])
+  #   Process.exit(pid, :kill)
+  # end
 end
