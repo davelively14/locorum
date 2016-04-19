@@ -18,7 +18,7 @@ defmodule Locorum.BackendSys.Yahoo do
     |> Helpers.send_results(owner)
   end
 
-  defp get_url(query) do
+  def get_url(query) do
     zip = query.zip
     biz =
       query.biz
@@ -27,7 +27,7 @@ defmodule Locorum.BackendSys.Yahoo do
     "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20local.search%20where%20zip%3D'#{zip}'%20and%20query%3D'#{biz}'&format=json&callback="
   end
 
-  defp parse_data(json) do
+  def parse_data(json) do
     result = Poison.decode!(json)
     add_to_result(result["query"]["results"]["Result"])
   end
@@ -35,5 +35,8 @@ defmodule Locorum.BackendSys.Yahoo do
   defp add_to_result([]), do: []
   defp add_to_result([head|tail]) do
     [%Result{biz: head["Title"], address: head["Address"], city: head["City"], state: head["State"]} | add_to_result(tail)]
+  end
+  defp add_to_result(single_result) do
+    [%Result{biz: single_result["Title"], address: single_result["Address"], city: single_result["City"], state: single_result["State"]}]
   end
 end
