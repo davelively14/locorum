@@ -1,6 +1,10 @@
 defmodule Locorum.BackendSys.Helpers do
-  require Logger
   use Phoenix.Channel
+  require Logger
+
+  def set_header(url, header) do
+    Map.put(header, :url_search, url)
+  end
 
   def fetch_json(url) do
     case HTTPoison.get(url) do
@@ -37,21 +41,21 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  # TODO handle the nil results on the front end
-  def make_message(nil, query_ref, _header, url), do: {:ignore, query_ref, url}
-  def make_message(results, query_ref, header, url) do
-    header = Map.put(header, :url_search, url)
-    {:results, query_ref, header, results}
-  end
+  # def make_message(results, query_ref, header) do
+  #   {:results, query_ref, header, results}
+  # end
 
-  def send_results(message, socket) do
-    {_, _, header, results} = message
+  def init_backend(header, socket) do
     broadcast! socket, "backend", %{
       backend: header.backend,
       backend_str: header.backend_str,
       backend_url: header.url_site,
       results_url: header.url_search
     }
+    header.url_search
+  end
+
+  def send_results(results, header, socket) do
     if results != [] do
       for result <- results do
         broadcast! socket, "result", %{

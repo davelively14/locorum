@@ -9,12 +9,13 @@ defmodule Locorum.BackendSys.WhitePages do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, query_ref, owner, _limit) do
+  def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
+    |> Helpers.set_header(@backend)
+    |> Helpers.init_backend(owner)
     |> Helpers.fetch_html
     |> parse_data
-    |> Helpers.make_message(query_ref, @backend, get_url(query))
-    |> Helpers.send_results(owner)
+    |> Helpers.send_results(@backend, owner)
   end
 
   def parse_data(body) do
