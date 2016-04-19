@@ -52,14 +52,20 @@ defmodule Locorum.BackendSys.Helpers do
       backend_url: header.url_site,
       results_url: header.url_search
     }
-    for result <- results do
-      broadcast! socket, "result", %{
-        backend: header.backend,
-        biz: result.biz,
-        address: result.address,
-        city: result.city,
-        state: result.state,
-        zip: result.zip
+    if results != [] do
+      for result <- results do
+        broadcast! socket, "result", %{
+          backend: header.backend,
+          biz: result.biz,
+          address: result.address,
+          city: result.city,
+          state: result.state,
+          zip: result.zip
+        }
+      end
+    else
+      broadcast! socket, "no_result", %{
+        backend: header.backend
       }
     end
   end
