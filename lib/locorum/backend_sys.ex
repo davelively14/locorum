@@ -21,17 +21,18 @@ defmodule Locorum.BackendSys do
   def compute(query, opts \\ []) do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
+    owner = opts[:owner] || self()
     HTTPoison.start
 
     backends
     # TODO should this call a Task.start_link?
-    |> Enum.map(&spawn_query(&1, query, limit))
+    |> Enum.map(&spawn_query(&1, query, owner, limit))
     |> Enum.map(&handle_results(&1, opts))
   end
 
-  defp spawn_query(backend, query, limit) do
+  defp spawn_query(backend, query, owner, limit) do
     query_ref = make_ref()
-    opts = [backend, query, query_ref, self(), limit]
+    opts = [backend, query, query_ref, owner, limit]
     {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
     monitor_ref = Process.monitor(pid)
     {pid, monitor_ref, query_ref}
