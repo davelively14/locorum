@@ -19,13 +19,11 @@ defmodule Locorum.BackendSys.Local do
   def get_url(query) do
     city =
       query.city
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "%2520")
+      |> Helpers.convert_to_utf("%2520")
     state = String.downcase(query.state)
     biz =
       query.biz
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "%20")
+      |> Helpers.convert_to_utf("%20")
 
     "http://www.local.com/business/results/?keyword=#{biz}&location=#{city}%252C%2520#{state}"
   end

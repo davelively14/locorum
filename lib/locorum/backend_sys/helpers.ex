@@ -33,6 +33,13 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
+  # TODO allow for apostrophe to not be replaced
+  def convert_to_utf(text, output) do
+    String.downcase(text)
+    |> String.replace(~r/'/, "")
+    |> String.replace(~r/[^\w-]+/, output)
+  end
+
   defp set_header(url, header) do
     Map.put(header, :url_search, url)
   end

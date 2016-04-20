@@ -29,13 +29,11 @@ defmodule Locorum.BackendSys.WhitePages do
   defp get_url(query) do
     city =
       query.city
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "-")
+      |> Helpers.convert_to_utf("-")
     state = String.upcase(query.state)
     biz =
       query.biz
-      |> String.downcase
-      |> String.replace(~r/[^\w-]+/, "-")
+      |> Helpers.convert_to_utf("-")
 
     "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
   end
