@@ -1,5 +1,5 @@
 <h2><strong>Saved Search: </strong></h2>
-<h3><%= @search.name %></h3>
+<h3><%= @search.name || @search.biz %></h3>
 
 <div class="container">
   <table class="table">

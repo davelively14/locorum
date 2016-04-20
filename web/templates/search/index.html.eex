@@ -5,13 +5,15 @@
     <th>Search Name</th>
     <th>Business Name</th>
     <th>Zip</th>
+    <th>Location</th>
     <th></th>
   </tr>
   <%= for search <- @searches do %>
     <tr>
-      <td><%= search.name %></td>
+      <td><%= search.name || "(none)" %></td>
       <td><%= search.biz %></td>
       <td><%= search.zip %></td>
+      <td><%= "#{search.city}, #{search.state}" %></td>
       <td>
         <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
         <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
