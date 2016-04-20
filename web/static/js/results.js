@@ -8,7 +8,7 @@ let Results = {
 
   onReady(searchId, socket){
     let resultsContainer = document.getElementById("results")
-    let backendListContainer = document.getElementById("list_backends")
+    let backendMenuContainer = document.getElementById("list_backends")
     let runSearch = document.getElementById("run-search")
     let searchChannel   = socket.channel("searches:" + searchId)
 
@@ -18,12 +18,19 @@ let Results = {
     })
 
     searchChannel.on("backend", (resp) => {
-      this.renderBackend(resultsContainer, backendListContainer, resp)
+      this.renderBackend(resultsContainer, backendMenuContainer, resp)
     })
 
     searchChannel.on("result", (resp) => {
       let backendContainer = document.getElementById(resp.backend)
       this.renderResult(backendContainer, resp)
+    })
+
+    searchChannel.on("loaded_results", (resp) => {
+      let backendMenuItem = document.getElementById(resp.backend + "_menu")
+      backendMenuItem.innerHTML = `
+      <a href="#${resp.backend}_header">${resp.backend_str}</a>
+      `
     })
 
     searchChannel.on("no_result", (resp) => {
@@ -33,10 +40,10 @@ let Results = {
 
     searchChannel.on("clear_results", (resp) => {
       let resultsContainer = document.getElementById("results")
-      let backendListContainer = document.getElementById("list_backends")
+      let backendMenuContainer = document.getElementById("list_backends")
 
       resultsContainer.innerHTML = ``
-      backendListContainer.innerHTML = ``
+      backendMenuContainer.innerHTML = ``
     })
 
     searchChannel.join()
@@ -45,11 +52,11 @@ let Results = {
 
   },
 
-  renderBackend(resultsContainer, backendListContainer, {backend, backend_str, backend_url, results_url}){
+  renderBackend(resultsContainer, backendMenuContainer, {backend, backend_str, backend_url, results_url}){
     let template = document.createElement("div")
     template.setAttribute("class", "panel panel-info")
     template.innerHTML = `
-    <div class="panel-heading">
+    <div class="panel-heading" id="${backend}_header">
     <h4><a href="${backend_url}" target="_blank">${backend_str}</a></h4>
     </div>
     <div class="panel-body" id="${backend}"></div>
@@ -58,11 +65,13 @@ let Results = {
     </div>
     `
     resultsContainer.appendChild(template)
+
     let new_result = document.createElement("div")
+    new_result.setAttribute("id", backend + "_menu")
     new_result.innerHTML = `
-    ${backend_str}
+    ${backend_str}...loading
     `
-    backendListContainer.appendChild(new_result)
+    backendMenuContainer.appendChild(new_result)
   },
 
   renderResult(backendContainer, {backend, biz, address, city, state, zip}){

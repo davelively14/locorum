@@ -4,13 +4,13 @@ defmodule Locorum.BackendSys.Helpers do
 
   def init_json(url, header, socket) do
     set_header(url, header)
-    |> init_backend(socket)
+    |> init_frontend(socket)
     |> fetch_json
   end
 
   def init_html(url, header, socket) do
     set_header(url, header)
-    |> init_backend(socket)
+    |> init_frontend(socket)
     |> fetch_html
   end
 
@@ -31,6 +31,10 @@ defmodule Locorum.BackendSys.Helpers do
         backend: header.backend
       }
     end
+    broadcast! socket, "loaded_results", %{
+      backend: header.backend,
+      backend_str: header.backend_str
+    }
   end
 
   # TODO allow for apostrophe to not be replaced
@@ -83,7 +87,7 @@ defmodule Locorum.BackendSys.Helpers do
   #   {:results, query_ref, header, results}
   # end
 
-  defp init_backend(header, socket) do
+  defp init_frontend(header, socket) do
     broadcast! socket, "backend", %{
       backend: header.backend,
       backend_str: header.backend_str,
