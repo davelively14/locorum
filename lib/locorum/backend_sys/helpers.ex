@@ -14,7 +14,25 @@ defmodule Locorum.BackendSys.Helpers do
     |> fetch_html
   end
 
-  def send_results(results, header, socket) do
+  def send_results(results, header, socket, query) do
+    rate_result(results, query)
+    |> broadcast_results(header, socket)
+  end
+
+  # TODO allow for apostrophe to not be replaced
+  def convert_to_utf(text, output) do
+    String.downcase(text)
+    |> String.replace(~r/'/, "")
+    |> String.replace(~r/[^\w-]+/, output)
+  end
+
+  defp rate_result(results, _query) do
+    for result <- results do
+      Map.put(result, :rating, "100")
+    end
+  end
+
+  defp broadcast_results(results, header, socket) do
     if results != [] do
       for result <- results do
         broadcast! socket, "result", %{
@@ -35,13 +53,6 @@ defmodule Locorum.BackendSys.Helpers do
       backend: header.backend,
       backend_str: header.backend_str
     }
-  end
-
-  # TODO allow for apostrophe to not be replaced
-  def convert_to_utf(text, output) do
-    String.downcase(text)
-    |> String.replace(~r/'/, "")
-    |> String.replace(~r/[^\w-]+/, output)
   end
 
   defp set_header(url, header) do

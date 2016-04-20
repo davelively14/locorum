@@ -7,7 +7,7 @@ defmodule Locorum.BackendSys do
   @backends [Locorum.BackendSys.Local, Locorum.BackendSys.Yahoo, Locorum.BackendSys.WhitePages]
 
   defmodule Result do
-    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil
+    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil, rating: nil
   end
 
   defmodule Header do

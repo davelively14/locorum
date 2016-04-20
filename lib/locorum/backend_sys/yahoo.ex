@@ -14,7 +14,7 @@ defmodule Locorum.BackendSys.Yahoo do
     get_url(query)
     |> Helpers.init_json(@backend, owner)
     |> parse_data
-    |> Helpers.send_results(@backend, owner)
+    |> Helpers.send_results(@backend, owner, query)
   end
 
   def get_url(query) do
