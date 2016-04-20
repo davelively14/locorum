@@ -26,11 +26,36 @@ defmodule Locorum.BackendSys.Helpers do
     |> String.replace(~r/[^\w-]+/, output)
   end
 
-  defp rate_result(results, _query) do
+  defp rate_result(results, query) do
+    address =
+      case query.address2 do
+        nil -> query.address1
+        _ -> "#{query.address1}, #{query.address2}"
+      end
+
     for result <- results do
-      Map.put(result, :rating, "100")
+      rating = %{biz: rate_same(result.biz, query.biz), address: rate_same(result.address, address),
+                city: rate_same(result.city, query.city), state: rate_same(result.state, query.state),
+                zip: rate_same(result.zip || query.zip, query.zip)}
+
+      rating = return_lowest(rating)
+      Map.put(result, :rating, round(rating * 100))
     end
   end
+
+  defp rate_same(string1, string2) do
+    string1 = String.upcase(string1)
+    string2 = String.upcase(string2)
+    String.jaro_distance(string1, string2)
+  end
+
+  defp return_lowest(map) do
+    Map.values(map)
+    |> return_lowest(1.0)
+  end
+  defp return_lowest([], lowest), do: lowest
+  defp return_lowest([head|tail], lowest) when head < lowest, do: return_lowest(tail, head)
+  defp return_lowest([_head|tail], lowest), do: return_lowest(tail, lowest)
 
   defp broadcast_results(results, header, socket) do
     if results != [] do
@@ -41,7 +66,8 @@ defmodule Locorum.BackendSys.Helpers do
           address: result.address,
           city: result.city,
           state: result.state,
-          zip: result.zip
+          zip: result.zip,
+          rating: result.rating
         }
       end
     else

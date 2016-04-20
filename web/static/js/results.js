@@ -74,7 +74,7 @@ let Results = {
     backendMenuContainer.appendChild(new_result)
   },
 
-  renderResult(backendContainer, {backend, biz, address, city, state, zip}){
+  renderResult(backendContainer, {backend, biz, address, city, state, zip, rating}){
     let template = document.createElement("div")
     if (zip == null) {
       zip = ""
@@ -83,6 +83,7 @@ let Results = {
     <b>${biz}</b><br>
     ${address}<br>
     ${city}, ${state} ${zip}<br>
+    <i>Rating: </i><b>${rating}</b><br>
     <br>
     `
     backendContainer.appendChild(template)

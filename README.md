@@ -12,6 +12,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Determine how to cleanup processes if needed. Can they self-kill?
 - Add more backends. Priorities: Google, Bing, Facebook, yp.com, Citysearch, Yelp, MapQuest, Foursquare, Superpages
 - Add some sort of loading notification for each backend to the frontend.
+- ~~Add ranking system to results~~
 - Enhance side menu summary for backends
   - ~~Don't hyperlink until backend is loaded~~
   - ~~Link to respective backends using #backend~~ [Completed: 20160420]
