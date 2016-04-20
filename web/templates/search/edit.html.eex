@@ -1,4 +1,4 @@
-<h1>Edit <%= @search.name || @search.biz %></h1>
+<h2>Edit <%= @search.name || @search.biz %></h2>
 
 <%= render "form.html", changeset: @changeset, action: search_path(@conn, :update, @search) %>
 

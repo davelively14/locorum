@@ -1,4 +1,4 @@
-<h2><strong>Saved Search: </strong></h2>
+<h2>Saved Search:</h2>
 <h3><%= @search.name || @search.biz %></h3>
 
 <div class="container">

@@ -1,4 +1,4 @@
-<h1>New Search</h1>
+<h2>New Search</h2>
 
 <%= render "form.html", changeset: @changeset, action: search_path(@conn, :create) %>
 
