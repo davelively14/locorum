@@ -37,5 +37,6 @@
 </div>
 
 <%= link "Run this Search", to: results_path(@conn, :show, @search.id), class: "btn btn-success" %>
+<%= link "Edit this Search", to: search_path(@conn, :edit, @search.id), class: "btn btn-info" %>
 <%= link "View All Searches", to: search_path(@conn, :index), class: "btn btn-primary" %>
 <%= link "Delete Search", to: search_path(@conn, :delete, @search), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>

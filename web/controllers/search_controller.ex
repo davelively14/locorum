@@ -21,18 +21,38 @@ defmodule Locorum.SearchController do
     end
   end
 
+  def edit(conn, %{"id" => id}) do
+    search = Repo.get(Search, id)
+    changeset = Search.changeset(search)
+    render conn, "edit.html", search: search, changeset: changeset
+  end
+
+  def update(conn, %{"id" => id, "search" => search_params}) do
+    search = Repo.get(Search, id)
+    changeset = Search.changeset(search, search_params)
+
+    case Repo.update(changeset) do
+      {:ok, search} ->
+        conn
+        |> put_flash(:info, "Search updated")
+        |> redirect(to: search_path(conn, :show, search))
+      {:error, changeset} ->
+        render(conn, "edit.html", search: search, changeset: changeset)
+    end
+  end
+
   def show(conn, %{"id" => id}) do
-    search = Repo.get(Locorum.Search, id)
+    search = Repo.get(Search, id)
     render conn, "show.html", search: search
   end
 
   def index(conn, _params) do
-    searches = Repo.all(Locorum.Search)
+    searches = Repo.all(Search)
     render conn, "index.html", searches: searches
   end
 
   def delete(conn, %{"id" => id}) do
-    search = Repo.get(Locorum.Search, id)
+    search = Repo.get(Search, id)
     Repo.delete search
     redirect(conn, to: search_path(conn, :index))
   end

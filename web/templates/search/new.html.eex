@@ -1,42 +1,5 @@
 <h1>New Search</h1>
 
-<%= form_for @changeset, search_path(@conn, :create), fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
+<%= render "form.html", changeset: @changeset, action: search_path(@conn, :create) %>
 
-  <div class="form-group">
-    <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control"  %>
-    <%= error_tag f, :name %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
-    <%= error_tag f, :biz %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :address1, placeholder: "Address", class: "form-control"  %>
-    <%= error_tag f, :address1 %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :address2, placeholder: "Address Continued", class: "form-control"  %>
-    <%= error_tag f, :address2 %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :zip, placeholder: "Zip", class: "form-control"  %>
-    <%= error_tag f, :zip %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :city, placeholder: "City", class: "form-control"  %>
-    <%= error_tag f, :city %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :state, placeholder: "State", class: "form-control"  %>
-    <%= error_tag f, :state %>
-  </div>
-  <div class="form-group">
-    <%= submit "Search", class: "btn btn-primary" %>
-  </div>
-  <%= link "Cancel", to: page_path(@conn, :index), class: "btn btn-primary" %>
-<% end %>
+<%= link "Cancel", to: page_path(@conn, :index), class: "btn btn-danger" %>

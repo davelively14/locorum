@@ -1,0 +1,5 @@
+<h1>Edit <%= @search.name || @search.biz %></h1>
+
+<%= render "form.html", changeset: @changeset, action: search_path(@conn, :update, @search) %>
+
+<%= link "Cancel", to: search_path(@conn, :show, @search), class: "btn btn-danger" %>
