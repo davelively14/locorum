@@ -1,39 +1,22 @@
-<h2>Saved Search:</h2>
-<h3><%= @search.name || @search.biz %></h3>
+<h2><%= @search.name || @search.biz %></h2>
 
 <div class="container">
-  <table class="table">
-    <tr>
-      <th>Category</th>
-      <th>Value</th>
-    </tr>
-    <tr>
-      <td>Name</td>
-      <td><%= @search.biz %></td>
-    </tr>
-    <tr>
-      <td>Address</td>
-      <td><%= @search.address1 %></td>
-    </tr>
+  <dl class="dl-horizontal">
+    <dt>Company Name</dt>
+    <dd><%= @search.biz %></dd>
+    <dt>Address</dt>
     <%= if @search.address2 do %>
-      <tr>
-        <td>Address (continued)</td>
-        <td><%= @search.address2 %></td>
-      </tr>
+      <dd><%= "#{@search.address1}, #{@search.address2}" %></dd>
+    <% else %>
+      <dd><%= @search.address1 %></dd>
     <% end %>
-    <tr>
-      <td>City</td>
-      <td><%= @search.city %></td>
-    </tr>
-    <tr>
-      <td>State</td>
-      <td><%= @search.state %></td>
-    </tr>
-    <tr>
-      <td>Zip</td>
-      <td><%= @search.zip %></td>
-    </tr>
-  </table>
+    <dt>City</dt>
+    <dd><%= @search.city %></dd>
+    <dt>State</dt>
+    <dd><%= @search.state %></dd>
+    <dt>Zip</dt>
+    <dd><%= @search.zip %></dd>
+  </dl>
 </div>
 
 <%= link "Run this Search", to: results_path(@conn, :show, @search.id), class: "btn btn-success" %>
