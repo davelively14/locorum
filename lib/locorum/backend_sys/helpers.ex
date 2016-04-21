@@ -88,7 +88,7 @@ defmodule Locorum.BackendSys.Helpers do
     Map.put(header, :url_search, url)
   end
 
-  defp fetch_json(url) do
+  def fetch_json(url) do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: json}} ->
         json
@@ -107,7 +107,7 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp fetch_html(url) do
+  def fetch_html(url) do
     case HTTPoison.get(url, [], follow_redirect: true) do
       {:ok, %HTTPoison.Response{status_code: 200, body: html}} ->
         html
