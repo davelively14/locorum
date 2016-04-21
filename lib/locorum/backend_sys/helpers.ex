@@ -27,11 +27,7 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   defp rate_result(results, query) do
-    address =
-      case query.address2 do
-        nil -> query.address1
-        _ -> "#{query.address1}, #{query.address2}"
-      end
+    address = single_address(query.address1, query.address2)
 
     for result <- results do
       rating = %{biz: rate_same(result.biz, query.biz), address: rate_same(result.address, address),
@@ -56,6 +52,13 @@ defmodule Locorum.BackendSys.Helpers do
   defp return_lowest([], lowest), do: lowest
   defp return_lowest([head|tail], lowest) when head < lowest, do: return_lowest(tail, head)
   defp return_lowest([_head|tail], lowest), do: return_lowest(tail, lowest)
+
+  defp single_address(address1, address2) do
+    case address2 do
+      nil -> address1
+      _ -> "#{address1}, #{address2}"
+    end
+  end
 
   defp broadcast_results(results, header, socket) do
     if results != [] do

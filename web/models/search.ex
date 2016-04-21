@@ -13,8 +13,8 @@ defmodule Locorum.Search do
     timestamps
   end
 
-  @required_fields ~w(biz zip city state)
-  @optional_fields ~w(name address1 address2)
+  @required_fields ~w(biz zip city state address1)
+  @optional_fields ~w(name address2)
 
   def changeset(model, params \\ :empty) do
     model
