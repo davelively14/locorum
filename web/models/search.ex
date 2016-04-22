@@ -5,7 +5,7 @@ defmodule Locorum.Search do
     field :name, :string
     field :biz, :string
     field :address1, :string
-    field :address2, :string
+    field :address2, :string, virtual: true
     field :city, :string
     field :state, :string
     field :zip, :string
