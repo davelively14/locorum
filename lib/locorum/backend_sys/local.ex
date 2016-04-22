@@ -17,15 +17,12 @@ defmodule Locorum.BackendSys.Local do
   end
 
   def get_url(query) do
-    city =
-      query.city
-      |> Helpers.convert_to_utf("%2520")
-    state = String.downcase(query.state)
+    zip = query.zip
     biz =
       query.biz
       |> Helpers.convert_to_utf("%20")
 
-    "http://www.local.com/business/results/?keyword=#{biz}&location=#{city}%252C%2520#{state}"
+    "http://www.local.com/business/results/?keyword=#{biz}&location=#{zip}"
   end
 
   defp parse_data(body) do
