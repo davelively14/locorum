@@ -16,7 +16,7 @@ defmodule Locorum.BackendSys.Google do
     |> Helpers.send_results(@backend, owner, query)
   end
 
-  def get_url(query) do
+  defp get_url(query) do
     city =
       query.city
       |> Helpers.convert_to_utf("%20")
@@ -30,14 +30,14 @@ defmodule Locorum.BackendSys.Google do
 
   defp get_key, do: Application.get_env(:locorum, :google)[:key]
 
-  def parse_data(body) do
+  defp parse_data(body) do
     result = Poison.decode!(body)
     result["results"]
     |> add_to_results
   end
 
-  def add_to_results([]), do: []
-  def add_to_results([head|tail]) do
+  defp add_to_results([]), do: []
+  defp add_to_results([head|tail]) do
     full =
       head["formatted_address"]
       |> String.split(", ")
