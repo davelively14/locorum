@@ -6,14 +6,17 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, "Name this Search", class: "control-label" %>
     <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control"  %>
     <%= error_tag f, :name %>
   </div>
   <div class="form-group">
+    <%= label f, "Name of Business", class: "control-label" %>
     <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
     <%= error_tag f, :biz %>
   </div>
   <div class="form-group">
+    <%= label f, "Address", class: "control-label" %>
     <%= text_input f, :address1, placeholder: "Address", class: "form-control"  %>
     <%= error_tag f, :address1 %>
   </div>
@@ -21,17 +24,26 @@
     <%= text_input f, :address2, placeholder: "Address Continued", class: "form-control"  %>
     <%= error_tag f, :address2 %>
   </div>
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="form-group">
+        <%= label f, :city, class: "control-label" %>
+        <%= text_input f, :city, placeholder: "City", class: "form-control"  %>
+        <%= error_tag f, :city %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <%= label f, :state, class: "control-label" %>
+        <%= text_input f, :state, placeholder: "State", class: "form-control"  %>
+        <%= error_tag f, :state %>
+      </div>
+    </div>
+  </div>
   <div class="form-group">
+    <%= label f, :zip, class: "control-label" %>
     <%= text_input f, :zip, placeholder: "Zip", class: "form-control"  %>
     <%= error_tag f, :zip %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :city, placeholder: "City", class: "form-control"  %>
-    <%= error_tag f, :city %>
-  </div>
-  <div class="form-group">
-    <%= text_input f, :state, placeholder: "State", class: "form-control"  %>
-    <%= error_tag f, :state %>
   </div>
   <div class="form-group">
     <%= submit "Save", class: "btn btn-primary" %>

@@ -20,7 +20,6 @@ defmodule Locorum.Search do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:address1, min: 4, max: 50)
-    |> validate_length(:address2, min: 4, max: 50)
     |> validate_length(:state, min: 2, max: 2)
     |> validate_length(:zip, min: 5, max: 5)
   end
