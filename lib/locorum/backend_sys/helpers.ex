@@ -16,6 +16,7 @@ defmodule Locorum.BackendSys.Helpers do
 
   def send_results(results, header, socket, query) do
     rate_result(results, query)
+    |> sort_results
     |> broadcast_results(header, socket)
   end
 
@@ -47,6 +48,8 @@ defmodule Locorum.BackendSys.Helpers do
     string2 = String.upcase(string2)
     String.jaro_distance(string1, string2)
   end
+
+  defp sort_results(map), do: Enum.sort(map, &(&1.rating > &2.rating))
 
   defp return_lowest(map) do
     Map.values(map)
