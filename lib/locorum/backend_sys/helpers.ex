@@ -26,6 +26,9 @@ defmodule Locorum.BackendSys.Helpers do
     |> String.replace(~r/[^\w-]+/, output)
   end
 
+  def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
+  def pop_first(remaining, _current), do: remaining
+
   defp rate_result(results, query) do
     address = single_address(query.address1, query.address2)
 
