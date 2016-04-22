@@ -8,11 +8,7 @@
   <div class="col-sm-4">
     <address>
       <strong><%= link @search.biz, to: search_path(@conn, :show, @search.id) %></strong><br>
-      <%= if @search.address2 do %>
-        <%= @search.address1 || "(street address)" %>, <%= @search.address2 %>
-      <% else %>
-        <%= @search.address1 || "(street address)"%>
-      <% end %>
+      <%= @search.address1 %>
       <br>
       <%= @search.city || "(city)" %>, <%= @search.state || "(state)" %> <%= @search.zip %>
       <br>

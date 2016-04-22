@@ -5,11 +5,7 @@
     <dt>Company Name</dt>
     <dd><%= @search.biz %></dd>
     <dt>Address</dt>
-    <%= if @search.address2 do %>
-      <dd><%= "#{@search.address1}, #{@search.address2}" %></dd>
-    <% else %>
-      <dd><%= @search.address1 %></dd>
-    <% end %>
+    <dd><%= @search.address1 %></dd>
     <dt>City</dt>
     <dd><%= @search.city %></dd>
     <dt>State</dt>
