@@ -9,7 +9,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## To do list
 
 - Find way around White Pages issue. Change up headers?
-- Add more backends. Priorities: Bing, Facebook, yp.com, Yelp, MapQuest, Foursquare, Superpages
+- Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
 - Add some sort of loading notification for each backend to the frontend.
 - Enhance side menu summary for backends
   - Use an icon to indicate overall accuracy for each backend (st: develop a rating system)
@@ -22,7 +22,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Recently completed
 - Add ranking system to results
-- Add backends: Google, Citysearch
+- Add backends: Google, Citysearch, yp.com
 - Enhance side menu summary for backends
   - Don't hyperlink until backend is loaded
   - Link to respective backends using #backend
