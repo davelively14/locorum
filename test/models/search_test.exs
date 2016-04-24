@@ -1,4 +1,4 @@
-defmodule Locorum.SearchControllerTest do
+defmodule Locorum.SearchTest do
   use Locorum.ConnCase
   alias Locorum.Search
 

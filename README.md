@@ -19,6 +19,9 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Clean up passed info/supervision trees
 - Add user authentication
 - Determine how to cleanup processes if needed. Can they self-kill?
+- Add tests for:
+  - Model: user (requires: user authentication)
+  - Controller: results_controller 
 
 ## Recently completed
 - Add ranking system to results
