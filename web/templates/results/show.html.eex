@@ -13,7 +13,8 @@
       <%= @search.city || "(city)" %>, <%= @search.state || "(state)" %> <%= @search.zip %>
       <br>
       <br>
-      <%= link "New Search", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
+      <%= link "Modify Search", to: search_path(@conn, :edit, @search.id), class: "btn btn-info btn-xs" %>
+      <%= link "View All Searches", to: search_path(@conn, :index), class: "btn btn-primary btn-xs" %>
     </address>
     <div class="panel panel-success">
       <div class="panel-heading">

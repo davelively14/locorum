@@ -6,7 +6,7 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, "Name this Search", class: "control-label" %>
+    <%= label f, "Name of Search", class: "control-label" %>
     <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control"  %>
     <%= error_tag f, :name %>
   </div>
@@ -16,12 +16,12 @@
     <%= error_tag f, :biz %>
   </div>
   <div class="form-group">
-    <%= label f, "Address", class: "control-label" %>
+    <%= label f, "Street Address", class: "control-label" %>
     <%= text_input f, :address1, placeholder: "Address", class: "form-control"  %>
     <%= error_tag f, :address1 %>
   </div>
   <div class="form-group">
-    <%= text_input f, :address2, placeholder: "Address Continued", class: "form-control"  %>
+    <%= text_input f, :address2, placeholder: "Street Address Continued (optional)", class: "form-control"  %>
     <%= error_tag f, :address2 %>
   </div>
   <div class="row">
