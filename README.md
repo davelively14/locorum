@@ -1,6 +1,6 @@
 # Locorum
 
-Current version: unversioned
+Current version: 0.1
 
 Check local listings and assess accuracy.
 
@@ -21,7 +21,9 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Determine how to cleanup processes if needed. Can they self-kill?
 - Add tests for:
   - Model: user (requires: user authentication)
-  - Controller: results_controller 
+  - Controller: results_controller
+  - Channel: search_channel, backend_sys
+- Deploy V0.1
 
 ## Recently completed
 - Add ranking system to results
