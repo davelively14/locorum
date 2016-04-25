@@ -27,6 +27,12 @@ config :locorum, Locorum.Repo,
   pool_size: 20,
   ssl: true
 
+config :locorum, :bing, key: System.get_env("BING_KEY")
+config :locorum, :google, key: System.get_env("GOOGLE_KEY")
+config :locorum, :citygrid, key: System.get_env("CITYGRID_KEY")
+config :locorum, :yp, key: System.get_env("YP_KEY")
+
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
