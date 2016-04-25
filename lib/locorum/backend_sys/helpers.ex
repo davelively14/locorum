@@ -23,8 +23,8 @@ defmodule Locorum.BackendSys.Helpers do
   # TODO allow for apostrophe to not be replaced
   def convert_to_utf(text, output) do
     String.downcase(text)
-    |> String.replace(~r/'/, "")
-    |> String.replace(~r/[^\w-]+/, output)
+    # |> String.replace(~r/'/, "")
+    |> String.replace(~r/[^\w-']+/, output)
   end
 
   def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
