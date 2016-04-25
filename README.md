@@ -1,12 +1,22 @@
 # Locorum
 
-Current version: 0.1
+Current version: 0.2b
 
 Check local listings and assess accuracy.
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## To do list
+## Immediate to do list
+- Change Search
+  - Add phone number
+- Change Results struct
+  - Add change link to each result
+  - Add phone number
+- Change results/show
+  - Link each result
+  - Add phone number
+
+## Long term to do list
 
 - Find way around White Pages issue. Change up headers?
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -23,7 +33,6 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   - Model: user (requires: user authentication)
   - Controller: results_controller
   - Channel: search_channel, backend_sys
-- Deploy V0.1
 
 ## Recently completed
 - Add ranking system to results
@@ -31,6 +40,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Enhance side menu summary for backends
   - Don't hyperlink until backend is loaded
   - Link to respective backends using #backend
+- Deployed v0.1
 
 ## Deployment notes to myself
 
