@@ -15,6 +15,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Change results/show
   - Link each result
   - Add phone number
+- Add CSV input (and/or excel?)
 
 ## Long term to do list
 
@@ -33,6 +34,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
   - Model: user (requires: user authentication)
   - Controller: results_controller
   - Channel: search_channel, backend_sys
+- Find a new name
 
 ## Recently completed
 - Add ranking system to results
