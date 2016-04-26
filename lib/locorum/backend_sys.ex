@@ -13,6 +13,7 @@ defmodule Locorum.BackendSys do
               rating: nil, url_result: nil, phone: nil
   end
 
+  # TODO deprecate url_site once %Result{url_result} is online
   defmodule Header do
     defstruct backend: nil, backend_str: nil, url_search: nil, url_site: nil
   end
