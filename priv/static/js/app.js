@@ -1305,9 +1305,9 @@ var Results = {
       zip = "";
     }
     if (url) {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + (phone + "<br>") + "\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i><br>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + phone + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i><br>\n      <br>\n      ";
     } else {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + (phone + "<br>") + "\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + phone + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
     }
     backendContainer.appendChild(template);
   },

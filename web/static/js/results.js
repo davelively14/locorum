@@ -84,7 +84,7 @@ let Results = {
       <b>${biz}</b><br>
       ${address}<br>
       ${city}, ${state} ${zip}<br>
-      ${phone + "<br>"}
+      ${phone}<br>
       <i>Rating: </i><b>${rating}</b><br>
       <i><a href="${url}" target="_blank">Edit entry</a></i><br>
       <br>
@@ -94,7 +94,7 @@ let Results = {
       <b>${biz}</b><br>
       ${address}<br>
       ${city}, ${state} ${zip}<br>
-      ${phone + "<br>"}
+      ${phone}<br>
       <i>Rating: </i><b>${rating}</b><br>
       <br>
       `
