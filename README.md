@@ -10,8 +10,8 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## Immediate to do list
 - Change results
-  - url_result for backends: Google, WhitePages
-  - Phone number for backends: Google, WhitePages
+  - url_result for backends: Google
+  - Phone number for backends: Google
 - Add CSV input (and/or excel?)
 - Ratings based on stripped, 10 char strings
 
@@ -45,5 +45,5 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Change search/:show
   - Added phone number, with phonify
 - Change results
-  - url_result for backends: yp.com, Yahoo, CityGrid, Local
-  - Phone number for backends: yp.com, Yahoo, CityGrid, Local
+  - url_result for backends: yp.com, Yahoo, CityGrid, Local, WhitePages
+  - Phone number for backends: yp.com, Yahoo, CityGrid, Local, WhitePages

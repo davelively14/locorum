@@ -22,8 +22,10 @@ defmodule Locorum.BackendSys.WhitePages do
     city = parse_item(Floki.find(body, "span[itemprop=addressLocality]"))
     state = parse_item(Floki.find(body, "span[itemprop=addressRegion]"))
     zip = parse_item(Floki.find(body, "span[itemprop=postalCode]"))
+    phone = parse_item(Floki.find(body, "span[itemprop=telephone]"))
+    url = parse_url(Floki.find(body, "span[itemprop=shortId]"))
 
-    add_to_result(List.zip([name, address, city, state, zip]))
+    add_to_result(List.zip([name, address, city, state, zip, phone, url]))
   end
 
   defp get_url(query) do
@@ -41,8 +43,11 @@ defmodule Locorum.BackendSys.WhitePages do
   defp parse_item([]), do: []
   defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
 
+  defp parse_url([]), do: []
+  defp parse_url([{_, _,[item]} | tail]), do: ["http://www.whitepages.com/business/#{item}" | parse_url(tail)]
+
   defp add_to_result([]), do: []
-  defp add_to_result([{name, address, city, state, zip} | tail]) do
-    [%Result{biz: name, address: address, city: city, state: state, zip: zip } | add_to_result(tail)]
+  defp add_to_result([{name, address, city, state, zip, phone, url} | tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: url } | add_to_result(tail)]
   end
 end
