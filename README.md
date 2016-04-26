@@ -1,17 +1,12 @@
 # Locorum
 
-Current version: 0.2a
+Current version: 0.2
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
-
-## v0.2 to do list
-- Update rating algorithm
-  - Rating based on stripped, 10 char strings for phone numbers
-  - Zip code mismatch should return a 50 rating (compare directly, not with jaro_distance)
 
 ## v0.3 to do list
 - Add CSV input and output
@@ -39,7 +34,7 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Find a new name
 
 ## Recently completed
-- Deployed v0.1
+- Deployed v0.2
 - Change Search
   - Added :phone
 - Changed Results struct
@@ -51,3 +46,6 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Change results
   - url_result for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google
   - Phone number for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google
+- Update rating algorithm
+  - Rating based on stripped, 10 char strings for phone numbers
+  - Zip code mismatch should return a 0 rating (compare directly, not with jaro_distance)

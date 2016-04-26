@@ -35,9 +35,12 @@ defmodule Locorum.BackendSys.Helpers do
     for result <- results do
       rating = %{biz: rate_same(result.biz, query.biz), address: rate_same(result.address, address),
                 city: rate_same(result.city, query.city), state: rate_same(result.state, query.state),
-                zip: rate_same(result.zip || query.zip, query.zip)}
+                phone: rate_same(phonify(result.phone), phonify(query.phone))}
 
       rating = return_lowest(rating)
+      if result.zip && (result.zip != query.zip) do
+        rating = 0
+      end
       Map.put(result, :rating, round(rating * 100))
     end
   end
@@ -63,6 +66,11 @@ defmodule Locorum.BackendSys.Helpers do
       nil -> address1
       _ -> "#{address1}, #{address2}"
     end
+  end
+
+  defp phonify(string) do
+    string = String.replace(string, ~r/[^\w]/, "")
+    String.slice(string, (String.length(string)-10)..(String.length(string)-1))
   end
 
   defp broadcast_results(results, header, socket) do
