@@ -7,8 +7,6 @@ Check local listings and assess accuracy.
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Immediate to do list
-- Change Search
-  - Add phone number
 - Change Results struct
   - Add change link to each result
   - Add phone number
@@ -37,12 +35,9 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Find a new name
 
 ## Recently completed
-- Add ranking system to results
-- Add backends: Google, Citysearch, yp.com
-- Enhance side menu summary for backends
-  - Don't hyperlink until backend is loaded
-  - Link to respective backends using #backend
 - Deployed v0.1
+- Change Search
+  - Add phone number
 
 ## Deployment notes to myself
 
