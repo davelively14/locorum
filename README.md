@@ -7,9 +7,8 @@ Check local listings and assess accuracy.
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 ## Immediate to do list
-- Change Results struct
-  - Add change link to each result
-  - Add phone number
+- Populate phone for each result
+- Populate url_result for each result
 - Change results/show
   - Link each result
   - Add phone number
@@ -37,4 +36,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 ## Recently completed
 - Deployed v0.1
 - Change Search
-  - Add phone number
+  - Added :phone
+- Changed Results struct
+  - Added change link
+  - Added phone number

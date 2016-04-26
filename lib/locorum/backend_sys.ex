@@ -9,7 +9,8 @@ defmodule Locorum.BackendSys do
              Locorum.BackendSys.Yp, Locorum.BackendSys.WhitePages]
 
   defmodule Result do
-    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil, rating: nil
+    defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
+              rating: nil, url_result: nil, phone: nil
   end
 
   defmodule Header do
