@@ -34,6 +34,7 @@ defmodule Locorum.BackendSys.CityGrid do
   defp add_to_result([]), do: []
   defp add_to_result([head|tail]) do
     [%Result{biz: head["name"], address: head["address"]["street"], city: head["address"]["city"],
-             state: head["address"]["state"], zip: head["address"]["postal_code"]} | add_to_result(tail)]
+             state: head["address"]["state"], zip: head["address"]["postal_code"],
+             phone: head["phone_number"], url: head["profile"]} | add_to_result(tail)]
   end
 end
