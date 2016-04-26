@@ -2,9 +2,11 @@
 
 Current version: 0.2b
 
-Check local listings and assess accuracy.
+Check local listings, assess accuracy, fix issues.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## Immediate to do list
 - Populate phone for each result

@@ -4,9 +4,12 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO: replace this with a Repo call to backends persisted in db?
-  @backends [Locorum.BackendSys.Google, Locorum.BackendSys.Yahoo,
-             Locorum.BackendSys.CityGrid, Locorum.BackendSys.Local,
-             Locorum.BackendSys.Yp, Locorum.BackendSys.WhitePages]
+  @backends [Locorum.BackendSys.Google,
+             Locorum.BackendSys.Yahoo,
+             Locorum.BackendSys.CityGrid,
+             Locorum.BackendSys.Local,
+             Locorum.BackendSys.Yp,
+             Locorum.BackendSys.WhitePages]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
