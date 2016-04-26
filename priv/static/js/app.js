@@ -1298,15 +1298,16 @@ var Results = {
     var zip = _ref2.zip;
     var rating = _ref2.rating;
     var url = _ref2.url;
+    var phone = _ref2.phone;
 
     var template = document.createElement("div");
     if (zip == null) {
       zip = "";
     }
     if (url) {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + (phone + "<br>") + "\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i>\n      <br>\n      ";
     } else {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + (phone + "<br>") + "\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
     }
     backendContainer.appendChild(template);
   },

@@ -35,6 +35,7 @@ defmodule Locorum.BackendSys.Yp do
   defp add_to_results([]), do: []
   defp add_to_results([head|tail]) do
     [%Result{biz: head["businessName"], address: head["street"], zip: Integer.to_string(head["zip"]),
-             state: head["state"], city: head["city"], url_result: head["businessNameURL"]} | add_to_results(tail)]
+             state: head["state"], city: head["city"], url_result: head["businessNameURL"],
+             phone: head["phone"]} | add_to_results(tail)]
   end
 end
