@@ -1297,12 +1297,17 @@ var Results = {
     var state = _ref2.state;
     var zip = _ref2.zip;
     var rating = _ref2.rating;
+    var url = _ref2.url;
 
     var template = document.createElement("div");
     if (zip == null) {
       zip = "";
     }
-    template.innerHTML = "\n    <b>" + biz + "</b><br>\n    " + address + "<br>\n    " + city + ", " + state + " " + zip + "<br>\n    <i>Rating: </i><b>" + rating + "</b><br>\n    <br>\n    ";
+    if (url) {
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i>\n      <br>\n      ";
+    } else {
+      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
+    }
     backendContainer.appendChild(template);
   },
   renderNoResult: function renderNoResult(backendContainer) {

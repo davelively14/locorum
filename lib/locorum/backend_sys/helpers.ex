@@ -75,7 +75,8 @@ defmodule Locorum.BackendSys.Helpers do
           city: result.city,
           state: result.state,
           zip: result.zip,
-          rating: result.rating
+          rating: result.rating,
+          url: result.url_result || nil
         }
       end
     else

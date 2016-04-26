@@ -74,18 +74,29 @@ let Results = {
     backendMenuContainer.appendChild(new_result)
   },
 
-  renderResult(backendContainer, {backend, biz, address, city, state, zip, rating}){
+  renderResult(backendContainer, {backend, biz, address, city, state, zip, rating, url}){
     let template = document.createElement("div")
     if (zip == null) {
       zip = ""
     }
-    template.innerHTML = `
-    <b>${biz}</b><br>
-    ${address}<br>
-    ${city}, ${state} ${zip}<br>
-    <i>Rating: </i><b>${rating}</b><br>
-    <br>
-    `
+    if (url) {
+      template.innerHTML = `
+      <b>${biz}</b><br>
+      ${address}<br>
+      ${city}, ${state} ${zip}<br>
+      <i>Rating: </i><b>${rating}</b><br>
+      <i><a href="${url}" target="_blank">Edit entry</a></i>
+      <br>
+      `
+    } else {
+      template.innerHTML = `
+      <b>${biz}</b><br>
+      ${address}<br>
+      ${city}, ${state} ${zip}<br>
+      <i>Rating: </i><b>${rating}</b><br>
+      <br>
+      `
+    }
     backendContainer.appendChild(template)
   },
 
