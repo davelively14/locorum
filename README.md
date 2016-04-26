@@ -9,9 +9,6 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.2 to do list
-- Change results
-  - url_result for backends: Google
-  - Phone number for backends: Google
 - Update rating algorithm
   - Rating based on stripped, 10 char strings for phone numbers
   - Zip code mismatch should return a 50 rating (compare directly, not with jaro_distance)
@@ -52,5 +49,5 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Change search/:show
   - Added phone number, with phonify
 - Change results
-  - url_result for backends: yp.com, Yahoo, CityGrid, Local, WhitePages
-  - Phone number for backends: yp.com, Yahoo, CityGrid, Local, WhitePages
+  - url_result for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google
+  - Phone number for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google

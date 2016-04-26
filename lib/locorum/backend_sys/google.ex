@@ -73,7 +73,7 @@ defmodule Locorum.BackendSys.Google do
     result = Enum.filter(addresses, fn(x) -> Enum.any?(x["types"], fn(y) -> y == string end) end)
     case result do
       [] -> nil
-      [head|_] -> head["long_name"]
+      [head|_] -> head["short_name"]
       _ -> "error in get_item"
     end
   end
