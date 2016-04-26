@@ -69,6 +69,7 @@ defmodule Locorum.SearchController do
     redirect(conn, to: search_path(conn, :index))
   end
 
+  # TODO DRY this
   defp phonify(string) do
     case String.length(string) do
       11 ->

@@ -9,12 +9,11 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## Immediate to do list
-- Populate phone for each result
-- Populate url_result for each result
 - Change results
-  - url_result for backends: Google, Local, WhitePages
-  - Phone number for backends: Google, Local, WhitePages
+  - url_result for backends: Google, WhitePages
+  - Phone number for backends: Google, WhitePages
 - Add CSV input (and/or excel?)
+- Ratings based on stripped, 10 char strings
 
 ## Long term to do list
 
@@ -42,8 +41,9 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Changed Results struct
   - Added change link
   - Added phone number
+- Configured BackendSys.Helpers to work with phone and url
 - Change search/:show
   - Added phone number, with phonify
 - Change results
-  - url_result for backends: yp.com, Yahoo, CityGrid
-  - Phone number for backends: yp.com, Yahoo, CityGrid
+  - url_result for backends: yp.com, Yahoo, CityGrid, Local
+  - Phone number for backends: yp.com, Yahoo, CityGrid, Local

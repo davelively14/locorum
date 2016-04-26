@@ -2,6 +2,7 @@ defmodule Locorum.BackendSys.Local do
   alias Locorum.BackendSys.Result
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
+  require Logger
 
   @backend %Header{backend: "local", backend_str: "Local", url_site: "http://www.local.com"}
 
@@ -31,8 +32,12 @@ defmodule Locorum.BackendSys.Local do
       parse_item(Floki.find(body, "span.locality"))
       |> extract_city_state
     biz = extract_title(Floki.find(body, "h2.title"))
+    phone = parse_item(Floki.find(body, "span.phoneNumber"))
+    url =
+      Floki.attribute(body, "a.orgClick", "href")
+      |> append_url
 
-    add_to_result(List.zip([biz, address, city, state]))
+    add_to_result(List.zip([biz, address, city, state, phone, url]))
   end
 
   defp parse_item([]), do: []
@@ -54,7 +59,10 @@ defmodule Locorum.BackendSys.Local do
   defp join_string_elements([], acc), do: String.strip(acc)
 
   defp add_to_result([]), do: []
-  defp add_to_result([{name, address, city, state} | tail]) do
-    [%Result{biz: name, address: address, city: city, state: state } | add_to_result(tail)]
+  defp add_to_result([{name, address, city, state, phone, url} | tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, phone: phone, url: url } | add_to_result(tail)]
   end
+
+  defp append_url([]), do: []
+  defp append_url([head|tail]), do: ["http://www.local.com#{head}" | append_url(tail)]
 end
