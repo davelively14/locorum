@@ -3,7 +3,7 @@ defmodule Locorum.BackendSys.WhitePages do
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
 
-  @backend %Header{backend: "white_pages", backend_str: "White Pages", url_site: "http://www.local.com"}
+  @backend %Header{backend: "white_pages", backend_str: "White Pages", url_site: "http://www.whitepages.com/"}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
