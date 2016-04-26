@@ -16,7 +16,7 @@ defmodule Locorum.BackendSys.Google do
     |> Helpers.send_results(@backend, owner, query)
   end
 
-  defp get_url(query) do
+  def get_url(query) do
     city =
       query.city
       |> Helpers.convert_to_utf("%20")
@@ -30,24 +30,51 @@ defmodule Locorum.BackendSys.Google do
 
   defp get_key, do: Application.get_env(:locorum, :google)[:key]
 
-  defp parse_data(body) do
+  def parse_data(body) do
     result = Poison.decode!(body)
     result["results"]
+    |> get_place_results
     |> add_to_results
   end
 
+  defp get_place_results([]), do: []
+  defp get_place_results([head|tail]) do
+    result =
+      get_details_url(head["place_id"])
+      |> Helpers.fetch_json
+      |> Poison.decode!
+    [result|get_place_results(tail)]
+  end
+
+  def get_details_url(place_id), do: "https://maps.googleapis.com/maps/api/place/details/json?placeid=#{place_id}&key=#{get_key}"
+
   defp add_to_results([]), do: []
   defp add_to_results([head|tail]) do
-    full =
-      head["formatted_address"]
-      |> String.split(", ")
-    address = Enum.at(full, 0)
-    city = Enum.at(full, 1)
-    state_zip =
-      Enum.at(full, 2)
-      |> String.split(" ")
-    state = Enum.at(state_zip, 0)
-    zip = Enum.at(state_zip, 1)
-    [%Result{biz: head["name"], address: address, city: city, state: state, zip: zip} | add_to_results(tail)]
+    url = head["result"]["url"]
+    biz = head["result"]["name"]
+    phone = head["result"]["formatted_phone_number"]
+    street_number = get_item(head, "street_number")
+    route = get_item(head, "route")
+    address2 = get_item(head, "subpremise")
+    address =
+      case address2 do
+        nil -> "#{street_number} #{route}"
+        _ -> "#{street_number} #{route} #{address2}"
+      end
+    city = get_item(head, "locality")
+    state = get_item(head, "administrative_area_level_1")
+    zip = get_item(head, "postal_code")
+
+    [%Result{biz: biz, address: address, city: city, state: state, zip: zip, url: url, phone: phone} | add_to_results(tail)]
+  end
+
+  def get_item(head, string) do
+    addresses = head["result"]["address_components"]
+    result = Enum.filter(addresses, fn(x) -> Enum.any?(x["types"], fn(y) -> y == string end) end)
+    case result do
+      [] -> nil
+      [head|_] -> head["long_name"]
+      _ -> "error in get_item"
+    end
   end
 end

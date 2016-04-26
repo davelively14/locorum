@@ -1,6 +1,6 @@
 # Locorum
 
-Current version: 0.2b
+Current version: 0.2a
 
 Check local listings, assess accuracy, fix issues.
 
@@ -8,17 +8,25 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
-## Immediate to do list
+## v0.2 to do list
 - Change results
   - url_result for backends: Google
   - Phone number for backends: Google
-- Add CSV input (and/or excel?)
-- Ratings based on stripped, 10 char strings
+- Update rating algorithm
+  - Rating based on stripped, 10 char strings for phone numbers
+  - Zip code mismatch should return a 50 rating (compare directly, not with jaro_distance)
+
+## v0.3 to do list
+- Add CSV input and output
+- Create projects with multiple searches
+- Fix WhitePages nil return
+
+## v0.4 to do list
+- Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
+- Add user authentication
 
 ## Long term to do list
 
-- Find way around White Pages issue. Change up headers?
-- Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
 - Add some sort of loading notification for each backend to the frontend.
 - Enhance side menu summary for backends
   - Use an icon to indicate overall accuracy for each backend (st: develop a rating system)
@@ -26,7 +34,6 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Handle a lot of results (i.e. more than 10)
   - Use limit option to determine. Let the user set the limit
 - Clean up passed info/supervision trees
-- Add user authentication
 - Determine how to cleanup processes if needed. Can they self-kill?
 - Add tests for:
   - Model: user (requires: user authentication)
