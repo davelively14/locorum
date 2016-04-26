@@ -38,7 +38,3 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 - Deployed v0.1
 - Change Search
   - Add phone number
-
-## Deployment notes to myself
-
-Need to check this before deploying: [deployment guides](http://www.phoenixframework.org/docs/deployment).
