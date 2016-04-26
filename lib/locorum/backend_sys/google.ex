@@ -58,7 +58,13 @@ defmodule Locorum.BackendSys.Google do
     address2 = get_item(head, "subpremise")
     address =
       case address2 do
-        nil -> "#{street_number} #{route}"
+        nil ->
+          case street_number && route do
+            nil ->
+              {_, answer} = Enum.fetch(String.split(head["result"]["adr_address"], ","), 0)
+              answer
+            _ -> "#{street_number} #{route}"
+          end
         _ -> "#{street_number} #{route} #{address2}"
       end
     city = get_item(head, "locality")
