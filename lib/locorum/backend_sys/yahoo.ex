@@ -33,9 +33,11 @@ defmodule Locorum.BackendSys.Yahoo do
 
   defp add_to_result([]), do: []
   defp add_to_result([head|tail]) do
-    [%Result{biz: head["Title"], address: head["Address"], city: head["City"], state: head["State"]} | add_to_result(tail)]
+    [%Result{biz: head["Title"], address: head["Address"], city: head["City"],
+             state: head["State"], url: head["Url"], phone: head["Phone"]} | add_to_result(tail)]
   end
   defp add_to_result(single_result) do
-    [%Result{biz: single_result["Title"], address: single_result["Address"], city: single_result["City"], state: single_result["State"]}]
+    [%Result{biz: single_result["Title"], address: single_result["Address"], city: single_result["City"],
+             state: single_result["State"], url: single_result["Url"], phone: single_result["Phone"]}]
   end
 end

@@ -86,7 +86,7 @@ let Results = {
       ${city}, ${state} ${zip}<br>
       ${phone + "<br>"}
       <i>Rating: </i><b>${rating}</b><br>
-      <i><a href="${url}" target="_blank">Edit entry</a></i>
+      <i><a href="${url}" target="_blank">Edit entry</a></i><br>
       <br>
       `
     } else {

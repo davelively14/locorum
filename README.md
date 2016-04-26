@@ -12,8 +12,8 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Populate phone for each result
 - Populate url_result for each result
 - Change results
-  - url_result for backends: CityGrid, Google, Local, WhitePages, Yahoo
-  - Phone number for backends: CityGrid, Google, Local, WhitePages, Yahoo
+  - url_result for backends: CityGrid, Google, Local, WhitePages
+  - Phone number for backends: CityGrid, Google, Local, WhitePages
 - Add CSV input (and/or excel?)
 
 ## Long term to do list
@@ -45,5 +45,5 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Change search/:show
   - Added phone number, with phonify
 - Change results
-  - url_result for backends: yp.com
-  - Phone number for backends: yp.com
+  - url_result for backends: yp.com, Yahoo
+  - Phone number for backends: yp.com, Yahoo

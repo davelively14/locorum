@@ -76,7 +76,7 @@ defmodule Locorum.BackendSys.Helpers do
           state: result.state,
           zip: result.zip,
           rating: result.rating,
-          url: result.url_result,
+          url: result.url,
           phone: result.phone
         }
       end
