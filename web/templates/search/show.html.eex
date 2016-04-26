@@ -12,6 +12,8 @@
     <dd><%= @search.state %></dd>
     <dt>Zip</dt>
     <dd><%= @search.zip %></dd>
+    <dt>Phone</dt>
+    <dd><%= @search.phone %></dd>
   </dl>
 </div>
 

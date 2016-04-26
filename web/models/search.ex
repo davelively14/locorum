@@ -9,12 +9,12 @@ defmodule Locorum.Search do
     field :city, :string
     field :state, :string
     field :zip, :string
-    # field :phone, :string
+    field :phone, :string
 
     timestamps
   end
 
-  @required_fields ~w(biz zip city state address1, phone)
+  @required_fields ~w(biz zip city state address1 phone)
   @optional_fields ~w(name address2)
 
   def changeset(model, params \\ :empty) do
