@@ -50,7 +50,6 @@
     <%= text_input f, :phone, placeholder: "Phone number", class: "form-control" %>
     <%= error_tag f, :phone %>
   </div>
-  <div class="form-group">
-    <%= submit "Save", class: "btn btn-primary" %>
-  </div>
+
+  <%= submit "Save", class: "btn btn-primary" %>
 <% end %>

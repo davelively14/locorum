@@ -1,0 +1,20 @@
+<h2>All Users</h2>
+
+<table class="table">
+  <tr class="text-center">
+    <th>Name</th>
+    <th>Username</th>
+    <th></th>
+  </tr>
+  <%= for user <- @users do %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.username %></td>
+      <td>
+        <%= link "View", to: user_path(@conn, :show, user.id), class: "btn btn-primary btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "Create New User", to: user_path(@conn, :new), class: "btn btn-primary" %>

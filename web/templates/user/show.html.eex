@@ -1,0 +1,12 @@
+<h2>Welcome, <%= first_name(@user) %></h2>
+
+<div class="container">
+  <dl class="dl-horizontal">
+    <dt>Name</dt>
+    <dd><%= @user.name %></dd>
+    <dt>Username</dt>
+    <dd><%= @user.username %></dd>
+  </dl>
+</div>
+
+<%= link "View All Users", to: user_path(@conn, :index), class: "btn btn-primary" %>

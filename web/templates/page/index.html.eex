@@ -18,6 +18,7 @@
     <h4>User Controls</h4>
     <ul>
       <li><%= link "Create New User", to: user_path(@conn, :new) %></li>
+      <li><%= link "View All Users", to: user_path(@conn, :index) %></li>
     </ul>
   </div>
 </div>

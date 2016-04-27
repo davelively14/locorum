@@ -18,7 +18,7 @@ defmodule Locorum.Router do
 
     get "/", PageController, :index
     resources "/search", SearchController
-    resources "/user", UserController, only: [:new, :create]
+    resources "/user", UserController, only: [:new, :create, :index, :show]
     get "/results/:id", ResultsController, :show
   end
 

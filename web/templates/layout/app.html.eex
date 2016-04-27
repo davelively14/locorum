@@ -17,6 +17,7 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><%= link "Home", to: page_path(@conn, :index) %></li>
+            <li><%= link "Users", to: user_path(@conn, :index) %></li>
             <li><%= link "Searches", to: search_path(@conn, :index) %></li>
           </ul>
         </nav>
