@@ -10,3 +10,4 @@
 </div>
 
 <%= link "View All Users", to: user_path(@conn, :index), class: "btn btn-primary" %>
+<%= link "Delete User", to: user_path(@conn, :delete, @user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>

@@ -12,6 +12,7 @@
       <td><%= user.username %></td>
       <td>
         <%= link "View", to: user_path(@conn, :show, user.id), class: "btn btn-primary btn-xs" %>
+        <%= link "Delete", to: user_path(@conn, :delete, user.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
   <% end %>

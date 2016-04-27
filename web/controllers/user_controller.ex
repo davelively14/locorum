@@ -31,4 +31,10 @@ defmodule Locorum.UserController do
     user = Repo.get(User, id)
     render conn, "show.html", user: user
   end
+
+  def delete(conn, %{"id" => id}) do
+    search = Repo.get(User, id)
+    Repo.delete search
+    redirect(conn, to: user_path(conn, :index))
+  end
 end
