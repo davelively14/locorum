@@ -2,7 +2,7 @@ defmodule Locorum.SearchTest do
   use Locorum.ConnCase
   alias Locorum.Search
 
-  @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE"}
+  @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121"}
   @invalid_attrs %{zip: "1234"}
 
   test "creates search and redirects to results page", %{conn: conn} do
