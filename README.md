@@ -9,13 +9,15 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.3 to do list
-- Add CSV input and output
-- Create projects with multiple searches
-- Fix WhitePages nil return
+- Create Project structure that can contain multiple searches
+- Create project_channel
+- Integrate with search_channel
+- Use CSV input and output
 
 ## v0.4 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
 - Add user authentication
+- Fix WhitePages nil return
 
 ## Long term to do list
 
