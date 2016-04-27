@@ -15,11 +15,16 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
+          <ol class="breadcrumb text-right">
             <li><%= link "Home", to: page_path(@conn, :index) %></li>
-            <li><%= link "Users", to: user_path(@conn, :index) %></li>
-            <li><%= link "Searches", to: search_path(@conn, :index) %></li>
-          </ul>
+            <%= if @current_user do %>
+              <li><%= link "Users", to: user_path(@conn, :index) %></li>
+              <li><%= link "Searches", to: search_path(@conn, :index) %></li>
+              <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
+            <%= else %>
+              <li><%= link "Login", to: session_path(@conn, :new) %></li>
+            <% end %>
+          </ol>
         </nav>
         <span class="logo"></span>
       </header>

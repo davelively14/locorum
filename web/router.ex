@@ -7,6 +7,7 @@ defmodule Locorum.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Locorum.Auth, repo: Locorum.Repo
   end
 
   pipeline :api do
@@ -19,6 +20,7 @@ defmodule Locorum.Router do
     get "/", PageController, :index
     resources "/search", SearchController
     resources "/user", UserController, only: [:new, :create, :index, :show, :delete]
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
     get "/results/:id", ResultsController, :show
   end
 
