@@ -11,6 +11,7 @@ defmodule Locorum.Search do
     field :zip, :string
     field :phone, :string
     belongs_to :project, Locorum.Project
+    belongs_to :user, Locorum.User
 
     timestamps
   end
