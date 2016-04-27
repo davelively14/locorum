@@ -15,9 +15,9 @@
   </div>
 
   <div class="col-lg-6">
-    <h4>Help</h4>
+    <h4>User Controls</h4>
     <ul>
-      <li>More things</li>
+      <li><%= link "Create New User", to: user_path(@conn, :new) %></li>
     </ul>
   </div>
 </div>
