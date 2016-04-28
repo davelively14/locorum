@@ -34,6 +34,8 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Model: user (requires: user authentication)
   - Controller: results_controller
   - Channel: search_channel, backend_sys
+- Update tests for:
+  - Model: search (needs user to be logged in)
 - Find a new name
 
 ## Recently completed
