@@ -3,15 +3,28 @@ defmodule Locorum.ProjectController do
   alias Locorum.Project
   alias Locorum.Repo
 
-  plug :scrub_params, "project" when action in [:create]
+  plug :scrub_params, "project" when action in [:create, :update]
 
-  def new(conn, _params) do
-    changeset = Project.changeset(%Project{})
+  # Override action function, pass current_user as third paramater to all func
+  def action(conn, _) do
+    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.current_user])
+  end
+
+  def new(conn, _params, user) do
+    changeset =
+      user
+      |> build_assoc(:projects)
+      |> Project.changeset
+
     render conn, "new.html", changeset: changeset
   end
 
-  def create(conn, %{"project" => project_params}) do
-    changeset = Project.changeset(%Project{}, project_params)
+  def create(conn, %{"project" => project_params}, user) do
+    changeset =
+      user
+      |> build_assoc(:projects)
+      |> Project.changeset(project_params)
+
     case Repo.insert(changeset) do
       {:ok, project} ->
         conn
@@ -22,29 +35,31 @@ defmodule Locorum.ProjectController do
     end
   end
 
-  def index(conn, _params) do
-    projects = Repo.all(Project)
+  def index(conn, _params, _user) do
+    projects =
+      Repo.all(Project)
+      |> Repo.preload(:user)
     render conn, "index.html", projects: projects
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id}, _user) do
     project = Repo.get(Project, id)
     render conn, "show.html", project: project
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => id}, _user) do
     project = Repo.get(Project, id)
     Repo.delete project
     redirect(conn, to: project_path(conn, :index))
   end
 
-  def edit(conn, %{"id" => id}) do
+  def edit(conn, %{"id" => id}, _user) do
     project = Repo.get(Project, id)
     changeset = Project.changeset(project)
     render conn, "edit.html", project: project, changeset: changeset
   end
 
-  def update(conn, %{"id" => id, "project" => project_params}) do
+  def update(conn, %{"id" => id, "project" => project_params}, _user) do
     project = Repo.get(Project, id)
     changeset = Project.changeset(project, project_params)
 

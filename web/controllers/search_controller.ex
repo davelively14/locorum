@@ -3,7 +3,7 @@ defmodule Locorum.SearchController do
   alias Locorum.Search
   require Logger
 
-  plug :scrub_params, "search" when action in [:create]
+  plug :scrub_params, "search" when action in [:create, :update]
 
   def new(conn, _params) do
     changeset = Search.changeset(%Search{})
