@@ -9,8 +9,9 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.3 to do list
-- Create Project
-  - General routes: edit, update
+- Create links to user
+  - Project
+  - Search
 - Create project_channel
 - Integrate with search_channel
 - Use CSV input and output

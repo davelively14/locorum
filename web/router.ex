@@ -26,7 +26,7 @@ defmodule Locorum.Router do
     pipe_through [:browser, :authenticate_user]
 
     resources "/search", SearchController
-    resources "/project", ProjectController, only: [:new, :create, :index, :show, :delete]
+    resources "/project", ProjectController
     get "/results/:id", ResultsController, :show
   end
 
