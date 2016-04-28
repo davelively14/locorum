@@ -18,9 +18,15 @@ defmodule Locorum.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/search", SearchController
     resources "/user", UserController, only: [:new, :create, :index, :show, :delete]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+  end
+
+  scope "/manage", Locorum do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/search", SearchController
+    resources "/project", ProjectController, only: [:new, :create, :index, :show, :delete]
     get "/results/:id", ResultsController, :show
   end
 

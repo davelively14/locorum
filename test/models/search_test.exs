@@ -2,6 +2,7 @@ defmodule Locorum.SearchTest do
   use Locorum.ConnCase
   alias Locorum.Search
 
+  # TODO login before testing all of these
   @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121"}
   @invalid_attrs %{zip: "1234"}
 

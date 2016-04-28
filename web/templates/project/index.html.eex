@@ -1,0 +1,19 @@
+<h2>All Projects</h2>
+
+<table class="table">
+  <tr class="text-center">
+    <th>Name</th>
+    <th></th>
+  </tr>
+  <%= for project <- @projects do %>
+    <tr>
+      <td><%= project.name %></td>
+      <td>
+        <%= link "View", to: project_path(@conn, :show, project.id), class: "btn btn-primary btn-xs" %>
+        <%= link "Delete", to: project_path(@conn, :delete, project.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "Create New Project", to: project_path(@conn, :new), class: "btn btn-primary" %>

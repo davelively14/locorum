@@ -36,6 +36,7 @@ defmodule Locorum.Web do
 
       import Locorum.Router.Helpers
       import Locorum.Gettext
+      import Locorum.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -58,6 +59,7 @@ defmodule Locorum.Web do
   def router do
     quote do
       use Phoenix.Router
+      import Locorum.Auth, only: [authenticate_user: 2]
     end
   end
 

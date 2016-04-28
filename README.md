@@ -9,8 +9,8 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.3 to do list
-- Add user authentication
-- Create Project structure that can contain multiple searches
+- Create Project
+  - General routes: edit, update
 - Create project_channel
 - Integrate with search_channel
 - Use CSV input and output
@@ -37,17 +37,6 @@ For deployed v0.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## Recently completed
 - Deployed v0.2
-- Change Search
-  - Added :phone
-- Changed Results struct
-  - Added change link
-  - Added phone number
-- Configured BackendSys.Helpers to work with phone and url
-- Change search/:show
-  - Added phone number, with phonify
-- Change results
-  - url_result for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google
-  - Phone number for backends: yp.com, Yahoo, CityGrid, Local, WhitePages, Google
-- Update rating algorithm
-  - Rating based on stripped, 10 char strings for phone numbers
-  - Zip code mismatch should return a 0 rating (compare directly, not with jaro_distance)
+- Create Project
+  - General routes: new, update, index, show, delete
+- Added user authentication
