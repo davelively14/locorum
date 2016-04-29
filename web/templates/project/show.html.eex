@@ -1,9 +1,38 @@
-<h2><%= @project.name %></h2>
+<h2>View Project</h2>
+<br>
+<div class="container">
+  <h3>
+    <%= @project.name %>
+    <small class="pull-right">owned by <%= link get_user(@project.user_id).username, to: user_path(@conn, :show, @project.user_id) %></small>
+  </h3>
+  <table class="table">
+    <tr class="text-center">
+      <th>Search Name</th>
+      <th>Business Name</th>
+      <th>Zip</th>
+      <th>Location</th>
+      <th class="text-center">Options</th>
+    </tr>
+    <%= for search <- @searches || [] do %>
+      <tr>
+        <td><%= search.name || "(none)" %></td>
+        <td><%= search.biz %></td>
+        <td><%= search.zip %></td>
+        <td><%= "#{search.city}, #{search.state}" %></td>
+        <td class="text-center">
+          <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
+          <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
+          <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
+          <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <h3>+ <small>Add Search</small></h5>
+  <br>
+</div>
 
-<p>
-  Add searches here...
-</p>
-
-<%= link "View All Projects", to: project_path(@conn, :index), class: "btn btn-primary" %>
-<%= link "Edit Project", to: project_path(@conn, :edit, @project), class: "btn btn-info" %>
-<%= link "Delete Project", to: project_path(@conn, :delete, @project), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>
+  <%= link "View All Projects", to: project_path(@conn, :index), class: "btn btn-primary" %>
+  <%= link "Edit Project", to: project_path(@conn, :edit, @project), class: "btn btn-info" %>
+  <%= link "Delete Project", to: project_path(@conn, :delete, @project), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>

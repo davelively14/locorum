@@ -1,6 +1,7 @@
 defmodule Locorum.ProjectController do
   use Locorum.Web, :controller
   alias Locorum.Project
+  alias Locorum.Search
   alias Locorum.Repo
 
   plug :scrub_params, "project" when action in [:create, :update]
@@ -44,7 +45,8 @@ defmodule Locorum.ProjectController do
 
   def show(conn, %{"id" => id}, _user) do
     project = Repo.get(Project, id)
-    render conn, "show.html", project: project
+    searches = Repo.get_by(Search, project_id: id)
+    render conn, "show.html", project: project, searches: searches
   end
 
   def delete(conn, %{"id" => id}, _user) do
