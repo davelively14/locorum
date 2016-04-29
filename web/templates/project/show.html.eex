@@ -5,7 +5,6 @@
     <div class="panel-heading"><h3><%= @project.name %><small class="pull-right">owned by <%= link get_user(@project.user_id).username, to: user_path(@conn, :show, @project.user_id) %></small></h3></div>
     <table class="table">
       <tr class="text-center">
-        <th>Search Name</th>
         <th>Business Name</th>
         <th>Zip</th>
         <th>Location</th>
@@ -13,7 +12,6 @@
       </tr>
       <%= for search <- @searches || [] do %>
       <tr>
-        <td><%= search.name || "(none)" %></td>
         <td><%= search.biz %></td>
         <td><%= search.zip %></td>
         <td><%= "#{search.city}, #{search.state}" %></td>
@@ -26,11 +24,9 @@
       </tr>
       <% end %>
     </table>
+    <div class="panel-footer"> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"> + Add Search </button> </div>
   </div>
   <br>
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
-    + Add Search
-  </button>
   <br>
 </div>
 
@@ -51,11 +47,6 @@
           <% end %>
           <%= text_input f, :project_id, type: "hidden" %>
           <%= text_input f, :user_id, type: "hidden" %>
-          <div class="form-group">
-            <%= label f, "Name of Search", class: "control-label" %>
-            <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control", autofocus: true  %>
-            <%= error_tag f, :name %>
-          </div>
           <div class="form-group">
             <%= label f, "Name of Business", class: "control-label" %>
             <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
@@ -97,12 +88,11 @@
             <%= error_tag f, :phone %>
           </div>
 
-          <%= submit "Save", class: "btn btn-primary" %>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <%= submit "Save", class: "btn btn-primary" %>
+          </div>
         <% end %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
