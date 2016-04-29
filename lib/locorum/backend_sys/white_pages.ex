@@ -28,7 +28,7 @@ defmodule Locorum.BackendSys.WhitePages do
     add_to_result(List.zip([name, address, city, state, zip, phone, url]))
   end
 
-  defp get_url(query) do
+  def get_url(query) do
     city =
       query.city
       |> Helpers.convert_to_utf("-")
