@@ -4,7 +4,8 @@
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
   <% end %>
-
+  <%= text_input f, :user_id, type: "hidden" %>
+  <%= text_input f, :project_id, type: "hidden" %>
   <div class="form-group">
     <%= label f, "Name of Search", class: "control-label" %>
     <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control", autofocus: true  %>

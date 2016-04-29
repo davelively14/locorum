@@ -6,7 +6,8 @@ defmodule Locorum.SearchController do
   plug :scrub_params, "search" when action in [:create, :update]
 
   def new(conn, _params) do
-    changeset = Search.changeset(%Search{})
+    user = conn.assigns.current_user
+    changeset = Search.changeset(%Search{user_id: user.id})
     render conn, "new.html", changeset: changeset
   end
 
@@ -19,9 +20,16 @@ defmodule Locorum.SearchController do
     changeset = Search.changeset(%Search{}, search_params)
     case Repo.insert(changeset) do
       {:ok, search} ->
-        conn
-        |> put_flash(:info, "Search created")
-        |> redirect(to: results_path(conn, :show, search))
+        case search.project_id do
+          nil ->
+            conn
+            |> put_flash(:info, "Search created")
+            |> redirect(to: results_path(conn, :show, search))
+          id ->
+            conn
+            |> put_flash(:info, "Search created")
+            |> redirect(to: project_path(conn, :show, id))
+        end
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset
     end

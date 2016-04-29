@@ -1,4 +1,4 @@
-<h2>View Project</h2>
+<h2>Project Menu</h2>
 <br>
 <div class="container">
   <h3>
@@ -29,9 +29,89 @@
     <% end %>
   </table>
   <br>
-  <h3>+ <small>Add Search</small></h5>
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
+    + Add Search
+  </button>
   <br>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Search</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for @changeset, search_path(@conn, :create), fn f -> %>
+          <%= if @changeset.action do %>
+            <div class="alert alert-danger">
+              <p>Oops, something went wrong! Please check the errors below.</p>
+            </div>
+          <% end %>
+          <%= text_input f, :project_id, type: "hidden" %>
+          <%= text_input f, :user_id, type: "hidden" %>
+          <div class="form-group">
+            <%= label f, "Name of Search", class: "control-label" %>
+            <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control", autofocus: true  %>
+            <%= error_tag f, :name %>
+          </div>
+          <div class="form-group">
+            <%= label f, "Name of Business", class: "control-label" %>
+            <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
+            <%= error_tag f, :biz %>
+          </div>
+          <div class="form-group">
+            <%= label f, "Street Address", class: "control-label" %>
+            <%= text_input f, :address1, placeholder: "Address", class: "form-control"  %>
+            <%= error_tag f, :address1 %>
+          </div>
+          <div class="form-group">
+            <%= text_input f, :address2, placeholder: "Street Address Continued (optional)", class: "form-control"  %>
+            <%= error_tag f, :address2 %>
+          </div>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="form-group">
+                <%= label f, :city, class: "control-label" %>
+                <%= text_input f, :city, placeholder: "City", class: "form-control"  %>
+                <%= error_tag f, :city %>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-group">
+                <%= label f, :state, class: "control-label" %>
+                <%= text_input f, :state, placeholder: "State", class: "form-control"  %>
+                <%= error_tag f, :state %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <%= label f, :zip, class: "control-label" %>
+            <%= text_input f, :zip, placeholder: "Zip", class: "form-control"  %>
+            <%= error_tag f, :zip %>
+          </div>
+          <div class="form-group">
+            <%= label f, :phone, class: "control-label" %>
+            <%= text_input f, :phone, placeholder: "Phone number", class: "form-control" %>
+            <%= error_tag f, :phone %>
+          </div>
+
+          <%= submit "Save", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
   <%= link "View All Projects", to: project_path(@conn, :index), class: "btn btn-primary" %>
   <%= link "Edit Project", to: project_path(@conn, :edit, @project), class: "btn btn-info" %>

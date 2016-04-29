@@ -43,10 +43,11 @@ defmodule Locorum.ProjectController do
     render conn, "index.html", projects: projects
   end
 
-  def show(conn, %{"id" => id}, _user) do
+  def show(conn, %{"id" => id}, user) do
     project = Repo.get(Project, id)
-    searches = Repo.get_by(Search, project_id: id)
-    render conn, "show.html", project: project, searches: searches
+    searches = Repo.all(project_searches(project))
+    changeset = Search.changeset(%Search{user_id: user.id, project_id: id})
+    render conn, "show.html", project: project, searches: searches, changeset: changeset, user: user
   end
 
   def delete(conn, %{"id" => id}, _user) do
@@ -73,5 +74,9 @@ defmodule Locorum.ProjectController do
       {:error, changeset} ->
         render conn, "edit.html", project: project, changeset: changeset
     end
+  end
+
+  defp project_searches(project) do
+    assoc(project, :searches)
   end
 end
