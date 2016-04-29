@@ -24,19 +24,22 @@
       </tr>
       <% end %>
     </table>
-    <div class="panel-footer"> <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal"> + Add Search </button> </div>
+    <div class="panel-footer">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"> Create New Search </button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadCsvModal"> Upload CSV </button>
+    </div>
   </div>
   <br>
   <br>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="createSearchModal" tabindex="-1" role="dialog" aria-labelledby="createSearchModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Search</h4>
+        <h4 class="modal-title" id="createSearchModalLabel">Create New Search</h4>
       </div>
       <div class="modal-body">
         <%= form_for @changeset, search_path(@conn, :create), fn f -> %>
@@ -49,7 +52,7 @@
           <%= text_input f, :user_id, type: "hidden" %>
           <div class="form-group">
             <%= label f, "Name of Business", class: "control-label" %>
-            <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
+            <%= text_input f, :biz, placeholder: "Name of business", class: "form-control", autofocus: true  %>
             <%= error_tag f, :biz %>
           </div>
           <div class="form-group">
@@ -97,6 +100,25 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="uploadCsvModal" tabindex="-1" role="dialog" aria-labelledby="uploadCsvModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="uploadCsvModalLabel">Upload CSV</h4>
+      </div>
+      <div class="modal-body">
+        <input type="file" class="form-control" placeholder="Filename">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <%= submit "Upload", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <br>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
