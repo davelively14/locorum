@@ -1,19 +1,17 @@
 <h2>Project Menu</h2>
 <br>
 <div class="container">
-  <h3>
-    <%= @project.name %>
-    <small class="pull-right">owned by <%= link get_user(@project.user_id).username, to: user_path(@conn, :show, @project.user_id) %></small>
-  </h3>
-  <table class="table">
-    <tr class="text-center">
-      <th>Search Name</th>
-      <th>Business Name</th>
-      <th>Zip</th>
-      <th>Location</th>
-      <th class="text-center">Options</th>
-    </tr>
-    <%= for search <- @searches || [] do %>
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3><%= @project.name %><small class="pull-right">owned by <%= link get_user(@project.user_id).username, to: user_path(@conn, :show, @project.user_id) %></small></h3></div>
+    <table class="table">
+      <tr class="text-center">
+        <th>Search Name</th>
+        <th>Business Name</th>
+        <th>Zip</th>
+        <th>Location</th>
+        <th class="text-center">Options</th>
+      </tr>
+      <%= for search <- @searches || [] do %>
       <tr>
         <td><%= search.name || "(none)" %></td>
         <td><%= search.biz %></td>
@@ -26,8 +24,9 @@
           <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
         </td>
       </tr>
-    <% end %>
-  </table>
+      <% end %>
+    </table>
+  </div>
   <br>
   <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">
     + Add Search
