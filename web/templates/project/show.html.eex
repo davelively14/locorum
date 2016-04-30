@@ -109,7 +109,7 @@
         <h4 class="modal-title" id="uploadCsvModalLabel">Upload CSV</h4>
       </div>
       <div class="modal-body">
-        <input type="file" class="form-control" placeholder="Filename">
+        <input type="file" class="form-control" placeholder="Filename" name="file">
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <%= submit "Upload", class: "btn btn-primary" %>
