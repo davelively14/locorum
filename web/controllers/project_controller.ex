@@ -46,7 +46,7 @@ defmodule Locorum.ProjectController do
   def show(conn, %{"id" => id}, user, changeset \\ nil) do
     project = Repo.get(Project, id)
     searches = Repo.all(project_searches(project))
-    changeset = Search.changeset(%Search{user_id: user.id, project_id: id})
+    changeset = changeset || Search.changeset(%Search{user_id: user.id, project_id: id})
     render conn, "show.html", project: project, searches: searches, changeset: changeset, user: user
   end
 
