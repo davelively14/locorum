@@ -1,1 +1,15 @@
 <h2>Searchs to Add...</h2>
+<table class="table">
+  <tr class="text-center">
+    <th>Business</th>
+    <th>Location</th>
+    <th>Phone</th>
+  </tr>
+  <%= for search <- @searches || [] do %>
+  <tr>
+    <td><%= search.biz %></td>
+    <td><%= "#{search.address1}, #{search.city}, #{search.state} #{search.zip}" %></td>
+    <td><%= "#{search.phone}" %></td>
+  </tr>
+  <% end %>
+</table>

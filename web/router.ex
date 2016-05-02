@@ -27,7 +27,7 @@ defmodule Locorum.Router do
 
     resources "/search", SearchController
     resources "/project", ProjectController
-    resources "/upload", CSVController, only: [:new]
+    resources "/upload", CSVController, only: [:create]
     get "/results/:id", ResultsController, :show
   end
 
