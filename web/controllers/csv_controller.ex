@@ -44,7 +44,7 @@ defmodule Locorum.CSVController do
     biz = Enum.at(head, 1)
     address1 =
       case Enum.at(head, 3) do
-        "" -> Enum.ad(head, 2)
+        "" -> Enum.at(head, 2)
         _ -> "#{Enum.at(head, 2)}, #{Enum.at(head, 3)}"
       end
     city = Enum.at(head, 4)
