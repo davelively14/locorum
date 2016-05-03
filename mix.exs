@@ -40,7 +40,6 @@ defmodule Locorum.Mixfile do
      {:floki, "~> 0.8"},
      {:poison, "~> 1.5"},
      {:comeonin, "~> 2.4"},
-     {:csv, "~> 1.4.0"},
      {:cowboy, "~> 1.0"}]
   end
 

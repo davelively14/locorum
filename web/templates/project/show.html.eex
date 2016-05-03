@@ -11,17 +11,17 @@
         <th class="text-center">Options</th>
       </tr>
       <%= for search <- @searches || [] do %>
-      <tr>
-        <td><%= search.biz %></td>
-        <td><%= search.zip %></td>
-        <td><%= "#{search.city}, #{search.state}" %></td>
-        <td class="text-center">
-          <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
-          <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
-          <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
-          <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-        </td>
-      </tr>
+        <tr>
+          <td><%= search.biz %></td>
+          <td><%= search.zip %></td>
+          <td><%= "#{search.city}, #{search.state}" %></td>
+          <td class="text-center">
+            <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
+            <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
+            <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
+            <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+          </td>
+        </tr>
       <% end %>
     </table>
     <div class="panel-footer">
@@ -109,7 +109,7 @@
         <h4 class="modal-title" id="uploadCsvModalLabel">Upload CSV</h4>
       </div>
       <div class="modal-body">
-        <%= form_for @changeset, csv_path(@conn, :create), [multipart: true], fn f -> %>
+        <%= form_for @conn, csv_path(@conn, :new), [multipart: true, name: :upload], fn f -> %>
         <%= text_input f, :project_id, type: "hidden", value: @project.id %>
         <%= text_input f, :user_id, type: "hidden", value: @user.id %>
           <div class="form-group">

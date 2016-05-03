@@ -1,7 +1,8 @@
 defmodule Locorum.CSVController do
   use Locorum.Web, :controller
+  alias Locorum.Repo
 
-  def create(conn, %{"search" => %{"csv" => csv, "project_id" => project_id, "user_id" => user_id}}) do
+  def new(conn, %{"upload" => %{"csv" => csv, "project_id" => project_id, "user_id" => user_id}}) do
     searches =
       case File.read(csv.path) do
         {:ok, result} ->
@@ -14,7 +15,13 @@ defmodule Locorum.CSVController do
         _ ->
           {:error, "Invalid file type"}
       end
-    render conn, "index.html", searches: searches
+    project = Repo.get(Locorum.Project, project_id)
+    user = Repo.get(Locorum.User, user_id)
+    render conn, "new.html", searches: searches, project: project, user: user
+  end
+
+  def create(conn, %{"searches" => searches}) do
+    "do stuff #{conn} and #{searches}"
   end
 
   def split_results([]), do: []
