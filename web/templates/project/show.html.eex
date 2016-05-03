@@ -110,6 +110,8 @@
       </div>
       <div class="modal-body">
         <%= form_for @changeset, csv_path(@conn, :create), [multipart: true], fn f -> %>
+        <%= text_input f, :project_id, type: "hidden", value: @project.id %>
+        <%= text_input f, :user_id, type: "hidden", value: @user.id %>
           <div class="form-group">
             <%= file_input f, :csv, class: "form-control" %>
           </div>
