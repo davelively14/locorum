@@ -16,8 +16,8 @@
           <td><%= "#{search.phone}" %></td>
         </tr>
         <% end %>
-      <% end %>
     </table>
   </div>
   <div class="panel-footer"><%= submit "Add to Project", class: "btn btn-primary" %></div>
+  <% end %>
 </div>
