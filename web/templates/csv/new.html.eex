@@ -1,18 +1,23 @@
-<h2>Searchs to add to <%= @project.name %><small class="pull-right">by <%= @user.username %></small></h2>
-<table class="table">
-  <tr class="text-center">
-    <th>Business</th>
-    <th>Location</th>
-    <th>Phone</th>
-  </tr>
-  <!-- TODO add form_for @changeset -->
-  <%= form_for @conn, csv_path(@conn, :create), [name: :upload], fn f -> %>
-    <%= for search <- @searches || [] do %>
+<div class="panel panel-default">
+  <div class="panel-heading"> <h2>Searchs to add to <%= @project.name %><small class="pull-right">by <%= @user.username %></small></h2> </div>
+    <!-- TODO add form_for @changeset -->
+  <div class="panel-body">
+    <table class="table">
       <tr>
-        <td><%= text_input f, :biz, value: search.biz, class: "form-control" %></td>
-        <td><%= "#{search.address1}, #{search.city}, #{search.state} #{search.zip}" %></td>
-        <td><%= "#{search.phone}" %></td>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
       </tr>
-    <% end %>
-  <% end %>
-</table>
+      <%= form_for @conn, csv_path(@conn, :create), [name: :upload], fn f -> %>
+        <%= for search <- @searches || [] do %>
+        <tr>
+          <td><%= "#{search.biz}" %></td>
+          <td><%= "#{search.address1}, #{search.city}, #{search.state} #{search.zip}" %></td>
+          <td><%= "#{search.phone}" %></td>
+        </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
+  <div class="panel-footer"><%= submit "Add to Project", class: "btn btn-primary" %></div>
+</div>
