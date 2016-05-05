@@ -18,21 +18,17 @@ defmodule Locorum.CSVController do
         _ ->
           {:error, "Invalid file type"}
       end
-    added = nil
-    error = nil
     Enum.each searches, fn search ->
       changeset = Search.changeset(%Search{}, Map.from_struct(search))
       case Repo.insert(changeset) do
         {:ok, search} ->
-          added = "#{added} #{search.biz} in #{search.city},"
+          conn = put_flash(conn, :info, "Added some searches")
         {:error, changeset} ->
-          error = "#{error} #{changeset.model.biz} in #{changeset.model.city},"
+          conn = put_flash(conn, :error, "Some searches could not be added from CSV")
       end
     end
     conn
     # TODO why isn't flash working?
-    |> put_flash(:info, "Added searches")
-    |> put_flash(:error, "Some searches could not be added from CSV")
     |> redirect(to: project_path(conn, :show, project_id))
     # render conn, "new.html", searches: searches, project: project, user: user
   end
