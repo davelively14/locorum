@@ -18,22 +18,21 @@ defmodule Locorum.CSVController do
         _ ->
           {:error, "Invalid file type"}
       end
-    # project = Repo.get(Locorum.Project, project_id)
-    # user = Repo.get(Locorum.User, user_id)
-    added = []
-    error = []
+    added = nil
+    error = nil
     Enum.each searches, fn search ->
       changeset = Search.changeset(%Search{}, Map.from_struct(search))
       case Repo.insert(changeset) do
         {:ok, search} ->
-          added = added ++ ["#{search.biz} in #{search.city}, "]
+          added = "#{added} #{search.biz} in #{search.city},"
         {:error, changeset} ->
-          error = error ++ ["#{changeset.model.biz} in #{changeset.model.city}, "]
+          error = "#{error} #{changeset.model.biz} in #{changeset.model.city},"
       end
     end
     conn
-    |> put_flash(:info, "Added #{List.to_string(added)}")
-    |> put_flash(:error, "Could not add #{List.to_string(error)}")
+    # TODO why isn't flash working?
+    |> put_flash(:info, added)
+    |> put_flash(:error, error)
     |> redirect(to: project_path(conn, :show, project_id))
     # render conn, "new.html", searches: searches, project: project, user: user
   end
