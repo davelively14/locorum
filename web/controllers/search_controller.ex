@@ -68,6 +68,7 @@ defmodule Locorum.SearchController do
 
   def index(conn, _params) do
     searches = Repo.all(Search)
+    IO.inspect "Referer: #{List.keyfind(conn.req_headers, "referer", 2)}"
     render conn, "index.html", searches: searches
   end
 

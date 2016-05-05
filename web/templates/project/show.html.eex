@@ -109,7 +109,7 @@
         <h4 class="modal-title" id="uploadCsvModalLabel">Upload CSV</h4>
       </div>
       <div class="modal-body">
-        <%= form_for @conn, csv_path(@conn, :new), [multipart: true, name: :upload], fn f -> %>
+        <%= form_for @conn, csv_path(@conn, :create), [multipart: true, as: :upload, method: :post], fn f -> %>
         <%= text_input f, :project_id, type: "hidden", value: @project.id %>
         <%= text_input f, :user_id, type: "hidden", value: @user.id %>
           <div class="form-group">

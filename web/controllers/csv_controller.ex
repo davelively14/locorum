@@ -1,8 +1,11 @@
 defmodule Locorum.CSVController do
   use Locorum.Web, :controller
   alias Locorum.Repo
+  alias Locorum.Search
 
-  def new(conn, %{"upload" => %{"csv" => csv, "project_id" => project_id, "user_id" => user_id}}) do
+  plug :scrub_params, "upload" when action in [:create]
+
+  def create(conn, %{"upload" => %{"csv" => csv, "project_id" => project_id, "user_id" => user_id}}) do
     searches =
       case File.read(csv.path) do
         {:ok, result} ->
@@ -15,13 +18,24 @@ defmodule Locorum.CSVController do
         _ ->
           {:error, "Invalid file type"}
       end
-    project = Repo.get(Locorum.Project, project_id)
-    user = Repo.get(Locorum.User, user_id)
-    render conn, "new.html", searches: searches, project: project, user: user
-  end
-
-  def create(conn, %{"searches" => searches}) do
-    "do stuff #{conn} and #{searches}"
+    # project = Repo.get(Locorum.Project, project_id)
+    # user = Repo.get(Locorum.User, user_id)
+    added = []
+    error = []
+    Enum.each searches, fn search ->
+      changeset = Search.changeset(%Search{}, Map.from_struct(search))
+      case Repo.insert(changeset) do
+        {:ok, search} ->
+          added = added ++ ["#{search.biz} in #{search.city}, "]
+        {:error, changeset} ->
+          error = error ++ ["#{changeset.model.biz} in #{changeset.model.city}, "]
+      end
+    end
+    conn
+    |> put_flash(:info, "Added #{List.to_string(added)}")
+    |> put_flash(:error, "Could not add #{List.to_string(error)}")
+    |> redirect(to: project_path(conn, :show, project_id))
+    # render conn, "new.html", searches: searches, project: project, user: user
   end
 
   def split_results([]), do: []
