@@ -31,8 +31,8 @@ defmodule Locorum.CSVController do
     end
     conn
     # TODO why isn't flash working?
-    |> put_flash(:info, added)
-    |> put_flash(:error, error)
+    |> put_flash(:info, "Added searches")
+    |> put_flash(:error, "Some searches could not be added from CSV")
     |> redirect(to: project_path(conn, :show, project_id))
     # render conn, "new.html", searches: searches, project: project, user: user
   end
