@@ -68,14 +68,20 @@ defmodule Locorum.SearchController do
 
   def index(conn, _params) do
     searches = Repo.all(Search)
-    IO.inspect "Referer: #{List.keyfind(conn.req_headers, "referer", 2)}"
     render conn, "index.html", searches: searches
   end
 
   def delete(conn, %{"id" => id}) do
     search = Repo.get(Search, id)
+    project = search.project_id
     Repo.delete search
-    redirect(conn, to: search_path(conn, :index))
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
+    cond do
+      referer =~ "manage/project" ->
+        redirect(conn, to: project_path(conn, :show, project))
+      true ->
+        redirect(conn, to: search_path(conn, :index))
+    end
   end
 
   # TODO DRY this
