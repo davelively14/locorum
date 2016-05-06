@@ -60,14 +60,7 @@ defmodule Locorum.ProjectController do
     project = Repo.get(Project, id)
     changeset = Project.changeset(project)
     {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
-    cancel_action =
-      cond do
-        referer =~ "manage/project/" ->
-          project_path(conn, :show, project)
-        true ->
-          project_path(conn, :index)
-      end
-    render conn, "edit.html", project: project, changeset: changeset, cancel_action: cancel_action
+    render conn, "edit.html", project: project, changeset: changeset, cancel_action: referer
   end
 
   def update(conn, %{"id" => id, "project" => project_params}, _user) do
