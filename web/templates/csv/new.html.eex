@@ -6,8 +6,7 @@
         by <%= link @user.username, to: user_path(@conn, :show, @user.id) %>
       </small>
     </h2>
-  </div>
-    <!-- TODO add form_for @changeset -->
+  </div> 
   <div class="panel-body">
     <table class="table">
       <tr>

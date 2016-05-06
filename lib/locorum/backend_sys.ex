@@ -3,7 +3,6 @@ defmodule Locorum.BackendSys do
     Locorum.BackendSys.start_link()
   end
 
-  # TODO: replace this with a Repo call to backends persisted in db?
   @backends [Locorum.BackendSys.Google,
              Locorum.BackendSys.Yahoo,
              Locorum.BackendSys.CityGrid,
@@ -44,7 +43,7 @@ defmodule Locorum.BackendSys do
     {pid, monitor_ref, query_ref}
   end
 
-  # TODO kill processes once they return results
+  # TODO remove this
   # defp monitor_spawns(child, _opts) do
   #   {pid, monitor_ref, query_ref} = child
   #
