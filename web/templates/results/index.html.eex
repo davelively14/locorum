@@ -5,17 +5,28 @@
   </small>
 </h2>
 
-<%= content_tag :div, id: "project-results", data: [id: @project.id] do  %>
-<% end %>
+
+<button type="submit" id="run-search" class="btn btn-success btn-block">Run Search</button><br>
 
 <%= for search <- @searches do %>
   <div class="panel panel-info">
     <div class="panel-heading">
-      <h4><%= search.biz %></h4>
+      <h4><%= link search.biz, to: search_path(@conn, :show, search.id) %></h4>
     </div>
     <div class="panel-body">
-      <%= search.address1 %><br>
-      <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
+      <div class="row">
+        <div class="col-sm-4">
+          <%= search.address1 %><br>
+          <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
+        </div>
+        <div class="col-sm-8" id="results">
+          <%= content_tag :div, id: "project-results", data: [id: @project.id] do  %>
+          <% end %>
+          <h4>Results Start Here</h4>
+          <li>More things</li>
+          <li>More results</li>
+        </div>
+      </div>
     </div>
     <div class="panel-footer">
       <%= link "View details in new tab...", to: results_path(@conn, :show, search.id) %>

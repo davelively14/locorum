@@ -63,7 +63,7 @@ defmodule Locorum.SearchController do
   def show(conn, %{"id" => id}) do
     search = Repo.get(Search, id)
     search = Map.put(search, :phone, phonify(search.phone))
-    render conn, "show.html", search: search
+    render conn, "show.html", search: search, back_action: get_refer(conn)
   end
 
   def index(conn, _params) do
