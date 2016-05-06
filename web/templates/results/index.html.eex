@@ -6,9 +6,9 @@
 </h2>
 
 <%= for search <- @searches do %>
-  <div class="panel panel-primary">
+  <div class="panel panel-info">
     <div class="panel-heading">
-      <strong><%= search.biz %></strong><br>
+      <h4><%= search.biz %></h4>
     </div>
     <div class="panel-body">
       <%= search.address1 %><br>
