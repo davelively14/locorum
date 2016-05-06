@@ -1211,6 +1211,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _results2.default.init(_socket2.default, document.getElementById("results"));
 });
 
+;require.register("web/static/js/project", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var Project = {
+  init: function init(socket, element) {
+    if (!element) {
+      return;
+    }
+    var projectId = element.getAttribute("data-id");
+    socket.connect();
+    this.onRead(projectId, socket);
+  },
+  onReady: function onReady(projectId, socket) {
+    var searchesContainer = document.getElementById("searches");
+  }
+};
+
+exports.default = Project;
+});
+
 ;require.register("web/static/js/results", function(exports, require, module) {
 "use strict";
 
