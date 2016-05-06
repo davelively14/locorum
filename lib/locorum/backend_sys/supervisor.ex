@@ -7,7 +7,7 @@ defmodule Locorum.BackendSys.Supervisor do
 
   def init(_opts) do
     children = [
-      worker(Locorum.BackendSys, [], restart: :temporary)
+      worker(Locorum.BackendSys, [], restart: :transient)
     ]
 
     supervise children, strategy: :simple_one_for_one
