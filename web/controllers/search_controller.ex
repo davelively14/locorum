@@ -38,7 +38,15 @@ defmodule Locorum.SearchController do
   def edit(conn, %{"id" => id}) do
     search = Repo.get(Search, id)
     changeset = Search.changeset(search)
-    render conn, "edit.html", search: search, changeset: changeset
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
+    cancel_action =
+      cond do
+        referer =~ "manage/search/" ->
+          search_path(conn, :show, search)
+        true ->
+          search_path(conn, :index)
+      end
+    render conn, "edit.html", search: search, changeset: changeset, cancel_action: cancel_action
   end
 
   def update(conn, %{"id" => id, "search" => search_params}) do
