@@ -16,8 +16,7 @@ defmodule Locorum.ProjectController do
       user
       |> build_assoc(:projects)
       |> Project.changeset
-
-    render conn, "new.html", changeset: changeset
+    render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
   end
 
   def create(conn, %{"project" => project_params}, user) do
@@ -59,8 +58,7 @@ defmodule Locorum.ProjectController do
   def edit(conn, %{"id" => id}, _user) do
     project = Repo.get(Project, id)
     changeset = Project.changeset(project)
-    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
-    render conn, "edit.html", project: project, changeset: changeset, cancel_action: referer
+    render conn, "edit.html", project: project, changeset: changeset, cancel_action: get_refer(conn)
   end
 
   def update(conn, %{"id" => id, "project" => project_params}, _user) do
@@ -78,5 +76,10 @@ defmodule Locorum.ProjectController do
 
   defp project_searches(project) do
     assoc(project, :searches)
+  end
+
+  defp get_refer(conn) do
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
+    referer
   end
 end

@@ -8,7 +8,7 @@ defmodule Locorum.SearchController do
   def new(conn, _params) do
     user = conn.assigns.current_user
     changeset = Search.changeset(%Search{user_id: user.id})
-    render conn, "new.html", changeset: changeset
+    render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
   end
 
   def create(conn, %{"search" => search_params}) do
@@ -38,8 +38,7 @@ defmodule Locorum.SearchController do
   def edit(conn, %{"id" => id}) do
     search = Repo.get(Search, id)
     changeset = Search.changeset(search)
-    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
-    render conn, "edit.html", search: search, changeset: changeset, cancel_action: referer
+    render conn, "edit.html", search: search, changeset: changeset, cancel_action: get_refer(conn)
   end
 
   def update(conn, %{"id" => id, "search" => search_params}) do
@@ -101,5 +100,10 @@ defmodule Locorum.SearchController do
       _ ->
         "error"
     end
+  end
+
+  defp get_refer(conn) do
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0)
+    referer
   end
 end

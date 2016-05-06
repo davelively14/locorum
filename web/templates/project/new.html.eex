@@ -14,4 +14,5 @@
   </div>
 
   <%= submit "Create Project", class: "btn btn-primary" %>
+  <%= link "Cancel", to: @cancel_action, class: "btn btn-danger" %>
 <% end %>
