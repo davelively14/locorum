@@ -22,32 +22,35 @@
           <h3><small><i>Loading status goes here</i></small></h3>
         </div>
         <div class="col-sm-8" id="results">
-          <%= content_tag :div, id: "project-results", data: [id: @project.id] do  %>
+          <%= content_tag :div, id: "search-#{search.id}-results", data: [id: @project.id] do  %>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+              <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
               <li role="presentation" class="dropdown">
-                <!-- TODO backendDrop becomes <%= "backendDrop#{search.id}" %> -->
-                <a href="#" id="backendDrop" aria-controls="backendDrop-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
+                <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
                   Backends <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop-contents">
-                  <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1" aria-expanded="false">White Pages</a></li>
-                  <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2" aria-expanded="false">Google</a></li>
+                <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
+                  <li><a href="#dropdown1-<%= search.id %>" role="tab" id="dropdown1-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown1-<%= search.id %>" aria-expanded="false">White Pages</a></li>
+                  <li><a href="#dropdown2-<%= search.id %>" role="tab" id="dropdown2-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown2-<%= search.id %>" aria-expanded="false">Google</a></li>
                 </ul>
               </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade in active" id="overview">
+              <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
                 <h4>Results Start Here</h4>
                 <li>More things</li>
                 <li>More results</li>
                 <li>And conlusion</li>
               </div>
-              <div role="tabpanel" class="tab-pane fade" id="dropdown1">White Pages stuff goes here</div>
-              <div role="tabpanel" class="tab-pane fade" id="dropdown2">Google stuff goes here</div>
+              <div role="tabpanel" class="tab-pane fade" id="dropdown1-<%= search.id %>">
+                White Pages mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="dropdown2-<%= search.id %>">
+                Google trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.
+              </div>
             </div>
           <% end %>
         </div>
