@@ -29,6 +29,7 @@ defmodule Locorum.Router do
     resources "/project", ProjectController
     resources "/upload", CSVController, only: [:create]
     get "/results/:id", ResultsController, :show
+    get "/results/project/:id", ResultsController, :index
   end
 
   # Other scopes may use custom stacks.

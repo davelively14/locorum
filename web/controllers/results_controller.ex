@@ -1,11 +1,24 @@
 defmodule Locorum.ResultsController do
   use Locorum.Web, :controller
   alias Locorum.Search
+  alias Locorum.Project
 
   def show(conn, %{"id" => id}) do
     search = Repo.get!(Search, id)
     search = Map.put(search, :phone, phonify(search.phone))
     render conn, "show.html", search: search
+  end
+
+  def index(conn, %{"id" => project_id}) do
+    project = Repo.get!(Project, project_id)
+    searches =
+      project_searches(project)
+      |> Repo.all
+    render conn, "index.html", project: project, searches: searches
+  end
+
+  defp project_searches(project) do
+    assoc(project, :searches)
   end
 
   defp phonify(string) do

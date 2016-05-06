@@ -37,6 +37,7 @@ defmodule Locorum.ProjectController do
   end
 
   def index(conn, _params, _user) do
+    # TODO why preload projects?
     projects =
       Repo.all(Project)
       |> Repo.preload(:user)

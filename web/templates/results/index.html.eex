@@ -1,0 +1,21 @@
+<h2>
+  <%= @project.name %> Results
+  <small class="pull-right">
+    back to <%= link "project", to: project_path(@conn, :show, @project.id) %>
+  </small>
+</h2>
+
+<%= for search <- @searches do %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <strong><%= search.biz %></strong><br>
+    </div>
+    <div class="panel-body">
+      <%= search.address1 %><br>
+      <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
+    </div>
+    <div class="panel-footer">
+      <%= link "View details in new tab...", to: results_path(@conn, :show, search.id) %>
+    </div>
+  </div>
+<% end %>
