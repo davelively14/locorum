@@ -7,13 +7,8 @@
   <%= text_input f, :user_id, type: "hidden" %>
   <%= text_input f, :project_id, type: "hidden" %>
   <div class="form-group">
-    <%= label f, "Name of Search", class: "control-label" %>
-    <%= text_input f, :name, placeholder: "Name this search (optional)", class: "form-control", autofocus: true  %>
-    <%= error_tag f, :name %>
-  </div>
-  <div class="form-group">
     <%= label f, "Name of Business", class: "control-label" %>
-    <%= text_input f, :biz, placeholder: "Name of business", class: "form-control"  %>
+    <%= text_input f, :biz, placeholder: "Name of business", class: "form-control", autofocus: true, onfocus: "this.value = this.value;"  %>
     <%= error_tag f, :biz %>
   </div>
   <div class="form-group">
