@@ -16,20 +16,52 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-sm-4">
+          <strong> <%= search.biz %> </strong> <br>
           <%= search.address1 %><br>
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
+          <h3><small><i>Loading status goes here</i></small></h3>
         </div>
         <div class="col-sm-8" id="results">
           <%= content_tag :div, id: "project-results", data: [id: @project.id] do  %>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="active"><a href="#overview" aria-controls="overview" role="tab" data-toggle="tab">Overview</a></li>
+              <li role="presentation" class="dropdown">
+                <!-- TODO backendDrop becomes <%= "backendDrop#{search.id}" %> -->
+                <a href="#" id="backendDrop" aria-controls="backendDrop-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
+                  Backends <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop-contents">
+                  <li><a href="#dropdown1" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1" aria-expanded="false">White Pages</a></li>
+                  <li><a href="#dropdown2" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2" aria-expanded="false">Google</a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div role="tabpanel" class="tab-pane fade in active" id="overview">
+                <h4>Results Start Here</h4>
+                <li>More things</li>
+                <li>More results</li>
+                <li>And conlusion</li>
+              </div>
+              <div role="tabpanel" class="tab-pane fade" id="dropdown1">White Pages stuff goes here</div>
+              <div role="tabpanel" class="tab-pane fade" id="dropdown2">Google stuff goes here</div>
+            </div>
           <% end %>
-          <h4>Results Start Here</h4>
-          <li>More things</li>
-          <li>More results</li>
         </div>
       </div>
     </div>
     <div class="panel-footer">
-      <%= link "View details in new tab...", to: results_path(@conn, :show, search.id) %>
+      <%= link "View details in new tab...", to: results_path(@conn, :show, search.id), target: "_blank" %>
     </div>
   </div>
 <% end %>
+
+<div class="modal fade">
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
