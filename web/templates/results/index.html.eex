@@ -5,6 +5,9 @@
   </small>
 </h2>
 
+<%= content_tag :div, id: "project-results", data: [id: @project.id] do  %>
+<% end %>
+
 <%= for search <- @searches do %>
   <div class="panel panel-info">
     <div class="panel-heading">
