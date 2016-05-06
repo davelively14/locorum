@@ -1,3 +1,15 @@
 <h2>Edit <%= @project.name %></h2>
 
-<%= link "Cancel", to: project_path(@conn, :index), class: "btn btn-danger" %>
+<%= form_for @changeset, project_path(@conn, :update, @project), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= label f, "Name of Project", class: "control-label" %>
+    <%= text_input f, :name, placeholder: "Project Name", class: "form-control", autofocus: true, onfocus: "this.value = this.value;" %>
+  </div>
+  <%= submit "Save", class: "btn btn-primary" %>
+  <%= link "Cancel", to: @cancel_action, class: "btn btn-danger" %>
+<% end %>
