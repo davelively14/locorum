@@ -11,8 +11,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 ## v0.3 to do list
 - Create project_channel
 - Integrate with search_channel
-- Add searches to projects by CSV
-- Deprecate name of search
+- Deprecate name of search from database
 
 ## v0.4 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -27,7 +26,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Handle a lot of results (i.e. more than 10)
   - Use limit option to determine. Let the user set the limit
 - Clean up passed info/supervision trees
-- Determine how to cleanup processes if needed. Can they self-kill?
 - Add tests for:
   - Model: user (requires: user authentication)
   - Controller: results_controller
@@ -46,3 +44,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Project
   - Search
 - Can add searches to projects individually
+- Add searches to projects by CSV
+- Deprecate name of search from forms
+- Restart backends automatically when they fail

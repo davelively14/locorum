@@ -2,7 +2,6 @@
 
 <table class="table">
   <tr class="text-center">
-    <th>Search Name</th>
     <th>Business Name</th>
     <th>Zip</th>
     <th>Location</th>
@@ -10,7 +9,6 @@
   </tr>
   <%= for search <- @searches do %>
     <tr>
-      <td><%= search.name || "(none)" %></td>
       <td><%= search.biz %></td>
       <td><%= search.zip %></td>
       <td><%= "#{search.city}, #{search.state}" %></td>
