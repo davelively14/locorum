@@ -3,11 +3,12 @@ defmodule Locorum.UserSocket do
 
   ## Channels
   channel "searches:*", Locorum.SearchChannel
+  channel "projects:*", Locorum.ProjectChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,
     timeout: 45_000
-    
+
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
