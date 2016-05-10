@@ -21,48 +21,46 @@
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
           <h3><small><i>Loading status goes here</i></small></h3>
         </div>
-        <div class="col-sm-8" id="results">
-          <%= content_tag :div, id: "search-#{search.id}-results", data: [id: @project.id] do  %>
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
-              <li role="presentation" class="dropdown">
-                <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
-                  Backends <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
-                  <li><a href="#dropdown1-<%= search.id %>" role="tab" id="dropdown1-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown1-<%= search.id %>" aria-expanded="false">White Pages</a></li>
-                  <li><a href="#dropdown2-<%= search.id %>" role="tab" id="dropdown2-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown2-<%= search.id %>" aria-expanded="false">Google</a></li>
-                </ul>
-              </li>
-            </ul>
+        <%= content_tag :div, id: "search-results-#{search.id}", data: [id: @project.id], class: "col-sm-8" do  %>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
+            <li role="presentation" class="dropdown">
+              <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
+                Backends <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
+                <li><a href="#dropdown1-<%= search.id %>" role="tab" id="dropdown1-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown1-<%= search.id %>" aria-expanded="false">White Pages</a></li>
+                <li><a href="#dropdown2-<%= search.id %>" role="tab" id="dropdown2-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown2-<%= search.id %>" aria-expanded="false">Google</a></li>
+              </ul>
+            </li>
+          </ul>
 
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
-                <h4>Results Start Here</h4>
-                <li>More things</li>
-                <li>More results</li>
-                <li>And conclusion</li>
-              </div>
-              <div role="tabpanel" class="tab-pane fade" id="dropdown1-<%= search.id %>">
-                <h4>White Pages</h4>
-                Mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
-              </div>
-              <div role="tabpanel" class="tab-pane fade" id="dropdown2-<%= search.id %>">
-                <h4>Google</h4>
-                <b>Nebo Agency</b>
-                <br> 1000 Marietta St Suite 270 <br>
-                Atlanta, GA 30318 <br>
-                (404) 885-1201 <br>
-                <i>Rating: </i>
-                <b>94</b><br>
-                <i><a href="https://maps.google.com/?cid=15464446986575315456" target="_blank">Edit entry</a></i>
-                <br>
-              </div>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
+              <h4>Results Start Here</h4>
+              <li>More things</li>
+              <li>More results</li>
+              <li>And conclusion</li>
             </div>
-          <% end %>
-        </div>
+            <div role="tabpanel" class="tab-pane fade" id="dropdown1-<%= search.id %>">
+              <h4>White Pages</h4>
+              Mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="dropdown2-<%= search.id %>">
+              <h4>Google</h4>
+              <b>Nebo Agency</b>
+              <br> 1000 Marietta St Suite 270 <br>
+              Atlanta, GA 30318 <br>
+              (404) 885-1201 <br>
+              <i>Rating: </i>
+              <b>94</b><br>
+              <i><a href="https://maps.google.com/?cid=15464446986575315456" target="_blank">Edit entry</a></i>
+              <br>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
     <div class="panel-footer">

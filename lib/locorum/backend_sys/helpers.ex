@@ -4,20 +4,20 @@ defmodule Locorum.BackendSys.Helpers do
 
   def join(_,_,_), do: nil
 
-  def init_json(url, header, socket) do
-    set_header(url, header)
+  def init_json(url, header, socket, query) do
+    set_header(url, header, query)
     |> init_frontend(socket)
     |> fetch_json
   end
 
-  def init_html(url, header, socket) do
-    set_header(url, header)
+  def init_html(url, header, socket, query) do
+    set_header(url, header, query)
     |> init_frontend(socket)
     |> fetch_html
   end
 
   def send_results(results, header, socket, query) do
-    rate_results_add_search_id(results, query)
+    rate_results(results, query)
     |> sort_results
     |> broadcast_results(header, socket)
   end
@@ -30,7 +30,7 @@ defmodule Locorum.BackendSys.Helpers do
   def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
   def pop_first(remaining, _current), do: remaining
 
-  defp rate_results_add_search_id(results, query) do
+  defp rate_results(results, query) do
     address = single_address(query.address1, query.address2)
 
     for result <- results do
@@ -42,8 +42,7 @@ defmodule Locorum.BackendSys.Helpers do
       if result.zip && (result.zip != query.zip) do
         rating = 0
       end
-      result = Map.put(result, :rating, round(rating * 100))
-      Map.put(result, :search_id, query.id)
+      Map.put(result, :rating, round(rating * 100))
     end
   end
 
@@ -88,7 +87,7 @@ defmodule Locorum.BackendSys.Helpers do
           rating: result.rating,
           url: result.url,
           phone: result.phone,
-          search_id: result.search_id
+          search_id: header.search_id
         }
       end
     else
@@ -102,8 +101,9 @@ defmodule Locorum.BackendSys.Helpers do
     }
   end
 
-  defp set_header(url, header) do
+  defp set_header(url, header, query) do
     Map.put(header, :url_search, url)
+    |> Map.put(:search_id, query.id)
   end
 
   def fetch_json(url) do
@@ -152,7 +152,8 @@ defmodule Locorum.BackendSys.Helpers do
       backend: header.backend,
       backend_str: header.backend_str,
       backend_url: header.url_site,
-      results_url: header.url_search
+      results_url: header.url_search,
+      search_id: header.search_id
     }
     header.url_search
   end

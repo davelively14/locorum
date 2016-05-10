@@ -12,7 +12,7 @@ defmodule Locorum.BackendSys.Local do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.init_html(@backend, owner)
+    |> Helpers.init_html(@backend, owner, query)
     |> parse_data
     |> Helpers.send_results(@backend, owner, query)
   end

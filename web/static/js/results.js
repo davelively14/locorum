@@ -52,7 +52,7 @@ let Results = {
 
   },
 
-  renderBackend(resultsContainer, backendMenuContainer, {backend, backend_str, backend_url, results_url}){
+  renderBackend(resultsContainer, backendMenuContainer, {backend, backend_str, backend_url, results_url, search_id}){
     let template = document.createElement("div")
     template.setAttribute("class", "panel panel-info")
     template.innerHTML = `

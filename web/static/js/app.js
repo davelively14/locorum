@@ -20,5 +20,7 @@ import "phoenix_html"
 
 import socket from "./socket"
 import Results from "./results"
+import Project from "./project"
 
 Results.init(socket, document.getElementById("results"))
+Project.init(socket, document.getElementById("searches"))

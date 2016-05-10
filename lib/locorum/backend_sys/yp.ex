@@ -11,7 +11,7 @@ defmodule Locorum.BackendSys.Yp do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.init_json(@backend, owner)
+    |> Helpers.init_json(@backend, owner, query)
     |> parse_data
     |> Helpers.send_results(@backend, owner, query)
   end

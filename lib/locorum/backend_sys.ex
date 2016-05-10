@@ -12,12 +12,13 @@ defmodule Locorum.BackendSys do
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
-              rating: nil, url: nil, phone: nil, search_id: nil
+              rating: nil, url: nil, phone: nil
   end
 
   # TODO deprecate url_site once %Result{url_result} is online
   defmodule Header do
-    defstruct backend: nil, backend_str: nil, url_search: nil, url_site: nil
+    defstruct backend: nil, backend_str: nil, url_search: nil, url_site: nil,
+              search_id: nil
   end
 
   def start_link(backend, query, query_ref, owner, limit) do

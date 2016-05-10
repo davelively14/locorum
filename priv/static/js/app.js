@@ -1186,6 +1186,10 @@ var _results = require("./results");
 
 var _results2 = _interopRequireDefault(_results);
 
+var _project = require("./project");
+
+var _project2 = _interopRequireDefault(_project);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // Brunch automatically concatenates all files in your
@@ -1203,12 +1207,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // to also remove its path from "config.paths.watched".
 
 
+_results2.default.init(_socket2.default, document.getElementById("results"));
+
 // Import local files
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-_results2.default.init(_socket2.default, document.getElementById("results"));
+_project2.default.init(_socket2.default, document.getElementById("searches"));
 });
 
 ;require.register("web/static/js/project", function(exports, require, module) {
@@ -1227,7 +1233,21 @@ var Project = {
     this.onRead(projectId, socket);
   },
   onReady: function onReady(projectId, socket) {
+    var _this = this;
+
     var searchesContainer = document.getElementById("searches");
+    var projectChannel = socket.channel("projects:" + projectId);
+
+    runSearch.addEventListener("click", function (e) {
+      searchChannel.push("run_search").receive("error", function (e) {
+        return console.log(e);
+      });
+    });
+
+    // Need search_id for this one...
+    searchChannel.on("backend", function (resp) {
+      _this.renderBackend(resp);
+    });
   }
 };
 
@@ -1301,6 +1321,7 @@ var Results = {
     var backend_str = _ref.backend_str;
     var backend_url = _ref.backend_url;
     var results_url = _ref.results_url;
+    var search_id = _ref.search_id;
 
     var template = document.createElement("div");
     template.setAttribute("class", "panel panel-info");
