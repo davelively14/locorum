@@ -2,6 +2,8 @@ defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
   require Logger
 
+  def join(_,_,_), do: nil
+
   def init_json(url, header, socket) do
     set_header(url, header)
     |> init_frontend(socket)
@@ -15,7 +17,7 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   def send_results(results, header, socket, query) do
-    rate_result(results, query)
+    rate_results_add_search_id(results, query)
     |> sort_results
     |> broadcast_results(header, socket)
   end
@@ -28,7 +30,7 @@ defmodule Locorum.BackendSys.Helpers do
   def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
   def pop_first(remaining, _current), do: remaining
 
-  defp rate_result(results, query) do
+  defp rate_results_add_search_id(results, query) do
     address = single_address(query.address1, query.address2)
 
     for result <- results do
@@ -40,7 +42,8 @@ defmodule Locorum.BackendSys.Helpers do
       if result.zip && (result.zip != query.zip) do
         rating = 0
       end
-      Map.put(result, :rating, round(rating * 100))
+      result = Map.put(result, :rating, round(rating * 100))
+      Map.put(result, :search_id, query.id)
     end
   end
 

@@ -12,7 +12,7 @@ defmodule Locorum.BackendSys do
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
-              rating: nil, url: nil, phone: nil
+              rating: nil, url: nil, phone: nil, search_id: nil
   end
 
   # TODO deprecate url_site once %Result{url_result} is online
