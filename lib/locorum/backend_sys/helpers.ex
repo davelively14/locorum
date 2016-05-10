@@ -87,7 +87,8 @@ defmodule Locorum.BackendSys.Helpers do
           zip: result.zip,
           rating: result.rating,
           url: result.url,
-          phone: result.phone
+          phone: result.phone,
+          search_id: result.search_id
         }
       end
     else
