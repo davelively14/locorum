@@ -19,8 +19,10 @@ let Project = {
     searchChannel.on("backend", (resp) => {
       this.renderBackend(resp)
     })
+  },
 
-
+  renderBackend(resp){
+    let template = document.createElement("div")
   }
 }
 

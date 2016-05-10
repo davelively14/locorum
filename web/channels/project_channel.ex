@@ -9,7 +9,5 @@ defmodule Locorum.ProjectChannel do
     broadcast! socket, "clear_results", %{
       id: nil
     }
-
-    # TODO decide method format for routing backend results to the right DOM area
   end
 end
