@@ -1248,6 +1248,9 @@ var Project = {
     searchChannel.on("backend", function (resp) {
       _this.renderBackend(resp);
     });
+  },
+  renderBackend: function renderBackend(resp) {
+    var template = document.createElement("div");
   }
 };
 
@@ -1325,12 +1328,12 @@ var Results = {
 
     var template = document.createElement("div");
     template.setAttribute("class", "panel panel-info");
-    template.innerHTML = "\n    <div class=\"panel-heading\" id=\"" + backend + "_header\">\n    <h4><a href=\"" + backend_url + "\" target=\"_blank\">" + backend_str + "</a></h4>\n    </div>\n    <div class=\"panel-body\" id=\"" + backend + "\"></div>\n    <div class=\"panel-footer\">\n    <a href=\"" + results_url + "\" target=\"_blank\">Go to results on " + backend_str + "...</a>\n    </div>\n    ";
+    template.innerHTML = "\n    <div class=\"panel-heading\" id=\"" + this.esc(backend) + "_header\">\n    <h4><a href=\"" + this.esc(backend_url) + "\" target=\"_blank\">" + this.esc(backend_str) + "</a></h4>\n    </div>\n    <div class=\"panel-body\" id=\"" + this.esc(backend) + "\"></div>\n    <div class=\"panel-footer\">\n    <a href=\"" + this.esc(results_url) + "\" target=\"_blank\">Go to results on " + this.esc(backend_str) + "...</a>\n    </div>\n    ";
     resultsContainer.appendChild(template);
 
     var new_result = document.createElement("div");
     new_result.setAttribute("id", backend + "_menu");
-    new_result.innerHTML = "\n    " + backend_str + "...loading\n    ";
+    new_result.innerHTML = "\n    " + this.esc(backend_str) + "...loading\n    ";
     backendMenuContainer.appendChild(new_result);
   },
   renderResult: function renderResult(backendContainer, _ref2) {
@@ -1349,9 +1352,9 @@ var Results = {
       zip = "";
     }
     if (url) {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + phone + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <i><a href=\"" + url + "\" target=\"_blank\">Edit entry</a></i><br>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + this.esc(biz) + "</b><br>\n      " + this.esc(address) + "<br>\n      " + this.esc(city) + ", " + this.esc(state) + " " + this.esc(zip) + "<br>\n      " + this.esc(phone) + "<br>\n      <i>Rating: </i><b>" + this.esc(rating) + "</b><br>\n      <i><a href=\"" + this.esc(url) + "\" target=\"_blank\">Edit entry</a></i><br>\n      <br>\n      ";
     } else {
-      template.innerHTML = "\n      <b>" + biz + "</b><br>\n      " + address + "<br>\n      " + city + ", " + state + " " + zip + "<br>\n      " + phone + "<br>\n      <i>Rating: </i><b>" + rating + "</b><br>\n      <br>\n      ";
+      template.innerHTML = "\n      <b>" + this.esc(biz) + "</b><br>\n      " + this.esc(address) + "<br>\n      " + this.esc(city) + ", " + this.esc(state) + " " + this.esc(zip) + "<br>\n      " + this.esc(phone) + "<br>\n      <i>Rating: </i><b>" + this.esc(rating) + "</b><br>\n      <br>\n      ";
     }
     backendContainer.appendChild(template);
   },
@@ -1359,6 +1362,11 @@ var Results = {
     var template = document.createElement("div");
     template.innerHTML = "\n    <i>No results</i>\n    ";
     backendContainer.appendChild(template);
+  },
+  esc: function esc(str) {
+    var div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
   }
 };
 exports.default = Results;

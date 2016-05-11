@@ -56,12 +56,12 @@ let Results = {
     let template = document.createElement("div")
     template.setAttribute("class", "panel panel-info")
     template.innerHTML = `
-    <div class="panel-heading" id="${backend}_header">
-    <h4><a href="${backend_url}" target="_blank">${backend_str}</a></h4>
+    <div class="panel-heading" id="${this.esc(backend)}_header">
+    <h4><a href="${this.esc(backend_url)}" target="_blank">${this.esc(backend_str)}</a></h4>
     </div>
-    <div class="panel-body" id="${backend}"></div>
+    <div class="panel-body" id="${this.esc(backend)}"></div>
     <div class="panel-footer">
-    <a href="${results_url}" target="_blank">Go to results on ${backend_str}...</a>
+    <a href="${this.esc(results_url)}" target="_blank">Go to results on ${this.esc(backend_str)}...</a>
     </div>
     `
     resultsContainer.appendChild(template)
@@ -69,7 +69,7 @@ let Results = {
     let new_result = document.createElement("div")
     new_result.setAttribute("id", backend + "_menu")
     new_result.innerHTML = `
-    ${backend_str}...loading
+    ${this.esc(backend_str)}...loading
     `
     backendMenuContainer.appendChild(new_result)
   },
@@ -81,21 +81,21 @@ let Results = {
     }
     if (url) {
       template.innerHTML = `
-      <b>${biz}</b><br>
-      ${address}<br>
-      ${city}, ${state} ${zip}<br>
-      ${phone}<br>
-      <i>Rating: </i><b>${rating}</b><br>
-      <i><a href="${url}" target="_blank">Edit entry</a></i><br>
+      <b>${this.esc(biz)}</b><br>
+      ${this.esc(address)}<br>
+      ${this.esc(city)}, ${this.esc(state)} ${this.esc(zip)}<br>
+      ${this.esc(phone)}<br>
+      <i>Rating: </i><b>${this.esc(rating)}</b><br>
+      <i><a href="${this.esc(url)}" target="_blank">Edit entry</a></i><br>
       <br>
       `
     } else {
       template.innerHTML = `
-      <b>${biz}</b><br>
-      ${address}<br>
-      ${city}, ${state} ${zip}<br>
-      ${phone}<br>
-      <i>Rating: </i><b>${rating}</b><br>
+      <b>${this.esc(biz)}</b><br>
+      ${this.esc(address)}<br>
+      ${this.esc(city)}, ${this.esc(state)} ${this.esc(zip)}<br>
+      ${this.esc(phone)}<br>
+      <i>Rating: </i><b>${this.esc(rating)}</b><br>
       <br>
       `
     }
@@ -108,6 +108,12 @@ let Results = {
     <i>No results</i>
     `
     backendContainer.appendChild(template)
+  },
+
+  esc(str){
+    let div = document.createElement("div")
+    div.appendChild(document.createTextNode(str))
+    return div.innerHTML
   }
 }
 export default Results
