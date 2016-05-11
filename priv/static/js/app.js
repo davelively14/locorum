@@ -1251,6 +1251,11 @@ var Project = {
   },
   renderBackend: function renderBackend(resp) {
     var template = document.createElement("div");
+  },
+  esc: function esc(str) {
+    var div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
   }
 };
 
