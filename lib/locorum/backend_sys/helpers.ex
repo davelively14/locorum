@@ -122,6 +122,8 @@ defmodule Locorum.BackendSys.Helpers do
       {:error, %HTTPoison.Error{reason: reason}} ->
         Logger.error("HTTPoison error: #{inspect reason}, #{__MODULE__} backend, #{inspect url}")
         {:error, reason}
+      {:ok, %HTTPoison.Response{body: json}} ->
+        json
     end
   end
 
