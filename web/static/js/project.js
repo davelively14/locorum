@@ -3,22 +3,27 @@ let Project = {
   init(socket, element){ if(!element){ return }
     let projectId = element.getAttribute("data-id")
     socket.connect()
-    this.onRead(projectId, socket)
+    this.onReady(projectId, socket)
   },
 
   onReady(projectId, socket){
     let searchesContainer = document.getElementById("searches")
+    let runSearch = document.getElementById("run-search")
     let projectChannel = socket.channel("projects:" + projectId)
 
     runSearch.addEventListener("click", e => {
-      searchChannel.push("run_search")
+      projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
 
     // Need search_id for this one...
-    searchChannel.on("backend", (resp) => {
+    projectChannel.on("backend", (resp) => {
       this.renderBackend(resp)
     })
+
+    projectChannel.join()
+      .receive("ok", resp => console.log("Joined project channel", resp))
+      .receive("error", resp => console.log("Failed to join project channel", resp))
   },
 
   renderBackend(resp){

@@ -10,6 +10,8 @@ defmodule Locorum.ProjectChannel do
       id: nil
     }
 
+    IO.puts("Running test")
+
     broadcast! socket, "backend", %{
       backend: "yahoo",
       backend_str: "Yahoo Local",
@@ -146,5 +148,6 @@ defmodule Locorum.ProjectChannel do
       search_id: 2
     }
 
+    {:reply, :ok, socket}
   end
 end

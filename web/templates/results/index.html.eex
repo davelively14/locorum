@@ -7,7 +7,7 @@
 
 
 <button type="submit" id="run-search" class="btn btn-success btn-block">Run Search</button><br>
-
+<%= content_tag :div, id: "searches", data: [id: @project.id] do %>
 <%= for search <- @searches do %>
   <div class="panel panel-info">
     <div class="panel-heading">
@@ -21,7 +21,7 @@
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
           <h3><small><i>Loading status goes here</i></small></h3>
         </div>
-        <%= content_tag :div, id: "search-results-#{search.id}", data: [id: @project.id], class: "col-sm-8" do  %>
+        <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8" do  %>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
@@ -67,6 +67,7 @@
       <%= link "View details in new tab...", to: results_path(@conn, :show, search.id), target: "_blank" %>
     </div>
   </div>
+<% end %>
 <% end %>
 
 <div class="modal fade">

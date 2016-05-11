@@ -1230,23 +1230,30 @@ var Project = {
     }
     var projectId = element.getAttribute("data-id");
     socket.connect();
-    this.onRead(projectId, socket);
+    this.onReady(projectId, socket);
   },
   onReady: function onReady(projectId, socket) {
     var _this = this;
 
     var searchesContainer = document.getElementById("searches");
+    var runSearch = document.getElementById("run-search");
     var projectChannel = socket.channel("projects:" + projectId);
 
     runSearch.addEventListener("click", function (e) {
-      searchChannel.push("run_search").receive("error", function (e) {
+      projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
     });
 
     // Need search_id for this one...
-    searchChannel.on("backend", function (resp) {
+    projectChannel.on("backend", function (resp) {
       _this.renderBackend(resp);
+    });
+
+    projectChannel.join().receive("ok", function (resp) {
+      return console.log("Joined project channel", resp);
+    }).receive("error", function (resp) {
+      return console.log("Failed to join project channel", resp);
     });
   },
   renderBackend: function renderBackend(resp) {
