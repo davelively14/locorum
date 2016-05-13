@@ -26,8 +26,8 @@ let Project = {
     })
 
     projectChannel.on("clear_results", (resp) => {
-      let dropdownElements = document.getElementsByClassName("dropdown-menu")
-      let tabElements = document.getElementsByClassName("tab-content")
+      let dropdownElements = document.getElementsByClassName("backend-titles")
+      let tabElements = document.getElementsByClassName("backend-content")
       let overviewElements = document.getElementsByClassName("search-result-tabs")
 
       Array.prototype.forEach.call(dropdownElements, function(elem){

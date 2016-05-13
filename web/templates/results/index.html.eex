@@ -29,14 +29,14 @@
               <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
                 Backends <span class="caret"></span>
               </a>
-              <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
+              <ul class="dropdown-menu backend-titles" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
 
               </ul>
             </li>
           </ul>
 
           <!-- Tab panes -->
-          <div class="tab-content" id="tab-content-<%= search.id %>">
+          <div class="tab-content backend-content" id="tab-content-<%= search.id %>">
             <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
               <h4>Run Search to view results!</h4>
             </div>

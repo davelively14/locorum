@@ -1255,8 +1255,8 @@ var Project = {
     });
 
     projectChannel.on("clear_results", function (resp) {
-      var dropdownElements = document.getElementsByClassName("dropdown-menu");
-      var tabElements = document.getElementsByClassName("tab-content");
+      var dropdownElements = document.getElementsByClassName("backend-titles");
+      var tabElements = document.getElementsByClassName("backend-content");
       var overviewElements = document.getElementsByClassName("search-result-tabs");
 
       Array.prototype.forEach.call(dropdownElements, function (elem) {
