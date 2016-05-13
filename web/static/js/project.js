@@ -32,13 +32,21 @@ let Project = {
 
   renderBackend(resp){
     let dropMenu = document.getElementById(`backendDrop${resp.search_id}-contents`)
-    let newBackend = document.createElement("li")
-    newBackend.innerHTML = `
+    let dropMenuBackend = document.createElement("li")
+    dropMenuBackend.innerHTML = `
     <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" id="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" aria-expanded="false">${this.esc(resp.backend_str)}</a>
     `
-    dropMenu.appendChild(newBackend)
-    let temp = document.getElementById("title-header")
-    temp.innerHTML = newBackend.innerHTML
+    dropMenu.appendChild(dropMenuBackend)
+
+    let tabContent = document.getElementById(`tab-content-${this.esc(resp.search_id)}`)
+    let tabContentBackend = document.createElement("div")
+    tabContentBackend.setAttribute("class", "tab-pane fade")
+    tabContentBackend.setAttribute("role", "tabpanel")
+    tabContentBackend.setAttribute("id", `dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
+    tabContentBackend.innerHTML = `
+    <i>Loading content...</i>
+    `
+    tabContent.appendChild(tabContentBackend)
   },
 
   esc(str){

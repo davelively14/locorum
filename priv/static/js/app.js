@@ -1260,11 +1260,17 @@ var Project = {
   },
   renderBackend: function renderBackend(resp) {
     var dropMenu = document.getElementById("backendDrop" + resp.search_id + "-contents");
-    var newBackend = document.createElement("li");
-    newBackend.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" id=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" aria-expanded=\"false\">" + this.esc(resp.backend_str) + "</a>\n    ";
-    dropMenu.appendChild(newBackend);
-    var temp = document.getElementById("title-header");
-    temp.innerHTML = newBackend.innerHTML;
+    var dropMenuBackend = document.createElement("li");
+    dropMenuBackend.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" id=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" aria-expanded=\"false\">" + this.esc(resp.backend_str) + "</a>\n    ";
+    dropMenu.appendChild(dropMenuBackend);
+
+    var tabContent = document.getElementById("tab-content-" + this.esc(resp.search_id));
+    var tabContentBackend = document.createElement("div");
+    tabContentBackend.setAttribute("class", "tab-pane fade");
+    tabContentBackend.setAttribute("role", "tabpanel");
+    tabContentBackend.setAttribute("id", "dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
+    tabContentBackend.innerHTML = "\n    <i>Loading content...</i>\n    ";
+    tabContent.appendChild(tabContentBackend);
   },
   esc: function esc(str) {
     var div = document.createElement("div");
