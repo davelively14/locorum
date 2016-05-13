@@ -47,7 +47,7 @@ let Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade")
     tabContentBackend.setAttribute("role", "tabpanel")
     tabContentBackend.setAttribute("id", `dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
-    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)}</h4>`
+    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)} <small><a href="${this.esc(resp.results_url)}" target="_blank" class="pull-right">view results in new tab</a></small></h4>`
     tabContent.appendChild(tabContentBackend)
   },
 
