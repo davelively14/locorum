@@ -80,16 +80,31 @@ let Project = {
     let newContent = document.createElement("div")
     let counter = document.getElementById('id')
     let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
-    newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4 thumbnail")
-    newContent.innerHTML = `
-    <b>${this.esc(resp.biz)}</b><br>
-    ${this.esc(resp.address)}<br>
-    ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip || "")}<br>
-    ${this.esc(resp.phone)}<br>
-    <i>Rating: <b>${this.esc(resp.rating)}</b><br>`
-
+    newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4")
     if(resp.url){
-      newContent.innerHTML = newContent.innerHTML + `<i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>`
+      newContent.innerHTML = `
+      <div class="panel panel-info">
+      <div class="panel-body">
+      <b>${this.esc(resp.biz)}</b><br>
+      ${this.esc(resp.address)}<br>
+      ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip || "")}<br>
+      ${this.esc(resp.phone)}<br>
+      <i>Rating: <b>${this.esc(resp.rating)}</b></i>
+      </div>
+      <div class="panel-footer">
+      <i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i>
+      </div>
+      </div>`
+    } else {
+      newContent.innerHTML = `
+      <div class="panel panel-info">
+      <div class="panel-body">
+      <b>${this.esc(resp.biz)}</b><br>
+      ${this.esc(resp.address)}<br>
+      ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip || "")}<br>
+      ${this.esc(resp.phone)}<br>
+      <i>Rating: <b>${this.esc(resp.rating)}</b></i>
+      </div>`
     }
 
     dropContent.appendChild(newContent)
