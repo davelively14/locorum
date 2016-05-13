@@ -25,6 +25,10 @@ let Project = {
       this.renderBackend(resp)
     })
 
+    projectChannel.on("result", (resp) => {
+      this.renderResult(resp)
+    })
+
     projectChannel.join()
       .receive("ok", resp => console.log("Joined project channel", resp))
       .receive("error", resp => console.log("Failed to join project channel", resp))
@@ -43,10 +47,22 @@ let Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade")
     tabContentBackend.setAttribute("role", "tabpanel")
     tabContentBackend.setAttribute("id", `dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
-    tabContentBackend.innerHTML = `
-    <i>Loading content...</i>
-    `
+    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)}</h4>`
     tabContent.appendChild(tabContentBackend)
+  },
+
+  renderResult(resp){
+    let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
+    let newContent = document.createElement("div")
+    newContent.innerHTML = `
+    <b>${this.esc(resp.biz)}</b><br>
+    ${this.esc(resp.address)}<br>
+    ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip)}<br>
+    ${this.esc(resp.phone)}<br>
+    <i>Rating: <b>${this.esc(resp.rating)}</b><br>
+    <i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>
+    `
+    dropContent.appendChild(newContent)
   },
 
   esc(str){

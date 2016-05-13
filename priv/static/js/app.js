@@ -1252,6 +1252,10 @@ var Project = {
       _this.renderBackend(resp);
     });
 
+    projectChannel.on("result", function (resp) {
+      _this.renderResult(resp);
+    });
+
     projectChannel.join().receive("ok", function (resp) {
       return console.log("Joined project channel", resp);
     }).receive("error", function (resp) {
@@ -1269,8 +1273,14 @@ var Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade");
     tabContentBackend.setAttribute("role", "tabpanel");
     tabContentBackend.setAttribute("id", "dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
-    tabContentBackend.innerHTML = "\n    <i>Loading content...</i>\n    ";
+    tabContentBackend.innerHTML = "<h4>" + this.esc(resp.backend_str) + "</h4>";
     tabContent.appendChild(tabContentBackend);
+  },
+  renderResult: function renderResult(resp) {
+    var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
+    var newContent = document.createElement("div");
+    newContent.innerHTML = "\n    <b>" + this.esc(resp.biz) + "</b><br>\n    " + this.esc(resp.address) + "<br>\n    " + this.esc(resp.city) + ", " + this.esc(resp.state) + " " + this.esc(resp.zip) + "<br>\n    " + this.esc(resp.phone) + "<br>\n    <i>Rating: <b>" + this.esc(resp.rating) + "</b><br>\n    <i><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\">Edit entry</a></i><br><br>\n    ";
+    dropContent.appendChild(newContent);
   },
   esc: function esc(str) {
     var div = document.createElement("div");

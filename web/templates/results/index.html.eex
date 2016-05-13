@@ -30,8 +30,7 @@
                 Backends <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
-                <li><a href="#dropdown-wp-<%= search.id %>" role="tab" id="dropdown-wp-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown-wp-<%= search.id %>" aria-expanded="false">White Pages</a></li>
-                <li><a href="#dropdown-google-<%= search.id %>" role="tab" id="dropdown-google-<%= search.id %>-tab" data-toggle="tab" aria-controls="dropdown-google-<%= search.id %>" aria-expanded="false">Google</a></li>
+                
               </ul>
             </li>
           </ul>
@@ -43,21 +42,6 @@
               <li>More things</li>
               <li>More results</li>
               <li>And conclusion</li>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="dropdown-wp-<%= search.id %>">
-              <h4>White Pages</h4>
-              Mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="dropdown-google-<%= search.id %>">
-              <h4>Google</h4>
-              <b>Nebo Agency</b>
-              <br> 1000 Marietta St Suite 270 <br>
-              Atlanta, GA 30318 <br>
-              (404) 885-1201 <br>
-              <i>Rating: </i>
-              <b>94</b><br>
-              <i><a href="https://maps.google.com/?cid=15464446986575315456" target="_blank">Edit entry</a></i>
-              <br>
             </div>
           </div>
         <% end %>
