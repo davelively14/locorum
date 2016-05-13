@@ -76,9 +76,13 @@ let Results = {
 
   renderResult(backendContainer, {backend, biz, address, city, state, zip, rating, url, phone}){
     let template = document.createElement("div")
+
+    // TODO refactor for short-circuit evaluation wihtin template innerHTML
     if (zip == null) {
       zip = ""
     }
+
+    // TODO refactor to just add the last line if url is true
     if (url) {
       template.innerHTML = `
       <b>${this.esc(biz)}</b><br>

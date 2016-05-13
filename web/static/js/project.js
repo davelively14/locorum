@@ -53,11 +53,14 @@ let Project = {
     newContent.innerHTML = `
     <b>${this.esc(resp.biz)}</b><br>
     ${this.esc(resp.address)}<br>
-    ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip)}<br>
+    ${this.esc(resp.city)}, ${this.esc(resp.state)} ${this.esc(resp.zip || "")}<br>
     ${this.esc(resp.phone)}<br>
-    <i>Rating: <b>${this.esc(resp.rating)}</b><br>
-    <i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>
-    `
+    <i>Rating: <b>${this.esc(resp.rating)}</b><br>`
+
+    if(resp.url){
+      newContent.innerHTML = newContent.innerHTML + `<i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>`
+    }
+    
     dropContent.appendChild(newContent)
   },
 

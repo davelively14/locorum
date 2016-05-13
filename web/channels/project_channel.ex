@@ -105,9 +105,9 @@ defmodule Locorum.ProjectChannel do
       address: "1280 W Peachtree St NW, Apt 3009",
       city: "Atlanta",
       state: "GA",
-      zip: "30309",
+      zip: nil,
       rating: "0",
-      url: "http://www.google.com/nebo_peachtree",
+      url: nil,
       phone: "(404) 277-3446",
       search_id: 92
     }
