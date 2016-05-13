@@ -19,7 +19,7 @@ defmodule Locorum.BackendSys.Helpers do
   def send_results(results, header, socket, query) do
     rate_results(results, query)
     |> sort_results
-    |> broadcast_results(header, socket)
+    |> broadcast_results(header, socket, query)
   end
 
   def convert_to_utf(text, output) do
@@ -74,7 +74,7 @@ defmodule Locorum.BackendSys.Helpers do
     String.slice(string, (String.length(string)-10)..(String.length(string)-1))
   end
 
-  defp broadcast_results(results, header, socket) do
+  defp broadcast_results(results, header, socket, query) do
     if results != [] do
       for result <- results do
         broadcast! socket, "result", %{
@@ -87,7 +87,7 @@ defmodule Locorum.BackendSys.Helpers do
           rating: result.rating,
           url: result.url,
           phone: result.phone,
-          search_id: header.search_id
+          search_id: query.id
         }
       end
     else
@@ -102,7 +102,8 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   defp set_header(url, header, query) do
-    Map.put(header, :url_search, url)
+    header
+    |> Map.put(:url_search, url)
     |> Map.put(:search_id, query.id)
   end
 

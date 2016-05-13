@@ -255,4 +255,18 @@ defmodule Locorum.ProjectChannel do
 
     {:reply, :ok, socket}
   end
+
+  def handle_in("run_search", _params, socket) do
+    broadcast! socket, "clear_results", %{
+      id: nil
+    }
+
+    project = Repo.get!(Locorum.Project, socket.assigns.project_id)
+    searches =
+      assoc(project, :searches)
+      |> Repo.all
+
+    for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
+    {:reply, :ok, socket}
+  end
 end

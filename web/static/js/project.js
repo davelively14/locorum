@@ -12,7 +12,7 @@ let Project = {
     let projectChannel = socket.channel("projects:" + projectId)
 
     runSearch.addEventListener("click", e => {
-      projectChannel.push("run_test")
+      projectChannel.push("run_search")
                    .receive("error", e => console.log(e) )
     })
 

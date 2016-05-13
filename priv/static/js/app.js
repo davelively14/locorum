@@ -1240,7 +1240,7 @@ var Project = {
     var projectChannel = socket.channel("projects:" + projectId);
 
     runSearch.addEventListener("click", function (e) {
-      projectChannel.push("run_test").receive("error", function (e) {
+      projectChannel.push("run_search").receive("error", function (e) {
         return console.log(e);
       });
     });
