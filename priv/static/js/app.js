@@ -1254,6 +1254,18 @@ var Project = {
       _this.renderResult(resp);
     });
 
+    projectChannel.on("clear_results", function (resp) {
+      var dropdownElements = document.getElementsByClassName("dropdown-menu");
+      var tabElements = document.getElementsByClassName("tab-content");
+
+      Array.prototype.forEach.call(dropdownElements, function (elem) {
+        elem.innerHTML = "";
+      });
+      Array.prototype.forEach.call(tabElements, function (elem) {
+        elem.innerHTML = "\n        <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"overview-<%= search.id %>\">\n          <h4>Loading results!</h4>\n        </div>\n        ";
+      });
+    });
+
     projectChannel.join().receive("ok", function (resp) {
       return console.log("Joined project channel", resp);
     }).receive("error", function (resp) {

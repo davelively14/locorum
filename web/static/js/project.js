@@ -25,6 +25,22 @@ let Project = {
       this.renderResult(resp)
     })
 
+    projectChannel.on("clear_results", (resp) => {
+      let dropdownElements = document.getElementsByClassName("dropdown-menu")
+      let tabElements = document.getElementsByClassName("tab-content")
+
+      Array.prototype.forEach.call(dropdownElements, function(elem){
+        elem.innerHTML = ""
+      })
+      Array.prototype.forEach.call(tabElements, function(elem){
+        elem.innerHTML = `
+        <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
+          <h4>Loading results!</h4>
+        </div>
+        `
+      })
+    })
+
     projectChannel.join()
       .receive("ok", resp => console.log("Joined project channel", resp))
       .receive("error", resp => console.log("Failed to join project channel", resp))
@@ -60,7 +76,7 @@ let Project = {
     if(resp.url){
       newContent.innerHTML = newContent.innerHTML + `<i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>`
     }
-    
+
     dropContent.appendChild(newContent)
   },
 

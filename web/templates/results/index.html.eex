@@ -30,7 +30,7 @@
                 Backends <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
-                
+
               </ul>
             </li>
           </ul>
@@ -38,10 +38,7 @@
           <!-- Tab panes -->
           <div class="tab-content" id="tab-content-<%= search.id %>">
             <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
-              <h4>Results Start Here</h4>
-              <li>More things</li>
-              <li>More results</li>
-              <li>And conclusion</li>
+              <h4>Run Search to view results!</h4>
             </div>
           </div>
         <% end %>

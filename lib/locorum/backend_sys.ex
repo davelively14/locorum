@@ -3,12 +3,13 @@ defmodule Locorum.BackendSys do
     Locorum.BackendSys.start_link()
   end
 
+  # TODO uncomment WhitePages once backend fixed
   @backends [Locorum.BackendSys.Google,
              Locorum.BackendSys.Yahoo,
              Locorum.BackendSys.CityGrid,
              Locorum.BackendSys.Local,
-             Locorum.BackendSys.Yp,
-             Locorum.BackendSys.WhitePages]
+             Locorum.BackendSys.Yp]
+            #  Locorum.BackendSys.WhitePages]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
