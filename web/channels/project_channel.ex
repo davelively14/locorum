@@ -58,6 +58,30 @@ defmodule Locorum.ProjectChannel do
       search_id: 94
     }
 
+    broadcast! socket, "backend", %{
+      backend: "local",
+      backend_str: "Local",
+      backend_url: "http://www.local.com",
+      results_url: "http://www.local.com/results/16",
+      search_id: 92
+    }
+
+    broadcast! socket, "backend", %{
+      backend: "local",
+      backend_str: "Local",
+      backend_url: "http://www.local.com",
+      results_url: "http://www.local.com/results/16",
+      search_id: 93
+    }
+
+    broadcast! socket, "backend", %{
+      backend: "local",
+      backend_str: "Local",
+      backend_url: "http://www.local.com",
+      results_url: "http://www.local.com/results/16",
+      search_id: 94
+    }
+
     broadcast! socket, "result", %{
       backend: "yahoo",
       biz: "Nebo Agency",
@@ -211,6 +235,21 @@ defmodule Locorum.ProjectChannel do
       rating: "0",
       url: "http://www.google.com/lg_wrong",
       phone: "(404) 277-1234",
+      search_id: 94
+    }
+
+    broadcast! socket, "no_result", %{
+      backend: "local",
+      search_id: 92
+    }
+
+    broadcast! socket, "no_result", %{
+      backend: "local",
+      search_id: 93
+    }
+
+    broadcast! socket, "no_result", %{
+      backend: "local",
       search_id: 94
     }
 

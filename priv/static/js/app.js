@@ -1254,6 +1254,10 @@ var Project = {
       _this.renderResult(resp);
     });
 
+    projectChannel.on("no_result", function (resp) {
+      _this.renderNoResult(resp);
+    });
+
     projectChannel.on("clear_results", function (resp) {
       var dropdownElements = document.getElementsByClassName("backend-titles");
       var tabElements = document.getElementsByClassName("backend-content");
@@ -1303,6 +1307,12 @@ var Project = {
       newContent.innerHTML = newContent.innerHTML + ("<i><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\">Edit entry</a></i><br><br>");
     }
 
+    dropContent.appendChild(newContent);
+  },
+  renderNoResult: function renderNoResult(resp) {
+    var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
+    var newContent = document.createElement("div");
+    newContent.innerHTML = "\n    <i>No results</i>\n    ";
     dropContent.appendChild(newContent);
   },
   esc: function esc(str) {

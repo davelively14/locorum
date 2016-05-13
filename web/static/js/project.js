@@ -25,6 +25,10 @@ let Project = {
       this.renderResult(resp)
     })
 
+    projectChannel.on("no_result", (resp) => {
+      this.renderNoResult(resp)
+    })
+
     projectChannel.on("clear_results", (resp) => {
       let dropdownElements = document.getElementsByClassName("backend-titles")
       let tabElements = document.getElementsByClassName("backend-content")
@@ -81,6 +85,15 @@ let Project = {
       newContent.innerHTML = newContent.innerHTML + `<i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i><br><br>`
     }
 
+    dropContent.appendChild(newContent)
+  },
+
+  renderNoResult(resp){
+    let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
+    let newContent = document.createElement("div")
+    newContent.innerHTML = `
+    <i>No results</i>
+    `
     dropContent.appendChild(newContent)
   },
 
