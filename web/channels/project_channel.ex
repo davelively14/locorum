@@ -17,7 +17,7 @@ defmodule Locorum.ProjectChannel do
       backend_str: "Yahoo Local",
       backend_url: "http://www.yahoo.com",
       results_url: "http://www.yahoo.com/results/16",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "backend", %{
@@ -25,7 +25,15 @@ defmodule Locorum.ProjectChannel do
       backend_str: "Yahoo Local",
       backend_url: "http://www.yahoo.com",
       results_url: "http://www.yahoo.com/results/16",
-      search_id: 2
+      search_id: 93
+    }
+
+    broadcast! socket, "backend", %{
+      backend: "yahoo",
+      backend_str: "Yahoo Local",
+      backend_url: "http://www.yahoo.com",
+      results_url: "http://www.yahoo.com/results/16",
+      search_id: 94
     }
 
     broadcast! socket, "backend", %{
@@ -33,7 +41,7 @@ defmodule Locorum.ProjectChannel do
       backend_str: "Google",
       backend_url: "http://www.google.com",
       results_url: "http://www.google.com/results/16",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "backend", %{
@@ -41,7 +49,15 @@ defmodule Locorum.ProjectChannel do
       backend_str: "Google",
       backend_url: "http://www.google.com",
       results_url: "http://www.google.com/results/16",
-      search_id: 2
+      search_id: 93
+    }
+
+    broadcast! socket, "backend", %{
+      backend: "google",
+      backend_str: "Google",
+      backend_url: "http://www.google.com",
+      results_url: "http://www.google.com/results/16",
+      search_id: 94
     }
 
     broadcast! socket, "result", %{
@@ -54,7 +70,7 @@ defmodule Locorum.ProjectChannel do
       rating: "83",
       url: "http://www.yahoo.com/nebo_loomis",
       phone: "(404) 260-7121",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "result", %{
@@ -67,7 +83,7 @@ defmodule Locorum.ProjectChannel do
       rating: "0",
       url: "http://www.yahoo.com/nebo_peachtree",
       phone: "(404) 277-3446",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "result", %{
@@ -80,7 +96,7 @@ defmodule Locorum.ProjectChannel do
       rating: "83",
       url: "http://www.google.com/nebo_loomis",
       phone: "(404) 260-7121",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "result", %{
@@ -93,7 +109,7 @@ defmodule Locorum.ProjectChannel do
       rating: "0",
       url: "http://www.google.com/nebo_peachtree",
       phone: "(404) 277-3446",
-      search_id: 1
+      search_id: 92
     }
 
     broadcast! socket, "result", %{
@@ -106,7 +122,7 @@ defmodule Locorum.ProjectChannel do
       rating: "83",
       url: "http://www.yahoo.com/lg_right",
       phone: "(404) 260-7777",
-      search_id: 2
+      search_id: 93
     }
 
     broadcast! socket, "result", %{
@@ -119,7 +135,7 @@ defmodule Locorum.ProjectChannel do
       rating: "0",
       url: "http://www.yahoo.com/lg_wrong",
       phone: "(404) 277-1234",
-      search_id: 2
+      search_id: 93
     }
 
     broadcast! socket, "result", %{
@@ -132,7 +148,7 @@ defmodule Locorum.ProjectChannel do
       rating: "83",
       url: "http://www.google.com/lg_right",
       phone: "(404) 260-7777",
-      search_id: 2
+      search_id: 93
     }
 
     broadcast! socket, "result", %{
@@ -145,7 +161,59 @@ defmodule Locorum.ProjectChannel do
       rating: "0",
       url: "http://www.google.com/lg_wrong",
       phone: "(404) 277-1234",
-      search_id: 2
+      search_id: 93
+    }
+
+    broadcast! socket, "result", %{
+      backend: "yahoo",
+      biz: "Bradley Morris",
+      address: "5724 Shadow Creek Rd",
+      city: "Charlotte",
+      state: "NC",
+      zip: "28226",
+      rating: "83",
+      url: "http://www.yahoo.com/lg_right",
+      phone: "(704) 541-6490",
+      search_id: 94
+    }
+
+    broadcast! socket, "result", %{
+      backend: "yahoo",
+      biz: "Bradley Morris",
+      address: "5832 Ryder Ave",
+      city: "Charlotte",
+      state: "NC",
+      zip: "28229",
+      rating: "0",
+      url: "http://www.yahoo.com/lg_wrong",
+      phone: "(404) 277-1234",
+      search_id: 94
+    }
+
+    broadcast! socket, "result", %{
+      backend: "google",
+      biz: "Bradley Morris",
+      address: "5724 Shadow Creek Rd",
+      city: "Charlotte",
+      state: "NC",
+      zip: "28226",
+      rating: "83",
+      url: "http://www.google.com/lg_right",
+      phone: "(704) 541-6490",
+      search_id: 94
+    }
+
+    broadcast! socket, "result", %{
+      backend: "google",
+      biz: "Bradley Morris",
+      address: "5832 Ryder Ave",
+      city: "Charlotte",
+      state: "NC",
+      zip: "28229",
+      rating: "0",
+      url: "http://www.google.com/lg_wrong",
+      phone: "(404) 277-1234",
+      search_id: 94
     }
 
     {:reply, :ok, socket}

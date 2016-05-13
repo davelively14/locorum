@@ -14,6 +14,10 @@ let Project = {
     runSearch.addEventListener("click", e => {
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
+      let temp = document.getElementById("title-header")
+      temp.innerHTML = `
+      Test underway...
+      `
     })
 
     // Need search_id for this one...
@@ -27,7 +31,14 @@ let Project = {
   },
 
   renderBackend(resp){
-    let template = document.createElement("div")
+    let dropMenu = document.getElementById(`backendDrop${resp.search_id}-contents`)
+    let newBackend = document.createElement("li")
+    newBackend.innerHTML = `
+    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" id="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" aria-expanded="false">${this.esc(resp.backend_str)}</a>
+    `
+    dropMenu.appendChild(newBackend)
+    let temp = document.getElementById("title-header")
+    temp.innerHTML = newBackend.innerHTML
   },
 
   esc(str){

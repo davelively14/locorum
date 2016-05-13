@@ -1243,6 +1243,8 @@ var Project = {
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
+      var temp = document.getElementById("title-header");
+      temp.innerHTML = "\n      Test underway...\n      ";
     });
 
     // Need search_id for this one...
@@ -1257,7 +1259,12 @@ var Project = {
     });
   },
   renderBackend: function renderBackend(resp) {
-    var template = document.createElement("div");
+    var dropMenu = document.getElementById("backendDrop" + resp.search_id + "-contents");
+    var newBackend = document.createElement("li");
+    newBackend.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" id=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" aria-expanded=\"false\">" + this.esc(resp.backend_str) + "</a>\n    ";
+    dropMenu.appendChild(newBackend);
+    var temp = document.getElementById("title-header");
+    temp.innerHTML = newBackend.innerHTML;
   },
   esc: function esc(str) {
     var div = document.createElement("div");
