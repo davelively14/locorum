@@ -9,11 +9,16 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.3 to do list
-- Create project_channel
-- Integrate with search_channel
-- Deprecate name of search from database
+- Persist search results
+  - Create results table
+  - Associate with searches
+  - Load on project/search load
+  - Display "as of" for each search
 
 ## v0.4 to do list
+- Deprecate name of search from database
+
+## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
 - Fix WhitePages nil return
 
@@ -35,8 +40,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Find a new name
 - Change Search.biz to Search.name
 
-## Recently completed
-- Deployed v0.2
+## Changelog, v0.3
 - Create Project
   - General routes: new, update, index, show, delete, edit, update
 - Added user authentication
@@ -47,3 +51,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Add searches to projects by CSV
 - Deprecate name of search from forms
 - Restart backends automatically when they fail
+- Created project_channel
