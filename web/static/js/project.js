@@ -9,10 +9,14 @@ let Project = {
   onReady(projectId, socket){
     let searchesContainer = document.getElementById("searches")
     let runSearch = document.getElementById("run-search")
+    let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
     let projectChannel = socket.channel("projects:" + projectId)
 
     runSearch.addEventListener("click", e => {
-      projectChannel.push("run_search")
+      Array.prototype.forEach.call(dropdownTitle, function(elem){
+        elem.setAttribute("class", "dropdown dropdown-menu-title")
+      })
+      projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
 
@@ -58,7 +62,7 @@ let Project = {
     let dropMenu = document.getElementById(`backendDrop${resp.search_id}-contents`)
     let dropMenuBackend = document.createElement("li")
     dropMenuBackend.innerHTML = `
-    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" id="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" aria-expanded="false">${this.esc(resp.backend_str)}</a>
+    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" id="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" aria-expanded="false">${this.esc(resp.backend_str)} <span class="badge" id="${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge">0</span></a>
     `
     dropMenu.appendChild(dropMenuBackend)
 
@@ -74,6 +78,9 @@ let Project = {
   renderResult(resp){
     let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
     let newContent = document.createElement("div")
+    let counter = document.getElementById('id')
+    let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
+    newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4 thumbnail")
     newContent.innerHTML = `
     <b>${this.esc(resp.biz)}</b><br>
     ${this.esc(resp.address)}<br>
@@ -86,6 +93,7 @@ let Project = {
     }
 
     dropContent.appendChild(newContent)
+    badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1
   },
 
   renderNoResult(resp){

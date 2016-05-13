@@ -15,19 +15,19 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-lg-3">
           <strong> <%= search.biz %> </strong> <br>
           <%= search.address1 %><br>
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
           <h3><small><i>Loading status goes here</i></small></h3>
         </div>
-        <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8" do  %>
+        <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8 col-lg-9" do  %>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs search-result-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
-            <li role="presentation" class="dropdown">
+            <li role="presentation" class="dropdown hidden dropdown-menu-title">
               <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
-                Backends <span class="caret"></span>
+                Websites <span class="caret"></span>
               </a>
               <ul class="dropdown-menu backend-titles" aria-labeledby="backendDrop" id="backendDrop<%= search.id %>-contents">
 

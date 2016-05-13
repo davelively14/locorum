@@ -1237,10 +1237,14 @@ var Project = {
 
     var searchesContainer = document.getElementById("searches");
     var runSearch = document.getElementById("run-search");
+    var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
     var projectChannel = socket.channel("projects:" + projectId);
 
     runSearch.addEventListener("click", function (e) {
-      projectChannel.push("run_search").receive("error", function (e) {
+      Array.prototype.forEach.call(dropdownTitle, function (elem) {
+        elem.setAttribute("class", "dropdown dropdown-menu-title");
+      });
+      projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
     });
@@ -1287,7 +1291,7 @@ var Project = {
   renderBackend: function renderBackend(resp) {
     var dropMenu = document.getElementById("backendDrop" + resp.search_id + "-contents");
     var dropMenuBackend = document.createElement("li");
-    dropMenuBackend.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" id=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" aria-expanded=\"false\">" + this.esc(resp.backend_str) + "</a>\n    ";
+    dropMenuBackend.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" id=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" aria-expanded=\"false\">" + this.esc(resp.backend_str) + " <span class=\"badge\" id=\"" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge\">0</span></a>\n    ";
     dropMenu.appendChild(dropMenuBackend);
 
     var tabContent = document.getElementById("tab-content-" + this.esc(resp.search_id));
@@ -1301,6 +1305,9 @@ var Project = {
   renderResult: function renderResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
     var newContent = document.createElement("div");
+    var counter = document.getElementById('id');
+    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
+    newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4 thumbnail");
     newContent.innerHTML = "\n    <b>" + this.esc(resp.biz) + "</b><br>\n    " + this.esc(resp.address) + "<br>\n    " + this.esc(resp.city) + ", " + this.esc(resp.state) + " " + this.esc(resp.zip || "") + "<br>\n    " + this.esc(resp.phone) + "<br>\n    <i>Rating: <b>" + this.esc(resp.rating) + "</b><br>";
 
     if (resp.url) {
@@ -1308,6 +1315,7 @@ var Project = {
     }
 
     dropContent.appendChild(newContent);
+    badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1;
   },
   renderNoResult: function renderNoResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
