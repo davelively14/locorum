@@ -1243,8 +1243,6 @@ var Project = {
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
-      var temp = document.getElementById("title-header");
-      temp.innerHTML = "\n      Test underway...\n      ";
     });
 
     // Need search_id for this one...

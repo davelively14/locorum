@@ -14,10 +14,6 @@ let Project = {
     runSearch.addEventListener("click", e => {
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
-      let temp = document.getElementById("title-header")
-      temp.innerHTML = `
-      Test underway...
-      `
     })
 
     // Need search_id for this one...
