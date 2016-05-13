@@ -40,7 +40,9 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Find a new name
 - Change Search.biz to Search.name
 
-## Changelog, v0.3
+## Changelog
+
+### v0.3
 - Create Project
   - General routes: new, update, index, show, delete, edit, update
 - Added user authentication
