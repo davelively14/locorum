@@ -34,11 +34,10 @@ let Project = {
         elem.innerHTML = ""
       })
       Array.prototype.forEach.call(tabElements, function(elem){
-        elem.innerHTML = `
-        <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
-          <h4>Loading results!</h4>
-        </div>
-        `
+        let firstChild = elem.children[0]
+        firstChild.setAttribute("class", "tab-pane fade in active")
+        elem.innerHTML = ""
+        elem.appendChild(firstChild)
       })
       Array.prototype.forEach.call(overviewElements, function(elem){
         elem.children[0].setAttribute("class", "active")
