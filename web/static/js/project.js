@@ -28,6 +28,7 @@ let Project = {
     projectChannel.on("clear_results", (resp) => {
       let dropdownElements = document.getElementsByClassName("dropdown-menu")
       let tabElements = document.getElementsByClassName("tab-content")
+      let overviewElements = document.getElementsByClassName("search-result-tabs")
 
       Array.prototype.forEach.call(dropdownElements, function(elem){
         elem.innerHTML = ""
@@ -38,6 +39,10 @@ let Project = {
           <h4>Loading results!</h4>
         </div>
         `
+      })
+      Array.prototype.forEach.call(overviewElements, function(elem){
+        elem.children[0].setAttribute("class", "active")
+        elem.children[1].setAttribute("class", "dropdown")
       })
     })
 

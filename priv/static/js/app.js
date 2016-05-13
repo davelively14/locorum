@@ -1257,12 +1257,17 @@ var Project = {
     projectChannel.on("clear_results", function (resp) {
       var dropdownElements = document.getElementsByClassName("dropdown-menu");
       var tabElements = document.getElementsByClassName("tab-content");
+      var overviewElements = document.getElementsByClassName("search-result-tabs");
 
       Array.prototype.forEach.call(dropdownElements, function (elem) {
         elem.innerHTML = "";
       });
       Array.prototype.forEach.call(tabElements, function (elem) {
         elem.innerHTML = "\n        <div role=\"tabpanel\" class=\"tab-pane fade in active\" id=\"overview-<%= search.id %>\">\n          <h4>Loading results!</h4>\n        </div>\n        ";
+      });
+      Array.prototype.forEach.call(overviewElements, function (elem) {
+        elem.children[0].setAttribute("class", "active");
+        elem.children[1].setAttribute("class", "dropdown");
       });
     });
 
