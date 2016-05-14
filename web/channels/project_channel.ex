@@ -253,6 +253,60 @@ defmodule Locorum.ProjectChannel do
       search_id: 94
     }
 
+    broadcast! socket, "loaded_results", %{
+      backend: "google",
+      backend_str: "Google",
+      search_id: 92
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "google",
+      backend_str: "Google",
+      search_id: 93
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "google",
+      backend_str: "Google",
+      search_id: 94
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "yahoo",
+      backend_str: "Yahoo",
+      search_id: 92
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "yahoo",
+      backend_str: "Yahoo",
+      search_id: 93
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "yahoo",
+      backend_str: "Yahoo",
+      search_id: 94
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "local",
+      backend_str: "Local",
+      search_id: 92
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "local",
+      backend_str: "Local",
+      search_id: 93
+    }
+
+    broadcast! socket, "loaded_results", %{
+      backend: "local",
+      backend_str: "Local",
+      search_id: 94
+    }
+
     {:reply, :ok, socket}
   end
 

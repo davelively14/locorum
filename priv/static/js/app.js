@@ -1238,12 +1238,11 @@ var Project = {
     var searchesContainer = document.getElementById("searches");
     var runSearch = document.getElementById("run-search");
     var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
+    var loadingStatus = document.getElementsByClassName("load-status");
     var projectChannel = socket.channel("projects:" + projectId);
 
     runSearch.addEventListener("click", function (e) {
-      Array.prototype.forEach.call(dropdownTitle, function (elem) {
-        elem.setAttribute("class", "dropdown dropdown-menu-title");
-      });
+      _this.showWebsiteDropdown(dropdownTitle);
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
@@ -1251,6 +1250,8 @@ var Project = {
 
     // Need search_id for this one...
     projectChannel.on("backend", function (resp) {
+      var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
+      loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
       _this.renderBackend(resp);
     });
 
@@ -1280,6 +1281,17 @@ var Project = {
         elem.children[0].setAttribute("class", "active");
         elem.children[1].setAttribute("class", "dropdown");
       });
+    });
+
+    projectChannel.on("loaded_results", function (resp) {
+      var loaded = document.getElementById("search-" + _this.esc(resp.search_id) + "-loaded");
+      var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
+      var loadStatsContainer = document.getElementById("load-status-" + _this.esc(resp.search_id));
+      loaded.innerHTML = parseInt(loaded.innerHTML) + 1;
+      if (loaded.innerHTML == loadedOf.innerHTML) {
+        loadStatsContainer.setAttribute("class", "text-success");
+        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
+      }
     });
 
     projectChannel.join().receive("ok", function (resp) {
@@ -1322,6 +1334,11 @@ var Project = {
     var newContent = document.createElement("div");
     newContent.innerHTML = "\n    <i>No results</i>\n    ";
     dropContent.appendChild(newContent);
+  },
+  showWebsiteDropdown: function showWebsiteDropdown(dropdownTitle) {
+    Array.prototype.forEach.call(dropdownTitle, function (elem) {
+      elem.setAttribute("class", "dropdown dropdown-menu-title");
+    });
   },
   esc: function esc(str) {
     var div = document.createElement("div");

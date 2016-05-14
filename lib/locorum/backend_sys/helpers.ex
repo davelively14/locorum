@@ -97,7 +97,8 @@ defmodule Locorum.BackendSys.Helpers do
     end
     broadcast! socket, "loaded_results", %{
       backend: header.backend,
-      backend_str: header.backend_str
+      backend_str: header.backend_str,
+      search_id: query.id
     }
   end
 

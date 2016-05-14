@@ -14,6 +14,11 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Associate with searches
   - Load on project/search load
   - Display "as of" for each search
+- Create overview for each search
+  - Project
+  - Search
+- Show loading status for each search
+  - Display "loaded" when complete
 
 ## v0.4 to do list
 - Deprecate name of search from database
@@ -43,10 +48,10 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 ## Changelog
 
 ### v0.3
-- Create Project
+- Created Project
   - General routes: new, update, index, show, delete, edit, update
 - Added user authentication
-- Create links to user
+- Created links to user
   - Project
   - Search
 - Can add searches to projects individually

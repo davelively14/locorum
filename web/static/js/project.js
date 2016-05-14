@@ -10,18 +10,19 @@ let Project = {
     let searchesContainer = document.getElementById("searches")
     let runSearch = document.getElementById("run-search")
     let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
+    let loadingStatus = document.getElementsByClassName("load-status")
     let projectChannel = socket.channel("projects:" + projectId)
 
     runSearch.addEventListener("click", e => {
-      Array.prototype.forEach.call(dropdownTitle, function(elem){
-        elem.setAttribute("class", "dropdown dropdown-menu-title")
-      })
+      this.showWebsiteDropdown(dropdownTitle)
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
 
     // Need search_id for this one...
     projectChannel.on("backend", (resp) => {
+      let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
+      loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
       this.renderBackend(resp)
     })
 
@@ -51,6 +52,17 @@ let Project = {
         elem.children[0].setAttribute("class", "active")
         elem.children[1].setAttribute("class", "dropdown")
       })
+    })
+
+    projectChannel.on("loaded_results", (resp) => {
+      let loaded = document.getElementById(`search-${this.esc(resp.search_id)}-loaded`)
+      let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
+      let loadStatsContainer = document.getElementById(`load-status-${this.esc(resp.search_id)}`)
+      loaded.innerHTML = parseInt(loaded.innerHTML) + 1
+      if (loaded.innerHTML == loadedOf.innerHTML) {
+        loadStatsContainer.setAttribute("class", "text-success")
+        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
+      }
     })
 
     projectChannel.join()
@@ -118,6 +130,12 @@ let Project = {
     <i>No results</i>
     `
     dropContent.appendChild(newContent)
+  },
+
+  showWebsiteDropdown(dropdownTitle){
+    Array.prototype.forEach.call(dropdownTitle, function(elem){
+      elem.setAttribute("class", "dropdown dropdown-menu-title")
+    })
   },
 
   esc(str){

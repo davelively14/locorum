@@ -19,7 +19,7 @@
           <strong> <%= search.biz %> </strong> <br>
           <%= search.address1 %><br>
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
-          <h3><small><i>Loading status goes here</i></small></h3>
+          <h3><small><i class="load-status" id="load-status-<%= search.id %>">Loaded <span id="search-<%= search.id %>-loaded">0</span> of <span id="search-<%= search.id %>-of">0</span> backends</i></small></h3>
         </div>
         <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8 col-lg-9" do  %>
           <!-- Nav tabs -->
