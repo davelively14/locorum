@@ -27,7 +27,7 @@ let Project = {
         let search_id = button.getAttribute("data-id")
         let payload = {search_id: search_id}
         Project.clearAndPrepSingleResult(search_id)
-        projectChannel.push("run_single_search", payload)
+        projectChannel.push("run_single_test", payload)
                       .receive("error", e => console.log(e) )
       })
     })
@@ -99,11 +99,20 @@ let Project = {
 
     dropdownElement.innerHTML = ""
 
-    let firstTab = tabContentElement.children[0]
-    firstTab.setAttribute("class", "tab-pane fade in active overview")
-    firstTab.innerHTML = ""
+    let overviewTab = tabContentElement.children[0]
+    overviewTab.setAttribute("class", "tab-pane fade in active overview")
     tabContentElement.innerHTML = ""
-    tabContentElement.appendChild(firstTab)
+    tabContentElement.appendChild(overviewTab)
+    overviewTab.innerHTML = `
+    <table id="overview-${search_id}-table" class="table table-hover">
+    <tr>
+    <th>Backend</th>
+    <th>Results</th>
+    <th>High Rating</th>
+    <th>Low Rating</th>
+    </tr>
+    </table>
+    `
 
     overviewElement.children[0].setAttribute("class", "active")
     overviewElement.children[1].setAttribute("class", "dropdown")

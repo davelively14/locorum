@@ -1256,7 +1256,7 @@ var Project = {
         var search_id = button.getAttribute("data-id");
         var payload = { search_id: search_id };
         Project.clearAndPrepSingleResult(search_id);
-        projectChannel.push("run_single_search", payload).receive("error", function (e) {
+        projectChannel.push("run_single_test", payload).receive("error", function (e) {
           return console.log(e);
         });
       });
@@ -1329,11 +1329,11 @@ var Project = {
 
     dropdownElement.innerHTML = "";
 
-    var firstTab = tabContentElement.children[0];
-    firstTab.setAttribute("class", "tab-pane fade in active overview");
-    firstTab.innerHTML = "";
+    var overviewTab = tabContentElement.children[0];
+    overviewTab.setAttribute("class", "tab-pane fade in active overview");
     tabContentElement.innerHTML = "";
-    tabContentElement.appendChild(firstTab);
+    tabContentElement.appendChild(overviewTab);
+    overviewTab.innerHTML = "\n    <table id=\"overview-" + search_id + "-table\" class=\"table table-hover\">\n    <tr>\n    <th>Backend</th>\n    <th>Results</th>\n    <th>High Rating</th>\n    <th>Low Rating</th>\n    </tr>\n    </table>\n    ";
 
     overviewElement.children[0].setAttribute("class", "active");
     overviewElement.children[1].setAttribute("class", "dropdown");
