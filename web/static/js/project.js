@@ -90,7 +90,6 @@ let Project = {
     let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
     let newContent = document.createElement("div")
     let counter = document.getElementById('id')
-    let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
     newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4")
     if(resp.url){
       newContent.innerHTML = `
@@ -119,7 +118,11 @@ let Project = {
     }
 
     dropContent.appendChild(newContent)
-    badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1
+
+    let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
+    if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)){
+      badgeCounter.innerHTML = this.esc(resp.rating)
+    }
   },
 
   renderNoResult(resp){

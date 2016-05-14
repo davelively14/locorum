@@ -2,7 +2,6 @@ defmodule Locorum.Search do
   use Locorum.Web, :model
 
   schema "searches" do
-    field :name, :string
     field :biz, :string
     field :address1, :string
     field :address2, :string, virtual: true

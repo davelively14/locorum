@@ -1317,7 +1317,6 @@ var Project = {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
     var newContent = document.createElement("div");
     var counter = document.getElementById('id');
-    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
     newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4");
     if (resp.url) {
       newContent.innerHTML = "\n      <div class=\"panel panel-info\">\n      <div class=\"panel-body\">\n      <b>" + this.esc(resp.biz) + "</b><br>\n      " + this.esc(resp.address) + "<br>\n      " + this.esc(resp.city) + ", " + this.esc(resp.state) + " " + this.esc(resp.zip || "") + "<br>\n      " + this.esc(resp.phone) + "<br>\n      <i>Rating: <b>" + this.esc(resp.rating) + "</b></i>\n      </div>\n      <div class=\"panel-footer\">\n      <i><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\">Edit entry</a></i>\n      </div>\n      </div>";
@@ -1326,7 +1325,11 @@ var Project = {
     }
 
     dropContent.appendChild(newContent);
-    badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1;
+
+    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
+    if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)) {
+      badgeCounter.innerHTML = this.esc(resp.rating);
+    }
   },
   renderNoResult: function renderNoResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
