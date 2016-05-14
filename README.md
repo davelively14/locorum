@@ -16,6 +16,11 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Display "as of" for each search
 
 ## v0.4 to do list
+- Improve templates
+  - Homepage
+  - Project
+  - Search
+  - User
 - User authentication for socket
 - Refactor to use "name" instead of "biz" for search
 - Create overview for each search
@@ -23,6 +28,9 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
 - Fix WhitePages nil return
+- Add chat capabilities
+  - By search/results
+  - Link to #slack
 
 ## Long term to do list
 
