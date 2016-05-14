@@ -1254,13 +1254,9 @@ var Project = {
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
 
       _this.renderBackend(resp);
-      _this.renderTally(resp);
     });
 
     projectChannel.on("result", function (resp) {
-      var tallyContainer = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-tally");
-      tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1;
-
       var badgeCounter = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-badge");
       badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1;
 
@@ -1280,6 +1276,7 @@ var Project = {
         loadStatsContainer.setAttribute("class", "text-success");
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
       }
+      _this.renderTally(resp);
     });
 
     projectChannel.on("clear_results", function (resp) {
@@ -1338,7 +1335,7 @@ var Project = {
   renderTally: function renderTally(resp) {
     var tallyContainer = document.getElementById("overview-" + this.esc(resp.search_id));
     var newEntry = document.createElement("div");
-    newEntry.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a>: <span id=\"" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tally\">0</span>\n    ";
+    newEntry.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a>: " + this.esc(resp.num_results) + "\n    ";
     tallyContainer.appendChild(newEntry);
 
     // TODO can I write this in ES6 instead of jquery?

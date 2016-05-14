@@ -25,13 +25,9 @@ let Project = {
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
 
       this.renderBackend(resp)
-      this.renderTally(resp)
     })
 
     projectChannel.on("result", (resp) => {
-      let tallyContainer = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tally`)
-      tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1
-
       let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
       badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1
 
@@ -51,6 +47,7 @@ let Project = {
         loadStatsContainer.setAttribute("class", "text-success")
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
       }
+      this.renderTally(resp)
     })
 
     projectChannel.on("clear_results", (resp) => {
@@ -133,7 +130,7 @@ let Project = {
     let tallyContainer = document.getElementById(`overview-${this.esc(resp.search_id)}`)
     let newEntry = document.createElement("div")
     newEntry.innerHTML = `
-    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}">${this.esc(resp.backend_str)}</a>: <span id="${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tally">0</span>
+    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}">${this.esc(resp.backend_str)}</a>: ${this.esc(resp.num_results)}
     `
     tallyContainer.appendChild(newEntry)
 
