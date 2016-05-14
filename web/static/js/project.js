@@ -33,9 +33,7 @@ let Project = {
       tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1
 
       let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
-      if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)){
-        badgeCounter.innerHTML = this.esc(resp.rating)
-      }
+      badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1
 
       this.renderResult(resp)
     })

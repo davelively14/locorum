@@ -1262,9 +1262,7 @@ var Project = {
       tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1;
 
       var badgeCounter = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-badge");
-      if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)) {
-        badgeCounter.innerHTML = _this.esc(resp.rating);
-      }
+      badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1;
 
       _this.renderResult(resp);
     });
