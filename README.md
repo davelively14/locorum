@@ -14,13 +14,11 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Associate with searches
   - Load on project/search load
   - Display "as of" for each search
-- Create overview for each search
-  - Project
-  - Search
 
 ## v0.4 to do list
 - User authentication for socket
 - Refactor to use "name" instead of "biz" for search
+- Create overview for each search
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -58,3 +56,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Shows loading status for each search
   - Displays "loaded" when complete
 - Removed "name" from search
+- Created overview for each search in Project
