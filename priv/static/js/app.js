@@ -1243,7 +1243,7 @@ var Project = {
 
     runSearch.addEventListener("click", function (e) {
       _this.showWebsiteDropdown(dropdownTitle);
-      _this.clearOverviews();
+      _this.prepOverviews();
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
@@ -1333,10 +1333,10 @@ var Project = {
     var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
     badgeCounter.innerHTML = "" + this.esc(resp.num_results);
 
-    var tallyContainer = document.getElementById("overview-" + this.esc(resp.search_id));
-    var newEntry = document.createElement("div");
-    newEntry.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a>: " + this.esc(resp.num_results) + "\n    ";
-    tallyContainer.appendChild(newEntry);
+    var tallyContainerTable = document.getElementById("overview-" + this.esc(resp.search_id) + "-table");
+    var newEntry = document.createElement("tr");
+    newEntry.innerHTML = "\n    <td><a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a></td>\n    <td>" + this.esc(resp.num_results) + "</td>\n    <td>" + this.esc(resp.high_rating || "--") + "</td>\n    <td>" + this.esc(resp.low_rating || "--") + "</td>\n    ";
+    tallyContainerTable.children[0].appendChild(newEntry);
 
     // TODO can I write this in ES6 instead of jquery?
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -1355,10 +1355,11 @@ var Project = {
       elem.setAttribute("class", "dropdown dropdown-menu-title");
     });
   },
-  clearOverviews: function clearOverviews() {
+  prepOverviews: function prepOverviews() {
     var allOverviews = document.getElementsByClassName("overview");
     Array.prototype.forEach.call(allOverviews, function (elem) {
-      elem.innerHTML = "";
+      var parentId = elem.getAttribute("id");
+      elem.innerHTML = "\n      <table id=\"" + parentId + "-table\" class=\"table table-hover\">\n        <tr>\n          <th>Backend</th>\n          <th>Results</th>\n          <th>High Rating</th>\n          <th>Low Rating</th>\n        </tr>\n      </table>\n      ";
     });
   },
   esc: function esc(str) {

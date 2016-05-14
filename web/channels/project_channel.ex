@@ -257,63 +257,81 @@ defmodule Locorum.ProjectChannel do
       backend: "google",
       backend_str: "Google",
       num_results: 2,
-      search_id: 92
+      search_id: 92,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "google",
       backend_str: "Google",
       num_results: 2,
-      search_id: 93
+      search_id: 93,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "google",
       backend_str: "Google",
       num_results: 2,
-      search_id: 94
+      search_id: 94,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
       num_results: 2,
-      search_id: 92
+      search_id: 92,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
       num_results: 2,
-      search_id: 93
+      search_id: 93,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
       num_results: 2,
-      search_id: 94
+      search_id: 94,
+      high_rating: "83",
+      low_rating: "0"
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
       num_results: 0,
-      search_id: 92
+      search_id: 92,
+      high_rating: nil,
+      low_rating: nil
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
       num_results: 0,
-      search_id: 93
+      search_id: 93,
+      high_rating: nil,
+      low_rating: nil
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
       num_results: 0,
-      search_id: 94
+      search_id: 94,
+      high_rating: nil,
+      low_rating: nil
     }
 
     {:reply, :ok, socket}

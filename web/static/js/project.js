@@ -15,7 +15,7 @@ let Project = {
 
     runSearch.addEventListener("click", e => {
       this.showWebsiteDropdown(dropdownTitle)
-      this.clearOverviews()
+      this.prepOverviews()
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
@@ -127,12 +127,15 @@ let Project = {
     let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
     badgeCounter.innerHTML = `${this.esc(resp.num_results)}`
 
-    let tallyContainer = document.getElementById(`overview-${this.esc(resp.search_id)}`)
-    let newEntry = document.createElement("div")
+    let tallyContainerTable = document.getElementById(`overview-${this.esc(resp.search_id)}-table`)
+    let newEntry = document.createElement("tr")
     newEntry.innerHTML = `
-    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}">${this.esc(resp.backend_str)}</a>: ${this.esc(resp.num_results)}
+    <td><a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}">${this.esc(resp.backend_str)}</a></td>
+    <td>${this.esc(resp.num_results)}</td>
+    <td>${this.esc(resp.high_rating || "--")}</td>
+    <td>${this.esc(resp.low_rating || "--")}</td>
     `
-    tallyContainer.appendChild(newEntry)
+    tallyContainerTable.children[0].appendChild(newEntry)
 
     // TODO can I write this in ES6 instead of jquery?
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -156,10 +159,20 @@ let Project = {
     })
   },
 
-  clearOverviews(){
+  prepOverviews(){
     let allOverviews = document.getElementsByClassName("overview")
     Array.prototype.forEach.call(allOverviews, function(elem){
-      elem.innerHTML = ""
+      let parentId = elem.getAttribute("id")
+      elem.innerHTML = `
+      <table id="${parentId}-table" class="table table-hover">
+        <tr>
+          <th>Backend</th>
+          <th>Results</th>
+          <th>High Rating</th>
+          <th>Low Rating</th>
+        </tr>
+      </table>
+      `
     })
   },
 

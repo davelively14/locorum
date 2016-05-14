@@ -99,7 +99,9 @@ defmodule Locorum.BackendSys.Helpers do
       backend: header.backend,
       backend_str: header.backend_str,
       search_id: query.id,
-      num_results: Enum.count(results)
+      num_results: Enum.count(results),
+      high_rating: Integer.to_string(List.first(results).rating),
+      low_rating: Integer.to_string(List.last(results).rating)
     }
   end
 
