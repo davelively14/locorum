@@ -17,8 +17,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Create overview for each search
   - Project
   - Search
-- Show loading status for each search
-  - Display "loaded" when complete
 
 ## v0.4 to do list
 - Deprecate name of search from database
@@ -59,3 +57,5 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Deprecate name of search from forms
 - Restart backends automatically when they fail
 - Created project_channel
+- Shows loading status for each search
+  - Displays "loaded" when complete
