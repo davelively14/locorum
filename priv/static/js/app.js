@@ -1330,6 +1330,9 @@ var Project = {
     dropContent.appendChild(newContent);
   },
   renderTally: function renderTally(resp) {
+    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
+    badgeCounter.innerHTML = "" + this.esc(resp.num_results);
+
     var tallyContainer = document.getElementById("overview-" + this.esc(resp.search_id));
     var newEntry = document.createElement("div");
     newEntry.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a>: " + this.esc(resp.num_results) + "\n    ";
@@ -1340,9 +1343,6 @@ var Project = {
       var target = this.href.split('#');
       $('.nav a').filter('a[href="#' + target[1] + '"]').tab('show');
     });
-
-    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
-    badgeCounter.innerHTML = this.esc(resp.num_results);
   },
   renderNoResult: function renderNoResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
