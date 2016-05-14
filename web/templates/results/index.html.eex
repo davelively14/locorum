@@ -1,7 +1,7 @@
 <h2 id="title-header">
   <%= @project.name %> Results
   <small class="pull-right">
-    back to <%= link "project", to: project_path(@conn, :show, @project.id) %>
+    back to <%= link "project menu", to: project_path(@conn, :show, @project.id) %>
   </small>
 </h2>
 
@@ -38,7 +38,7 @@
           <!-- Tab panes -->
           <div class="tab-content backend-content" id="tab-content-<%= search.id %>">
             <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
-              <h4>Run Search to view results!</h4>
+              <h4>No data available. Click "Run Search" above</h4>
             </div>
           </div>
         <% end %>

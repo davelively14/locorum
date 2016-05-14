@@ -19,7 +19,6 @@ let Project = {
                    .receive("error", e => console.log(e) )
     })
 
-    // Need search_id for this one...
     projectChannel.on("backend", (resp) => {
       let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1

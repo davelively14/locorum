@@ -20,6 +20,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## v0.4 to do list
 - Deprecate name of search from database
+- User authentication for socket
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages

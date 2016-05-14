@@ -1248,7 +1248,6 @@ var Project = {
       });
     });
 
-    // Need search_id for this one...
     projectChannel.on("backend", function (resp) {
       var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
