@@ -17,15 +17,16 @@ let Project = {
     runProjectSearch.addEventListener("click", e => {
       this.showWebsiteDropdown(dropdownTitle)
       this.prepOverviews()
-      this.clear_results()
+      this.clearAndPrepAllResults()
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
 
     Array.prototype.forEach.call(runSingleSearch, function(button){
       button.addEventListener("click", e => {
-        let payload = {search_id: button.getAttribute("data-id")}
-
+        let search_id = button.getAttribute("data-id")
+        let payload = {search_id: search_id}
+        Project.clearAndPrepSingleResult(search_id)
         projectChannel.push("run_single_search", payload)
                       .receive("error", e => console.log(e) )
       })
@@ -59,41 +60,25 @@ let Project = {
       this.renderTally(resp)
     })
 
-    projectChannel.on("clear_results_by_search", (resp) => {
-      let dropdownElement = document.getElementById(`backendDrop${this.esc(resp.search_id)}`)
-      let tabElement = document.getElementById(`tab-content-${this.esc(resp.search_id)}`)
-      let overviewElement = document.getElementById(`search-result-tabs-${this.esc(resp.search_id)}`)
-
-      dropdownElement.innerHTML = ""
-
-      let firstTab = tabElement.children[0]
-      firstTab.setAttribute("class", "tab-pane fade in active")
-      tabElement.innerHTML = ""
-      tabElement.appendChild(firstTab)
-
-      overviewElement.children[0].setAttribute("class", "active")
-      overviewElement.children[1].setAttribute("class", "dropdown")
-    })
-
     projectChannel.join()
       .receive("ok", resp => console.log("Joined project channel", resp))
       .receive("error", resp => console.log("Failed to join project channel", resp))
   },
 
-  clear_results(){
+  clearAndPrepAllResults(){
     let dropdownElements = document.getElementsByClassName("backend-titles")
-    let tabElements = document.getElementsByClassName("backend-content")
+    let tabContentElements = document.getElementsByClassName("backend-content")
     let overviewElements = document.getElementsByClassName("search-result-tabs")
     let loadStatusElements = document.getElementsByClassName("load-status")
 
     Array.prototype.forEach.call(dropdownElements, function(elem){
       elem.innerHTML = ""
     })
-    Array.prototype.forEach.call(tabElements, function(elem){
-      let firstChild = elem.children[0]
-      firstChild.setAttribute("class", "tab-pane fade in active")
+    Array.prototype.forEach.call(tabContentElements, function(elem){
+      let overviewTab = elem.children[0]
+      overviewTab.setAttribute("class", "tab-pane fade in active overview")
       elem.innerHTML = ""
-      elem.appendChild(firstChild)
+      elem.appendChild(overviewTab)
     })
     Array.prototype.forEach.call(overviewElements, function(elem){
       elem.children[0].setAttribute("class", "active")
@@ -104,6 +89,28 @@ let Project = {
       let id = elem.getAttribute("id").split(/[\s-]+/).pop()
       elem.innerHTML = `Loaded <span id="search-${id}-loaded">0</span> of <span id="search-${id}-of">0</span> backends`
     })
+  },
+
+  clearAndPrepSingleResult(search_id){
+    let dropdownElement = document.getElementById(`backendDrop${search_id}-contents`)
+    let tabContentElement = document.getElementById(`tab-content-${search_id}`)
+    let overviewElement = document.getElementById(`search-result-tabs-${search_id}`)
+    let loadStatusElement = document.getElementById(`load-status-${search_id}`)
+
+    dropdownElement.innerHTML = ""
+
+    let firstTab = tabContentElement.children[0]
+    firstTab.setAttribute("class", "tab-pane fade in active overview")
+    firstTab.innerHTML = ""
+    tabContentElement.innerHTML = ""
+    tabContentElement.appendChild(firstTab)
+
+    overviewElement.children[0].setAttribute("class", "active")
+    overviewElement.children[1].setAttribute("class", "dropdown")
+
+    loadStatusElement.innerHTML = `Loaded <span id="search-${search_id}-loaded">0</span> of <span id="search-${search_id}-of">0</span> backends`
+
+
   },
 
   renderBackend(resp){

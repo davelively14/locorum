@@ -1245,7 +1245,7 @@ var Project = {
     runProjectSearch.addEventListener("click", function (e) {
       _this.showWebsiteDropdown(dropdownTitle);
       _this.prepOverviews();
-      _this.clear_results();
+      _this.clearAndPrepAllResults();
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
@@ -1253,8 +1253,9 @@ var Project = {
 
     Array.prototype.forEach.call(runSingleSearch, function (button) {
       button.addEventListener("click", function (e) {
-        var payload = { search_id: button.getAttribute("data-id") };
-
+        var search_id = button.getAttribute("data-id");
+        var payload = { search_id: search_id };
+        Project.clearAndPrepSingleResult(search_id);
         projectChannel.push("run_single_search", payload).receive("error", function (e) {
           return console.log(e);
         });
@@ -1289,42 +1290,26 @@ var Project = {
       _this.renderTally(resp);
     });
 
-    projectChannel.on("clear_results_by_search", function (resp) {
-      var dropdownElement = document.getElementById("backendDrop" + _this.esc(resp.search_id));
-      var tabElement = document.getElementById("tab-content-" + _this.esc(resp.search_id));
-      var overviewElement = document.getElementById("search-result-tabs-" + _this.esc(resp.search_id));
-
-      dropdownElement.innerHTML = "";
-
-      var firstTab = tabElement.children[0];
-      firstTab.setAttribute("class", "tab-pane fade in active");
-      tabElement.innerHTML = "";
-      tabElement.appendChild(firstTab);
-
-      overviewElement.children[0].setAttribute("class", "active");
-      overviewElement.children[1].setAttribute("class", "dropdown");
-    });
-
     projectChannel.join().receive("ok", function (resp) {
       return console.log("Joined project channel", resp);
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
     });
   },
-  clear_results: function clear_results() {
+  clearAndPrepAllResults: function clearAndPrepAllResults() {
     var dropdownElements = document.getElementsByClassName("backend-titles");
-    var tabElements = document.getElementsByClassName("backend-content");
+    var tabContentElements = document.getElementsByClassName("backend-content");
     var overviewElements = document.getElementsByClassName("search-result-tabs");
     var loadStatusElements = document.getElementsByClassName("load-status");
 
     Array.prototype.forEach.call(dropdownElements, function (elem) {
       elem.innerHTML = "";
     });
-    Array.prototype.forEach.call(tabElements, function (elem) {
-      var firstChild = elem.children[0];
-      firstChild.setAttribute("class", "tab-pane fade in active");
+    Array.prototype.forEach.call(tabContentElements, function (elem) {
+      var overviewTab = elem.children[0];
+      overviewTab.setAttribute("class", "tab-pane fade in active overview");
       elem.innerHTML = "";
-      elem.appendChild(firstChild);
+      elem.appendChild(overviewTab);
     });
     Array.prototype.forEach.call(overviewElements, function (elem) {
       elem.children[0].setAttribute("class", "active");
@@ -1335,6 +1320,25 @@ var Project = {
       var id = elem.getAttribute("id").split(/[\s-]+/).pop();
       elem.innerHTML = "Loaded <span id=\"search-" + id + "-loaded\">0</span> of <span id=\"search-" + id + "-of\">0</span> backends";
     });
+  },
+  clearAndPrepSingleResult: function clearAndPrepSingleResult(search_id) {
+    var dropdownElement = document.getElementById("backendDrop" + search_id + "-contents");
+    var tabContentElement = document.getElementById("tab-content-" + search_id);
+    var overviewElement = document.getElementById("search-result-tabs-" + search_id);
+    var loadStatusElement = document.getElementById("load-status-" + search_id);
+
+    dropdownElement.innerHTML = "";
+
+    var firstTab = tabContentElement.children[0];
+    firstTab.setAttribute("class", "tab-pane fade in active overview");
+    firstTab.innerHTML = "";
+    tabContentElement.innerHTML = "";
+    tabContentElement.appendChild(firstTab);
+
+    overviewElement.children[0].setAttribute("class", "active");
+    overviewElement.children[1].setAttribute("class", "dropdown");
+
+    loadStatusElement.innerHTML = "Loaded <span id=\"search-" + search_id + "-loaded\">0</span> of <span id=\"search-" + search_id + "-of\">0</span> backends";
   },
   renderBackend: function renderBackend(resp) {
     var dropMenu = document.getElementById("backendDrop" + resp.search_id + "-contents");
