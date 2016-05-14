@@ -1262,6 +1262,17 @@ var Project = {
       _this.renderNoResult(resp);
     });
 
+    projectChannel.on("loaded_results", function (resp) {
+      var loaded = document.getElementById("search-" + _this.esc(resp.search_id) + "-loaded");
+      var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
+      var loadStatsContainer = document.getElementById("load-status-" + _this.esc(resp.search_id));
+      loaded.innerHTML = parseInt(loaded.innerHTML) + 1;
+      if (loaded.innerHTML == loadedOf.innerHTML) {
+        loadStatsContainer.setAttribute("class", "text-success");
+        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
+      }
+    });
+
     projectChannel.on("clear_results", function (resp) {
       var dropdownElements = document.getElementsByClassName("backend-titles");
       var tabElements = document.getElementsByClassName("backend-content");
@@ -1280,17 +1291,6 @@ var Project = {
         elem.children[0].setAttribute("class", "active");
         elem.children[1].setAttribute("class", "dropdown");
       });
-    });
-
-    projectChannel.on("loaded_results", function (resp) {
-      var loaded = document.getElementById("search-" + _this.esc(resp.search_id) + "-loaded");
-      var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
-      var loadStatsContainer = document.getElementById("load-status-" + _this.esc(resp.search_id));
-      loaded.innerHTML = parseInt(loaded.innerHTML) + 1;
-      if (loaded.innerHTML == loadedOf.innerHTML) {
-        loadStatsContainer.setAttribute("class", "text-success");
-        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
-      }
     });
 
     projectChannel.join().receive("ok", function (resp) {

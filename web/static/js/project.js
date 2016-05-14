@@ -33,6 +33,17 @@ let Project = {
       this.renderNoResult(resp)
     })
 
+    projectChannel.on("loaded_results", (resp) => {
+      let loaded = document.getElementById(`search-${this.esc(resp.search_id)}-loaded`)
+      let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
+      let loadStatsContainer = document.getElementById(`load-status-${this.esc(resp.search_id)}`)
+      loaded.innerHTML = parseInt(loaded.innerHTML) + 1
+      if (loaded.innerHTML == loadedOf.innerHTML) {
+        loadStatsContainer.setAttribute("class", "text-success")
+        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
+      }
+    })
+
     projectChannel.on("clear_results", (resp) => {
       let dropdownElements = document.getElementsByClassName("backend-titles")
       let tabElements = document.getElementsByClassName("backend-content")
@@ -51,17 +62,6 @@ let Project = {
         elem.children[0].setAttribute("class", "active")
         elem.children[1].setAttribute("class", "dropdown")
       })
-    })
-
-    projectChannel.on("loaded_results", (resp) => {
-      let loaded = document.getElementById(`search-${this.esc(resp.search_id)}-loaded`)
-      let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
-      let loadStatsContainer = document.getElementById(`load-status-${this.esc(resp.search_id)}`)
-      loaded.innerHTML = parseInt(loaded.innerHTML) + 1
-      if (loaded.innerHTML == loadedOf.innerHTML) {
-        loadStatsContainer.setAttribute("class", "text-success")
-        loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
-      }
     })
 
     projectChannel.join()
