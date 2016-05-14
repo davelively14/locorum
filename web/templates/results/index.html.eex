@@ -24,8 +24,8 @@
         <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8 col-lg-9" do  %>
           <!-- Nav tabs -->
           <ul class="nav nav-tabs search-result-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
-            <li role="presentation" class="dropdown hidden dropdown-menu-title">
+            <li role="presentation" class="active over-tab-<%= search.id %>"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
+            <li role="presentation" class="dropdown hidden dropdown-menu-title" id="drop-tab-<%= search.id %>">
               <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">
                 Websites <span class="caret"></span>
               </a>
@@ -37,7 +37,7 @@
 
           <!-- Tab panes -->
           <div class="tab-content backend-content" id="tab-content-<%= search.id %>">
-            <div role="tabpanel" class="tab-pane fade in active" id="overview-<%= search.id %>">
+            <div role="tabpanel" class="tab-pane fade in active overview" id="overview-<%= search.id %>">
               <h4>No data available. Click "Run Search" above</h4>
             </div>
           </div>

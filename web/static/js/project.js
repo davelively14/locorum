@@ -15,6 +15,7 @@ let Project = {
 
     runSearch.addEventListener("click", e => {
       this.showWebsiteDropdown(dropdownTitle)
+      this.clearOverviews()
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
     })
@@ -22,10 +23,20 @@ let Project = {
     projectChannel.on("backend", (resp) => {
       let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
+
       this.renderBackend(resp)
+      this.renderTally(resp)
     })
 
     projectChannel.on("result", (resp) => {
+      let tallyContainer = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tally`)
+      tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1
+
+      let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
+      if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)){
+        badgeCounter.innerHTML = this.esc(resp.rating)
+      }
+
       this.renderResult(resp)
     })
 
@@ -118,11 +129,21 @@ let Project = {
     }
 
     dropContent.appendChild(newContent)
+  },
 
-    let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
-    if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)){
-      badgeCounter.innerHTML = this.esc(resp.rating)
-    }
+  renderTally(resp){
+    let tallyContainer = document.getElementById(`overview-${this.esc(resp.search_id)}`)
+    let newEntry = document.createElement("div")
+    newEntry.innerHTML = `
+    <a href="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}" role="tab" data-toggle="tab" aria-controls="#dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}">${this.esc(resp.backend_str)}</a>: <span id="${this.esc(resp.backend)}-${this.esc(resp.search_id)}-tally">0</span>
+    `
+    tallyContainer.appendChild(newEntry)
+
+    // TODO can I write this in ES6 instead of jquery?
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = this.href.split('#');
+      $('.nav a').filter('a[href="#'+target[1]+'"]').tab('show');
+    })
   },
 
   renderNoResult(resp){
@@ -137,6 +158,13 @@ let Project = {
   showWebsiteDropdown(dropdownTitle){
     Array.prototype.forEach.call(dropdownTitle, function(elem){
       elem.setAttribute("class", "dropdown dropdown-menu-title")
+    })
+  },
+
+  clearOverviews(){
+    let allOverviews = document.getElementsByClassName("overview")
+    Array.prototype.forEach.call(allOverviews, function(elem){
+      elem.innerHTML = ""
     })
   },
 

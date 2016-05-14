@@ -98,7 +98,8 @@ defmodule Locorum.BackendSys.Helpers do
     broadcast! socket, "loaded_results", %{
       backend: header.backend,
       backend_str: header.backend_str,
-      search_id: query.id
+      search_id: query.id,
+      num_results: Enum.count(results)
     }
   end
 

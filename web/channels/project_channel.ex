@@ -256,54 +256,63 @@ defmodule Locorum.ProjectChannel do
     broadcast! socket, "loaded_results", %{
       backend: "google",
       backend_str: "Google",
+      num_results: 2,
       search_id: 92
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "google",
       backend_str: "Google",
+      num_results: 2,
       search_id: 93
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "google",
       backend_str: "Google",
+      num_results: 2,
       search_id: 94
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
+      num_results: 2,
       search_id: 92
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
+      num_results: 2,
       search_id: 93
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "yahoo",
       backend_str: "Yahoo",
+      num_results: 2,
       search_id: 94
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
+      num_results: 0,
       search_id: 92
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
+      num_results: 0,
       search_id: 93
     }
 
     broadcast! socket, "loaded_results", %{
       backend: "local",
       backend_str: "Local",
+      num_results: 0,
       search_id: 94
     }
 

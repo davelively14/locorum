@@ -1243,6 +1243,7 @@ var Project = {
 
     runSearch.addEventListener("click", function (e) {
       _this.showWebsiteDropdown(dropdownTitle);
+      _this.clearOverviews();
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
       });
@@ -1251,10 +1252,20 @@ var Project = {
     projectChannel.on("backend", function (resp) {
       var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
+
       _this.renderBackend(resp);
+      _this.renderTally(resp);
     });
 
     projectChannel.on("result", function (resp) {
+      var tallyContainer = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-tally");
+      tallyContainer.innerHTML = parseInt(tallyContainer.innerHTML) + 1;
+
+      var badgeCounter = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-badge");
+      if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)) {
+        badgeCounter.innerHTML = _this.esc(resp.rating);
+      }
+
       _this.renderResult(resp);
     });
 
@@ -1325,11 +1336,18 @@ var Project = {
     }
 
     dropContent.appendChild(newContent);
+  },
+  renderTally: function renderTally(resp) {
+    var tallyContainer = document.getElementById("overview-" + this.esc(resp.search_id));
+    var newEntry = document.createElement("div");
+    newEntry.innerHTML = "\n    <a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a>: <span id=\"" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-tally\">0</span>\n    ";
+    tallyContainer.appendChild(newEntry);
 
-    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
-    if (parseInt(resp.rating) > parseInt(badgeCounter.innerHTML)) {
-      badgeCounter.innerHTML = this.esc(resp.rating);
-    }
+    // TODO can I write this in ES6 instead of jquery?
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      var target = this.href.split('#');
+      $('.nav a').filter('a[href="#' + target[1] + '"]').tab('show');
+    });
   },
   renderNoResult: function renderNoResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
@@ -1340,6 +1358,12 @@ var Project = {
   showWebsiteDropdown: function showWebsiteDropdown(dropdownTitle) {
     Array.prototype.forEach.call(dropdownTitle, function (elem) {
       elem.setAttribute("class", "dropdown dropdown-menu-title");
+    });
+  },
+  clearOverviews: function clearOverviews() {
+    var allOverviews = document.getElementsByClassName("overview");
+    Array.prototype.forEach.call(allOverviews, function (elem) {
+      elem.innerHTML = "";
     });
   },
   esc: function esc(str) {
