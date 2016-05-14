@@ -19,8 +19,8 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Search
 
 ## v0.4 to do list
-- Deprecate name of search from database
 - User authentication for socket
+- Refactor to use "name" instead of "biz" for search
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -31,18 +31,15 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Add some sort of loading notification for each backend to the frontend.
 - Enhance side menu summary for backends
   - Use an icon to indicate overall accuracy for each backend (st: develop a rating system)
-- Persist results of each search. Let the user revisit them without running the search. Compare progress.
 - Handle a lot of results (i.e. more than 10)
   - Use limit option to determine. Let the user set the limit
-- Clean up passed info/supervision trees
 - Add tests for:
-  - Model: user (requires: user authentication)
+  - Model: user (requires: user authentication), results
   - Controller: results_controller
-  - Channel: search_channel, backend_sys
+  - Channel: search_channel, backend_sys, project_channel
 - Update tests for:
   - Model: search (needs user to be logged in)
 - Find a new name
-- Change Search.biz to Search.name
 
 ## Changelog
 
@@ -60,3 +57,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Created project_channel
 - Shows loading status for each search
   - Displays "loaded" when complete
+- Removed "name" from search
