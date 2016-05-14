@@ -8,16 +8,27 @@ let Project = {
 
   onReady(projectId, socket){
     let searchesContainer = document.getElementById("searches")
-    let runSearch = document.getElementById("run-search")
+    let runProjectSearch = document.getElementById("run-search")
+    let runSingleSearch = document.getElementsByClassName("run-single-search")
     let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
     let loadingStatus = document.getElementsByClassName("load-status")
     let projectChannel = socket.channel("projects:" + projectId)
 
-    runSearch.addEventListener("click", e => {
+    runProjectSearch.addEventListener("click", e => {
       this.showWebsiteDropdown(dropdownTitle)
       this.prepOverviews()
+      this.clear_results()
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
+    })
+
+    Array.prototype.forEach.call(runSingleSearch, function(button){
+      button.addEventListener("click", e => {
+        let payload = {search_id: button.getAttribute("data-id")}
+
+        projectChannel.push("run_single_search", payload)
+                      .receive("error", e => console.log(e) )
+      })
     })
 
     projectChannel.on("backend", (resp) => {
@@ -41,35 +52,58 @@ let Project = {
       let loadStatsContainer = document.getElementById(`load-status-${this.esc(resp.search_id)}`)
       loaded.innerHTML = parseInt(loaded.innerHTML) + 1
       if (loaded.innerHTML == loadedOf.innerHTML) {
-        loadStatsContainer.setAttribute("class", "text-success")
+        loadStatsContainer.setAttribute("class", "text-success load-status")
+
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
       }
       this.renderTally(resp)
     })
 
-    projectChannel.on("clear_results", (resp) => {
-      let dropdownElements = document.getElementsByClassName("backend-titles")
-      let tabElements = document.getElementsByClassName("backend-content")
-      let overviewElements = document.getElementsByClassName("search-result-tabs")
+    projectChannel.on("clear_results_by_search", (resp) => {
+      let dropdownElement = document.getElementById(`backendDrop${this.esc(resp.search_id)}`)
+      let tabElement = document.getElementById(`tab-content-${this.esc(resp.search_id)}`)
+      let overviewElement = document.getElementById(`search-result-tabs-${this.esc(resp.search_id)}`)
 
-      Array.prototype.forEach.call(dropdownElements, function(elem){
-        elem.innerHTML = ""
-      })
-      Array.prototype.forEach.call(tabElements, function(elem){
-        let firstChild = elem.children[0]
-        firstChild.setAttribute("class", "tab-pane fade in active")
-        elem.innerHTML = ""
-        elem.appendChild(firstChild)
-      })
-      Array.prototype.forEach.call(overviewElements, function(elem){
-        elem.children[0].setAttribute("class", "active")
-        elem.children[1].setAttribute("class", "dropdown")
-      })
+      dropdownElement.innerHTML = ""
+
+      let firstTab = tabElement.children[0]
+      firstTab.setAttribute("class", "tab-pane fade in active")
+      tabElement.innerHTML = ""
+      tabElement.appendChild(firstTab)
+
+      overviewElement.children[0].setAttribute("class", "active")
+      overviewElement.children[1].setAttribute("class", "dropdown")
     })
 
     projectChannel.join()
       .receive("ok", resp => console.log("Joined project channel", resp))
       .receive("error", resp => console.log("Failed to join project channel", resp))
+  },
+
+  clear_results(){
+    let dropdownElements = document.getElementsByClassName("backend-titles")
+    let tabElements = document.getElementsByClassName("backend-content")
+    let overviewElements = document.getElementsByClassName("search-result-tabs")
+    let loadStatusElements = document.getElementsByClassName("load-status")
+
+    Array.prototype.forEach.call(dropdownElements, function(elem){
+      elem.innerHTML = ""
+    })
+    Array.prototype.forEach.call(tabElements, function(elem){
+      let firstChild = elem.children[0]
+      firstChild.setAttribute("class", "tab-pane fade in active")
+      elem.innerHTML = ""
+      elem.appendChild(firstChild)
+    })
+    Array.prototype.forEach.call(overviewElements, function(elem){
+      elem.children[0].setAttribute("class", "active")
+      elem.children[1].setAttribute("class", "dropdown")
+    })
+
+    Array.prototype.forEach.call(loadStatusElements, function(elem){
+      let id = elem.getAttribute("id").split(/[\s-]+/).pop()
+      elem.innerHTML = `Loaded <span id="search-${id}-loaded">0</span> of <span id="search-${id}-of">0</span> backends`
+    })
   },
 
   renderBackend(resp){

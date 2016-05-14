@@ -20,10 +20,11 @@
           <%= search.address1 %><br>
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
           <h3><small><i class="load-status" id="load-status-<%= search.id %>">Loaded <span id="search-<%= search.id %>-loaded">0</span> of <span id="search-<%= search.id %>-of">0</span> backends</i></small></h3>
+          <button type="submit" class="btn btn-success run-single-search" data-id="<%= search.id %>">Run Single Search</button>
         </div>
         <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8 col-lg-9" do  %>
           <!-- Nav tabs -->
-          <ul class="nav nav-tabs search-result-tabs" role="tablist">
+          <ul class="nav nav-tabs search-result-tabs" id="search-result-tabs-<%= search.id %>" role="tablist">
             <li role="presentation" class="active over-tab-<%= search.id %>"><a href="#overview-<%= search.id %>" aria-controls="overview-<%= search.id %>" role="tab" data-toggle="tab">Overview</a></li>
             <li role="presentation" class="dropdown hidden dropdown-menu-title" id="drop-tab-<%= search.id %>">
               <a href="#" id="backendDrop<%= search.id %>" aria-controls="backendDrop<%= search.id %>-contents" role="tab" data-toggle="dropdown" class="dropdown-toggle">

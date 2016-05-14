@@ -1236,16 +1236,28 @@ var Project = {
     var _this = this;
 
     var searchesContainer = document.getElementById("searches");
-    var runSearch = document.getElementById("run-search");
+    var runProjectSearch = document.getElementById("run-search");
+    var runSingleSearch = document.getElementsByClassName("run-single-search");
     var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
     var loadingStatus = document.getElementsByClassName("load-status");
     var projectChannel = socket.channel("projects:" + projectId);
 
-    runSearch.addEventListener("click", function (e) {
+    runProjectSearch.addEventListener("click", function (e) {
       _this.showWebsiteDropdown(dropdownTitle);
       _this.prepOverviews();
+      _this.clear_results();
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
+      });
+    });
+
+    Array.prototype.forEach.call(runSingleSearch, function (button) {
+      button.addEventListener("click", function (e) {
+        var payload = { search_id: button.getAttribute("data-id") };
+
+        projectChannel.push("run_single_search", payload).receive("error", function (e) {
+          return console.log(e);
+        });
       });
     });
 
@@ -1270,36 +1282,58 @@ var Project = {
       var loadStatsContainer = document.getElementById("load-status-" + _this.esc(resp.search_id));
       loaded.innerHTML = parseInt(loaded.innerHTML) + 1;
       if (loaded.innerHTML == loadedOf.innerHTML) {
-        loadStatsContainer.setAttribute("class", "text-success");
+        loadStatsContainer.setAttribute("class", "text-success load-status");
+
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
       }
       _this.renderTally(resp);
     });
 
-    projectChannel.on("clear_results", function (resp) {
-      var dropdownElements = document.getElementsByClassName("backend-titles");
-      var tabElements = document.getElementsByClassName("backend-content");
-      var overviewElements = document.getElementsByClassName("search-result-tabs");
+    projectChannel.on("clear_results_by_search", function (resp) {
+      var dropdownElement = document.getElementById("backendDrop" + _this.esc(resp.search_id));
+      var tabElement = document.getElementById("tab-content-" + _this.esc(resp.search_id));
+      var overviewElement = document.getElementById("search-result-tabs-" + _this.esc(resp.search_id));
 
-      Array.prototype.forEach.call(dropdownElements, function (elem) {
-        elem.innerHTML = "";
-      });
-      Array.prototype.forEach.call(tabElements, function (elem) {
-        var firstChild = elem.children[0];
-        firstChild.setAttribute("class", "tab-pane fade in active");
-        elem.innerHTML = "";
-        elem.appendChild(firstChild);
-      });
-      Array.prototype.forEach.call(overviewElements, function (elem) {
-        elem.children[0].setAttribute("class", "active");
-        elem.children[1].setAttribute("class", "dropdown");
-      });
+      dropdownElement.innerHTML = "";
+
+      var firstTab = tabElement.children[0];
+      firstTab.setAttribute("class", "tab-pane fade in active");
+      tabElement.innerHTML = "";
+      tabElement.appendChild(firstTab);
+
+      overviewElement.children[0].setAttribute("class", "active");
+      overviewElement.children[1].setAttribute("class", "dropdown");
     });
 
     projectChannel.join().receive("ok", function (resp) {
       return console.log("Joined project channel", resp);
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
+    });
+  },
+  clear_results: function clear_results() {
+    var dropdownElements = document.getElementsByClassName("backend-titles");
+    var tabElements = document.getElementsByClassName("backend-content");
+    var overviewElements = document.getElementsByClassName("search-result-tabs");
+    var loadStatusElements = document.getElementsByClassName("load-status");
+
+    Array.prototype.forEach.call(dropdownElements, function (elem) {
+      elem.innerHTML = "";
+    });
+    Array.prototype.forEach.call(tabElements, function (elem) {
+      var firstChild = elem.children[0];
+      firstChild.setAttribute("class", "tab-pane fade in active");
+      elem.innerHTML = "";
+      elem.appendChild(firstChild);
+    });
+    Array.prototype.forEach.call(overviewElements, function (elem) {
+      elem.children[0].setAttribute("class", "active");
+      elem.children[1].setAttribute("class", "dropdown");
+    });
+
+    Array.prototype.forEach.call(loadStatusElements, function (elem) {
+      var id = elem.getAttribute("id").split(/[\s-]+/).pop();
+      elem.innerHTML = "Loaded <span id=\"search-" + id + "-loaded\">0</span> of <span id=\"search-" + id + "-of\">0</span> backends";
     });
   },
   renderBackend: function renderBackend(resp) {

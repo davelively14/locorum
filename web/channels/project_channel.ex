@@ -5,6 +5,24 @@ defmodule Locorum.ProjectChannel do
     {:ok, assign(socket, :project_id, project_id)}
   end
 
+  def handle_in("run_search", _params, socket) do
+    project = Repo.get!(Locorum.Project, socket.assigns.project_id)
+    searches =
+      assoc(project, :searches)
+      |> Repo.all
+
+    for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
+    {:reply, :ok, socket}
+  end
+
+  def handle_in("run_single_search", params, socket) do
+    broadcast! socket, "clear_results_by_search", %{
+      search_id: params["search_id"]
+    }
+
+    {:reply, :ok, socket}
+  end
+
   def handle_in("run_test", _params, socket) do
     broadcast! socket, "clear_results", %{
       id: nil
@@ -334,20 +352,6 @@ defmodule Locorum.ProjectChannel do
       low_rating: nil
     }
 
-    {:reply, :ok, socket}
-  end
-
-  def handle_in("run_search", _params, socket) do
-    broadcast! socket, "clear_results", %{
-      id: nil
-    }
-
-    project = Repo.get!(Locorum.Project, socket.assigns.project_id)
-    searches =
-      assoc(project, :searches)
-      |> Repo.all
-
-    for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
     {:reply, :ok, socket}
   end
 end
