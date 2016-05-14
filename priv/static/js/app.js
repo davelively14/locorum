@@ -1257,9 +1257,6 @@ var Project = {
     });
 
     projectChannel.on("result", function (resp) {
-      var badgeCounter = document.getElementById(_this.esc(resp.backend) + "-" + _this.esc(resp.search_id) + "-badge");
-      badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1;
-
       _this.renderResult(resp);
     });
 
@@ -1343,6 +1340,9 @@ var Project = {
       var target = this.href.split('#');
       $('.nav a').filter('a[href="#' + target[1] + '"]').tab('show');
     });
+
+    var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
+    badgeCounter.innerHTML = this.esc(resp.num_results);
   },
   renderNoResult: function renderNoResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));

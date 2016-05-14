@@ -28,9 +28,6 @@ let Project = {
     })
 
     projectChannel.on("result", (resp) => {
-      let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
-      badgeCounter.innerHTML = parseInt(badgeCounter.innerHTML) + 1
-
       this.renderResult(resp)
     })
 
@@ -139,6 +136,9 @@ let Project = {
       var target = this.href.split('#');
       $('.nav a').filter('a[href="#'+target[1]+'"]').tab('show');
     })
+
+    let badgeCounter = document.getElementById(`${this.esc(resp.backend)}-${this.esc(resp.search_id)}-badge`)
+    badgeCounter.innerHTML = this.esc(resp.num_results)
   },
 
   renderNoResult(resp){
