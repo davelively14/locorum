@@ -26,6 +26,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - User authentication for socket
 - Refactor to use "name" instead of "biz" for search
 - Create overview for each search
+- Export results to CSV
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
