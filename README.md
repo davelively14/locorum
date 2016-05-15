@@ -22,6 +22,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Project
   - Search
   - User
+- Ignore individual results so they won't show up in results again
 - User authentication for socket
 - Refactor to use "name" instead of "biz" for search
 - Create overview for each search
