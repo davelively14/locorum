@@ -14,7 +14,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Associate with searches
   - Load on project/search load
   - Display "as of" for each search
-- Run search for individual searches
+- Check TODOs
 
 ## v0.4 to do list
 - Improve templates
@@ -68,3 +68,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Displays "loaded" when complete
 - Removed "name" from search
 - Created overview for each search in Project
+- Run search for individual searches within a Project
