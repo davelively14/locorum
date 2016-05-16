@@ -1,6 +1,6 @@
 # Locorum
 
-Current version: 0.2b
+Current version on GitHub: 0.2b
 
 Check local listings, assess accuracy, fix issues.
 
