@@ -17,6 +17,3 @@ defmodule Locorum.Result do
     timestamps
   end
 end
-
-defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
-          rating: nil, url: nil, phone: nil

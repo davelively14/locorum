@@ -2,6 +2,7 @@ defmodule Locorum.Backend do
   use Locorum.Web, :model
 
   schema "backends" do
+    field :module, :string
     field :name, :string
     field :name_str, :string
     field :url, :string
