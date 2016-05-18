@@ -1,11 +1,7 @@
 defmodule Locorum.SearchChannel do
   alias Locorum.Search
   alias Locorum.Repo
-  alias Locorum.Result
   use Locorum.Web, :channel
-  import Ecto.Query, only: [from: 2]
-
-  @max_results 3
 
   def join("searches:" <> search_id, _params, socket) do
 
@@ -22,26 +18,19 @@ defmodule Locorum.SearchChannel do
     {:reply, :ok, socket}
   end
 
-  def handle_in("result", params, socket) do
-    params["search_id"]
-    |> check_max
-
-    changeset = Result.changeset(%Result{}, params)
-    {:reply, changeset, socket}
-  end
-
-  defp check_max(search_id) do
-    query = from r in Result, where: r.search_id == ^search_id
-
-    Repo.all(query)
-    |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
-    |> trim_to_max
-  end
-
-  defp trim_to_max([]), do: []
-  defp trim_to_max(results) when length(results) < @max_results, do: results
-  defp trim_to_max([head|tail]) do
-    Repo.delete head
-    trim_to_max tail
-  end
+  # def handle_out("result", payload, socket) do
+  #   payload["search_id"]
+  #   |> check_max
+  #
+  #   changeset = Result.changeset(%Result{}, payload)
+  #   case Repo.insert(changeset) do
+  #     {:ok, _result} ->
+  #       push socket, "result", payload
+  #       {:noreply, socket}
+  #     {:error, changeset} ->
+  #       push socket, "error", %{
+  #         error: changeset.errors
+  #       }
+  #   end
+  # end
 end

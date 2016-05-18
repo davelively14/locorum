@@ -17,8 +17,8 @@ defmodule Locorum.Result do
     timestamps
   end
 
-  @required_fields ~w{name, address, city, state, phone, rating, url, ignored}
-  @optional_fields ~w{zip}
+  @required_fields ~w(name address city state phone rating url)
+  @optional_fields ~w(zip)
 
   def changeset(model, params \\ :empty) do
     model

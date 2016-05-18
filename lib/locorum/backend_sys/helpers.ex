@@ -1,6 +1,9 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
+  import Ecto.Query, only: [from: 2]
   require Logger
+
+  @max_stored_results 3
 
   def join(_,_,_), do: nil
 
@@ -77,6 +80,8 @@ defmodule Locorum.BackendSys.Helpers do
   defp broadcast_results(results, header, socket, query) do
     if results != [] do
       for result <- results do
+        # Persist results
+
         broadcast! socket, "result", %{
           backend: header.backend,
           biz: result.biz,
@@ -163,5 +168,20 @@ defmodule Locorum.BackendSys.Helpers do
       search_id: header.search_id
     }
     header.url_search
+  end
+
+  defp check_max(search_id) do
+    query = from r in Result, where: r.search_id == ^search_id
+
+    Repo.all(query)
+    |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
+    |> trim_to_max
+  end
+
+  defp trim_to_max([]), do: []
+  defp trim_to_max(results) when length(results) < @max_stored_results, do: results
+  defp trim_to_max([head|tail]) do
+    Repo.delete head
+    trim_to_max tail
   end
 end
