@@ -23,17 +23,19 @@ defmodule Locorum.SearchChannel do
   end
 
   def handle_in("result", params, socket) do
-    result_params = params
-    changeset = Result.changeset(%Result{}, result_params)
+    params["search_id"]
+    |> check_max
+
+    changeset = Result.changeset(%Result{}, params)
     {:reply, changeset, socket}
   end
 
   defp check_max(search_id) do
-    results =
-      from r in Result, where: r.search_id = search_id
-      |> Repo.all
-      |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at)))
-      |> trim_to_max
+    query = from r in Result, where: r.search_id == ^search_id
+
+    Repo.all(query)
+    |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
+    |> trim_to_max
   end
 
   defp trim_to_max([]), do: []
