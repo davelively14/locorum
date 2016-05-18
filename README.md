@@ -10,7 +10,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## v0.3 to do list
 - Persist search results
-  - Create results table
   - Associate with searches
   - Load on project/search load
   - Display "as of" for each search
@@ -69,3 +68,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Removed "name" from search
 - Created overview for each search in Project
 - Run search for individual searches within a Project
+- Persisted search results
+  - Created results table
+  - Created backend table
