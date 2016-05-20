@@ -10,8 +10,7 @@ defmodule Locorum.Result do
     field :phone, :string
     field :rating, :string
     field :url, :string
-    field :ignored, :boolean, default: false
-    belongs_to :search, Locorum.Search
+    belongs_to :result_collection, Locorum.ResultCollection
     belongs_to :backend, Locorum.Backend
 
     timestamps

@@ -10,7 +10,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## v0.3 to do list
 - Persist search results
-  - Associate with searches
   - Load on project/search load
   - Display "as of" for each search
 - Check TODOs
@@ -26,6 +25,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Refactor to use "name" instead of "biz" for search
 - Create overview for each search
 - Export results to CSV
+- Check TODOs
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -33,6 +33,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Add chat capabilities
   - By search/results
   - Link to #slack
+- Check TODOs
 
 ## Long term to do list
 
@@ -71,3 +72,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Persisted search results
   - Created results table
   - Created backend table
+  - Created result_collection table
