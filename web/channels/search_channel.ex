@@ -1,6 +1,7 @@
 defmodule Locorum.SearchChannel do
   alias Locorum.Search
   alias Locorum.Repo
+  alias Locorum.ResultCollection
   use Locorum.Web, :channel
 
   def join("searches:" <> search_id, _params, socket) do
@@ -14,6 +15,16 @@ defmodule Locorum.SearchChannel do
     }
 
     search = Repo.get!(Search, socket.assigns.search_id)
+    changeset = ResultCollection.changeset(%ResultCollection{}, %{search_id: search})
+    result_collection_id =
+      case Repo.insert(changeset) do
+        {:ok, result_collection} ->
+          result_collection.id
+        _ ->
+          nil
+      end
+
+    socket = assign(socket, :result_collection_id, result_collection_id)
     Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
     {:reply, :ok, socket}
   end

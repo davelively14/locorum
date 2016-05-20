@@ -7,4 +7,8 @@ defmodule Locorum.ResultCollection do
 
     timestamps
   end
+
+  def changeset(model, params \\ :empty) do
+    nil
+  end
 end

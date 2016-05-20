@@ -1,5 +1,6 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
+  alias Locorum.Result
   import Ecto.Query, only: [from: 2]
   require Logger
 
@@ -80,7 +81,7 @@ defmodule Locorum.BackendSys.Helpers do
   defp broadcast_results(results, header, socket, query) do
     if results != [] do
       for result <- results do
-        # Persist results
+        changeset =
 
         broadcast! socket, "result", %{
           backend: header.backend,
