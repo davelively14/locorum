@@ -81,7 +81,7 @@ defmodule Locorum.BackendSys.Helpers do
   defp broadcast_results(results, header, socket, query) do
     if results != [] do
       for result <- results do
-        changeset =
+        create_result_add_to_collection(result, header, socket.assigns.result_collection_id, query)
 
         broadcast! socket, "result", %{
           backend: header.backend,
@@ -156,9 +156,10 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  # defp make_message(results, query_ref, header) do
-  #   {:results, query_ref, header, results}
-  # end
+  defp create_result_add_to_collection(result, header, collection_id, query) do
+    _ = [result, header, collection_id, query]
+    nil
+  end
 
   defp init_frontend(header, socket) do
     broadcast! socket, "backend", %{
