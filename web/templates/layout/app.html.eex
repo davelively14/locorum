@@ -21,7 +21,7 @@
               <li><%= link "Users", to: user_path(@conn, :index) %></li>
               <li><%= link "Searches", to: search_path(@conn, :index) %></li>
               <li><%= link "Projects", to: project_path(@conn, :index) %></li>
-              <li><%= link "Backend Admin - new", to: backend_path(@conn, :new) %></li>
+              <li><%= link "Backend Admin", to: backend_path(@conn, :index) %></li>
               <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
             <%= else %>
               <li><%= link "Login", to: session_path(@conn, :new) %></li>

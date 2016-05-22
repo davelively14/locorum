@@ -19,5 +19,9 @@ defmodule Locorum.Backend do
     |> cast(params, @required_params, @optional_params)
     |> unique_constraint(:name)
     |> unique_constraint(:module)
+    |> validate_length(:module, min: 5, max: 100)
+    |> validate_length(:name, min: 1, max: 50)
+    |> validate_length(:name_str, min: 1, max: 50)
+    |> validate_length(:url, min: 7, max: 80)
   end
 end

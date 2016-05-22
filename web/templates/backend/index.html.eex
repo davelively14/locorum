@@ -1,0 +1,24 @@
+<h2>All Backends</h2>
+
+<table class="table">
+  <tr class="text-center">
+    <th>Module</th>
+    <th>Name</th>
+    <th>Name String</th>
+    <th>URL</th>
+    <th></th>
+  </tr>
+  <%= for backend <- @backends do %>
+    <tr>
+      <td><%= backend.module %></td>
+      <td><%= backend.name %></td>
+      <td><%= backend.name_str %></td>
+      <td><%= backend.url %></td>
+      <td>
+        <%= link "Delete", to: backend_path(@conn, :delete, backend.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link "Create New Backend", to: backend_path(@conn, :new), class: "btn btn-primary" %>

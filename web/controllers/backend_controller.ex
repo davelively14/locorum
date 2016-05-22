@@ -7,16 +7,31 @@ defmodule Locorum.BackendController do
     render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
   end
 
-  def create(conn, params) do
-    nil
+  def create(conn, %{"backend" => backend_params}) do
+    changeset = Backend.changeset(%Backend{}, backend_params)
+    case Repo.insert(changeset) do
+      {:ok, backend} ->
+        conn
+        |> put_flash(:info, "Created the #{backend.name_str} backend")
+        |> redirect(to: backend_path(conn, :index))
+      {:error, changeset} ->
+        render conn, "new.html", changeset: changeset, cancel_action: backend_path(conn, :index)
+    end
   end
 
-  def show(conn, %{"id" => backend_id}) do
-    nil
+  def index(conn, _params) do
+    backends = Repo.all(Backend)
+    render conn, "index.html", backends: backends
+  end
+
+  def delete(conn, %{"id" => id}) do
+    backend = Repo.get(Backend, id)
+    Repo.delete backend
+    redirect conn, external: get_refer(conn)
   end
 
   defp get_refer(conn) do
-    {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, page_path(conn, :index)}
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, backend_path(conn, :index)}
     referer
   end
 end

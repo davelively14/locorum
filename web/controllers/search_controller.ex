@@ -31,7 +31,7 @@ defmodule Locorum.SearchController do
             |> redirect(to: project_path(conn, :show, id))
         end
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset
+        render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
     end
   end
 
