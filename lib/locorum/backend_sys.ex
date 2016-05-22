@@ -1,4 +1,10 @@
 defmodule Locorum.BackendSys do
+  alias Locorum.ResultCollection
+  alias Locorum.Repo
+  use Phoenix.Channel
+
+  def join(_, _, _), do: nil
+
   def start(_type, _args) do
     Locorum.BackendSys.start_link()
   end
@@ -30,6 +36,17 @@ defmodule Locorum.BackendSys do
     limit = opts[:limit] || 10
     backends = opts[:backends] || @backends
     HTTPoison.start
+
+    changeset = ResultCollection.changeset(%ResultCollection{}, %{search_id: query.id})
+    result_collection_id =
+      case Repo.insert(changeset) do
+        {:ok, result_collection} ->
+          result_collection.id
+        {:error, changeset} ->
+          IO.inspect(changeset.errors)
+      end
+
+    socket = assign(socket, :result_collection_id, result_collection_id)
 
     backends
     # TODO should this call a Task.start_link?

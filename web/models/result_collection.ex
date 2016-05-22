@@ -8,7 +8,11 @@ defmodule Locorum.ResultCollection do
     timestamps
   end
 
+  @required_fields ~w()
+  @optional_fields ~w()
+
   def changeset(model, params \\ :empty) do
-    nil
+    model
+    |> cast(params, @required_fields, @optional_fields)
   end
 end

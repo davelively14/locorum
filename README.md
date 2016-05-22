@@ -26,6 +26,9 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Create overview for each search
 - Export results to CSV
 - Check TODOs
+- Takedown backends from admin menu
+  - Implement show.html to Handle
+  - Migrate "up" boolean, default to true
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages

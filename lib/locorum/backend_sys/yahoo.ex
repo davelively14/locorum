@@ -3,7 +3,7 @@ defmodule Locorum.BackendSys.Yahoo do
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
 
-  @backend %Header{backend: "yahoo", backend_str: "Yahoo Local", url_site: "http://local.yahoo.com"}
+  @backend %Header{backend: "yahoo", backend_str: "Yahoo Local", url_site: "https://local.yahoo.com"}
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start

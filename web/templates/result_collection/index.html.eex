@@ -1,0 +1,18 @@
+<h2>All Result Collections</h2>
+
+<table class="table">
+  <tr class="text-center">
+    <th>ID</th>
+    <th>Search ID</th>
+    <th></th>
+  </tr>
+  <%= for collection <- @collections do %>
+    <tr>
+      <td><%= collection.id %></td>
+      <td><%= collection.search_id %></td>
+      <td>
+        <%= link "Delete", to: result_collection_path(@conn, :delete, collection.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -30,6 +30,7 @@ defmodule Locorum.BackendController do
     redirect conn, external: get_refer(conn)
   end
 
+  # TODO DRY refactor
   defp get_refer(conn) do
     {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, backend_path(conn, :index)}
     referer

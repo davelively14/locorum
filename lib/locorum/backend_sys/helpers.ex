@@ -156,9 +156,8 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp collect_result(result, _header, collection_id) do
-    # TODO fetch backend once assembled
-    # backend = Repo.get_by(Backend, name: header.backend)
+  defp collect_result(result, header, collection_id) do
+    backend = Repo.get_by(Backend, name: header.backend)
 
     changeset = Result.changeset(%Result{}, %{
         name: result.biz,
@@ -169,7 +168,7 @@ defmodule Locorum.BackendSys.Helpers do
         rating: result.rating,
         phone: result.phone,
         url: result.url,
-        backend_id: nil,
+        backend_id: backend.id,
         result_collection_id: collection_id
       })
 
