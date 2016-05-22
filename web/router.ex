@@ -32,6 +32,12 @@ defmodule Locorum.Router do
     get "/results/project/:id", ResultsController, :index
   end
 
+  scope "/admin", Locorum do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/backend", BackendController, only: [:index, :new, :create, :delete]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", Locorum do
   #   pipe_through :api

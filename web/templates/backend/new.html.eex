@@ -1,0 +1,5 @@
+<h2>New Backend</h2>
+
+<%= render "form.html", changeset: @changeset, action: backend_path(@conn, :create) %>
+
+<%= link "Cancel", to: @cancel_action, class: "btn btn-danger" %>
