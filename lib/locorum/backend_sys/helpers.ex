@@ -1,7 +1,7 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
   alias Locorum.Result
-  import Ecto.Query, only: [from: 2]
+  # import Ecto.Query, only: [from: 2]
   require Logger
 
   @max_stored_results 3
@@ -81,7 +81,7 @@ defmodule Locorum.BackendSys.Helpers do
   defp broadcast_results(results, header, socket, query) do
     if results != [] do
       for result <- results do
-        create_result_add_to_collection(result, header, socket.assigns.result_collection_id, query)
+        collect_result(result, header, socket.assigns.result_collection_id)
 
         broadcast! socket, "result", %{
           backend: header.backend,
@@ -156,9 +156,29 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp create_result_add_to_collection(result, header, collection_id, query) do
-    _ = [result, header, collection_id, query]
-    nil
+  defp collect_result(result, _header, collection_id) do
+    # TODO fetch backend once assembled
+    # backend = Repo.get_by(Backend, name: header.backend)
+
+    changeset = Result.changeset(%Result{}, %{
+        name: result.biz,
+        address: result.address,
+        city: result.city,
+        state: result.state,
+        zip: result.zip,
+        rating: result.rating,
+        phone: result.phone,
+        url: result.url,
+        backend_id: nil,
+        result_collection_id: collection_id
+      })
+
+    case Repo.insert(changeset) do
+      {:ok, _result} ->
+        nil
+      {:error, changeset} ->
+        Logger.error("Could not add result #{changeset.errors}")
+    end
   end
 
   defp init_frontend(header, socket) do
@@ -172,18 +192,18 @@ defmodule Locorum.BackendSys.Helpers do
     header.url_search
   end
 
-  defp check_max(search_id) do
-    query = from r in Result, where: r.search_id == ^search_id
-
-    Repo.all(query)
-    |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
-    |> trim_to_max
-  end
-
-  defp trim_to_max([]), do: []
-  defp trim_to_max(results) when length(results) < @max_stored_results, do: results
-  defp trim_to_max([head|tail]) do
-    Repo.delete head
-    trim_to_max tail
-  end
+  # defp check_max(search_id) do
+  #   query = from r in Result, where: r.search_id == ^search_id
+  #
+  #   Repo.all(query)
+  #   |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
+  #   |> trim_to_max
+  # end
+  #
+  # defp trim_to_max([]), do: []
+  # defp trim_to_max(results) when length(results) < @max_stored_results, do: results
+  # defp trim_to_max([head|tail]) do
+  #   Repo.delete head
+  #   trim_to_max tail
+  # end
 end
