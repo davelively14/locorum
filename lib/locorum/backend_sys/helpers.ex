@@ -1,6 +1,8 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
   alias Locorum.Result
+  alias Locorum.Repo
+  alias Locorum.Backend
   # import Ecto.Query, only: [from: 2]
   require Logger
 
@@ -159,24 +161,24 @@ defmodule Locorum.BackendSys.Helpers do
   defp collect_result(result, header, collection_id) do
     backend = Repo.get_by(Backend, name: header.backend)
 
-    changeset = Result.changeset(%Result{}, %{
+    changeset = Result.changeset(%Result{backend_id: backend.id, result_collection_id: collection_id}, %{
         name: result.biz,
         address: result.address,
         city: result.city,
         state: result.state,
         zip: result.zip,
-        rating: result.rating,
+        rating: Integer.to_string(result.rating),
         phone: result.phone,
-        url: result.url,
-        backend_id: backend.id,
-        result_collection_id: collection_id
+        url: result.url
       })
 
     case Repo.insert(changeset) do
       {:ok, _result} ->
         nil
       {:error, changeset} ->
-        Logger.error("Could not add result #{changeset.errors}")
+        for error <- changeset.errors do
+          IO.inspect(error)
+        end
     end
   end
 
