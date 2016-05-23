@@ -12,6 +12,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Persist search results
   - Load on project/search load
   - Display "as of" for each search
+  - Delete associated results when result_collection is deleted
 - Check TODOs
 
 ## v0.4 to do list
