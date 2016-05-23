@@ -11,10 +11,10 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 ## v0.3 to do list
 - Persist search results
   - Load on project/search load
+    - Allow user to select older results, sort by date
+    - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
   - Delete associated results when result_collection is deleted
-  - Automatically delete older result_collections?  Or No?
-    - Save over time
 - Check TODOs
 
 ## v0.4 to do list
