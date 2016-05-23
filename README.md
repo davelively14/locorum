@@ -13,6 +13,8 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Load on project/search load
   - Display "as of" for each search
   - Delete associated results when result_collection is deleted
+  - Automatically delete older result_collections?  Or No?
+    - Save over time
 - Check TODOs
 
 ## v0.4 to do list
