@@ -9,7 +9,15 @@ defmodule Locorum.ResultCollectionController do
   end
 
   def delete(conn, %{"id" => id}) do
-    collection = Repo.get(ResultCollection, id)
+    collection =
+      ResultCollection
+      |> Repo.get(id)
+      |> Repo.preload([:results])
+
+    for result <- collection.results do
+      Repo.delete result
+    end
+
     Repo.delete collection
     redirect conn, external: get_refer(conn)
   end

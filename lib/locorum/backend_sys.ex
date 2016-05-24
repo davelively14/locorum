@@ -37,7 +37,7 @@ defmodule Locorum.BackendSys do
     backends = opts[:backends] || @backends
     HTTPoison.start
 
-    changeset = ResultCollection.changeset(%ResultCollection{}, %{search_id: query.id})
+    changeset = ResultCollection.changeset(%ResultCollection{search_id: query.id}, %{search_id: query.id})
     result_collection_id =
       case Repo.insert(changeset) do
         {:ok, result_collection} ->

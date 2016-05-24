@@ -14,7 +14,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
     - Allow user to select older results, sort by date
     - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
-  - Delete associated results when result_collection is deleted
 - Check TODOs
 
 ## v0.4 to do list
@@ -32,6 +31,10 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Takedown backends from admin menu
   - Implement show.html to Handle
   - Migrate "up" boolean, default to true
+- Fix YP backend
+  - LG returns errors
+- Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
+  - LG error above displays this
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -79,3 +82,4 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Created results table
   - Created backend table
   - Created result_collection table
+  - Delete associated results when result_collection is deleted
