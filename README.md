@@ -13,7 +13,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Load on project/search load
     - Allow user to select older results, sort by date
     - Allow user to clear older results from search/edit menu
-  - Display "as of" for each search
+    - Display "as of" for each search
 - Check TODOs
 
 ## v0.4 to do list
@@ -22,19 +22,18 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Project
   - Search
   - User
-- Ignore individual results so they won't show up in results again
+- Allow user to individual results so they won't show up in results again
 - User authentication for socket
-- Refactor to use "name" instead of "biz" for search
-- Create overview for each search
 - Export results to CSV
-- Check TODOs
-- Takedown backends from admin menu
+- Allow admin to disable backends from admin menu
   - Implement show.html to Handle
-  - Migrate "up" boolean, default to true
-- Fix YP backend
-  - LG returns errors
-- Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
-  - LG error above displays this
+  - Migrate add "up" boolean, default to true
+- Check TODOs
+- Errata
+  - Fix YP backend
+    - LG returns errors
+  - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
+    - LG error above displays this
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -43,6 +42,9 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - By search/results
   - Link to #slack
 - Check TODOs
+- Refactor
+  - Create better overview for each search
+  - Use "name" instead of "biz" for search
 
 ## Long term to do list
 
