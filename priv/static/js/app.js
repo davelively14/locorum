@@ -1238,13 +1238,10 @@ var Project = {
     var searchesContainer = document.getElementById("searches");
     var runProjectSearch = document.getElementById("run-search");
     var runSingleSearch = document.getElementsByClassName("run-single-search");
-    var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
     var loadingStatus = document.getElementsByClassName("load-status");
     var projectChannel = socket.channel("projects:" + projectId);
 
     runProjectSearch.addEventListener("click", function (e) {
-      _this.showWebsiteDropdown(dropdownTitle);
-      _this.prepOverviews();
       _this.clearAndPrepAllResults();
       projectChannel.push("run_test").receive("error", function (e) {
         return console.log(e);
@@ -1301,6 +1298,10 @@ var Project = {
     var tabContentElements = document.getElementsByClassName("backend-content");
     var overviewElements = document.getElementsByClassName("search-result-tabs");
     var loadStatusElements = document.getElementsByClassName("load-status");
+    var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
+
+    this.showWebsiteDropdown(dropdownTitle);
+    this.prepOverviews();
 
     Array.prototype.forEach.call(dropdownElements, function (elem) {
       elem.innerHTML = "";

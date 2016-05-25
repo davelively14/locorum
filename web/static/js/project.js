@@ -10,13 +10,10 @@ let Project = {
     let searchesContainer = document.getElementById("searches")
     let runProjectSearch = document.getElementById("run-search")
     let runSingleSearch = document.getElementsByClassName("run-single-search")
-    let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
     let loadingStatus = document.getElementsByClassName("load-status")
     let projectChannel = socket.channel("projects:" + projectId)
 
     runProjectSearch.addEventListener("click", e => {
-      this.showWebsiteDropdown(dropdownTitle)
-      this.prepOverviews()
       this.clearAndPrepAllResults()
       projectChannel.push("run_test")
                    .receive("error", e => console.log(e) )
@@ -70,6 +67,10 @@ let Project = {
     let tabContentElements = document.getElementsByClassName("backend-content")
     let overviewElements = document.getElementsByClassName("search-result-tabs")
     let loadStatusElements = document.getElementsByClassName("load-status")
+    let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
+
+    this.showWebsiteDropdown(dropdownTitle)
+    this.prepOverviews()
 
     Array.prototype.forEach.call(dropdownElements, function(elem){
       elem.innerHTML = ""
