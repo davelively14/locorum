@@ -10,10 +10,10 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## v0.3 to do list
 - Persist search results
-  - Load on project/search load
-    - Allow user to select older results, sort by date
-    - Allow user to clear older results from search/edit menu
-    - Display "as of" for each search
+  - Load on project load
+  - Allow user to select older results, sort by date
+  - Allow user to clear older results from search/edit menu
+  - Display "as of" for each search
 - Check TODOs
 
 ## v0.4 to do list
@@ -84,6 +84,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Created overview for each search in Project
 - Run search for individual searches within a Project
 - Persisted search results
+  - Load on search load
   - Created results table
   - Created backend table
   - Created result_collection table
