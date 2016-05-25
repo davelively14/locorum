@@ -1466,9 +1466,7 @@ var Results = {
       backendMenuContainer.innerHTML = "";
     });
 
-    searchChannel.join()
-    // TODO add receive results here
-    .receive("ok", function (resp) {
+    searchChannel.join().receive("ok", function (resp) {
       var loadedBackends = [];
 
       resp.results.forEach(function (result) {
@@ -1481,8 +1479,25 @@ var Results = {
             search_id: resp.search_id
           });
           loadedBackends.push(result.backend);
+
+          var backendMenuItem = document.getElementById(result.backend + "_menu");
+          backendMenuItem.innerHTML = "\n            <a href=\"#" + result.backend + "_header\">" + result.backend_str + "</a>\n            ";
         }
+
+        var backendContainer = document.getElementById(result.backend);
+        Results.renderResult(backendContainer, {
+          backend: result.backend,
+          biz: result.biz,
+          address: result.address,
+          city: result.city,
+          state: result.state,
+          zip: result.zip,
+          rating: result.rating,
+          url: result.url,
+          phone: result.phone
+        });
       });
+      // TODO how do we handle no results?
     }).receive("error", function (reason) {
       return console.log("Join failed", reason);
     });

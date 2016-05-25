@@ -34,6 +34,8 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
     - LG returns errors
   - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
     - LG error above displays this
+  - How do we persist "no results"?
+    - Are empty backends saved in resultsContainer?
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
