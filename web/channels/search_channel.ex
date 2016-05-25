@@ -5,8 +5,15 @@ defmodule Locorum.SearchChannel do
   use Locorum.Web, :channel
 
   def join("searches:" <> search_id, _params, socket) do
-
-    {:ok, assign(socket, :search_id, search_id)}
+    search_id = String.to_integer(search_id)
+    collections = Repo.all from c in ResultCollection,
+                           where: c.search_id == ^search_id,
+                           order_by: [desc: c.inserted_at],
+                           preload: [:results]
+    first_collection = List.first(collections)
+    results = first_collection.results
+    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
+    {:ok, resp, assign(socket, :search_id, search_id)}
   end
 
   def handle_in("run_search", _params, socket) do

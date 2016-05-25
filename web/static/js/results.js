@@ -47,6 +47,7 @@ let Results = {
     })
 
     searchChannel.join()
+      // TODO add receive results here
       .receive("ok", resp => console.log("Joined search channel", resp))
       .receive("error", reason => console.log("Join failed", reason))
 

@@ -45,6 +45,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Refactor
   - Create better overview for each search
   - Use "name" instead of "biz" for search
+  - results.js to search.js
 
 ## Long term to do list
 

@@ -1466,7 +1466,9 @@ var Results = {
       backendMenuContainer.innerHTML = "";
     });
 
-    searchChannel.join().receive("ok", function (resp) {
+    searchChannel.join()
+    // TODO add receive results here
+    .receive("ok", function (resp) {
       return console.log("Joined search channel", resp);
     }).receive("error", function (reason) {
       return console.log("Join failed", reason);
