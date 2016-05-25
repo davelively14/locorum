@@ -9,10 +9,10 @@ defmodule Locorum.SearchChannel do
     collections = Repo.all from c in ResultCollection,
                            where: c.search_id == ^search_id,
                            order_by: [desc: c.inserted_at],
-                           preload: [:results]
+                           preload: [:results, results: :backend]
     first_collection = List.first(collections)
     results = first_collection.results
-    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
+    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json"), search_id: search_id}
     {:ok, resp, assign(socket, :search_id, search_id)}
   end
 

@@ -1469,7 +1469,20 @@ var Results = {
     searchChannel.join()
     // TODO add receive results here
     .receive("ok", function (resp) {
-      return console.log("Joined search channel", resp);
+      var loadedBackends = [];
+
+      resp.results.forEach(function (result) {
+        if (loadedBackends.indexOf(result.backend) < 0) {
+          Results.renderBackend(resultsContainer, backendMenuContainer, {
+            backend: result.backend,
+            backend_str: result.backend_str,
+            backend_url: result.backend_url,
+            results_url: result.url,
+            search_id: resp.search_id
+          });
+          loadedBackends.push(result.backend);
+        }
+      });
     }).receive("error", function (reason) {
       return console.log("Join failed", reason);
     });
