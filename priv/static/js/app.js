@@ -1288,7 +1288,7 @@ var Project = {
     });
 
     projectChannel.join().receive("ok", function (resp) {
-      return console.log("Joined project channel", resp);
+      console.log("Joined", resp);
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
     });
@@ -1498,7 +1498,6 @@ var Results = {
           phone: result.phone
         });
       });
-      // TODO how do we handle no results?
     }).receive("error", function (reason) {
       return console.log("Join failed", reason);
     });

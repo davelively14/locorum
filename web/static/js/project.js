@@ -58,7 +58,10 @@ let Project = {
     })
 
     projectChannel.join()
-      .receive("ok", resp => console.log("Joined project channel", resp))
+      .receive("ok", resp => {
+        console.log("Joined", resp)
+      })
+
       .receive("error", resp => console.log("Failed to join project channel", resp))
   },
 

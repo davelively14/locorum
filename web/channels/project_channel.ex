@@ -1,8 +1,17 @@
 defmodule Locorum.ProjectChannel do
   use Locorum.Web, :channel
+  alias Locorum.ResultCollection
 
   def join("projects:" <> project_id, _params, socket) do
-    {:ok, assign(socket, :project_id, project_id)}
+    project_id = String.to_integer(project_id)
+    collections = Repo.all from c in ResultCollection,
+                        join: s in assoc(c, :search),
+                        where: s.project_id == ^project_id,
+                        order_by: [desc: c.inserted_at, asc: c.search_id],
+                        preload: [:results, results: :backend]
+    resp = collections
+    # TODO split collections by search, return first
+    {:ok, %{results: nil}, assign(socket, :project_id, project_id)}
   end
 
   def handle_in("run_search", _params, socket) do

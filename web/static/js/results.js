@@ -80,8 +80,8 @@ let Results = {
             phone: result.phone
           })
         })
-        // TODO how do we handle no results?
       })
+
       .receive("error", reason => console.log("Join failed", reason))
 
   },
