@@ -15,7 +15,8 @@ defmodule Locorum.ResultsView do
       zip: r.zip,
       rating: r.rating,
       url: r.url,
-      phone: r.phone
+      phone: r.phone,
+      search_id: r.search_id
     }
 
   end

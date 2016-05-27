@@ -1,18 +1,33 @@
 defmodule Locorum.ProjectChannel do
   use Locorum.Web, :channel
   alias Locorum.ResultCollection
+  alias Locorum.Search
 
   def join("projects:" <> project_id, _params, socket) do
     project_id = String.to_integer(project_id)
-    collections = Repo.all from c in ResultCollection,
-                        join: s in assoc(c, :search),
+    # collections = Repo.all from c in ResultCollection,
+    #                     join: s in assoc(c, :search),
+    #                     where: s.project_id == ^project_id,
+    #                     order_by: [desc: c.inserted_at, asc: c.search_id],
+    #                     preload: [:results, results: :backend]
+    preload_query = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
+    searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
-                        order_by: [desc: c.inserted_at, asc: c.search_id],
-                        preload: [:results, results: :backend]
-    resp = collections
+                        preload: [result_collections: ^preload_query, result_collections: [:results, results: :backend]]
+    collections =
+      for search <- searches, do: List.first(search.result_collections)
+    results =
+      for collection <- collections, do: Locorum.ProjectChannel.add_search_id(collection)
+    results = List.flatten(results)
+    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
+
     # TODO split collections by search, return first
-    {:ok, %{results: nil}, assign(socket, :project_id, project_id)}
+    {:ok, resp, assign(socket, :project_id, project_id)}
   end
+
+  def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)
+  defp add_search_id([], _search_id), do: []
+  defp add_search_id([head|tail], search_id), do: [Map.put_new(head, :search_id, search_id) | add_search_id(tail, search_id)]
 
   def handle_in("run_search", _params, socket) do
     project = Repo.get!(Locorum.Project, socket.assigns.project_id)
