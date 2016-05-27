@@ -20,8 +20,6 @@ defmodule Locorum.ProjectChannel do
       for collection <- collections, do: Locorum.ProjectChannel.add_search_id(collection)
     results = List.flatten(results)
     resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
-
-    # TODO split collections by search, return first
     {:ok, resp, assign(socket, :project_id, project_id)}
   end
 
