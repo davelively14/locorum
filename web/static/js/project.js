@@ -30,6 +30,7 @@ let Project = {
     })
 
     projectChannel.on("backend", (resp) => {
+      // TODO just populate with all backends...eliminates "no results" error
       let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
 

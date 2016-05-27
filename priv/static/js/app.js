@@ -1260,6 +1260,7 @@ var Project = {
     });
 
     projectChannel.on("backend", function (resp) {
+      // TODO just populate with all backends...eliminates "no results" error
       var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
       loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
 
