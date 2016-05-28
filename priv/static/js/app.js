@@ -1290,7 +1290,6 @@ var Project = {
 
     projectChannel.join().receive("ok", function (resp) {
       console.log("Joined", resp);
-      // Receive results, parse them out...similar to results.js
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
     });
