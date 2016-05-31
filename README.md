@@ -51,6 +51,10 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 
 ## Long term to do list
 
+- Create an agent to manage results
+  - First time a search is called, agent will load most recent. Every time search is run, the agent will store the most recent collection and save it to the repo.
+  - Should it load on restart?
+    - Probably not. Wouldn't scale well and it's true usefulness is as a cache for often requested results.
 - Add some sort of loading notification for each backend to the frontend.
 - Enhance side menu summary for backends
   - Use an icon to indicate overall accuracy for each backend (st: develop a rating system)
