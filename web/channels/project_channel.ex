@@ -11,10 +11,14 @@ defmodule Locorum.ProjectChannel do
                         preload: [result_collections: ^preload_query, result_collections: [:results, results: :backend]]
     collections =
       for search <- searches, do: List.first(search.result_collections)
-    # results =
-    #   for collection <- collections, do: Locorum.ProjectChannel.add_search_id(collection)
-    resp = %{collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json")}
-    {:ok, resp, assign(socket, :project_id, project_id)}
+      # results =
+      #   for collection <- collections, do: Locorum.ProjectChannel.add_search_id(collection)
+    if List.first(collections) do
+      resp = %{collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json")}
+      {:ok, resp, assign(socket, :project_id, project_id)}
+    else
+      {:ok, nil, assign(socket, :project_id, project_id)}
+    end
   end
 
   def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)

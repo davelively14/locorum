@@ -48,38 +48,42 @@ let Results = {
 
     searchChannel.join()
       .receive("ok", resp => {
-        let loadedBackends = []
+        if (resp) {
+          let loadedBackends = []
 
-        resp.results.forEach(function(result){
-          if (loadedBackends.indexOf(result.backend) < 0) {
-            Results.renderBackend(resultsContainer, backendMenuContainer, {
+          resp.results.forEach(function(result){
+            if (loadedBackends.indexOf(result.backend) < 0) {
+              Results.renderBackend(resultsContainer, backendMenuContainer, {
+                backend: result.backend,
+                backend_str: result.backend_str,
+                backend_url: result.backend_url,
+                results_url: result.url,
+                search_id: resp.search_id
+              })
+              loadedBackends.push(result.backend)
+
+              let backendMenuItem = document.getElementById(result.backend + "_menu")
+              backendMenuItem.innerHTML = `
+              <a href="#${result.backend}_header">${result.backend_str}</a>
+              `
+            }
+
+            let backendContainer = document.getElementById(result.backend)
+            Results.renderResult(backendContainer, {
               backend: result.backend,
-              backend_str: result.backend_str,
-              backend_url: result.backend_url,
-              results_url: result.url,
-              search_id: resp.search_id
+              biz: result.biz,
+              address: result.address,
+              city: result.city,
+              state: result.state,
+              zip: result.zip,
+              rating: result.rating,
+              url: result.url,
+              phone: result.phone
             })
-            loadedBackends.push(result.backend)
-
-            let backendMenuItem = document.getElementById(result.backend + "_menu")
-            backendMenuItem.innerHTML = `
-            <a href="#${result.backend}_header">${result.backend_str}</a>
-            `
-          }
-
-          let backendContainer = document.getElementById(result.backend)
-          Results.renderResult(backendContainer, {
-            backend: result.backend,
-            biz: result.biz,
-            address: result.address,
-            city: result.city,
-            state: result.state,
-            zip: result.zip,
-            rating: result.rating,
-            url: result.url,
-            phone: result.phone
           })
-        })
+        } else {
+          console.log("joined, channel empty")
+        }
       })
 
       .receive("error", reason => console.log("Join failed", reason))

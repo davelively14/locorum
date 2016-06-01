@@ -1289,53 +1289,57 @@ var Project = {
     });
 
     projectChannel.join().receive("ok", function (resp) {
-      Project.clearAndPrepAllResults();
-      resp.collections.forEach(function (collection) {
-        var loaded = document.getElementById("search-" + Project.esc(collection.search_id) + "-loaded");
-        var loadStatsContainer = document.getElementById("load-status-" + Project.esc(collection.search_id));
-        var loadedBackends = {};
+      if (resp) {
+        Project.clearAndPrepAllResults();
+        resp.collections.forEach(function (collection) {
+          var loaded = document.getElementById("search-" + Project.esc(collection.search_id) + "-loaded");
+          var loadStatsContainer = document.getElementById("load-status-" + Project.esc(collection.search_id));
+          var loadedBackends = {};
 
-        collection.results.forEach(function (result) {
-          result.search_id = collection.search_id;
+          collection.results.forEach(function (result) {
+            result.search_id = collection.search_id;
 
-          if (loadedBackends[result.backend] == null) {
-            Project.renderBackend(result);
-            loadedBackends[result.backend] = {};
-            loadedBackends[result.backend].total = 1;
-            loadedBackends[result.backend].backend_str = result.backend_str;
-            loadedBackends[result.backend].high_rating = result.rating;
-            loadedBackends[result.backend].low_rating = result.rating;
-          } else {
-            loadedBackends[result.backend].total = loadedBackends[result.backend].total + 1;
-            if (result.rating > loadedBackends[result.backend].high_rating) {
+            if (loadedBackends[result.backend] == null) {
+              Project.renderBackend(result);
+              loadedBackends[result.backend] = {};
+              loadedBackends[result.backend].total = 1;
+              loadedBackends[result.backend].backend_str = result.backend_str;
               loadedBackends[result.backend].high_rating = result.rating;
-            } else if (result.rating < loadedBackends[result.backend].low_rating) {
               loadedBackends[result.backend].low_rating = result.rating;
+            } else {
+              loadedBackends[result.backend].total = loadedBackends[result.backend].total + 1;
+              if (result.rating > loadedBackends[result.backend].high_rating) {
+                loadedBackends[result.backend].high_rating = result.rating;
+              } else if (result.rating < loadedBackends[result.backend].low_rating) {
+                loadedBackends[result.backend].low_rating = result.rating;
+              }
             }
+            Project.renderResult(result);
+          });
+
+          loadStatsContainer.setAttribute("class", "text-success load-status");
+          loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends";
+
+          // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
+
+          for (var key in loadedBackends) {
+            var finalTally = {};
+
+            finalTally.backend = key;
+            finalTally.backend_str = loadedBackends[key].backend_str;
+            finalTally.search_id = collection.search_id;
+            finalTally.num_results = loadedBackends[key].total;
+            finalTally.high_rating = loadedBackends[key].high_rating;
+            finalTally.low_rating = loadedBackends[key].low_rating;
+
+            console.log(finalTally);
+
+            Project.renderTally(finalTally);
           }
-          Project.renderResult(result);
         });
-
-        loadStatsContainer.setAttribute("class", "text-success load-status");
-        loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends";
-
-        // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
-
-        for (var key in loadedBackends) {
-          var finalTally = {};
-
-          finalTally.backend = key;
-          finalTally.backend_str = loadedBackends[key].backend_str;
-          finalTally.search_id = collection.search_id;
-          finalTally.num_results = loadedBackends[key].total;
-          finalTally.high_rating = loadedBackends[key].high_rating;
-          finalTally.low_rating = loadedBackends[key].low_rating;
-
-          console.log(finalTally);
-
-          Project.renderTally(finalTally);
-        }
-      });
+      } else {
+        console.log("joined, channel empty");
+      }
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
     });
@@ -1514,36 +1518,42 @@ var Results = {
     });
 
     searchChannel.join().receive("ok", function (resp) {
-      var loadedBackends = [];
+      if (resp) {
+        (function () {
+          var loadedBackends = [];
 
-      resp.results.forEach(function (result) {
-        if (loadedBackends.indexOf(result.backend) < 0) {
-          Results.renderBackend(resultsContainer, backendMenuContainer, {
-            backend: result.backend,
-            backend_str: result.backend_str,
-            backend_url: result.backend_url,
-            results_url: result.url,
-            search_id: resp.search_id
+          resp.results.forEach(function (result) {
+            if (loadedBackends.indexOf(result.backend) < 0) {
+              Results.renderBackend(resultsContainer, backendMenuContainer, {
+                backend: result.backend,
+                backend_str: result.backend_str,
+                backend_url: result.backend_url,
+                results_url: result.url,
+                search_id: resp.search_id
+              });
+              loadedBackends.push(result.backend);
+
+              var backendMenuItem = document.getElementById(result.backend + "_menu");
+              backendMenuItem.innerHTML = "\n              <a href=\"#" + result.backend + "_header\">" + result.backend_str + "</a>\n              ";
+            }
+
+            var backendContainer = document.getElementById(result.backend);
+            Results.renderResult(backendContainer, {
+              backend: result.backend,
+              biz: result.biz,
+              address: result.address,
+              city: result.city,
+              state: result.state,
+              zip: result.zip,
+              rating: result.rating,
+              url: result.url,
+              phone: result.phone
+            });
           });
-          loadedBackends.push(result.backend);
-
-          var backendMenuItem = document.getElementById(result.backend + "_menu");
-          backendMenuItem.innerHTML = "\n            <a href=\"#" + result.backend + "_header\">" + result.backend_str + "</a>\n            ";
-        }
-
-        var backendContainer = document.getElementById(result.backend);
-        Results.renderResult(backendContainer, {
-          backend: result.backend,
-          biz: result.biz,
-          address: result.address,
-          city: result.city,
-          state: result.state,
-          zip: result.zip,
-          rating: result.rating,
-          url: result.url,
-          phone: result.phone
-        });
-      });
+        })();
+      } else {
+        console.log("joined, channel empty");
+      }
     }).receive("error", function (reason) {
       return console.log("Join failed", reason);
     });

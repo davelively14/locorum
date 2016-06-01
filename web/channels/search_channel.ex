@@ -10,10 +10,14 @@ defmodule Locorum.SearchChannel do
                            where: c.search_id == ^search_id,
                            order_by: [desc: c.inserted_at],
                            preload: [:results, results: :backend]
-    first_collection = List.first(collections)
-    results = first_collection.results
-    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json"), search_id: search_id}
-    {:ok, resp, assign(socket, :search_id, search_id)}
+    if List.first(collections) do
+      first_collection = List.first(collections)
+      results = first_collection.results
+      resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json"), search_id: search_id}
+      {:ok, resp, assign(socket, :search_id, search_id)}
+    else
+      {:ok, nil, assign(socket, :search_id, search_id)}
+    end
   end
 
   def handle_in("run_search", _params, socket) do
