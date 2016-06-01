@@ -1,7 +1,5 @@
 defmodule Locorum.ResultsView do
   use Locorum.Web, :view
-  alias Locorum.Repo
-  alias Locorum.Backend
 
   def render("result.json", %{results: r}) do
     %{
@@ -15,8 +13,7 @@ defmodule Locorum.ResultsView do
       zip: r.zip,
       rating: r.rating,
       url: r.url,
-      phone: r.phone,
-      search_id: r.search_id
+      phone: r.phone
     }
 
   end
