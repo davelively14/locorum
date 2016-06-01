@@ -3,7 +3,7 @@ defmodule Locorum.ResultCollectionView do
 
   def render("result_collection.json", %{result_collection: c}) do
     %{
-      search_id: c.id,
+      search_id: c.search_id,
       results: render_many(c.results, Locorum.ResultsView, "result.json")
     }
   end

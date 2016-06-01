@@ -60,7 +60,20 @@ let Project = {
 
     projectChannel.join()
       .receive("ok", resp => {
-        console.log("Joined", resp)
+        resp.collections.forEach(function(collection){
+          let loaded_backends = []
+
+          collection.results.forEach(function(result){
+            if (loaded_backends.indexOf(result.backend) < 0) {
+              console.log("search_id: " + collection.search_id)
+              let loadedOf = document.getElementById(`search-${collection.search_id}-of`)
+              loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
+              result.search_id = collection.search_id
+              Project.renderBackend(result)
+              loaded_backends.push(result.backend)
+            }
+          })
+        })
 
       })
 
@@ -193,7 +206,7 @@ let Project = {
     `
     tallyContainerTable.children[0].appendChild(newEntry)
 
-    // TODO can I write this in ES6 instead of jquery?
+    // TODO can I write this in ES6 instead of jquery? Shows tab for new backend
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var target = this.href.split('#');
       $('.nav a').filter('a[href="#'+target[1]+'"]').tab('show');

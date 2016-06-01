@@ -1289,7 +1289,20 @@ var Project = {
     });
 
     projectChannel.join().receive("ok", function (resp) {
-      console.log("Joined", resp);
+      resp.collections.forEach(function (collection) {
+        var loaded_backends = [];
+
+        collection.results.forEach(function (result) {
+          if (loaded_backends.indexOf(result.backend) < 0) {
+            console.log("search_id: " + collection.search_id);
+            var loadedOf = document.getElementById("search-" + collection.search_id + "-of");
+            loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
+            result.search_id = collection.search_id;
+            Project.renderBackend(result);
+            loaded_backends.push(result.backend);
+          }
+        });
+      });
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
     });
@@ -1378,7 +1391,7 @@ var Project = {
     newEntry.innerHTML = "\n    <td><a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a></td>\n    <td>" + this.esc(resp.num_results) + "</td>\n    <td>" + this.esc(resp.high_rating || "--") + "</td>\n    <td>" + this.esc(resp.low_rating || "--") + "</td>\n    ";
     tallyContainerTable.children[0].appendChild(newEntry);
 
-    // TODO can I write this in ES6 instead of jquery?
+    // TODO can I write this in ES6 instead of jquery? Shows tab for new backend
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       var target = this.href.split('#');
       $('.nav a').filter('a[href="#' + target[1] + '"]').tab('show');
