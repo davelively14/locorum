@@ -14,6 +14,7 @@ defmodule Locorum.ResultsController do
     searches =
       project_searches(project)
       |> Repo.all
+      |> Enum.map(fn(x) -> Map.put(x, :phone, phonify(x.phone)) end )
     render conn, "index.html", project: project, searches: searches
   end
 

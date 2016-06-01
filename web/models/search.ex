@@ -17,7 +17,7 @@ defmodule Locorum.Search do
   end
 
   @required_fields ~w(biz zip city state address1 phone user_id)
-  @optional_fields ~w(name address2 project_id)
+  @optional_fields ~w(address2 project_id)
 
   def changeset(model, params \\ :empty) do
     model
