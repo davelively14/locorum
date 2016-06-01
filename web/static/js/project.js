@@ -62,17 +62,37 @@ let Project = {
       .receive("ok", resp => {
         resp.collections.forEach(function(collection){
           let loaded_backends = []
+          let backend_count = []
 
           collection.results.forEach(function(result){
+            result.search_id = collection.search_id
+            console.log(result.search_id)
+
             if (loaded_backends.indexOf(result.backend) < 0) {
-              console.log("search_id: " + collection.search_id)
-              let loadedOf = document.getElementById(`search-${collection.search_id}-of`)
-              loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1
-              result.search_id = collection.search_id
+              let loaded = document.getElementById(`search-${Project.esc(result.search_id)}-loaded`)
+              let loadStatsContainer = document.getElementById(`load-status-${Project.esc(result.search_id)}`)
+              loadStatsContainer.setAttribute("class", "text-success load-status")
+              loadStatsContainer.innerHTML = "Loaded all " + loaded_backends.length + " backends"
               Project.renderBackend(result)
+              // TODO Needs to put a backend object
               loaded_backends.push(result.backend)
+              backend_count[loaded_backends.indexOf(result.backend)] = 1
+            } else {
+              backend_count[loaded_backends.indexOf(result.backend)] = backend_count[loaded_backends.indexOf(result.backend)] + 1
             }
+
+            Project.renderResult(result)
           })
+
+          // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
+          let finalTally = {}
+          loaded_backends.forEach(function(loaded_backend){
+            finalTally.backend = loaded_backend.backend
+            finalTally.backend_str = loaded_backend.backend_str
+            finalTally.search_id = colleciton.search_id
+            finalTally.num_results =
+          })
+          Project.renderTally(finalTally)
         })
 
       })

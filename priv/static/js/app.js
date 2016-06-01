@@ -1293,15 +1293,22 @@ var Project = {
         var loaded_backends = [];
 
         collection.results.forEach(function (result) {
+          result.search_id = collection.search_id;
+          console.log(result.search_id);
+
           if (loaded_backends.indexOf(result.backend) < 0) {
-            console.log("search_id: " + collection.search_id);
-            var loadedOf = document.getElementById("search-" + collection.search_id + "-of");
-            loadedOf.innerHTML = parseInt(loadedOf.innerHTML) + 1;
-            result.search_id = collection.search_id;
+            var loaded = document.getElementById("search-" + Project.esc(result.search_id) + "-loaded");
+            var loadStatsContainer = document.getElementById("load-status-" + Project.esc(result.search_id));
+            loadStatsContainer.setAttribute("class", "text-success load-status");
+            loadStatsContainer.innerHTML = "Loaded all " + loaded_backends.length + " backends";
             Project.renderBackend(result);
             loaded_backends.push(result.backend);
           }
+
+          Project.renderResult(result);
         });
+        // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
+        Project.renderTally(backend);
       });
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
