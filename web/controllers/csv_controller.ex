@@ -21,14 +21,13 @@ defmodule Locorum.CSVController do
     Enum.each searches, fn search ->
       changeset = Search.changeset(%Search{}, Map.from_struct(search))
       case Repo.insert(changeset) do
-        {:ok, search} ->
+        {:ok, _} ->
           conn = put_flash(conn, :info, "Added some searches")
-        {:error, changeset} ->
-          conn = put_flash(conn, :error, "Some searches could not be added from CSV")
+        {:error, _changeset} ->
+          _conn = put_flash(conn, :error, "Some searches could not be added from CSV")
       end
     end
     conn
-    # TODO why isn't flash working?
     |> redirect(to: project_path(conn, :show, project_id))
     # render conn, "new.html", searches: searches, project: project, user: user
   end

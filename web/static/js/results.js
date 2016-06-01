@@ -120,7 +120,6 @@ let Results = {
       zip = ""
     }
 
-    // TODO refactor to just add the last line if url is true
     if (url) {
       template.innerHTML = `
       <b>${this.esc(biz)}</b><br>

@@ -1,22 +1,18 @@
 # Locorum
 
-Current version on GitHub: 0.2b
+Current version on GitHub: 0.3
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
-## v0.3 to do list
+## v0.4 to do list
 - Persist search results
-  - Load on project load
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
-- Check TODOs
-
-## v0.4 to do list
 - Improve templates
   - Homepage
   - Project
@@ -28,7 +24,6 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Allow admin to disable backends from admin menu
   - Implement show.html to Handle
   - Migrate add "up" boolean, default to true
-- Check TODOs
 - Errata
   - Fix YP backend
     - LG returns errors
@@ -36,6 +31,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
     - LG error above displays this
   - How do we persist "no results"?
     - Are empty backends saved in resultsContainer?
+- Check TODOs
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
@@ -88,6 +84,7 @@ For deployed v0.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
 - Created overview for each search in Project
 - Run search for individual searches within a Project
 - Persisted search results
+  - Load on project load
   - Load on search load
   - Created results table
   - Created backend table
