@@ -15,7 +15,7 @@ let Project = {
 
     runProjectSearch.addEventListener("click", e => {
       this.clearAndPrepAllResults()
-      projectChannel.push("run_test")
+      projectChannel.push("run_search")
                    .receive("error", e => console.log(e) )
     })
 
