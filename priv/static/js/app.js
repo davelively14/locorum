@@ -1289,26 +1289,52 @@ var Project = {
     });
 
     projectChannel.join().receive("ok", function (resp) {
+      Project.clearAndPrepAllResults();
       resp.collections.forEach(function (collection) {
-        var loaded_backends = [];
+        var loaded = document.getElementById("search-" + Project.esc(collection.search_id) + "-loaded");
+        var loadStatsContainer = document.getElementById("load-status-" + Project.esc(collection.search_id));
+        var loadedBackends = {};
 
         collection.results.forEach(function (result) {
           result.search_id = collection.search_id;
-          console.log(result.search_id);
 
-          if (loaded_backends.indexOf(result.backend) < 0) {
-            var loaded = document.getElementById("search-" + Project.esc(result.search_id) + "-loaded");
-            var loadStatsContainer = document.getElementById("load-status-" + Project.esc(result.search_id));
-            loadStatsContainer.setAttribute("class", "text-success load-status");
-            loadStatsContainer.innerHTML = "Loaded all " + loaded_backends.length + " backends";
+          if (loadedBackends[result.backend] == null) {
             Project.renderBackend(result);
-            loaded_backends.push(result.backend);
+            loadedBackends[result.backend] = {};
+            loadedBackends[result.backend].total = 1;
+            loadedBackends[result.backend].backend_str = result.backend_str;
+            loadedBackends[result.backend].high_rating = result.rating;
+            loadedBackends[result.backend].low_rating = result.rating;
+          } else {
+            loadedBackends[result.backend].total = loadedBackends[result.backend].total + 1;
+            if (result.rating > loadedBackends[result.backend].high_rating) {
+              loadedBackends[result.backend].high_rating = result.rating;
+            } else if (result.rating < loadedBackends[result.backend].low_rating) {
+              loadedBackends[result.backend].low_rating = result.rating;
+            }
           }
-
           Project.renderResult(result);
         });
+
+        loadStatsContainer.setAttribute("class", "text-success load-status");
+        loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends";
+
         // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
-        Project.renderTally(backend);
+
+        for (var key in loadedBackends) {
+          var finalTally = {};
+
+          finalTally.backend = key;
+          finalTally.backend_str = loadedBackends[key].backend_str;
+          finalTally.search_id = collection.search_id;
+          finalTally.num_results = loadedBackends[key].total;
+          finalTally.high_rating = loadedBackends[key].high_rating;
+          finalTally.low_rating = loadedBackends[key].low_rating;
+
+          console.log(finalTally);
+
+          Project.renderTally(finalTally);
+        }
       });
     }).receive("error", function (resp) {
       return console.log("Failed to join project channel", resp);
@@ -1392,7 +1418,6 @@ var Project = {
   renderTally: function renderTally(resp) {
     var badgeCounter = document.getElementById(this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "-badge");
     badgeCounter.innerHTML = "" + this.esc(resp.num_results);
-
     var tallyContainerTable = document.getElementById("overview-" + this.esc(resp.search_id) + "-table");
     var newEntry = document.createElement("tr");
     newEntry.innerHTML = "\n    <td><a href=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\" role=\"tab\" data-toggle=\"tab\" aria-controls=\"#dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id) + "\">" + this.esc(resp.backend_str) + "</a></td>\n    <td>" + this.esc(resp.num_results) + "</td>\n    <td>" + this.esc(resp.high_rating || "--") + "</td>\n    <td>" + this.esc(resp.low_rating || "--") + "</td>\n    ";
