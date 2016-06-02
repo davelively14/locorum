@@ -1,12 +1,17 @@
 # Locorum
 
-Current version on GitHub: 0.3
+Current version on GitHub: 0.2c
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.2c, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+
+## v0.3 to do list
+- Errata
+  - Fix YP backend
+    - LG returns errors
 
 ## v0.4 to do list
 - Persist search results
@@ -25,8 +30,6 @@ For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Implement show.html to Handle
   - Migrate add "up" boolean, default to true
 - Errata
-  - Fix YP backend
-    - LG returns errors
   - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
     - LG error above displays this
   - How do we persist "no results"?
