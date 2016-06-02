@@ -1243,7 +1243,7 @@ var Project = {
 
     runProjectSearch.addEventListener("click", function (e) {
       _this.clearAndPrepAllResults();
-      projectChannel.push("run_test").receive("error", function (e) {
+      projectChannel.push("run_search").receive("error", function (e) {
         return console.log(e);
       });
     });
@@ -1593,7 +1593,6 @@ var Results = {
       zip = "";
     }
 
-    // TODO refactor to just add the last line if url is true
     if (url) {
       template.innerHTML = "\n      <b>" + this.esc(biz) + "</b><br>\n      " + this.esc(address) + "<br>\n      " + this.esc(city) + ", " + this.esc(state) + " " + this.esc(zip) + "<br>\n      " + this.esc(phone) + "<br>\n      <i>Rating: </i><b>" + this.esc(rating) + "</b><br>\n      <i><a href=\"" + this.esc(url) + "\" target=\"_blank\">Edit entry</a></i><br>\n      <br>\n      ";
     } else {
