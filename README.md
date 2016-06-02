@@ -12,6 +12,10 @@ For deployed v0.2c, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) 
 - Errata
   - Fix YP backend
     - LG returns errors
+- Limit persisted data
+  - Only last 3 most recent ResultCollections
+- Write tests for backends
+  - Separate internal from external efforts
 
 ## v0.4 to do list
 - Persist search results
