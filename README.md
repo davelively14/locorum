@@ -1,27 +1,19 @@
 # Locorum
 
-Current version on GitHub: 0.2c
+Current version on GitHub: 0.3
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.2c, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
-
-## v0.3 to do list
-- Errata
-  - Fix YP backend
-    - LG returns errors
-- Limit persisted data
-  - Only last 3 most recent ResultCollections
-- Write tests for backends
-  - Separate internal from external efforts
+For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4 to do list
 - Persist search results
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
+  - Limit persisted data to 3 most recent ResultCollections
 - Improve templates
   - Homepage
   - Project
@@ -30,6 +22,8 @@ For deployed v0.2c, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) 
 - Allow user to individual results so they won't show up in results again
 - User authentication for socket
 - Export results to CSV
+- Write tests for backends
+  - Separate internal from external efforts
 - Allow admin to disable backends from admin menu
   - Implement show.html to Handle
   - Migrate add "up" boolean, default to true
