@@ -53,9 +53,13 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   defp rate_same(string1, string2) do
-    string1 = String.upcase(string1)
-    string2 = String.upcase(string2)
-    String.jaro_distance(string1, string2)
+    if string1 && string2 do
+      string1 = String.upcase(string1)
+      string2 = String.upcase(string2)
+      String.jaro_distance(string1, string2)
+    else
+      nil
+    end
   end
 
   defp sort_results(map), do: Enum.sort(map, &(&1.rating > &2.rating))
@@ -76,8 +80,12 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   defp phonify(string) do
-    string = String.replace(string, ~r/[^\w]/, "")
-    String.slice(string, (String.length(string)-10)..(String.length(string)-1))
+    if string do
+      String.replace(string, ~r/[^\w]/, "")
+      |> String.slice(string, (String.length(string)-10)..(String.length(string)-1))
+    else
+      string
+    end
   end
 
   defp broadcast_results(results, header, socket, query) do
