@@ -8,6 +8,10 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 
 For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
+## v0.3.1 to do list
+- Improve navigation
+  - Homepage
+
 ## v0.4 to do list
 - Persist search results
   - Allow user to select older results, sort by date
@@ -29,7 +33,6 @@ For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Migrate add "up" boolean, default to true
 - Errata
   - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
-    - LG error above displays this
   - How do we persist "no results"?
     - Are empty backends saved in resultsContainer?
 - Check TODOs
@@ -52,7 +55,6 @@ For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - First time a search is called, agent will load most recent. Every time search is run, the agent will store the most recent collection and save it to the repo.
   - Should it load on restart?
     - Probably not. Wouldn't scale well and it's true usefulness is as a cache for often requested results.
-- Add some sort of loading notification for each backend to the frontend.
 - Enhance side menu summary for backends
   - Use an icon to indicate overall accuracy for each backend (st: develop a rating system)
 - Handle a lot of results (i.e. more than 10)
