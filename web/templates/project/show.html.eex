@@ -16,7 +16,7 @@
           <td><%= search.zip %></td>
           <td><%= "#{search.city}, #{search.state}" %></td>
           <td class="text-center">
-            <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
+            <%= link "Results", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
             <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
             <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
           </td>
