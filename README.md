@@ -10,6 +10,7 @@ For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 
 ## v0.4 to do list
+- Export results to CSV
 - Persist search results
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
@@ -21,7 +22,6 @@ For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - User
 - Allow user to individual results so they won't show up in results again
 - User authentication for socket
-- Export results to CSV
 - Write tests for backends
   - Separate internal from external efforts
 - Allow admin to disable backends from admin menu
