@@ -11,7 +11,7 @@ defmodule Locorum.Search do
     field :phone, :string
     belongs_to :project, Locorum.Project
     belongs_to :user, Locorum.User
-    has_many :result_collections, Locorum.ResultCollection
+    has_many :result_collections, Locorum.ResultCollection, on_delete: :fetch_and_delete
 
     timestamps
   end

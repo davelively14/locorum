@@ -6,7 +6,7 @@ defmodule Locorum.Backend do
     field :name, :string
     field :name_str, :string
     field :url, :string
-    has_many :results, Locorum.Result
+    has_many :results, Locorum.Result, on_delete: :delete_all
 
     timestamps
   end

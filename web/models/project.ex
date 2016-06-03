@@ -3,7 +3,7 @@ defmodule Locorum.Project do
 
   schema "projects" do
     field :name, :string
-    has_many :searches, Locorum.Search
+    has_many :searches, Locorum.Search, on_delete: :fetch_and_delete
     belongs_to :user, Locorum.User
 
     timestamps

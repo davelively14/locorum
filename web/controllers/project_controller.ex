@@ -50,7 +50,9 @@ defmodule Locorum.ProjectController do
   end
 
   def delete(conn, %{"id" => id}, _user) do
-    project = Repo.get(Project, id)
+    project =
+      Repo.get(Project, id)
+      |> Repo.preload([:searches])
     Repo.delete project
     redirect(conn, to: project_path(conn, :index))
   end
