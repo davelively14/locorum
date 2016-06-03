@@ -27,7 +27,7 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"> Create New Search </button>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadCsvModal"> Upload CSV </button>
       <%= if @searches != [] do
-        link "Run All Searches", to: results_path(@conn, :index, @project.id), class: "btn btn-success pull-right"
+        link "View Results", to: results_path(@conn, :index, @project.id), class: "btn btn-success pull-right"
       end %>
     </div>
   </div>
