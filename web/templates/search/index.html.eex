@@ -1,4 +1,7 @@
 <h2>All Searches</h2>
+<div class="alert alert-warning" role="alert">
+  <b>Warning: </b>This page will be deprecated before v1.0
+</div>
 
 <table class="table">
   <tr class="text-center">
@@ -9,11 +12,10 @@
   </tr>
   <%= for search <- @searches do %>
     <tr>
-      <td><%= search.biz %></td>
+      <td><%= link search.biz, to: search_path(@conn, :show, search.id) %></td>
       <td><%= search.zip %></td>
       <td><%= "#{search.city}, #{search.state}" %></td>
       <td class="text-center">
-        <%= link "View", to: search_path(@conn, :show, search.id), class: "btn btn-primary btn-xs" %>
         <%= link "Run", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
         <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
         <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>

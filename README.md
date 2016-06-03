@@ -1,16 +1,13 @@
 # Locorum
 
-Current version on GitHub: 0.3
+Current version on GitHub: 0.3.1a
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
-## v0.3.1 to do list
-- Improve navigation
-  - Homepage
 
 ## v0.4 to do list
 - Persist search results
@@ -48,6 +45,10 @@ For deployed v0.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) f
   - Create better overview for each search
   - Use "name" instead of "biz" for search
   - results.js to search.js
+
+## v1.0 to do list
+- Deprecate
+  - search :index
 
 ## Long term to do list
 

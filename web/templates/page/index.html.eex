@@ -3,24 +3,26 @@
   <p class="lead">
     Check your local listings
   </p>
+  <%= if !@current_user do %>
+    <br>
+    <%= link "Login", to: session_path(@conn, :new), class: "btn btn-primary btn-lg" %>
+    <br>
+    <br>
+    <h4>Not a member? <small><%= link "Create New User", to: user_path(@conn, :new) %></small></h4>
+  <%= else %>
+    <div class="row marketing">
+      <br><br>
+      <div class="col-lg-6">
+        <%= link "Create New Project", to: project_path(@conn, :new), class: "btn btn-primary btn-lg" %>
+      </div>
+
+      <div class="col-lg-6">
+        <%= link "View Existing Projects", to: project_path(@conn, :index), class: "btn btn-primary btn-lg" %>
+      </div>
+    </div>
+  <% end %>
+
 </div>
 
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li><%= link "Create New Search", to: search_path(@conn, :new) %></li>
-      <li><%= link "View Saved Searches", to: search_path(@conn, :index) %></li>
-      <li><%= link "Create New Project", to: project_path(@conn, :new) %></li>
-      <li><%= link "View All Projects", to: project_path(@conn, :index) %></li>
-    </ul>
-  </div>
-
-  <div class="col-lg-6">
-    <h4>User Controls</h4>
-    <ul>
-      <li><%= link "Create New User", to: user_path(@conn, :new) %></li>
-      <li><%= link "View All Users", to: user_path(@conn, :index) %></li>
-    </ul>
-  </div>
-</div>
+<%= if @current_user do %>
+<% end %>
