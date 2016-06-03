@@ -16,7 +16,6 @@ For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Display "as of" for each search
   - Limit persisted data to 3 most recent ResultCollections
 - Improve templates
-  - Homepage
   - Project
   - Search
   - User
