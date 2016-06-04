@@ -12,13 +12,13 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 
 ## v0.4 to do list
+- Export results to CSV
 - Enhance persisted search results experience
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
   - Limit persisted data to 3 most recent ResultCollections
 - Replace %Header{} with %Result{}
-- Export results to CSV
 - Improve templates
   - Project
   - Search
