@@ -12,7 +12,7 @@
       </tr>
       <%= for search <- @searches || [] do %>
         <tr>
-          <td><%= link search.biz, to: search_path(@conn, :show, search.id) %></td>
+          <td><a href="#" data-toggle="modal" data-target="#viewSearch<%= search.id %>"><%= search.biz %></a></td>
           <td><%= search.zip %></td>
           <td><%= "#{search.city}, #{search.state}" %></td>
           <td class="text-center">
@@ -21,11 +21,37 @@
             <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
           </td>
         </tr>
+        <div class="modal fade" id="viewSearch<%= search.id %>" tabindex="-1" role="dialog" aria-labelledby="viewSearchModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="viewSearchModalLabel"><%= search.biz %></h4>
+                <div class="modal-body">
+                  <div class="panel panel-info">
+                    <div class="panel-body">
+                      <b><%= search.biz %></b><br>
+                      <%= search.address1 %><br>
+                      <%= "#{search.city}, #{search.state} #{search.zip || ""}" %><br>
+                      <%= search.phone %><br>
+                    </div>
+                    <div class="panel-footer text-right">
+                      <%= link "View Results", to: results_path(@conn, :show, search.id), class: "btn btn-success btn-xs" %>
+                      <%= link "Edit", to: search_path(@conn, :edit, search.id), class: "btn btn-info btn-xs" %>
+                      <%= link "Delete", to: search_path(@conn, :delete, search.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
     </table>
     <div class="panel-footer">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createSearchModal"> Create New Search </button>
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadCsvModal"> Upload CSV </button>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#viewSearchModal"> Search </button>
       <%= if @searches != [] do
         link "View Results", to: results_path(@conn, :index, @project.id), class: "btn btn-success pull-right"
       end %>

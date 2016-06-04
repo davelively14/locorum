@@ -1,5 +1,9 @@
 <h2><%= @search.biz %></h2>
 
+<div class="alert alert-warning" role="alert">
+  <b>Warning: </b>This page will be deprecated before v1.0
+</div>
+
 <div class="container">
   <dl class="dl-horizontal">
     <dt>Company Name</dt>

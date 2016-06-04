@@ -195,7 +195,7 @@ defmodule Locorum.BackendSys.Helpers do
       backend: header.backend,
       backend_str: header.backend_str,
       backend_url: header.url_site,
-      results_url: header.url_search,
+      url: header.url_search,
       search_id: header.search_id
     }
     header.url_search

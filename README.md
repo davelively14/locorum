@@ -6,15 +6,18 @@ Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+
+## v0.3.3 to do List
 
 
 ## v0.4 to do list
-- Persist search results
+- Enhance persisted search results experience
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
   - Limit persisted data to 3 most recent ResultCollections
+- Replace %Header{} with %Result{}
 - Export results to CSV
 - Improve templates
   - Project
@@ -48,6 +51,7 @@ For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v1.0 to do list
 - Deprecate
   - search :index
+  - search :show
 
 ## Long term to do list
 
@@ -68,6 +72,18 @@ For deployed v0.3.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Find a new name
 
 ## Changelog
+
+### v0.3.2
+- Bug fixes
+  - Fixed "view results in new tab" bad link for persisted results
+  - Fixed search :edit bad call to deprecated search.name
+- Reworded buttons and links for project screen
+- Updated project/show interface. Click on search to view information in modal.
+  - Added search/show to deprecate list
+
+### v0.3.1
+- Improved home Page
+- Better links
 
 ### v0.3
 - Created Project

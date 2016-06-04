@@ -192,7 +192,7 @@ let Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade")
     tabContentBackend.setAttribute("role", "tabpanel")
     tabContentBackend.setAttribute("id", `dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
-    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)} <small><a href="${this.esc(resp.results_url)}" target="_blank" class="pull-right">view results in new tab</a></small></h4>`
+    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)} <small><a href="${this.esc(resp.url)}" target="_blank" class="pull-right">view results in new tab</a></small></h4>`
     tabContent.appendChild(tabContentBackend)
   },
 
@@ -212,7 +212,7 @@ let Project = {
       <i>Rating: <b>${this.esc(resp.rating)}</b></i>
       </div>
       <div class="panel-footer">
-      <i><a href="${this.esc(resp.url)}" target="_blank">Edit entry</a></i>
+      <i><a href="${this.esc(resp.url)}" target="_blank">View at source</a></i>
       </div>
       </div>`
     } else {

@@ -6,7 +6,7 @@
 </h2>
 
 
-<button type="submit" id="run-search" class="btn btn-success btn-block">Run Search</button><br>
+<button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button><br>
 <%= content_tag :div, id: "searches", data: [id: @project.id] do %>
 <%= for search <- @searches do %>
   <div class="panel panel-info">
@@ -21,7 +21,7 @@
           <%= "#{search.city}, #{search.state} #{search.zip}" %><br>
           <%= search.phone %>
           <h3><small><i class="load-status" id="load-status-<%= search.id %>">Loaded <span id="search-<%= search.id %>-loaded">0</span> of <span id="search-<%= search.id %>-of">0</span> backends</i></small></h3>
-          <button type="submit" class="btn btn-success run-single-search" data-id="<%= search.id %>">Run Single Search</button>
+          <button type="submit" class="btn btn-success run-single-search" data-id="<%= search.id %>">Run this search</button>
         </div>
         <%= content_tag :div, id: "search-results-#{search.id}", class: "col-sm-8 col-lg-9" do  %>
           <!-- Nav tabs -->
@@ -40,14 +40,14 @@
           <!-- Tab panes -->
           <div class="tab-content backend-content" id="tab-content-<%= search.id %>">
             <div role="tabpanel" class="tab-pane fade in active overview" id="overview-<%= search.id %>">
-              <h4>No data available. Click "Run Search" above</h4>
+              <h4>No data available. Click "Run All Searches" above, or "Run this search" to the left</h4>
             </div>
           </div>
         <% end %>
       </div>
     </div>
     <div class="panel-footer">
-      <%= link "View details in new tab...", to: results_path(@conn, :show, search.id), target: "_blank" %>
+      <%= link "View this search in new tab", to: results_path(@conn, :show, search.id), target: "_blank" %>
     </div>
   </div>
 <% end %>
