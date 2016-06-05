@@ -9,7 +9,9 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.3.3 to do List
-
+- Testing
+  - Fix unit testing for Search
+  - Add unit testing for Project, Result, ResultCollection, User
 
 ## v0.4 to do list
 - Export results to CSV
