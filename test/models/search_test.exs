@@ -1,10 +1,22 @@
 defmodule Locorum.SearchTest do
   use Locorum.ConnCase
   alias Locorum.Search
+  alias Locorum.TestHelpers
 
   # TODO login before testing all of these
-  @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121"}
+  @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121", user_id: 1}
+  @need_user_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121"}
   @invalid_attrs %{zip: "1234"}
+
+  setup %{conn: conn} = config do
+    if _username = config[:logged_in] do
+      user = TestHelpers.insert_user(username: "searcher")
+      conn = assign(conn, :current_user, user)
+      {:ok, conn: conn, user: user}
+    else
+      :ok
+    end
+  end
 
   test "requires user authenticiation for all search actions", %{conn: conn} do
     Enum.each([
@@ -21,12 +33,15 @@ defmodule Locorum.SearchTest do
     end)
   end
 
-  test "creates search and redirects to results page", %{conn: conn} do
-    conn = post conn, search_path(conn, :create), search: @valid_attrs
-    search = Repo.get_by!(Search, @valid_attrs)
+  @tag :logged_in
+  test "creates search and redirects to results page", %{conn: conn, user: user} do
+    attrs = Map.put(@need_user_attrs, :user_id, user.id)
+    conn = post conn, search_path(conn, :create), search: attrs
+    search = Repo.get_by!(Search, attrs)
     assert redirected_to(conn) == results_path(conn, :show, search)
   end
 
+  @tag :logged_in
   test "deletes search and redirects to index page", %{conn: conn} do
     search = Repo.insert! %Search{}
     conn = delete conn, search_path(conn, :delete, search)
@@ -34,6 +49,7 @@ defmodule Locorum.SearchTest do
     refute Repo.get(Search, search.id)
   end
 
+  @tag :logged_in
   test "does not create a new search with invalid attributes", %{conn: conn} do
     conn = post conn, search_path(conn, :create), search: @invalid_attrs
     assert html_response(conn, 200) =~ "New Search"
