@@ -3,7 +3,6 @@ defmodule Locorum.BackendSys.Helpers do
   alias Locorum.Result
   alias Locorum.Repo
   alias Locorum.Backend
-  # import Ecto.Query, only: [from: 2]
   require Logger
 
   @max_stored_results 3
