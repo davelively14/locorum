@@ -11,27 +11,15 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4 to do list
 - Export results to CSV
+  - Need to identify currently displayed result
 - Enhance persisted search results experience
   - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
   - Display "as of" for each search
   - Limit persisted data to 3 most recent ResultCollections
+- Allow user to ignore individual results so they won't show up in results again
 - Replace %Header{} with %Result{}
-- Improve templates
-  - Project
-  - Search
-  - User
-- Allow user to individual results so they won't show up in results again
 - User authentication for socket
-- Write tests for backends
-  - Separate internal from external efforts
-- Allow admin to disable backends from admin menu
-  - Implement show.html to Handle
-  - Migrate add "up" boolean, default to true
-- Errata
-  - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
-  - How do we persist "no results"?
-    - Are empty backends saved in resultsContainer?
 - Check TODOs
 
 ## v0.5 to do list
@@ -47,6 +35,16 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - results.js to search.js
 - Testing
   - Add unit testing for Project, Result, ResultCollection, User
+  - Backends
+- Error check CSV upload
+- Allow admin to disable backends from admin menu
+  - Implement show.html to Handle
+  - Migrate add "up" boolean, default to true
+- Errata
+  - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
+  - How do we persist "no results"?
+    - Are empty backends saved in resultsContainer?
+    - Do we propagate all backends regardless? YES
 
 ## v1.0 to do list
 - Deprecate

@@ -3,7 +3,7 @@ defmodule Locorum.CSVController do
   alias Locorum.Repo
   alias Locorum.Search
 
-  plug :scrub_params, "upload" when action in [:create]
+  plug :scrub_params, "upload" when action in [:create, :update]
 
   def create(conn, %{"upload" => %{"csv" => csv, "project_id" => project_id, "user_id" => user_id}}) do
     searches =
@@ -31,6 +31,10 @@ defmodule Locorum.CSVController do
     |> redirect(to: project_path(conn, :show, project_id))
     # render conn, "new.html", searches: searches, project: project, user: user
   end
+
+  # def update(conn, %{"result_collection_id" => collection_id}) do
+  #   {:ok, conn, params}
+  # end
 
   def split_results([]), do: []
   def split_results([head|tail]), do: [String.split(head, ",")|split_results(tail)]
