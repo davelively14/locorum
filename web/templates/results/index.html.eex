@@ -11,7 +11,23 @@
 <%= for search <- @searches do %>
   <div class="panel panel-info">
     <div class="panel-heading">
-      <h4><%= link search.biz, to: search_path(@conn, :show, search.id) %></h4>
+      <h4>
+        <%= link search.biz, to: search_path(@conn, :show, search.id) %>
+        <div class="dropdown pull-right">
+          <button class="btn btn-default dropdown-toggle" type="button" id="prev-results-<%= search.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Manage Previous Results
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="prev-results-<%= search.id %>" id="select-collection-<%= search.id %>">
+            <li><a href="#">Action</a></li>
+            <li class="active"><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">TBA: manage results for search</a></li>
+          </ul>
+        </div>
+
+      </h4>
     </div>
     <div class="panel-body">
       <div class="row">

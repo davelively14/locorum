@@ -13,8 +13,6 @@ defmodule Locorum.ProjectChannel do
                         preload: [result_collections: ^preload_query, result_collections: [results: ^preload_results, results: :backend]]
     collections =
       for search <- searches, do: List.first(search.result_collections)
-      # results =
-      #   for collection <- collections, do: Locorum.ProjectChannel.add_search_id(collection)
     if List.first(collections) do
       resp = %{collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json")}
       {:ok, resp, assign(socket, :project_id, project_id)}
