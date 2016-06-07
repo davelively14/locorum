@@ -6,13 +6,12 @@ defmodule Locorum.ProjectChannel do
 
   def join("projects:" <> project_id, _params, socket) do
     project_id = String.to_integer(project_id)
-    preload_query = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
+    preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
     preload_results = from r in Result, order_by: [desc: r.rating]
     searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
-                        preload: [result_collections: ^preload_query, result_collections: [results: ^preload_results, results: :backend]]
-    collections =
-      for search <- searches, do: List.first(search.result_collections)
+                        preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+    collections = Enum.map(searches, fn search -> List.first(search.result_collections) end)
     if List.first(collections) do
       resp = %{collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json")}
       {:ok, resp, assign(socket, :project_id, project_id)}
