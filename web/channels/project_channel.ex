@@ -11,6 +11,8 @@ defmodule Locorum.ProjectChannel do
     searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
                         preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+                        
+    # TODO refactor to avoid transversing the searches map twice
     collections =
       Enum.map(searches, fn search -> search.result_collections end)
       |> List.flatten
