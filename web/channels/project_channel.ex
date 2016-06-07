@@ -11,9 +11,13 @@ defmodule Locorum.ProjectChannel do
     searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
                         preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
-    collections = Enum.map(searches, fn search -> List.first(search.result_collections) end)
+    collections =
+      Enum.map(searches, fn search -> search.result_collections end)
+      |> List.flatten
+    first_collections = Enum.map(searches, fn search -> List.first(search.result_collections) end)
     if List.first(collections) do
-      resp = %{collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json")}
+      resp = %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
+               collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json")}
       {:ok, resp, assign(socket, :project_id, project_id)}
     else
       {:ok, nil, assign(socket, :project_id, project_id)}
