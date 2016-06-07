@@ -32,9 +32,10 @@ defmodule Locorum.CSVController do
     # render conn, "new.html", searches: searches, project: project, user: user
   end
 
-  # def update(conn, %{"result_collection_id" => collection_id}) do
-  #   {:ok, conn, params}
-  # end
+  # TODO receive the result_collection_id and path, then save the file
+  def update(conn, %{"result_collection_id" => collection_id, "path" => path}) do
+    {:ok, conn, collection_id, path}
+  end
 
   def split_results([]), do: []
   def split_results([head|tail]), do: [String.split(head, ",")|split_results(tail)]
