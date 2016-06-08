@@ -90,6 +90,9 @@ let Project = {
     let overviewElements = document.getElementsByClassName("search-result-tabs")
     let loadStatusElements = document.getElementsByClassName("load-status")
     let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
+    let searchButton = document.getElementById("run-search")
+
+    searchButton.innerHTML = "Rerun All Searches"
 
     this.showWebsiteDropdown(dropdownTitle)
     this.prepOverviews()

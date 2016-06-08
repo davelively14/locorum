@@ -1317,6 +1317,9 @@ var Project = {
     var overviewElements = document.getElementsByClassName("search-result-tabs");
     var loadStatusElements = document.getElementsByClassName("load-status");
     var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
+    var searchButton = document.getElementById("run-search");
+
+    searchButton.innerHTML = "Rerun All Searches";
 
     this.showWebsiteDropdown(dropdownTitle);
     this.prepOverviews();
