@@ -260,6 +260,10 @@ let Project = {
       newElement.addEventListener("click", e => {
         e.preventDefault()
         let payload = new Object()
+        let title = selectCollection.parentElement.firstElementChild
+        title.innerHTML = `
+        From ${collection.created} <span class="caret"></span>
+        `
         payload.collection_id = collection.result_collection_id
         projectChannel.push("fetch_collection", payload)
       })

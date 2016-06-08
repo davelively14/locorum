@@ -1428,6 +1428,8 @@ var Project = {
       newElement.addEventListener("click", function (e) {
         e.preventDefault();
         var payload = new Object();
+        var title = selectCollection.parentElement.firstElementChild;
+        title.innerHTML = "\n        From " + collection.created + " <span class=\"caret\"></span>\n        ";
         payload.collection_id = collection.result_collection_id;
         projectChannel.push("fetch_collection", payload);
       });
