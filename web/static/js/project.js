@@ -7,13 +7,13 @@ let Project = {
   },
 
   onReady(projectId, socket){
-    let searchesContainer = document.getElementById("searches")
-    let runProjectSearch = document.getElementById("run-search")
+    let runSearchBtn = document.getElementById("run-search")
+    let exportResultsBtn = document.getElementById("export-results")
     let runSingleSearch = document.getElementsByClassName("run-single-search")
     let loadingStatus = document.getElementsByClassName("load-status")
     let projectChannel = socket.channel("projects:" + projectId)
 
-    runProjectSearch.addEventListener("click", e => {
+    runSearchBtn.addEventListener("click", e => {
       this.clearAndPrepAllResults()
       projectChannel.push("run_search")
                    .receive("error", e => console.log(e) )
@@ -90,9 +90,9 @@ let Project = {
     let overviewElements = document.getElementsByClassName("search-result-tabs")
     let loadStatusElements = document.getElementsByClassName("load-status")
     let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
-    let searchButton = document.getElementById("run-search")
+    let runSearchBtn = document.getElementById("run-search")
 
-    searchButton.innerHTML = "Rerun All Searches"
+    runSearchBtn.innerHTML = "Rerun All Searches"
 
     this.showWebsiteDropdown(dropdownTitle)
     this.prepOverviews()

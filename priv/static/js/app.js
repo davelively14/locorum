@@ -1235,13 +1235,13 @@ var Project = {
   onReady: function onReady(projectId, socket) {
     var _this = this;
 
-    var searchesContainer = document.getElementById("searches");
-    var runProjectSearch = document.getElementById("run-search");
+    var runSearchBtn = document.getElementById("run-search");
+    var exportResultsBtn = document.getElementById("export-results");
     var runSingleSearch = document.getElementsByClassName("run-single-search");
     var loadingStatus = document.getElementsByClassName("load-status");
     var projectChannel = socket.channel("projects:" + projectId);
 
-    runProjectSearch.addEventListener("click", function (e) {
+    runSearchBtn.addEventListener("click", function (e) {
       _this.clearAndPrepAllResults();
       projectChannel.push("run_search").receive("error", function (e) {
         return console.log(e);
@@ -1317,9 +1317,9 @@ var Project = {
     var overviewElements = document.getElementsByClassName("search-result-tabs");
     var loadStatusElements = document.getElementsByClassName("load-status");
     var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
-    var searchButton = document.getElementById("run-search");
+    var runSearchBtn = document.getElementById("run-search");
 
-    searchButton.innerHTML = "Rerun All Searches";
+    runSearchBtn.innerHTML = "Rerun All Searches";
 
     this.showWebsiteDropdown(dropdownTitle);
     this.prepOverviews();
