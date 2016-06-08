@@ -6,7 +6,15 @@
 </h2>
 
 
-<button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button><br>
+<div class="row">
+  <div class="col-sm-6">
+    <button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button>
+  </div>
+  <div class="col-sm-6">
+    <button type="submit" id="export-results" class="btn btn-primary btn-block">Export These Results</button>
+  </div>
+</div>
+<br>
 <%= content_tag :div, id: "searches", data: [id: @project.id] do %>
 <%= for search <- @searches do %>
   <div class="panel panel-info">

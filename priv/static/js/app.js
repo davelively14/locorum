@@ -1453,10 +1453,11 @@ var Project = {
     });
   },
   addCollectionListData: function addCollectionListData(collectionList) {
+    // TODO handle excessive amount of result_collections (more than 5)
     collectionList.forEach(function (collection) {
       var selectCollection = document.getElementById("select-collection-" + collection.search_id);
       var newElement = document.createElement("li");
-      newElement.innerHTML = "\n      <a href=\"#\" data-id=\"" + collection.result_collection_id + "\">" + collection.created + " (" + collection.result_collection_id + ")</a>\n      ";
+      newElement.innerHTML = "\n      <a href=\"#\" data-id=\"" + collection.result_collection_id + "\">" + (selectCollection.children.length - 1) + ": " + collection.created + "</a>\n      ";
       selectCollection.appendChild(newElement);
     });
   },
