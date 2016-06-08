@@ -12,10 +12,9 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.4 to do list
 - Export results to CSV
   - Need to identify currently displayed result
+  - Client maintains a data-id list of currently displayed result_collecions for export
 - Enhance persisted search results experience
-  - Allow user to select older results, sort by date
   - Allow user to clear older results from search/edit menu
-  - Display "as of" for each search
   - Limit persisted data to 3 most recent ResultCollections
 - Allow user to ignore individual results so they won't show up in results again
 - Replace %Header{} with %Result{}
@@ -74,6 +73,9 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ### v0.4
 - Testing
   - Fixed unit testing for SearchControllerTest
+- Enhance persisted search results experience
+  - Allow user to select older results, sort by date
+  - Display "as of" for each search
 
 ### v0.3.2
 - Bug fixes
