@@ -60,6 +60,16 @@ defmodule Locorum.ProjectChannel do
     {:noreply, socket}
   end
 
+  def handle_in("export_results", params, socket) do
+    collections = params["collection_ids"]
+    results = Repo.all from r in Result,
+                       where: r.result_collection_id in ^collections,
+                       preload: [:backend]
+    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
+    broadcast!(socket, "return_exports", resp)
+    {:reply, :ok, socket}
+  end
+
   # def handle_in("run_single_test", params, socket) do
   #   broadcast! socket, "backend", %{
   #     backend: "yahoo",

@@ -1248,6 +1248,13 @@ var Project = {
       });
     });
 
+    exportResultsBtn.addEventListener("click", function (e) {
+      var payload = { collection_ids: Project.getListedCollections() };
+      projectChannel.push("export_results", payload).receive("error", function (e) {
+        return console.log(e);
+      });
+    });
+
     Array.prototype.forEach.call(runSingleSearch, function (button) {
       button.addEventListener("click", function (e) {
         var search_id = button.getAttribute("data-id");
@@ -1444,7 +1451,6 @@ var Project = {
     var searchTag = document.getElementById("search-results-" + collection.search_id);
     var loadedBackends = {};
 
-    console.log(searchTag);
     searchTag.setAttribute("collection-id", collection.id);
 
     collection.results.forEach(function (result) {
@@ -1483,8 +1489,6 @@ var Project = {
       finalTally.high_rating = loadedBackends[key].high_rating;
       finalTally.low_rating = loadedBackends[key].low_rating;
 
-      console.log(finalTally);
-
       Project.renderTally(finalTally);
     }
   },
@@ -1494,7 +1498,7 @@ var Project = {
     for (var i = 0; i < elementsList.length; i++) {
       collectionIDs.push(elementsList[i].getAttribute("collection-id"));
     }
-    collectionIDs;
+    return collectionIDs;
   },
   esc: function esc(str) {
     var div = document.createElement("div");

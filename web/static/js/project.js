@@ -19,6 +19,12 @@ let Project = {
                    .receive("error", e => console.log(e) )
     })
 
+    exportResultsBtn.addEventListener("click", e => {
+      let payload = {collection_ids: Project.getListedCollections()}
+      projectChannel.push("export_results", payload)
+                    .receive("error", e => console.log(e))
+    })
+
     Array.prototype.forEach.call(runSingleSearch, function(button){
       button.addEventListener("click", e => {
         let search_id = button.getAttribute("data-id")
@@ -279,7 +285,6 @@ let Project = {
     let searchTag = document.getElementById(`search-results-${collection.search_id}`)
     let loadedBackends = {}
 
-    console.log(searchTag)
     searchTag.setAttribute("collection-id", collection.id)
 
     collection.results.forEach(function(result){
@@ -318,8 +323,6 @@ let Project = {
       finalTally.high_rating = loadedBackends[key].high_rating
       finalTally.low_rating = loadedBackends[key].low_rating
 
-      console.log(finalTally)
-
       Project.renderTally(finalTally)
     }
   },
@@ -330,7 +333,7 @@ let Project = {
     for (var i = 0; i < elementsList.length; i++) {
       collectionIDs.push(elementsList[i].getAttribute("collection-id"))
     }
-    collectionIDs
+    return collectionIDs
   },
 
   esc(str){
