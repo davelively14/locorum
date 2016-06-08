@@ -1337,6 +1337,7 @@ var Project = {
             Project.renderTally(finalTally);
           }
         });
+        Project.addCollectionListData(resp.collection_list);
       } else {
         console.log("joined, channel empty");
       }
@@ -1449,6 +1450,14 @@ var Project = {
     Array.prototype.forEach.call(allOverviews, function (elem) {
       var parentId = elem.getAttribute("id");
       elem.innerHTML = "\n      <table id=\"" + parentId + "-table\" class=\"table table-hover\">\n        <tr>\n          <th>Backend</th>\n          <th>Results</th>\n          <th>High Rating</th>\n          <th>Low Rating</th>\n        </tr>\n      </table>\n      ";
+    });
+  },
+  addCollectionListData: function addCollectionListData(collectionList) {
+    collectionList.forEach(function (collection) {
+      var selectCollection = document.getElementById("select-collection-" + collection.search_id);
+      var newElement = document.createElement("li");
+      newElement.innerHTML = "\n      <a href=\"#\" data-id=\"" + collection.result_collection_id + "\">" + collection.created + " (" + collection.result_collection_id + ")</a>\n      ";
+      selectCollection.appendChild(newElement);
     });
   },
   esc: function esc(str) {

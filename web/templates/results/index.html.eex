@@ -15,15 +15,12 @@
         <%= link search.biz, to: search_path(@conn, :show, search.id) %>
         <div class="dropdown pull-right">
           <button class="btn btn-default dropdown-toggle" type="button" id="prev-results-<%= search.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Manage Previous Results
+            Show Older Results
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" aria-labelledby="prev-results-<%= search.id %>" id="select-collection-<%= search.id %>">
-            <li><a href="#">Action</a></li>
-            <li class="active"><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Manage Results</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#">TBA: manage results for search</a></li>
           </ul>
         </div>
 

@@ -109,6 +109,7 @@ let Project = {
             }
 
           })
+          Project.addCollectionListData(resp.collection_list)
         } else {
           console.log("joined, channel empty")
         }
@@ -279,6 +280,17 @@ let Project = {
         </tr>
       </table>
       `
+    })
+  },
+
+  addCollectionListData(collectionList){
+    collectionList.forEach(function(collection){
+      let selectCollection = document.getElementById(`select-collection-${collection.search_id}`)
+      let newElement = document.createElement("li")
+      newElement.innerHTML = `
+      <a href="#" data-id="${collection.result_collection_id}">${collection.created} (${collection.result_collection_id})</a>
+      `
+      selectCollection.appendChild(newElement)
     })
   },
 
