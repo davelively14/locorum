@@ -1441,7 +1441,11 @@ var Project = {
   renderCollection: function renderCollection(collection) {
     var loaded = document.getElementById("search-" + Project.esc(collection.search_id) + "-loaded");
     var loadStatsContainer = document.getElementById("load-status-" + Project.esc(collection.search_id));
+    var searchTag = document.getElementById("search-results-" + collection.search_id);
     var loadedBackends = {};
+
+    console.log(searchTag);
+    searchTag.setAttribute("collection-id", collection.id);
 
     collection.results.forEach(function (result) {
       result.search_id = collection.search_id;
@@ -1483,6 +1487,14 @@ var Project = {
 
       Project.renderTally(finalTally);
     }
+  },
+  getListedCollections: function getListedCollections() {
+    var elementsList = document.getElementsByClassName("search-box");
+    var collectionIDs = [];
+    for (var i = 0; i < elementsList.length; i++) {
+      collectionIDs.push(elementsList[i].getAttribute("collection-id"));
+    }
+    collectionIDs;
   },
   esc: function esc(str) {
     var div = document.createElement("div");

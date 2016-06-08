@@ -276,7 +276,11 @@ let Project = {
   renderCollection(collection){
     let loaded = document.getElementById(`search-${Project.esc(collection.search_id)}-loaded`)
     let loadStatsContainer = document.getElementById(`load-status-${Project.esc(collection.search_id)}`)
+    let searchTag = document.getElementById(`search-results-${collection.search_id}`)
     let loadedBackends = {}
+
+    console.log(searchTag)
+    searchTag.setAttribute("collection-id", collection.id)
 
     collection.results.forEach(function(result){
       result.search_id = collection.search_id
@@ -318,6 +322,15 @@ let Project = {
 
       Project.renderTally(finalTally)
     }
+  },
+
+  getListedCollections(){
+    let elementsList = document.getElementsByClassName("search-box")
+    let collectionIDs = []
+    for (var i = 0; i < elementsList.length; i++) {
+      collectionIDs.push(elementsList[i].getAttribute("collection-id"))
+    }
+    collectionIDs
   },
 
   esc(str){
