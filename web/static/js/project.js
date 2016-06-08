@@ -58,56 +58,21 @@ let Project = {
       this.renderTally(resp)
     })
 
+    projectChannel.on("render_collection", (resp) => {
+      if (resp) {
+        Project.clearAndPrepSingleResult(resp.collection.search_id)
+        Project.renderCollection(resp.collection)
+      } else {
+        console.log("no results from collection to render")
+      }
+    })
+
     projectChannel.join()
       .receive("ok", resp => {
         if (resp) {
           Project.clearAndPrepAllResults()
           resp.collections.forEach(function(collection){
-            let loaded = document.getElementById(`search-${Project.esc(collection.search_id)}-loaded`)
-            let loadStatsContainer = document.getElementById(`load-status-${Project.esc(collection.search_id)}`)
-            let loadedBackends = {}
-
-            collection.results.forEach(function(result){
-              result.search_id = collection.search_id
-
-              if (loadedBackends[result.backend] == null) {
-                Project.renderBackend(result)
-                loadedBackends[result.backend] = {}
-                loadedBackends[result.backend].total = 1
-                loadedBackends[result.backend].backend_str = result.backend_str
-                loadedBackends[result.backend].high_rating = result.rating
-                loadedBackends[result.backend].low_rating = result.rating
-              } else {
-                loadedBackends[result.backend].total = loadedBackends[result.backend].total + 1
-                if (result.rating > loadedBackends[result.backend].high_rating) {
-                  loadedBackends[result.backend].high_rating = result.rating
-                } else if (result.rating < loadedBackends[result.backend].low_rating) {
-                  loadedBackends[result.backend].low_rating = result.rating
-                }
-              }
-              Project.renderResult(result)
-            })
-
-            loadStatsContainer.setAttribute("class", "text-success load-status")
-            loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends"
-
-            // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
-
-            for (var key in loadedBackends) {
-              let finalTally = {}
-
-              finalTally.backend = key
-              finalTally.backend_str = loadedBackends[key].backend_str
-              finalTally.search_id = collection.search_id
-              finalTally.num_results = loadedBackends[key].total
-              finalTally.high_rating = loadedBackends[key].high_rating
-              finalTally.low_rating = loadedBackends[key].low_rating
-
-              console.log(finalTally)
-
-              Project.renderTally(finalTally)
-            }
-
+            Project.renderCollection(collection)
           })
           Project.addCollectionListData(resp.collection_list, projectChannel)
         } else {
@@ -299,6 +264,53 @@ let Project = {
         projectChannel.push("fetch_collection", payload)
       })
     })
+  },
+
+  renderCollection(collection){
+    let loaded = document.getElementById(`search-${Project.esc(collection.search_id)}-loaded`)
+    let loadStatsContainer = document.getElementById(`load-status-${Project.esc(collection.search_id)}`)
+    let loadedBackends = {}
+
+    collection.results.forEach(function(result){
+      result.search_id = collection.search_id
+
+      if (loadedBackends[result.backend] == null) {
+        Project.renderBackend(result)
+        loadedBackends[result.backend] = {}
+        loadedBackends[result.backend].total = 1
+        loadedBackends[result.backend].backend_str = result.backend_str
+        loadedBackends[result.backend].high_rating = result.rating
+        loadedBackends[result.backend].low_rating = result.rating
+      } else {
+        loadedBackends[result.backend].total = loadedBackends[result.backend].total + 1
+        if (result.rating > loadedBackends[result.backend].high_rating) {
+          loadedBackends[result.backend].high_rating = result.rating
+        } else if (result.rating < loadedBackends[result.backend].low_rating) {
+          loadedBackends[result.backend].low_rating = result.rating
+        }
+      }
+      Project.renderResult(result)
+    })
+
+    loadStatsContainer.setAttribute("class", "text-success load-status")
+    loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends"
+
+    // TODO should make this Collection -> Backends -> Results in the structure. Long term refactor for simplification
+
+    for (var key in loadedBackends) {
+      let finalTally = {}
+
+      finalTally.backend = key
+      finalTally.backend_str = loadedBackends[key].backend_str
+      finalTally.search_id = collection.search_id
+      finalTally.num_results = loadedBackends[key].total
+      finalTally.high_rating = loadedBackends[key].high_rating
+      finalTally.low_rating = loadedBackends[key].low_rating
+
+      console.log(finalTally)
+
+      Project.renderTally(finalTally)
+    }
   },
 
   esc(str){
