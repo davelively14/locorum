@@ -47,13 +47,15 @@ defmodule Locorum.ProjectChannel do
     {:reply, :ok, socket}
   end
 
-  def handle_in("load_result", params, socket) do
-    collection =
-      ResultCollection
-      |> Repo.get(params["collection_id"])
+  def handle_in("fetch_collection", params, socket) do
+    preload_results = from r in Result, order_by: [desc: r.rating]
+    collection = Repo.one from c in ResultCollection,
+                          where: c.id == ^params["collection_id"],
+                          preload: [results: ^preload_results, results: :backend]
+
     resp = %{collection: Phoenix.View.render(Locorum.ResultCollectionView, "result_collection.json", result_collection: collection)}
-    
-    broadcast!(socket, "render_result", resp)
+
+    broadcast!(socket, "render_collection", resp)
 
     {:noreply, socket}
   end

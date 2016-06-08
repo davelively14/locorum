@@ -1337,7 +1337,7 @@ var Project = {
             Project.renderTally(finalTally);
           }
         });
-        Project.addCollectionListData(resp.collection_list);
+        Project.addCollectionListData(resp.collection_list, projectChannel);
       } else {
         console.log("joined, channel empty");
       }
@@ -1452,13 +1452,19 @@ var Project = {
       elem.innerHTML = "\n      <table id=\"" + parentId + "-table\" class=\"table table-hover\">\n        <tr>\n          <th>Backend</th>\n          <th>Results</th>\n          <th>High Rating</th>\n          <th>Low Rating</th>\n        </tr>\n      </table>\n      ";
     });
   },
-  addCollectionListData: function addCollectionListData(collectionList) {
+  addCollectionListData: function addCollectionListData(collectionList, projectChannel) {
     // TODO handle excessive amount of result_collections (more than 5)
     collectionList.forEach(function (collection) {
       var selectCollection = document.getElementById("select-collection-" + collection.search_id);
       var newElement = document.createElement("li");
-      newElement.innerHTML = "\n      <a href=\"#\" data-id=\"" + collection.result_collection_id + "\">" + (selectCollection.children.length - 1) + ": " + collection.created + "</a>\n      ";
+      newElement.innerHTML = "\n      <a href=\"\" data-id=\"" + collection.result_collection_id + "\">" + (selectCollection.children.length - 1) + ": " + collection.created + "</a>\n      ";
       selectCollection.appendChild(newElement);
+      newElement.addEventListener("click", function (e) {
+        e.preventDefault();
+        var payload = new Object();
+        payload.collection_id = collection.result_collection_id;
+        projectChannel.push("fetch_collection", payload);
+      });
     });
   },
   esc: function esc(str) {
