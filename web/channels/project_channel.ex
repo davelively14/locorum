@@ -66,9 +66,38 @@ defmodule Locorum.ProjectChannel do
                        where: r.result_collection_id in ^collections,
                        preload: [:backend]
     resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
+    results_json = Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")
+
+    headers =
+      results_json
+      |> List.first
+      |> Map.keys
+      |> Enum.map(fn x -> Atom.to_string(x) end)
+      |> encode_header
+
+    body =
+      results_json
+      |> Enum.map(fn result -> Map.values(result) end)
+      |> encode_body
+
+    _resp = headers <> body
+
     broadcast!(socket, "return_exports", resp)
     {:reply, :ok, socket}
   end
+
+  def encode_header([]), do: nil
+  def encode_header([head|tail]), do: encode_header(tail, "#{head}")
+  defp encode_header([], acc), do: "#{acc}\r\n"
+  defp encode_header([head|tail], acc), do: encode_header(tail, "#{acc},#{head}")
+
+  def encode_body([]), do: nil
+  def encode_body(body), do: encode_body(body, "")
+  defp encode_body([], acc), do: acc
+  defp encode_body([[head_line|tail_line]|tail], acc), do: encode_body(tail, encode_line(tail_line, "#{acc}\"#{head_line}\""))
+
+  defp encode_line([], acc), do: "#{acc}\r\n"
+  defp encode_line([head|tail], acc), do: encode_line(tail, "\"#{acc},#{head}\"")
 
   # def handle_in("run_single_test", params, socket) do
   #   broadcast! socket, "backend", %{

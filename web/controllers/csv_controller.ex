@@ -12,6 +12,7 @@ defmodule Locorum.CSVController do
           result =
             result
             |> String.split("\n")
+            # TODO move this helper to somewhere else
             |> Locorum.BackendSys.Helpers.pop_first(1)
             |> split_results
             |> add_to_search([project_id, user_id])
