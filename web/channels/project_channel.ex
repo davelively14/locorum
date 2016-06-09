@@ -65,7 +65,6 @@ defmodule Locorum.ProjectChannel do
     results = Repo.all from r in Result,
                        where: r.result_collection_id in ^collections,
                        preload: [:backend]
-    resp = %{results: Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")}
     results_json = Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")
 
     headers =
@@ -80,9 +79,10 @@ defmodule Locorum.ProjectChannel do
       |> Enum.map(fn result -> Map.values(result) end)
       |> encode_body
 
-    _resp = headers <> body
+    resp =
+      headers <> body
+      # TODO write to file
 
-    broadcast!(socket, "return_exports", resp)
     {:reply, :ok, socket}
   end
 
@@ -97,7 +97,7 @@ defmodule Locorum.ProjectChannel do
   defp encode_body([[head_line|tail_line]|tail], acc), do: encode_body(tail, encode_line(tail_line, "#{acc}\"#{head_line}\""))
 
   defp encode_line([], acc), do: "#{acc}\r\n"
-  defp encode_line([head|tail], acc), do: encode_line(tail, "\"#{acc},#{head}\"")
+  defp encode_line([head|tail], acc), do: encode_line(tail, "#{acc},\"#{head}\"")
 
   # def handle_in("run_single_test", params, socket) do
   #   broadcast! socket, "backend", %{
