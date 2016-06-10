@@ -22,7 +22,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
 - Allow user to ignore individual results so they won't show up in results again
-- Replace %Header{} with %Result{}
+- Replace %Header{} with %Backend{}
 - User authentication for socket
 - Refactor
   - Create better overview for each search
