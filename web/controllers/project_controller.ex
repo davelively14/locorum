@@ -37,7 +37,8 @@ defmodule Locorum.ProjectController do
 
   def index(conn, _params, _user) do
     projects =
-      Repo.all(Project)
+      Project
+      |> Repo.all
       |> Repo.preload(:user)
     render conn, "index.html", projects: projects
   end

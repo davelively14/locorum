@@ -81,6 +81,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Bug fixes
   - Fixed issue where export results button would display when no collections were loaded.
 - No longer use %Header{} in each backend. Helpers will pull backend data from repo based on module name.
+- Removed Collection Admin from main menu
 - Breaking Changes
   - Must reenter all backend module names (must include Elixir.BackendSys)
 
