@@ -2,6 +2,7 @@ defmodule Locorum.CSVController do
   use Locorum.Web, :controller
   alias Locorum.Repo
   alias Locorum.Search
+  alias Locorum.Result
 
   plug :scrub_params, "upload" when action in [:create, :update]
 
@@ -34,27 +35,38 @@ defmodule Locorum.CSVController do
   end
 
   # TODO receive the result_collection_id and path, then save the file
-  def update(conn, %{"result_collection_id" => collection_id, "path" => path}) do
-    {:ok, conn, collection_id, path}
+  def export(conn, %{"collection_ids" => collection_ids}) do
+    collection_ids = String.split(collection_ids, ",")
+    results = Repo.all from r in Result,
+                       where: r.result_collection_id in ^collection_ids,
+                       preload: [:backend]
+    results_json = Phoenix.View.render_many(results, Locorum.ResultsView, "result.json")
+
+    header =
+      results_json
+      |> List.first
+      |> Map.keys
+      |> Enum.map(&Atom.to_string(&1))
+      |> encode_header
+
+    body =
+      results_json
+      |> Enum.map(&Map.values(&1))
+      |> encode_body
+
+    resp = header <> body
+
+    conn
+    |> put_resp_content_type("text/csv")
+    |> put_resp_header("Content-Disposition", "attachment; filename=\"results.csv\"")
+    |> send_resp(200, resp)
   end
 
-  def split_results([]), do: []
-  def split_results([head|tail]), do: [String.split(head, ",")|split_results(tail)]
+  defp split_results([]), do: []
+  defp split_results([head|tail]), do: [String.split(head, ",")|split_results(tail)]
 
-  # def join_results(keys, values), do: join_results(keys, values, %{})
-  # def join_results([], [], acc), do: acc
-  # def join_results([], _, _acc), do: {:error, "Values longer than keys"}
-  # def join_results(_, [], _acc), do: {:error, "Keys longer than values"}
-  # def join_results([keys_head|keys_tail], [values_head|values_tail], acc) do
-  #   join_results(keys_tail, values_tail, Map.put(acc, keys_head, values_head))
-  # end
-  #
-  # def get_size(list), do: get_size(list, 0)
-  # def get_size([], acc), do: acc
-  # def get_size([_head|tail], acc), do: get_size(tail, acc + 1)
-
-  def add_to_search([], _), do: []
-  def add_to_search([head|tail], [project_id, user_id]) do
+  defp add_to_search([], _), do: []
+  defp add_to_search([head|tail], [project_id, user_id]) do
     biz = Enum.at(head, 1)
     address1 =
       case Enum.at(head, 3) do
@@ -69,4 +81,17 @@ defmodule Locorum.CSVController do
                      zip: zip, phone: phone, project_id: project_id,
                      user_id: user_id}|add_to_search(tail, [project_id, user_id])]
   end
+
+  def encode_header([]), do: nil
+  def encode_header([head|tail]), do: encode_header(tail, "#{head}")
+  defp encode_header([], acc), do: "#{acc}\r\n"
+  defp encode_header([head|tail], acc), do: encode_header(tail, "#{acc},#{head}")
+
+  def encode_body([]), do: nil
+  def encode_body(body), do: encode_body(body, "")
+  defp encode_body([], acc), do: acc
+  defp encode_body([[head_line|tail_line]|tail], acc), do: encode_body(tail, encode_line(tail_line, "#{acc}\"#{head_line}\""))
+
+  defp encode_line([], acc), do: "#{acc}\r\n"
+  defp encode_line([head|tail], acc), do: encode_line(tail, "#{acc},\"#{head}\"")
 end

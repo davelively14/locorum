@@ -1242,6 +1242,7 @@ var Project = {
     var projectChannel = socket.channel("projects:" + projectId);
 
     runSearchBtn.addEventListener("click", function (e) {
+      e.preventDefault();
       _this.clearAndPrepAllResults();
       projectChannel.push("run_search").receive("error", function (e) {
         return console.log(e);
@@ -1249,10 +1250,13 @@ var Project = {
     });
 
     exportResultsBtn.addEventListener("click", function (e) {
-      var payload = { collection_ids: Project.getListedCollections() };
-      projectChannel.push("export_results", payload).receive("error", function (e) {
-        return console.log(e);
-      });
+      // e.preventDefault()
+      var hiddenInput = document.getElementById("export-results-ids");
+      var payload = Project.getListedCollections();
+      hiddenInput.setAttribute("value", payload);
+      // console.log(payload)
+      // projectChannel.push("export_results", payload)
+      //               .receive("error", e => console.log(e))
     });
 
     Array.prototype.forEach.call(runSingleSearch, function (button) {

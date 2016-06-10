@@ -10,14 +10,8 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 
 ## v0.4 to do list
-- Export results to CSV
-  - Client maintains a data-id list of currently displayed result_collecions for export
-- Enhance persisted search results experience
-  - Allow user to clear older results from search/edit menu
-  - Limit persisted data to 3 most recent ResultCollections
-- Allow user to ignore individual results so they won't show up in results again
-- Replace %Header{} with %Result{}
-- User authentication for socket
+- Implement ResultCollection management
+  - Cleanup at a minimum, delete collections
 - Check TODOs
 
 ## v0.5 to do list
@@ -26,7 +20,12 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Add chat capabilities
   - By search/results
   - Link to #slack
-- Check TODOs
+- Enhance persisted search results experience
+  - Allow user to clear older results from search/edit menu
+  - Limit persisted data to 3 most recent ResultCollections
+- Allow user to ignore individual results so they won't show up in results again
+- Replace %Header{} with %Result{}
+- User authentication for socket
 - Refactor
   - Create better overview for each search
   - Use "name" instead of "biz" for search
@@ -43,6 +42,7 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - How do we persist "no results"?
     - Are empty backends saved in resultsContainer?
     - Do we propagate all backends regardless? YES
+- Check TODOs
 
 ## v1.0 to do list
 - Deprecate
@@ -70,6 +70,7 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## Changelog
 
 ### v0.4
+- Export results to CSV
 - Testing
   - Fixed unit testing for SearchControllerTest
 - Enhanced persisted search results experience

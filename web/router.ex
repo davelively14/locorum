@@ -22,12 +22,13 @@ defmodule Locorum.Router do
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 
-  scope "/manage", Locorum do
+  scope "/locate", Locorum do
     pipe_through [:browser, :authenticate_user]
 
     resources "/search", SearchController
     resources "/project", ProjectController
-    resources "/upload", CSVController, only: [:create, :update]
+    resources "/upload", CSVController, only: [:create]
+    post "/csv", CSVController, :export
     get "/results/:id", ResultsController, :show
     get "/results/project/:id", ResultsController, :index
   end

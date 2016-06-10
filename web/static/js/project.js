@@ -14,15 +14,20 @@ let Project = {
     let projectChannel = socket.channel("projects:" + projectId)
 
     runSearchBtn.addEventListener("click", e => {
+      e.preventDefault()
       this.clearAndPrepAllResults()
       projectChannel.push("run_search")
                    .receive("error", e => console.log(e) )
     })
 
     exportResultsBtn.addEventListener("click", e => {
-      let payload = {collection_ids: Project.getListedCollections()}
-      projectChannel.push("export_results", payload)
-                    .receive("error", e => console.log(e))
+      // e.preventDefault()
+      let hiddenInput = document.getElementById("export-results-ids")
+      let payload = Project.getListedCollections()
+      hiddenInput.setAttribute("value", payload)
+      // console.log(payload)
+      // projectChannel.push("export_results", payload)
+      //               .receive("error", e => console.log(e))
     })
 
     Array.prototype.forEach.call(runSingleSearch, function(button){

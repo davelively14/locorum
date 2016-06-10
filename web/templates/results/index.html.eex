@@ -5,15 +5,18 @@
   </small>
 </h2>
 
-<br>
-<div class="row">
-  <div class="col-sm-6">
-    <button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button>
+<%= form_for @conn, csv_path(@conn, :export), [as: :export], fn f -> %>
+  <div class="row">
+    <div class="col-sm-6">
+      <button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button>
+    </div>
+    <div class="col-sm-6">
+        <input type="hidden" id="export-results-ids" name="collection_ids" value="">
+        <%= submit "Export Results (CSV)", class: "btn btn-primary btn-block", id: "export-results" %>
+        <!-- <button type="submit" id="export-results" class="btn btn-primary btn-block">Export Results (CSV)</button> -->
+    </div>
   </div>
-  <div class="col-sm-6">
-    <button type="submit" id="export-results" class="btn btn-primary btn-block">Export These Results</button>
-  </div>
-</div>
+<%= end %>
 <br>
 <%= content_tag :div, id: "searches", data: [id: @project.id] do %>
 <%= for search <- @searches do %>
