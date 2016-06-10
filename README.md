@@ -10,12 +10,12 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 
 ## v0.4 to do list
-- Implement ResultCollection management
-  - Cleanup at a minimum, delete collections
 - Check TODOs
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
+- Implement ResultCollection management
+  - Cleanup at a minimum, delete collections
 - Fix WhitePages nil return
 - Add chat capabilities
   - By search/results
@@ -43,6 +43,11 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - Are empty backends saved in resultsContainer?
     - Do we propagate all backends regardless? YES
 - Check TODOs
+
+## v0.6 to do list
+- Setup admin
+  - Can manage other users
+  - Can manage all projects
 
 ## v1.0 to do list
 - Deprecate
