@@ -1641,7 +1641,6 @@ var Results = {
 
     var template = document.createElement("div");
 
-    // TODO refactor for short-circuit evaluation wihtin template innerHTML
     if (zip == null) {
       zip = "";
     }

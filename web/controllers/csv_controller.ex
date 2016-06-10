@@ -34,7 +34,6 @@ defmodule Locorum.CSVController do
     # render conn, "new.html", searches: searches, project: project, user: user
   end
 
-  # TODO receive the result_collection_id and path, then save the file
   def export(conn, %{"collection_ids" => collection_ids}) do
     collection_ids = String.split(collection_ids, ",")
     results = Repo.all from r in Result,

@@ -48,6 +48,12 @@ For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Setup admin
   - Can manage other users
   - Can manage all projects
+- Add helper for pop_first
+  - csv_controller calls Locorum.BackendSys.Helpers.pop_first right now
+- DRY refactor
+  - phonify in SearchController
+  - get_refer in numerous (i.e., ResultCollectionController)
+- Limit number of ResultCollection per Search
 
 ## v1.0 to do list
 - Deprecate

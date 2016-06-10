@@ -77,7 +77,7 @@ defmodule Locorum.SearchController do
     redirect conn, external: get_refer(conn)
   end
 
-  # TODO DRY this
+  # TODO DRY refactor
   defp phonify(string) do
     case String.length(string) do
       11 ->
@@ -95,7 +95,7 @@ defmodule Locorum.SearchController do
     end
   end
 
-  # TODO DRY this in a controller_helpers
+  # TODO DRY refactor
   defp get_refer(conn) do
     {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, search_path(conn, :index)}
     referer

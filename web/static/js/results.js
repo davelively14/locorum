@@ -115,7 +115,6 @@ let Results = {
   renderResult(backendContainer, {backend, biz, address, city, state, zip, rating, url, phone}){
     let template = document.createElement("div")
 
-    // TODO refactor for short-circuit evaluation wihtin template innerHTML
     if (zip == null) {
       zip = ""
     }

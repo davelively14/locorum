@@ -60,15 +60,6 @@ defmodule Locorum.ProjectChannel do
     {:noreply, socket}
   end
 
-  def handle_in("export_results", params, socket) do
-    collections = params["collection_ids"]
-    # TODO send collection_ids to csv_controller/update, let csv_controller do all this work and export
-    # Or is this perhaps the best place? Need to know who called so we can send the response back to them.
-
-
-    {:reply, :ok, socket}
-  end
-
   # def handle_in("run_single_test", params, socket) do
   #   broadcast! socket, "backend", %{
   #     backend: "yahoo",
