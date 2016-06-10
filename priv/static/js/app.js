@@ -1329,8 +1329,11 @@ var Project = {
     var loadStatusElements = document.getElementsByClassName("load-status");
     var dropdownTitle = document.getElementsByClassName("dropdown-menu-title");
     var runSearchBtn = document.getElementById("run-search");
+    var exportResultsBtn = document.getElementById("export-results");
 
     runSearchBtn.innerHTML = "Rerun All Searches";
+    console.log("Export Results Button Class Attribute: " + exportResultsBtn.getAttribute("class"));
+    exportResultsBtn.setAttribute("class", "btn btn-primary btn-block");
 
     this.showWebsiteDropdown(dropdownTitle);
     this.prepOverviews();

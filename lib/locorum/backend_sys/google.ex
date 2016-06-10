@@ -2,11 +2,21 @@ defmodule Locorum.BackendSys.Google do
   alias Locorum.BackendSys.Helpers
   alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Result
+  alias Locorum.Repo
 
   @backend %Header{backend: "google", backend_str: "Google", url_site: "https://www.google.com"}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
+  end
+
+  def get_backend() do
+    mod = __MODULE__
+    IO.inspect to_string(mod)
+    backend =
+      Locorum.Backend
+      |> Repo.get_by(module: Atom.to_string(mod))
+    backend
   end
 
   def fetch(query, _query_ref, owner, _limit) do

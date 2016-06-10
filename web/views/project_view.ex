@@ -7,5 +7,6 @@ defmodule Locorum.ProjectView do
     user =
       User
       |> Repo.get(id)
+    user
   end
 end

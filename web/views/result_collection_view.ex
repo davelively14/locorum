@@ -1,6 +1,5 @@
 defmodule Locorum.ResultCollectionView do
   use Locorum.Web, :view
-  import Ecto.DateTime, only: [dump: 1]
 
   def render("result_collection.json", %{result_collection: c}) do
     %{

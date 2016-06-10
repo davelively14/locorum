@@ -12,8 +12,7 @@
     </div>
     <div class="col-sm-6">
         <input type="hidden" id="export-results-ids" name="collection_ids" value="">
-        <%= submit "Export Results (CSV)", class: "btn btn-primary btn-block", id: "export-results" %>
-        <!-- <button type="submit" id="export-results" class="btn btn-primary btn-block">Export Results (CSV)</button> -->
+        <%= submit "Export Results (CSV)", class: "btn btn-primary btn-block hidden", id: "export-results" %>
     </div>
   </div>
 <%= end %>

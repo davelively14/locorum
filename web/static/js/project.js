@@ -102,8 +102,11 @@ let Project = {
     let loadStatusElements = document.getElementsByClassName("load-status")
     let dropdownTitle = document.getElementsByClassName("dropdown-menu-title")
     let runSearchBtn = document.getElementById("run-search")
+    let exportResultsBtn = document.getElementById("export-results")
 
     runSearchBtn.innerHTML = "Rerun All Searches"
+    console.log("Export Results Button Class Attribute: " + exportResultsBtn.getAttribute("class"));
+    exportResultsBtn.setAttribute("class", "btn btn-primary btn-block")
 
     this.showWebsiteDropdown(dropdownTitle)
     this.prepOverviews()
