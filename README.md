@@ -1,16 +1,12 @@
 # Locorum
 
-Current version on GitHub: 0.4a
+Current version on GitHub: 0.4
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.3.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
-
-
-## v0.4 to do list
-- Check TODOs
+For deployed v0.4, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
