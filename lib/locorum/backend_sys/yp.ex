@@ -1,9 +1,6 @@
 defmodule Locorum.BackendSys.Yp do
   alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Result
-
-  @backend %Header{backend: "yp", backend_str: "Yellow Pages", url_site: "http://www.yellowpages.com/"}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -11,9 +8,9 @@ defmodule Locorum.BackendSys.Yp do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.init_json(@backend, owner, query)
+    |> Helpers.init_json(__MODULE__, owner, query)
     |> parse_data
-    |> Helpers.send_results(@backend, owner, query)
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do

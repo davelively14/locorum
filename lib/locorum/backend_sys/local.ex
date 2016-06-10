@@ -1,10 +1,6 @@
 defmodule Locorum.BackendSys.Local do
   alias Locorum.BackendSys.Result
-  alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
-  require Logger
-
-  @backend %Header{backend: "local", backend_str: "Local", url_site: "http://www.local.com"}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -12,9 +8,9 @@ defmodule Locorum.BackendSys.Local do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.init_html(@backend, owner, query)
+    |> Helpers.init_html(__MODULE__, owner, query)
     |> parse_data
-    |> Helpers.send_results(@backend, owner, query)
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do

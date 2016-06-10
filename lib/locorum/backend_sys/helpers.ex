@@ -3,28 +3,34 @@ defmodule Locorum.BackendSys.Helpers do
   alias Locorum.Result
   alias Locorum.Repo
   alias Locorum.Backend
+  alias Locorum.BackendSys.Header
   require Logger
 
   @max_stored_results 3
 
   def join(_,_,_), do: nil
 
-  def init_json(url, header, socket, query) do
-    set_header(url, header, query)
+  def get_backend(mod) do
+    Locorum.Backend
+    |> Repo.get_by(module: Atom.to_string(mod))
+  end
+
+  def init_json(url, mod, socket, query) do
+    set_header(url, get_backend(mod), query)
     |> init_frontend(socket)
     |> fetch_json
   end
 
-  def init_html(url, header, socket, query) do
-    set_header(url, header, query)
+  def init_html(url, mod, socket, query) do
+    set_header(url, get_backend(mod), query)
     |> init_frontend(socket)
     |> fetch_html
   end
 
-  def send_results(results, header, socket, query) do
+  def send_results(results, mod, socket, query) do
     rate_results(results, query)
     |> sort_results
-    |> broadcast_results(header, socket, query)
+    |> broadcast_results(get_backend(mod), socket, query)
   end
 
   def convert_to_utf(text, output) do
@@ -87,7 +93,8 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp broadcast_results(results, header, socket, query) do
+  defp broadcast_results(results, backend, socket, query) do
+    header = set_header(nil, backend, query)
     if results != [] do
       for result <- results do
         collect_result(result, header, socket.assigns.result_collection_id)
@@ -120,10 +127,14 @@ defmodule Locorum.BackendSys.Helpers do
     }
   end
 
-  defp set_header(url, header, query) do
-    header
-    |> Map.put(:url_search, url)
-    |> Map.put(:search_id, query.id)
+  defp set_header(url, backend, query) do
+    %Header{
+      backend: backend.name,
+      backend_str: backend.name_str,
+      url_site: backend.url,
+      url_search: url,
+      search_id: query.id
+    }
   end
 
   def fetch_json(url) do

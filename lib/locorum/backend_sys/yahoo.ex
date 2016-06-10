@@ -1,9 +1,6 @@
 defmodule Locorum.BackendSys.Yahoo do
   alias Locorum.BackendSys.Result
-  alias Locorum.BackendSys.Header
   alias Locorum.BackendSys.Helpers
-
-  @backend %Header{backend: "yahoo", backend_str: "Yahoo Local", url_site: "https://local.yahoo.com"}
 
   def start_link(query, query_ref, owner, limit) do
     HTTPoison.start
@@ -12,9 +9,9 @@ defmodule Locorum.BackendSys.Yahoo do
 
   def fetch(query, _query_ref, owner, _limit) do
     get_url(query)
-    |> Helpers.init_json(@backend, owner, query)
+    |> Helpers.init_json(__MODULE__, owner, query)
     |> parse_data
-    |> Helpers.send_results(@backend, owner, query)
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do
