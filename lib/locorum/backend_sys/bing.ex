@@ -1,9 +1,6 @@
 defmodule Locorum.BackendSys.Bing do
   alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Header
-  # alias Locorum.BackendSys.Result
-
-  @backend %Header{backend: "bing", backend_str: "Bing", url_site: "https://www.bing.com/"}
+  alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])

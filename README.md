@@ -1,6 +1,6 @@
 # Locorum
 
-Current version on GitHub: 0.4.1a
+Current version on GitHub: 0.4.1
 
 Check local listings, assess accuracy, fix issues.
 
@@ -15,9 +15,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Implement ResultCollection management
   - Cleanup at a minimum, delete collections
 - Fix WhitePages nil return
-- Add chat capabilities
-  - By search/results
-  - Link to #slack
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
@@ -47,6 +44,9 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Can manage all projects
 - Add helper for pop_first
   - csv_controller calls Locorum.BackendSys.Helpers.pop_first right now
+- Add chat capabilities
+  - By search/results
+  - Link to #slack
 - DRY refactor
   - phonify in SearchController
   - get_refer in numerous (i.e., ResultCollectionController)
