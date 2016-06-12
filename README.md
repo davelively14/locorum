@@ -12,12 +12,10 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.5 to do list
 - Add more backends. Priorities: Bing, Facebook, Yelp, MapQuest, Foursquare, Superpages
-- Implement ResultCollection management
-  - Cleanup at a minimum, delete collections
-- Fix WhitePages nil return
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
+- Fix WhitePages nil return
 - Allow user to ignore individual results so they won't show up in results again
 - User authentication for socket
 - Refactor
