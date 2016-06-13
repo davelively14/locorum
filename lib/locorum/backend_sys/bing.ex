@@ -39,6 +39,8 @@ defmodule Locorum.BackendSys.Bing do
       results
       |> Floki.find()
 
+    url = "https://www.bingplaces.com/DashBoard/Home"
+
     results
   end
 
