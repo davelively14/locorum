@@ -1,14 +1,14 @@
 defmodule Locorum.BackendSys.Bing do
   alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Result
+  # alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
   def fetch(query, _query_ref, _owner, _limit) do
-    get_url(query)
-    |> Helpers.fetch_html
+    get_url(query) # url
+    |> Helpers.fetch_html # body
     |> parse_data
   end
 
@@ -28,16 +28,28 @@ defmodule Locorum.BackendSys.Bing do
     results =
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
+
+    addresses =
+      results
       |> Floki.find("span.b_address")
       |> parse_item
-      # |> add_to_results
+      |> parse_address
+
+    phone =
+      results
+      |> Floki.find()
 
     results
   end
 
-  defp parse_item([]), do: []
-  defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
-  defp parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
+  defp parse_item(result), do: Enum.map(result, fn {_, _, address} -> List.first(address) end)
+
+  # defp parse_item([]), do: []
+  # defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
+  # defp parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
+
+  defp parse_address([]), do: []
+  defp parse_address()
 
   # defp add_to_results(list) do
   #   temp_list = List.reverse(list)
