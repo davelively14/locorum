@@ -12,6 +12,7 @@ defmodule Locorum.BackendSys do
   # TODO uncomment WhitePages once backend fixed
   @backends [Locorum.BackendSys.Google,
              Locorum.BackendSys.Yahoo,
+             Locorum.BackendSys.Bing,
              Locorum.BackendSys.CityGrid,
              Locorum.BackendSys.Local,
              Locorum.BackendSys.Yp]

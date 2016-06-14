@@ -8,10 +8,11 @@ defmodule Locorum.BackendSys.Bing do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, _query_ref, _owner, _limit) do
-    get_url(query) # url
-    |> Helpers.fetch_html # body
+  def fetch(query, _query_ref, owner, _limit) do
+    get_url(query)
+    |> Helpers.init_html(__MODULE__, owner, query)
     |> parse_data
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do
@@ -31,7 +32,7 @@ defmodule Locorum.BackendSys.Bing do
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
 
-    biz =
+    name =
       cond do
         length(Floki.find(focus, ".b_vPanel")) > 0 ->
           body
@@ -79,12 +80,16 @@ defmodule Locorum.BackendSys.Bing do
       |> Enum.map(&String.replace(&1, "\) ", ""))
       |> Enum.map( &String.replace(&1, "-", ""))
 
-    List.zip([biz, address, city, state, zip, phone])
-
+    add_to_results List.zip([name, address, city, state, zip, phone])
   end
 
   def join_address([]), do: nil
   def join_address([head|tail]), do: join_address(tail, head)
   defp join_address([], string), do: string
   defp join_address([head|tail], string), do: join_address(tail, "#{string}, #{head}")
+
+  defp add_to_results([]), do: []
+  defp add_to_results([{name, address, city, state, zip, phone}|tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: @fixed_url} | add_to_results(tail)]
+  end
 end
