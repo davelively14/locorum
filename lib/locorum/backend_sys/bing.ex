@@ -46,7 +46,9 @@ defmodule Locorum.BackendSys.Bing do
     location_data =
       focus
       |> Floki.find("span.b_address")
-      |> parse_item
+      |> Enum.map(fn {_, _, element} -> List.first(element) end)
+      |> Enum.map(&String.split(&1, ", "))
+      |> Enum.map(&Enum.reverse/1)
 
     phone =
       focus
@@ -62,12 +64,6 @@ defmodule Locorum.BackendSys.Bing do
 
 
   end
-
-  defp parse_item(result), do: Enum.map(result, fn {_, _, element} -> List.first(element) end)
-
-  # defp parse_item([]), do: []
-  # defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
-  # defp parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
 
   defp parse_address([]), do: []
   defp parse_address(list), do: parse_address(list, [])
