@@ -2,6 +2,8 @@ defmodule Locorum.BackendSys.Bing do
   alias Locorum.BackendSys.Helpers
   alias Locorum.BackendSys.Result
 
+  @fixed_url "https://www.bingplaces.com/DashBoard/Home"
+
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
@@ -29,7 +31,7 @@ defmodule Locorum.BackendSys.Bing do
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
 
-    title =
+    biz =
       cond do
         length(Floki.find(focus, ".b_vPanel")) > 0 ->
           body
@@ -57,7 +59,15 @@ defmodule Locorum.BackendSys.Bing do
       |> Enum.map(&List.to_tuple/1)
       |> Enum.unzip
 
-    
+    city =
+      location_data
+      |> Enum.map(&Enum.drop(&1, 1))
+      |> Enum.map(&List.first/1)
+
+    address =
+      location_data
+      |> Enum.map(&Enum.drop(&1, 2))
+      |> Enum.map(&join_address/1)
 
     phone =
       focus
@@ -69,43 +79,12 @@ defmodule Locorum.BackendSys.Bing do
       |> Enum.map(&String.replace(&1, "\) ", ""))
       |> Enum.map( &String.replace(&1, "-", ""))
 
-    url = "https://www.bingplaces.com/DashBoard/Home"
-
-    add_to_results(title, )
+    List.zip([biz, address, city, state, zip, phone])
 
   end
 
-  defp parse_address([]), do: []
-  defp parse_address(list), do: parse_address(list, [])
-  defp parse_address([], acc), do: acc
-  defp parse_address([head|tail], acc) do
-
-  end
-
-  # defp add_to_results(list) do
-  #   temp_list = List.reverse(list)
-  #
-  #   state_zip =
-  #     temp_list
-  #     |> Enum.at(0)
-  #     |> String.split(" ")
-  #
-  #   state = Enum.at(state_zip, 0)
-  #   zip = Enum.at(state_zip, 1)
-  #   city = Enum.at(temp_list, 1)
-  #   address =
-  #     temp_list
-  #     |> pop_tops(2)
-  #     |> rebuild_address
-  #
-  #
-  # end
-  #
-  # def pop_tops([head|tail], current) when current > 0, do: pop_tops(tail, current - 1)
-  # def pop_tops(remaining, current), do: remaining
-  #
-  # def rebuild_address([]), do: ""
-  # def rebuild_address([head|tail]), do: rebuild_address(tail, head)
-  # def rebuild_address([], result), do: result
-  # def rebuild_address([head|tail], result), do: rebuild_address(tail, "#{result}, #{head}")
+  def join_address([]), do: nil
+  def join_address([head|tail]), do: join_address(tail, head)
+  defp join_address([], string), do: string
+  defp join_address([head|tail], string), do: join_address(tail, "#{string}, #{head}")
 end
