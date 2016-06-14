@@ -52,9 +52,9 @@ defmodule Locorum.BackendSys.Bing do
       focus
       |> Floki.find(".b_factrow")
       |> Floki.text
-      |> String.split(~r/\(/) 
+      |> String.split(~r/\(/)
       |> Helpers.pop_first(1)
-      |> Enum.map(&String.slice(&1, 0, 12))
+      |> Enum.map(&String.slice(&1, 0, 13))
       |> Enum.map(&String.replace(&1, "\) ", ""))
       |> Enum.map( &String.replace(&1, "-", ""))
 
