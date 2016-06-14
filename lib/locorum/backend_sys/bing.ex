@@ -1,6 +1,6 @@
 defmodule Locorum.BackendSys.Bing do
   alias Locorum.BackendSys.Helpers
-  # alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -25,33 +25,56 @@ defmodule Locorum.BackendSys.Bing do
   end
 
   def parse_data(body) do
-    results =
+    focus =
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
 
-    addresses =
-      results
+    if length(Floki.find(focus, ".b_vPanel") > 0) do
+      title =
+        body
+        |> Floki.find(".b_entityTitle")
+        |> Floki.text
+        |> List.wrap
+    else
+      title =
+        focus
+        |> Floki.find("h2")
+        |> Enum.map(&elem(&1, 2))
+        |> Enum.map(&Floki.text(&1))
+    end
+
+    location_data =
+      focus
       |> Floki.find("span.b_address")
       |> parse_item
-      |> parse_address
 
     phone =
-      results
-      |> Floki.find()
+      focus
+      |> Floki.find(".b_factrow")
+      |> Floki.text
+      |> String.split(~r/\(/) 
+      |> Helpers.pop_first(1)
+      |> Enum.map(&String.slice(&1, 0, 12))
+      |> Enum.map(&String.replace(&1, "\) ", ""))
+      |> Enum.map( &String.replace(&1, "-", ""))
 
     url = "https://www.bingplaces.com/DashBoard/Home"
 
-    results
+
   end
 
-  defp parse_item(result), do: Enum.map(result, fn {_, _, address} -> List.first(address) end)
+  defp parse_item(result), do: Enum.map(result, fn {_, _, element} -> List.first(element) end)
 
   # defp parse_item([]), do: []
   # defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
   # defp parse_item([item | tail]), do: [String.strip(item) | parse_item(tail)]
 
   defp parse_address([]), do: []
-  defp parse_address()
+  defp parse_address(list), do: parse_address(list, [])
+  defp parse_address([], acc), do: acc
+  defp parse_address([head|tail], acc) do
+
+  end
 
   # defp add_to_results(list) do
   #   temp_list = List.reverse(list)
