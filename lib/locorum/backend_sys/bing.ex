@@ -76,9 +76,7 @@ defmodule Locorum.BackendSys.Bing do
       |> Floki.text
       |> String.split(~r/\(/)
       |> Enum.drop(1)
-      |> Enum.map(&String.slice(&1, 0, 13))
-      |> Enum.map(&String.replace(&1, "\) ", ""))
-      |> Enum.map( &String.replace(&1, "-", ""))
+      |> Enum.map(&("(#{String.slice(&1, 0, 13)}"))
 
     add_to_results List.zip([name, address, city, state, zip, phone])
   end
