@@ -40,8 +40,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Setup admin
   - Can manage other users
   - Can manage all projects
-- Add helper for pop_first
-  - csv_controller calls Locorum.BackendSys.Helpers.pop_first right now
 - Add chat capabilities
   - By search/results
   - Link to #slack
@@ -82,6 +80,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Removed Collection Admin from main menu
 - Breaking Changes
   - Must reenter all backend module names (must include Elixir.BackendSys)
+- Replaced pop_first with Enum.drop
 
 ### v0.4
 - Export results to CSV

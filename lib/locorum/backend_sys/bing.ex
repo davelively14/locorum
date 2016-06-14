@@ -29,19 +29,19 @@ defmodule Locorum.BackendSys.Bing do
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
 
-    if length(Floki.find(focus, ".b_vPanel") > 0) do
-      title =
-        body
-        |> Floki.find(".b_entityTitle")
-        |> Floki.text
-        |> List.wrap
-    else
-      title =
-        focus
-        |> Floki.find("h2")
-        |> Enum.map(&elem(&1, 2))
-        |> Enum.map(&Floki.text(&1))
-    end
+    title =
+      cond do
+        length(Floki.find(focus, ".b_vPanel")) > 0 ->
+          body
+          |> Floki.find(".b_entityTitle")
+          |> Floki.text
+          |> List.wrap
+        true ->
+          focus
+          |> Floki.find("h2")
+          |> Enum.map(&elem(&1, 2))
+          |> Enum.map(&Floki.text(&1))
+      end
 
     location_data =
       focus
@@ -50,18 +50,28 @@ defmodule Locorum.BackendSys.Bing do
       |> Enum.map(&String.split(&1, ", "))
       |> Enum.map(&Enum.reverse/1)
 
+    {state, zip} =
+      location_data
+      |> Enum.map(&List.first/1)
+      |> Enum.map(&String.split(&1, " "))
+      |> Enum.map(&List.to_tuple/1)
+      |> Enum.unzip
+
+    
+
     phone =
       focus
       |> Floki.find(".b_factrow")
       |> Floki.text
       |> String.split(~r/\(/)
-      |> Helpers.pop_first(1)
+      |> Enum.drop(1)
       |> Enum.map(&String.slice(&1, 0, 13))
       |> Enum.map(&String.replace(&1, "\) ", ""))
       |> Enum.map( &String.replace(&1, "-", ""))
 
     url = "https://www.bingplaces.com/DashBoard/Home"
 
+    add_to_results(title, )
 
   end
 
