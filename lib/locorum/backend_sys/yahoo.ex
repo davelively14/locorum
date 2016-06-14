@@ -8,7 +8,8 @@ defmodule Locorum.BackendSys.Yahoo do
   end
 
   def fetch(query, _query_ref, owner, _limit) do
-    get_url(query)
+    query
+    |> get_url
     |> Helpers.init_json(__MODULE__, owner, query)
     |> parse_data
     |> Helpers.send_results(__MODULE__, owner, query)
