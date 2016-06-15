@@ -35,7 +35,8 @@ defmodule Locorum.BackendSys.Helpers do
 
   def convert_to_utf(text, output) do
     String.downcase(text)
-    |> String.replace(~r/[^\w-']+/, output)
+    |> String.replace("'", "%27")
+    |> String.replace(~r/[^\w-'^%]+/, output)
   end
 
   # TODO delete this?Added TODO
