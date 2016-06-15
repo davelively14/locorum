@@ -73,6 +73,8 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Update tests for:
   - Model: search (needs user to be logged in)
 - Find a new name
+- Refactor backends to avoid n+1
+  - Bing is a big violator
 
 ## Changelog
 

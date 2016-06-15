@@ -16,7 +16,7 @@ defmodule Locorum.BackendSys.Bing do
     |> Helpers.send_results(__MODULE__, owner, query)
   end
 
-  def get_url(query) do
+  defp get_url(query) do
     city =
       query.city
       |> Helpers.convert_to_utf("+")
@@ -28,7 +28,7 @@ defmodule Locorum.BackendSys.Bing do
     "http://www.bing.com/search?q=#{biz}+#{city}+#{state}"
   end
 
-  def parse_data(body) do
+  defp parse_data(body) do
     focus =
       Floki.find(body, "div.ent_cnt")
       |> Floki.raw_html
@@ -82,8 +82,8 @@ defmodule Locorum.BackendSys.Bing do
     add_to_results List.zip([name, address, city, state, zip, phone])
   end
 
-  def join_address([]), do: nil
-  def join_address([head|tail]), do: join_address(tail, head)
+  defp join_address([]), do: nil
+  defp join_address([head|tail]), do: join_address(tail, head)
   defp join_address([], string), do: string
   defp join_address([head|tail], string), do: join_address(tail, "#{string}, #{head}")
 

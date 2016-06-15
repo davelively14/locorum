@@ -159,7 +159,7 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   def fetch_html(url) do
-    case HTTPoison.get(url, [], follow_redirect: true) do
+    case HTTPoison.get(url, [], follow_redirect: true, hackney: [:insecure]) do
       {:ok, %HTTPoison.Response{status_code: 200, body: html}} ->
         html
       {:ok, %HTTPoison.Response{status_code: 404}} ->
