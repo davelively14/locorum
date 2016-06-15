@@ -38,6 +38,7 @@ defmodule Locorum.BackendSys.Helpers do
     |> String.replace(~r/[^\w-']+/, output)
   end
 
+  # TODO delete this?Added TODO
   def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
   def pop_first(remaining, _current), do: remaining
 
