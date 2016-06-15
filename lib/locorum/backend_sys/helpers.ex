@@ -210,19 +210,4 @@ defmodule Locorum.BackendSys.Helpers do
     }
     header.url_search
   end
-
-  # defp check_max(search_id) do
-  #   query = from r in Result, where: r.search_id == ^search_id
-  #
-  #   Repo.all(query)
-  #   |> Enum.sort(&(Ecto.DateTime.compare(&1.inserted_at, &2.inserted_at) == :lt))
-  #   |> trim_to_max
-  # end
-  #
-  # defp trim_to_max([]), do: []
-  # defp trim_to_max(results) when length(results) < @max_stored_results, do: results
-  # defp trim_to_max([head|tail]) do
-  #   Repo.delete head
-  #   trim_to_max tail
-  # end
 end
