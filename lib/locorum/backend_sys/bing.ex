@@ -28,6 +28,8 @@ defmodule Locorum.BackendSys.Bing do
     "http://www.bing.com/search?q=#{biz}+#{city}+#{state}"
   end
 
+  # TODO put consecutive Enum.map calls into a pipe within one Enum.map
+  # i.e. Enum.map(&(Floki.text(&1) |> title_case))
   defp parse_data(body) do
     focus =
       Floki.find(body, "div.ent_cnt")

@@ -1,16 +1,17 @@
 defmodule Locorum.BackendSys.Neustar do
   alias Locorum.BackendSys.Helpers
-  # alias Locorum.Result
+  alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, _query_ref, _owner, _limit) do
+  def fetch(query, _query_ref, owner, _limit) do
     query
     |> get_url
-    |> Helpers.fetch_html
+    |> Helpers.init_html(__MODULE__, owner, query)
     |> parse_data
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do
@@ -30,49 +31,47 @@ defmodule Locorum.BackendSys.Neustar do
   def parse_data(body) do
     focus = body |> Floki.find(".list-group")
 
-    biz =
+    name =
       focus
       |> Floki.find("h4")
-      |> Floki.text
+      |> Enum.map(&Floki.text/1)
 
     address =
       focus
       |> Floki.find("span[itemprop=streetAddress]")
-      |> Floki.text
-      |> title_case
+      |> Enum.map(&(Floki.text(&1) |> title_case))
 
     city =
       focus
       |> Floki.find("span[itemprop=addressLocality]")
-      |> Floki.text
-      |> title_case
+      |> Enum.map(&(Floki.text(&1) |> title_case))
 
     state =
       focus
       |> Floki.find("span[itemprop=addressRegion]")
-      |> Floki.text
+      |> Enum.map(&Floki.text/1)
 
     zip =
       focus
       |> Floki.find("span[itemprop=postalCode]")
-      |> Floki.text
-      |> String.split("-")
-      |> List.first
+      |> Enum.map(&(Floki.text(&1) |> String.split("-") |> List.first))
 
     phone =
       focus
       |> Floki.find("div[itemprop=telephone]")
-      |> Floki.text
+      |> Enum.map(&Floki.text/1)
 
-    [{_, [_, {_, url}], _}] =
+    url =
       focus
-      |> Floki.find("a[href]")
+      |> Floki.find("h4 a[href]")
+      |> Enum.map(&pull_url/1)
 
-    url = "https://www.neustarlocaleze.biz#{url}"
-
+    add_to_result List.zip([name, address, city, state, zip, phone, url])
   end
 
-  def pull_address_data(set) do
+  def pull_url(element) do
+    {_, [_, {_, url}], _} = element
+    "https://www.neustarlocaleze.biz#{url}"
   end
 
   def title_case(string) do
@@ -81,5 +80,10 @@ defmodule Locorum.BackendSys.Neustar do
     |> Enum.map(&("#{String.capitalize(&1)} "))
     |> List.to_string
     |> String.strip
+  end
+
+  def add_to_result([]), do: []
+  def add_to_result([{name, address, city, state, zip, phone, url} | tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: url} | add_to_result(tail)]
   end
 end
