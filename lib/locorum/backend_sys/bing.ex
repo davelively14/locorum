@@ -79,7 +79,7 @@ defmodule Locorum.BackendSys.Bing do
       |> Enum.drop(1)
       |> Enum.map(&("(#{String.slice(&1, 0, 13)}"))
 
-    add_to_results List.zip([name, address, city, state, zip, phone])
+    add_to_result List.zip([name, address, city, state, zip, phone])
   end
 
   defp join_address([]), do: nil
@@ -87,8 +87,8 @@ defmodule Locorum.BackendSys.Bing do
   defp join_address([], string), do: string
   defp join_address([head|tail], string), do: join_address(tail, "#{string}, #{head}")
 
-  defp add_to_results([]), do: []
-  defp add_to_results([{name, address, city, state, zip, phone}|tail]) do
-    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: @fixed_url} | add_to_results(tail)]
+  defp add_to_result([]), do: []
+  defp add_to_result([{name, address, city, state, zip, phone}|tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: @fixed_url} | add_to_result(tail)]
   end
 end
