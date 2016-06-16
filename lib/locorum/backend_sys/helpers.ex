@@ -59,6 +59,21 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
+  def geocode(zip) do
+    result =
+      "https://maps.googleapis.com/maps/api/place/textsearch/json?key=#{get_key}&query=#{zip}"
+      |> fetch_json
+      |> Poison.decode!
+      |> Map.get("results")
+      |> List.first
+      |> Map.get("geometry")
+      |> Map.get("location")
+
+    result
+  end
+
+  def get_key, do: Application.get_env(:locorum, :google)[:key]
+
   defp rate_same(string1, string2) do
     if string1 && string2 do
       string1 = String.upcase(string1)
@@ -114,7 +129,7 @@ defmodule Locorum.BackendSys.Helpers do
           search_id: query.id
         }
       end
-      
+
       broadcast! socket, "loaded_results", %{
         backend: header.backend,
         backend_str: header.backend_str,
