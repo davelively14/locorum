@@ -97,9 +97,10 @@ defmodule Locorum.BackendSys.Helpers do
 
   defp broadcast_results(results, backend, socket, query) do
     header = set_header(nil, backend, query)
-    if length(results) > 0 do
+    if results != [] do
       for result <- results do
         collect_result(result, header, socket.assigns.result_collection_id)
+
         broadcast! socket, "result", %{
           backend: header.backend,
           biz: result.biz,
@@ -112,15 +113,16 @@ defmodule Locorum.BackendSys.Helpers do
           phone: result.phone,
           search_id: query.id
         }
-        broadcast! socket, "loaded_results", %{
-          backend: header.backend,
-          backend_str: header.backend_str,
-          search_id: query.id,
-          num_results: Enum.count(results),
-          high_rating: Integer.to_string(List.first(results).rating),
-          low_rating: Integer.to_string(List.last(results).rating)
-        }
       end
+      
+      broadcast! socket, "loaded_results", %{
+        backend: header.backend,
+        backend_str: header.backend_str,
+        search_id: query.id,
+        num_results: Enum.count(results),
+        high_rating: Integer.to_string(List.first(results).rating),
+        low_rating: Integer.to_string(List.last(results).rating)
+      }
     else
       broadcast! socket, "no_result", %{
         backend: header.backend
