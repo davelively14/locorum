@@ -1264,7 +1264,7 @@ var Project = {
         var search_id = button.getAttribute("data-id");
         var payload = { search_id: search_id };
         Project.clearAndPrepSingleResult(search_id);
-        projectChannel.push("run_single_test", payload).receive("error", function (e) {
+        projectChannel.push("run_single_search", payload).receive("error", function (e) {
           return console.log(e);
         });
       });

@@ -43,7 +43,7 @@ defmodule Locorum.BackendSys.Helpers do
   def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
   def pop_first(remaining, _current), do: remaining
 
-  defp rate_results(results, query) do
+  def rate_results(results, query) do
     address = single_address(query.address1, query.address2)
 
     for result <- results do
@@ -97,10 +97,9 @@ defmodule Locorum.BackendSys.Helpers do
 
   defp broadcast_results(results, backend, socket, query) do
     header = set_header(nil, backend, query)
-    if results != [] do
+    if length(results) > 0 do
       for result <- results do
         collect_result(result, header, socket.assigns.result_collection_id)
-
         broadcast! socket, "result", %{
           backend: header.backend,
           biz: result.biz,
@@ -113,20 +112,28 @@ defmodule Locorum.BackendSys.Helpers do
           phone: result.phone,
           search_id: query.id
         }
+        broadcast! socket, "loaded_results", %{
+          backend: header.backend,
+          backend_str: header.backend_str,
+          search_id: query.id,
+          num_results: Enum.count(results),
+          high_rating: Integer.to_string(List.first(results).rating),
+          low_rating: Integer.to_string(List.last(results).rating)
+        }
       end
     else
       broadcast! socket, "no_result", %{
         backend: header.backend
       }
+      broadcast! socket, "loaded_results", %{
+        backend: header.backend,
+        backend_str: header.backend_str,
+        search_id: query.id,
+        num_results: 0,
+        high_rating: "--",
+        low_rating: "--"
+      }
     end
-    broadcast! socket, "loaded_results", %{
-      backend: header.backend,
-      backend_str: header.backend_str,
-      search_id: query.id,
-      num_results: Enum.count(results),
-      high_rating: Integer.to_string(List.first(results).rating),
-      low_rating: Integer.to_string(List.last(results).rating)
-    }
   end
 
   defp set_header(url, backend, query) do

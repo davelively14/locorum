@@ -14,6 +14,7 @@ defmodule Locorum.BackendSys do
              Locorum.BackendSys.Yahoo,
              Locorum.BackendSys.Bing,
              Locorum.BackendSys.CityGrid,
+             Locorum.BackendSys.Neustar,
              Locorum.BackendSys.Local,
              Locorum.BackendSys.Yp]
             #  Locorum.BackendSys.WhitePages]

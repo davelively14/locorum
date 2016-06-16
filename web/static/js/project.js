@@ -35,7 +35,7 @@ let Project = {
         let search_id = button.getAttribute("data-id")
         let payload = {search_id: search_id}
         Project.clearAndPrepSingleResult(search_id)
-        projectChannel.push("run_single_test", payload)
+        projectChannel.push("run_single_search", payload)
                       .receive("error", e => console.log(e) )
       })
     })
