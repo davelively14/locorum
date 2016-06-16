@@ -83,12 +83,15 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ### v0.4.1
 - Bug fixes
   - Fixed issue where export results button would display when no collections were loaded.
+  - Fixed issue where no results would crash BackendSys
 - No longer use %Header{} in each backend. Helpers will pull backend data from repo based on module name.
 - Added backends: Bing, Neustar Localeze
 - Removed Collection Admin from main menu
 - Breaking Changes
   - Must reenter all backend module names (must include Elixir.BackendSys)
 - Replaced pop_first with Enum.drop
+- Added geocode to Helpers
+  - Returns lat and lng map for a given zip code
 
 ### v0.4
 - Export results to CSV
