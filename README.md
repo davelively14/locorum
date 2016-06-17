@@ -17,7 +17,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Server crashes when a backend doesn't work
 
 ## v0.5 to do list
-- Add more backends. Priorities: Yelp, MapQuest, Foursquare, Superpages, Acxiom
+- Add more backends. Priorities: Yelp, MapQuest
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
@@ -61,6 +61,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## Long term to do list
 
+- Add more backends. Priorities: Acxiom, Foursquare, Superpages
 - Create an agent to manage results
   - First time a search is called, agent will load most recent. Every time search is run, the agent will store the most recent collection and save it to the repo.
   - Should it load on restart?
