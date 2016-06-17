@@ -31,6 +31,7 @@ config :locorum, :bing, key: System.get_env("BING_KEY")
 config :locorum, :google, key: System.get_env("GOOGLE_KEY")
 config :locorum, :citygrid, key: System.get_env("CITYGRID_KEY")
 config :locorum, :yp, key: System.get_env("YP_KEY")
+config :locorum, :facebook, key: System.get_env("FACEBOOK_KEY")
 
 
 # ## SSL Support
