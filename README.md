@@ -9,7 +9,6 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.1 to do list
-- Add Facebook key to heroku deployment
 - Errata
   - Supervisor terminates if a backend is missing from the Repo.
     - Potential fix: Load backends from the Repo instead of hardcoding in BackendSys
@@ -86,14 +85,15 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Bug fixes
   - Fixed issue where export results button would display when no collections were loaded.
   - Fixed issue where no results would crash BackendSys
-- No longer use %Header{} in each backend. Helpers will pull backend data from repo based on module name.
+- No longer using %Header{} in each backend. Helpers will pull backend data from repo based on module name.
 - Added backends: Bing, Neustar Localeze, Facebook
 - Removed Collection Admin from main menu
 - Breaking Changes
-  - Must reenter all backend module names (must include Elixir.BackendSys)
+  - Had to reenter all backend module names (must include Elixir.BackendSys)
 - Replaced pop_first with Enum.drop
 - Added geocode to Helpers
   - Returns lat and lng map for a given zip code
+- Added Facebook key to heroku deployment
 
 ### v0.4
 - Export results to CSV
