@@ -9,6 +9,7 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.1 to do list
+- Move strip_format to Helpers
 - Errata
   - Supervisor terminates if a backend is missing from the Repo.
     - Potential fix: Load backends from the Repo instead of hardcoding in BackendSys
