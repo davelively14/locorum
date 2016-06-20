@@ -17,6 +17,7 @@ defmodule Locorum.BackendSys do
              Locorum.BackendSys.Neustar,
              Locorum.BackendSys.Facebook,
              Locorum.BackendSys.Yp,
+             Locorum.BackendSys.Yelp,
              Locorum.BackendSys.Local]
 
             #  Locorum.BackendSys.WhitePages]

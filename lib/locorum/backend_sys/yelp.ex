@@ -1,16 +1,17 @@
 defmodule Locorum.BackendSys.Yelp do
   alias Locorum.BackendSys.Helpers
-  # alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.Result
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  def fetch(query, _query_ref, _owner, _limit) do
+  def fetch(query, _query_ref, owner, _limit) do
     query
     |> get_url
-    |> Helpers.fetch_html
+    |> Helpers.init_html(__MODULE__, owner, query)
     |> parse_data
+    |> Helpers.send_results(__MODULE__, owner, query)
   end
 
   def get_url(query) do
@@ -32,6 +33,22 @@ defmodule Locorum.BackendSys.Yelp do
       |> Floki.find("address")
       |> Enum.map(&(Floki.text(&1) |> String.strip |> String.split("\n")))
 
+    address =
+      address_group
+      |> decode_address
+
+    city =
+      address_group
+      |> Enum.map(&(List.last(&1) |> String.split(", ") |> List.first))
+
+    state =
+      address_group
+      |> Enum.map(&(List.last(&1) |> String.split(", ") |> List.last |> String.split(" ") |> List.first))
+
+    zip =
+      address_group
+      |> Enum.map(&(List.last(&1) |> String.split(", ") |> List.last |> String.split(" ") |> List.last))
+
     phone =
       focus
       |> Floki.find(".biz-phone")
@@ -39,7 +56,29 @@ defmodule Locorum.BackendSys.Yelp do
 
     url =
       focus
-      |> Enum.map(&(Floki.find(&1, ".biz-name") |> Floki.attribute("href") |> List.to_string |> Yelp.make_url))
+      |> Enum.map(&(Floki.find(&1, ".biz-name") |> Floki.attribute("href") |> List.to_string |> make_url))
+
+    add_to_result List.zip([name, address, city, state, zip, phone, url])
+  end
+
+  def add_to_result([]), do: []
+  def add_to_result([{name, address, city, state, zip, phone, url} | tail]) do
+    [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: url} | add_to_result(tail)]
+  end
+
+  def decode_address([]), do: []
+  def decode_address([head|tail]) do
+    address =
+      case length head do
+        1 ->
+          ""
+        2 ->
+          head
+          |> List.first
+        _ ->
+          nil
+      end
+    [address | decode_address(tail)]
   end
 
   def get_names(element) do
