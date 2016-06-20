@@ -17,7 +17,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Server crashes when a backend doesn't work
 
 ## v0.5 to do list
-- Add more backends. Priorities: Yelp, MapQuest
+- Add more backends. Priorities: MapQuest
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
@@ -46,6 +46,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Setup admin
   - Can manage other users
   - Can manage all projects
+- Seed database with Backends
 - Add chat capabilities
   - By search/results
   - Link to #slack
@@ -87,7 +88,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Fixed issue where export results button would display when no collections were loaded.
   - Fixed issue where no results would crash BackendSys
 - No longer using %Header{} in each backend. Helpers will pull backend data from repo based on module name.
-- Added backends: Bing, Neustar Localeze, Facebook
+- Added backends: Bing, Neustar Localeze, Facebook, Yelp
 - Removed Collection Admin from main menu
 - Breaking Changes
   - Had to reenter all backend module names (must include Elixir.BackendSys)
