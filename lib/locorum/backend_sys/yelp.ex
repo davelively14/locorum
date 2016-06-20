@@ -30,15 +30,16 @@ defmodule Locorum.BackendSys.Yelp do
     address_group =
       focus
       |> Floki.find("address")
-      |> Floki.text
-      |> String.strip
-      |> String.split("\n")
+      |> Enum.map(&(Floki.text(&1) |> String.strip |> String.split("\n")))
 
     phone =
       focus
       |> Floki.find(".biz-phone")
-      |> Floki.text
-      |> String.strip
+      |> Enum.map(&(Floki.text(&1) |> String.strip))
+
+    url =
+      focus
+      |> Enum.map(&(Floki.find(&1, ".biz-name") |> Floki.attribute("href") |> List.to_string |> Yelp.make_url))
   end
 
   def get_names(element) do
@@ -55,4 +56,6 @@ defmodule Locorum.BackendSys.Yelp do
   def list_to_spaced_str([head|tail]), do: list_to_spaced_str(tail, "#{head}")
   def list_to_spaced_str([], str), do: str
   def list_to_spaced_str([head|tail], str), do: list_to_spaced_str(tail, "#{str} #{head}")
+
+  def make_url(str), do: "https://www.yelp.com#{str}"
 end
