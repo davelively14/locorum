@@ -22,6 +22,7 @@ defmodule Locorum.BackendSys.Mapquest do
   end
 
   def parse_data(body) do
-    body
+    focus = body |> Floki.find("script[id=SearchResults]") |> List.first |> elem(2) |> List.first
+    focus
   end
 end
