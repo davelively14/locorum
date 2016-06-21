@@ -18,6 +18,7 @@ defmodule Locorum.BackendSys do
              Locorum.BackendSys.Facebook,
              Locorum.BackendSys.Yp,
              Locorum.BackendSys.Yelp,
+             Locorum.BackendSys.Mapquest,
              Locorum.BackendSys.Local]
 
             #  Locorum.BackendSys.WhitePages]
