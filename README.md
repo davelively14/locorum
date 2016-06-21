@@ -15,6 +15,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - Potential fix: Load backends from the Repo instead of hardcoding in BackendSys
   - Phone not evaluating when determining rating for Wendy's
   - Server crashes when a backend doesn't work
+    - No, only crashes when Supervisor has a run time error (i.e. calling for a backend that doesn't exist)
   - Do not allow projects_index to link to results if it's empty
 
 ## v0.5 to do list
