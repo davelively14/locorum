@@ -38,14 +38,14 @@ defmodule Locorum.BackendSys.WhitePages do
     "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
   end
 
-  defp parse_item([]), do: []
-  defp parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
+  def parse_item([]), do: []
+  def parse_item([{_, _,[item]} | tail]), do: [String.strip(item) | parse_item(tail)]
 
-  defp parse_url([]), do: []
-  defp parse_url([{_, _,[item]} | tail]), do: ["http://www.whitepages.com/business/#{item}" | parse_url(tail)]
+  def parse_url([]), do: []
+  def parse_url([{_, _,[item]} | tail]), do: ["http://www.whitepages.com/business/#{item}" | parse_url(tail)]
 
-  defp add_to_result([]), do: []
-  defp add_to_result([{name, address, city, state, zip, phone, url} | tail]) do
+  def add_to_result([]), do: []
+  def add_to_result([{name, address, city, state, zip, phone, url} | tail]) do
     [%Result{biz: name, address: address, city: city, state: state, zip: zip, phone: phone, url: url } | add_to_result(tail)]
   end
 end

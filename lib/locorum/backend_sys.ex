@@ -19,9 +19,8 @@ defmodule Locorum.BackendSys do
              Locorum.BackendSys.Yp,
              Locorum.BackendSys.Yelp,
              Locorum.BackendSys.Mapquest,
+             Locorum.BackendSys.WhitePages,
              Locorum.BackendSys.Local]
-
-            #  Locorum.BackendSys.WhitePages]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
