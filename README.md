@@ -10,7 +10,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4.1 to do list
 - Errata
-  - Phone not evaluating when determining rating for Wendy's
   - Do not allow projects_index to link to results if it's empty
 
 ## v0.5 to do list
@@ -84,6 +83,10 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Fixed issue where export results button would display when no collections were loaded.
   - Fixed issue where no results would crash BackendSys
   - Fixed issue where Supervisor terminates if a backend is missing from the Repo. Backends are loaded from the Repo now.
+  - Fixed issue where phone would return a higher rating even if incorrect. If the phone number does not match, it now receives a fixed lower rating (50)
+- Rating system updated. Established fixed scores for numeric comparisons, since the jaro_distance method will still provide a relatively high rating for incorrect numbers, particularly within the same area code.
+  - A non-matching zip code will return a rating of 20
+  - A non-matching phone will return a rating of 50
 - No longer using %Header{} in each backend. Helpers will pull backend data from repo based on module name.
 - Added backends: Bing, Neustar Localeze, Facebook, Yelp
 - Removed Collection Admin from main menu

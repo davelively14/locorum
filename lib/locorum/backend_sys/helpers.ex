@@ -47,14 +47,24 @@ defmodule Locorum.BackendSys.Helpers do
     address = single_address(query.address1, query.address2)
 
     for result <- results do
-      rating = %{biz: rate_same(result.biz, query.biz), address: rate_same(result.address, address),
-                city: rate_same(result.city, query.city), state: rate_same(result.state, query.state),
-                phone: rate_same(phonify(result.phone), phonify(query.phone))}
+      rating =
+        %{biz: rate_same(result.biz, query.biz), address: rate_same(result.address, address),
+          city: rate_same(result.city, query.city), state: rate_same(result.state, query.state),
+          phone: rate_same(phonify(result.phone), phonify(query.phone))}
+        |> return_lowest
 
-      rating = return_lowest(rating)
-      if result.zip && (result.zip != query.zip) do
-        rating = 0
+      cond do
+        result.zip && (result.zip != query.zip) ->
+          rating = 0.2
+        result.phone && (phonify(result.phone) != phonify(query.phone)) ->
+          rating = 0.5
+        true ->
+          nil
       end
+
+      # if (result.zip && (result.zip != query.zip)) || (result.phone && (phonify(result.phone) != phonify(query.phone)) do
+      #   rating = 20
+      # end
       Map.put(result, :rating, round(rating * 100))
     end
   end
@@ -98,12 +108,12 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp phonify(string) do
-    if string do
-      String.replace(string, ~r/[^\w]/, "")
-      |> String.slice(string, (String.length(string)-10)..(String.length(string)-1))
+  defp phonify(phone_number) do
+    if phone_number do
+      String.replace(phone_number, ~r/[^\w]/, "")
+      |> String.slice(phone_number, (String.length(phone_number)-10)..(String.length(phone_number)-1))
     else
-      string
+      phone_number
     end
   end
 
