@@ -10,8 +10,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4.1 to do list
 - Errata
-  - Supervisor terminates if a backend is missing from the Repo.
-    - Potential fix: Load backends from the Repo instead of hardcoding in BackendSys
   - Phone not evaluating when determining rating for Wendy's
   - Server crashes when a backend doesn't work
     - No, only crashes when Supervisor has a run time error (i.e. calling for a backend that doesn't exist)
@@ -88,6 +86,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Bug fixes
   - Fixed issue where export results button would display when no collections were loaded.
   - Fixed issue where no results would crash BackendSys
+  - Fixed issue where Supervisor terminates if a backend is missing from the Repo. Backends are loaded from the Repo now.
 - No longer using %Header{} in each backend. Helpers will pull backend data from repo based on module name.
 - Added backends: Bing, Neustar Localeze, Facebook, Yelp
 - Removed Collection Admin from main menu
