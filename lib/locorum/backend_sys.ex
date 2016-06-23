@@ -1,6 +1,7 @@
 defmodule Locorum.BackendSys do
   alias Locorum.ResultCollection
   alias Locorum.Repo
+  alias Locorum.Backend
   use Phoenix.Channel
 
   def join(_, _, _), do: nil
@@ -8,19 +9,6 @@ defmodule Locorum.BackendSys do
   def start(_type, _args) do
     Locorum.BackendSys.start_link()
   end
-
-  # TODO uncomment WhitePages once backend fixed
-  @backends [Locorum.BackendSys.Google,
-             Locorum.BackendSys.Yahoo,
-             Locorum.BackendSys.Bing,
-             Locorum.BackendSys.CityGrid,
-             Locorum.BackendSys.Neustar,
-             Locorum.BackendSys.Facebook,
-             Locorum.BackendSys.Yp,
-             Locorum.BackendSys.Yelp,
-             Locorum.BackendSys.Mapquest,
-             Locorum.BackendSys.WhitePages,
-             Locorum.BackendSys.Local]
 
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
@@ -39,7 +27,7 @@ defmodule Locorum.BackendSys do
 
   def compute(query, socket, opts \\ []) do
     limit = opts[:limit] || 10
-    backends = opts[:backends] || @backends
+    backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
     HTTPoison.start
 
     changeset = ResultCollection.changeset(%ResultCollection{search_id: query.id}, %{search_id: query.id})
