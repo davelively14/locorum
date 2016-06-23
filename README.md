@@ -9,8 +9,7 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.1 to do list
-- Errata
-  - Do not allow projects_index to link to results if it's empty
+- Upon creating a project, redirect to project :show
 
 ## v0.5 to do list
 - Add more backends. Priorities: MapQuest
@@ -84,6 +83,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Fixed issue where no results would crash BackendSys
   - Fixed issue where Supervisor terminates if a backend is missing from the Repo. Backends are loaded from the Repo now.
   - Fixed issue where phone would return a higher rating even if incorrect. If the phone number does not match, it now receives a fixed lower rating (50)
+  - project :index no longer displays "Results" option if no searches exist for a given project. Replaced with "Add Searches" button, which links to project :show where the user can add searches to the project.
 - Rating system updated. Established fixed scores for numeric comparisons, since the jaro_distance method will still provide a relatively high rating for incorrect numbers, particularly within the same area code.
   - A non-matching zip code will return a rating of 20
   - A non-matching phone will return a rating of 50
