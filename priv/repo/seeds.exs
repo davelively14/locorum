@@ -17,7 +17,7 @@ backends = [
   %Backend{module: "Elixir.Locorum.BackendSys.CityGrid", name: "city_grid", name_str: "CitySearch / CityGrid", url: "http://www.citysearch.com"},
   %Backend{module: "Elixir.Locorum.BackendSys.Google", name: "google", name_str: "Google", url: "https://www.google.com"},
   %Backend{module: "Elixir.Locorum.BackendSys.Local", name: "local", name_str: "Local", url: "http://www.local.com"},
-  %Backend{module: "Elixir.Locorum.BackendSys.WhitePages", name: "white_pages", name_str: "White Pages", url: "http://www.whitepages.com"},
+  # %Backend{module: "Elixir.Locorum.BackendSys.WhitePages", name: "white_pages", name_str: "White Pages", url: "http://www.whitepages.com"},
   %Backend{module: "Elixir.Locorum.BackendSys.Yahoo", name: "yahoo", name_str: "Yahoo Local", url: "https://local.yahoo.com"},
   %Backend{module: "Elixir.Locorum.BackendSys.Yp", name: "yp", name_str: "Yellow Pages", url: "http://www.yellowpages.com"},
   %Backend{module: "Elixir.Locorum.BackendSys.Bing", name: "bing", name_str: "Bing", url: "https://www.bing.com"},
