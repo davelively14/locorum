@@ -40,6 +40,7 @@ defmodule Locorum.ProjectController do
       Project
       |> Repo.all
       |> Repo.preload(:user)
+      |> Repo.preload(:searches)
     render conn, "index.html", projects: projects
   end
 
