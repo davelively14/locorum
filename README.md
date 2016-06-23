@@ -45,7 +45,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Setup admin
   - Can manage other users
   - Can manage all projects
-- Seed database with Backends
 - Add chat capabilities
   - By search/results
   - Link to #slack
