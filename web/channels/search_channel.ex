@@ -29,20 +29,4 @@ defmodule Locorum.SearchChannel do
     Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
     {:reply, :ok, socket}
   end
-
-  # def handle_out("result", payload, socket) do
-  #   payload["search_id"]
-  #   |> check_max
-  #
-  #   changeset = Result.changeset(%Result{}, payload)
-  #   case Repo.insert(changeset) do
-  #     {:ok, _result} ->
-  #       push socket, "result", payload
-  #       {:noreply, socket}
-  #     {:error, changeset} ->
-  #       push socket, "error", %{
-  #         error: changeset.errors
-  #       }
-  #   end
-  # end
 end

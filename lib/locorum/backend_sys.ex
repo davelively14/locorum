@@ -42,9 +42,7 @@ defmodule Locorum.BackendSys do
     socket = assign(socket, :result_collection_id, result_collection_id)
 
     backends
-    # TODO should this call a Task.start_link?
     |> Enum.map(&spawn_query(&1, query, socket, limit))
-    # |> Enum.map(&monitor_spawns(&1, opts))
   end
 
   defp spawn_query(backend, query, socket, limit) do
