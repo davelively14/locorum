@@ -3,16 +3,15 @@ defmodule Locorum.BackendSys.Yahoo do
   alias Locorum.BackendSys.Helpers
 
   def start_link(query, query_ref, owner, limit) do
-    HTTPoison.start
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
   def fetch(query, _query_ref, owner, _limit) do
     query
     |> get_url
-    |> Helpers.init_json(__MODULE__, owner, query)
+    |> Helpers.fetch_json
     |> parse_data
-    |> Helpers.send_results(__MODULE__, owner, query)
+    |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
 
   def get_url(query) do

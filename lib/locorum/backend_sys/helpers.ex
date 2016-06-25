@@ -15,6 +15,18 @@ defmodule Locorum.BackendSys.Helpers do
     |> Repo.get_by(module: Atom.to_string(mod))
   end
 
+  def display_results(results, mod, socket, query, url) do
+    set_header(url, get_backend(mod), query)
+    |> init_frontend(socket)
+
+    # TODO Sleep for 1/2 a second? There has to be a better way to ensure this executes in order.
+    :timer.sleep(500)
+
+    rate_results(results, query)
+    |> sort_results
+    |> broadcast_results(get_backend(mod), socket, query)
+  end
+
   def init_json(url, mod, socket, query) do
     set_header(url, get_backend(mod), query)
     |> init_frontend(socket)

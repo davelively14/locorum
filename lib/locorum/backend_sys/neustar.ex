@@ -9,9 +9,9 @@ defmodule Locorum.BackendSys.Neustar do
   def fetch(query, _query_ref, owner, _limit) do
     query
     |> get_url
-    |> Helpers.init_html(__MODULE__, owner, query)
+    |> Helpers.fetch_html
     |> parse_data
-    |> Helpers.send_results(__MODULE__, owner, query)
+    |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
 
   def get_url(query) do

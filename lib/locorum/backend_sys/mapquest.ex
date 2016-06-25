@@ -2,19 +2,16 @@ defmodule Locorum.BackendSys.Mapquest do
   alias Locorum.BackendSys.Helpers
   alias Locorum.BackendSys.Result
 
-  @limit 10
-
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
-  # TODO set default limit to 10, employ in parse_data
   def fetch(query, _query_ref, owner, _limit) do
     query
     |> get_url
-    |> Helpers.init_html(__MODULE__, owner, query)
+    |> Helpers.fetch_html
     |> parse_data
-    |> Helpers.send_results(__MODULE__, owner, query)
+    |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
 
   def get_url(query) do
