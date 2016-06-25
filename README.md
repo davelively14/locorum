@@ -27,7 +27,6 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Implement show.html to Handle
   - Migrate add "up" boolean, default to true
 - Errata
-  - Fix multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
   - How do we persist "no results"?
     - Are empty backends saved in resultsContainer?
     - Do we propagate all backends regardless? YES
@@ -79,6 +78,7 @@ For deployed v0.4.0, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Fixed issue where no results would crash BackendSys
   - Fixed issue where Supervisor terminates if a backend is missing from the Repo. Backends are loaded from the Repo now.
   - Fixed issue where phone would return a higher rating even if incorrect. If the phone number does not match, it now receives a fixed lower rating (50)
+  - Fixed multiple "Backend...loading" prints backends: menu on Search when supervisor restarts
   - project :index no longer displays "Results" option if no searches exist for a given project. Replaced with "Add Searches" button, which links to project :show where the user can add searches to the project.
 - Rating system updated. Established fixed scores for numeric comparisons, since the jaro_distance method will still provide a relatively high rating for incorrect numbers, particularly within the same area code.
   - A non-matching zip code will return a rating of 20
