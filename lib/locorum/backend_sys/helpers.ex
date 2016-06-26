@@ -19,8 +19,8 @@ defmodule Locorum.BackendSys.Helpers do
     set_header(url, get_backend(mod), query)
     |> init_frontend(socket)
 
-    # TODO Sleep for 1/2 a second? There has to be a better way to ensure this executes in order.
-    :timer.sleep(500)
+    # TODO Sleep for a second? There has to be a better way to ensure this executes in order.
+    :timer.sleep(1000)
 
     rate_results(results, query)
     |> sort_results

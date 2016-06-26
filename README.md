@@ -30,6 +30,7 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Allow admin to disable backends from admin menu
   - Implement show.html to Handle
   - Migrate add "up" boolean, default to true
+- When a backend doesn't work, let the user know that it timed out
 - Errata
   - How do we persist "no results"?
     - Are empty backends saved in resultsContainer?
