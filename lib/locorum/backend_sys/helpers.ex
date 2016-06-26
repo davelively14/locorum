@@ -20,6 +20,7 @@ defmodule Locorum.BackendSys.Helpers do
     |> init_frontend(socket)
 
     # TODO Sleep for a second? There has to be a better way to ensure this executes in order.
+    # Perhaps don't split up init_frontend and broadcast_results?
     :timer.sleep(1000)
 
     rate_results(results, query)
