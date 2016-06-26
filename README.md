@@ -9,10 +9,8 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.2 to do list
-- Replace geocode from Google to pull from internal
-  - Pull from CSV on start?
-  - Start an agent from channel?
-  - Create table and seed with data
+- Replace geocode from Google to pull from a CSV with data
+  - Use an Agent that loads when the app loads
 
 ## v0.5 to do list
 - Enhance persisted search results experience
