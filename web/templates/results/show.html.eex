@@ -1,4 +1,7 @@
 <h3 class="text-center"><strong><%= @search.biz %> Results</strong></h3>
+<div class="alert alert-warning" role="alert">
+  <b>Warning: </b>This page will be deprecated before v1.0
+</div>
 <br>
 
 <button id="run-search" class="btn btn-success btn-block" type="submit">Run Search</button>

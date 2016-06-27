@@ -21,6 +21,9 @@ defmodule Locorum.BackendSys.Helpers do
 
     # TODO Sleep for a second? There has to be a better way to ensure this executes in order.
     # Perhaps don't split up init_frontend and broadcast_results?
+    # Or, perhaps we just broadcast all backends (minus url) first (solves two problems), and then
+    # we process everything locally (web crawls, etc.) and then call broadcast_results, but make
+    # sure to send the search url.
     :timer.sleep(1000)
 
     rate_results(results, query)
