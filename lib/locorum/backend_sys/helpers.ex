@@ -16,38 +16,28 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   def display_results(results, mod, socket, query, url) do
-    set_header(url, get_backend(mod), query)
-    |> init_frontend(socket)
-
-    # TODO Sleep for a second? There has to be a better way to ensure this executes in order.
-    # Perhaps don't split up init_frontend and broadcast_results?
-    # Or, perhaps we just broadcast all backends (minus url) first (solves two problems), and then
-    # we process everything locally (web crawls, etc.) and then call broadcast_results, but make
-    # sure to send the search url.
-    :timer.sleep(1000)
-
     rate_results(results, query)
     |> sort_results
-    |> broadcast_results(get_backend(mod), socket, query)
+    |> broadcast_results(get_backend(mod), socket, query, url)
   end
 
-  def init_json(url, mod, socket, query) do
-    set_header(url, get_backend(mod), query)
-    |> init_frontend(socket)
-    |> fetch_json
-  end
-
-  def init_html(url, mod, socket, query) do
-    set_header(url, get_backend(mod), query)
-    |> init_frontend(socket)
-    |> fetch_html
-  end
-
-  def send_results(results, mod, socket, query) do
-    rate_results(results, query)
-    |> sort_results
-    |> broadcast_results(get_backend(mod), socket, query)
-  end
+  # def init_json(url, mod, socket, query) do
+  #   set_header(url, get_backend(mod), query)
+  #   |> init_frontend(socket)
+  #   |> fetch_json
+  # end
+  #
+  # def init_html(url, mod, socket, query) do
+  #   set_header(url, get_backend(mod), query)
+  #   |> init_frontend(socket)
+  #   |> fetch_html
+  # end
+  #
+  # def send_results(results, mod, socket, query) do
+  #   rate_results(results, query)
+  #   |> sort_results
+  #   |> broadcast_results(get_backend(mod), socket, query, nil)
+  # end
 
   def convert_to_utf(text, output) do
     String.downcase(text)
@@ -133,8 +123,8 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp broadcast_results(results, backend, socket, query) do
-    header = set_header(nil, backend, query)
+  defp broadcast_results(results, backend, socket, query, url) do
+    header = set_header(url, backend, query)
     if results != [] do
       for result <- results do
         collect_result(result, header, socket.assigns.result_collection_id)
@@ -156,6 +146,7 @@ defmodule Locorum.BackendSys.Helpers do
       broadcast! socket, "loaded_results", %{
         backend: header.backend,
         backend_str: header.backend_str,
+        results_url: url,
         search_id: query.id,
         num_results: Enum.count(results),
         high_rating: Integer.to_string(List.first(results).rating),
@@ -163,7 +154,8 @@ defmodule Locorum.BackendSys.Helpers do
       }
     else
       broadcast! socket, "no_result", %{
-        backend: header.backend
+        backend: header.backend,
+        search_id: query.id
       }
       broadcast! socket, "loaded_results", %{
         backend: header.backend,
@@ -249,14 +241,14 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp init_frontend(header, socket) do
-    broadcast! socket, "backend", %{
-      backend: header.backend,
-      backend_str: header.backend_str,
-      backend_url: header.url_site,
-      url: header.url_search,
-      search_id: header.search_id
-    }
-    header.url_search
-  end
+  # defp init_frontend(header, socket) do
+  #   broadcast! socket, "backend", %{
+  #     backend: header.backend,
+  #     backend_str: header.backend_str,
+  #     backend_url: header.url_site,
+  #     url: header.url_search,
+  #     search_id: header.search_id
+  #   }
+  #   header.url_search
+  # end
 end

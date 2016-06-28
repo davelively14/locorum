@@ -1,6 +1,7 @@
 defmodule Locorum.ProjectChannel do
   use Locorum.Web, :channel
   alias Locorum.ResultCollection
+  alias Locorum.Backend
   alias Locorum.Search
   alias Locorum.Result
 
@@ -11,15 +12,20 @@ defmodule Locorum.ProjectChannel do
     searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
                         preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+    backends = Backend |> Repo.all
+
 
     # TODO refactor to avoid transversing the searches map twice
     collections =
       Enum.map(searches, fn search -> search.result_collections end)
       |> List.flatten
     first_collections = Enum.map(searches, fn search -> List.first(search.result_collections) end)
+    # TODO render backends as well
     if List.first(collections) do
       resp = %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
-               collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json")}
+               collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
+               backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")
+             }
       {:ok, resp, assign(socket, :project_id, project_id)}
     else
       {:ok, nil, assign(socket, :project_id, project_id)}

@@ -60,12 +60,14 @@ let Project = {
       let loaded = document.getElementById(`search-${this.esc(resp.search_id)}-loaded`)
       let loadedOf = document.getElementById(`search-${this.esc(resp.search_id)}-of`)
       let loadStatsContainer = document.getElementById(`load-status-${this.esc(resp.search_id)}`)
+      let resultUrl = document.getElementById(`tab-content-url-${resp.search_id}`)
       loaded.innerHTML = parseInt(loaded.innerHTML) + 1
       if (loaded.innerHTML == loadedOf.innerHTML) {
         loadStatsContainer.setAttribute("class", "text-success load-status")
 
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends"
       }
+      resultUrl.setAttribute("href", resp.results_url)
       this.renderTally(resp)
     })
 
@@ -175,14 +177,13 @@ let Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade")
     tabContentBackend.setAttribute("role", "tabpanel")
     tabContentBackend.setAttribute("id", `dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
-    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)} <small><a href="${this.esc(resp.url)}" target="_blank" class="pull-right">view results in new tab</a></small></h4>`
+    tabContentBackend.innerHTML = `<h4>${this.esc(resp.backend_str)} <small><a href="${this.esc(resp.url)}" target="_blank" class="pull-right" id="tab-content-url-${this.esc(resp.search_id)}">view results in new tab</a></small></h4>`
     tabContent.appendChild(tabContentBackend)
   },
 
   renderResult(resp){
     let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
     let newContent = document.createElement("div")
-    let counter = document.getElementById('id')
     newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4")
     if(resp.url){
       newContent.innerHTML = `

@@ -1290,12 +1290,14 @@ var Project = {
       var loaded = document.getElementById("search-" + _this.esc(resp.search_id) + "-loaded");
       var loadedOf = document.getElementById("search-" + _this.esc(resp.search_id) + "-of");
       var loadStatsContainer = document.getElementById("load-status-" + _this.esc(resp.search_id));
+      var resultUrl = document.getElementById("tab-content-url-" + resp.search_id);
       loaded.innerHTML = parseInt(loaded.innerHTML) + 1;
       if (loaded.innerHTML == loadedOf.innerHTML) {
         loadStatsContainer.setAttribute("class", "text-success load-status");
 
         loadStatsContainer.innerHTML = "Loaded all " + loaded.innerHTML + " backends";
       }
+      resultUrl.setAttribute("href", resp.results_url);
       _this.renderTally(resp);
     });
 
@@ -1387,13 +1389,12 @@ var Project = {
     tabContentBackend.setAttribute("class", "tab-pane fade");
     tabContentBackend.setAttribute("role", "tabpanel");
     tabContentBackend.setAttribute("id", "dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
-    tabContentBackend.innerHTML = "<h4>" + this.esc(resp.backend_str) + " <small><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\" class=\"pull-right\">view results in new tab</a></small></h4>";
+    tabContentBackend.innerHTML = "<h4>" + this.esc(resp.backend_str) + " <small><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\" class=\"pull-right\" id=\"tab-content-url-" + this.esc(resp.search_id) + "\">view results in new tab</a></small></h4>";
     tabContent.appendChild(tabContentBackend);
   },
   renderResult: function renderResult(resp) {
     var dropContent = document.getElementById("dropdown-" + this.esc(resp.backend) + "-" + this.esc(resp.search_id));
     var newContent = document.createElement("div");
-    var counter = document.getElementById('id');
     newContent.setAttribute("class", "col-sm-12 col-md-6 col-lg-4");
     if (resp.url) {
       newContent.innerHTML = "\n      <div class=\"panel panel-info\">\n      <div class=\"panel-body\">\n      <b>" + this.esc(resp.biz) + "</b><br>\n      " + this.esc(resp.address) + "<br>\n      " + this.esc(resp.city) + ", " + this.esc(resp.state) + " " + this.esc(resp.zip || "") + "<br>\n      " + this.esc(resp.phone) + "<br>\n      <i>Rating: <b>" + this.esc(resp.rating) + "</b></i>\n      </div>\n      <div class=\"panel-footer\">\n      <i><a href=\"" + this.esc(resp.url) + "\" target=\"_blank\">View at source</a></i>\n      </div>\n      </div>";

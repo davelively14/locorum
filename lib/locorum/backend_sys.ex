@@ -41,8 +41,20 @@ defmodule Locorum.BackendSys do
 
     socket = assign(socket, :result_collection_id, result_collection_id)
 
+    backends |> Enum.each(&(Repo.get_by!(Backend, module: Atom.to_string(&1)) |> init_frontend(query, socket)))
+
     backends
     |> Enum.map(&spawn_query(&1, query, socket, limit))
+  end
+
+  defp init_frontend(backend, query, socket) do
+    broadcast! socket, "backend", %{
+      backend: backend.name,
+      backend_str: backend.name_str,
+      url_site: backend.url,
+      url_search: "#",
+      search_id: query.id
+    }
   end
 
   defp spawn_query(backend, query, socket, limit) do
