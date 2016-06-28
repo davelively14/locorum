@@ -19,10 +19,10 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Fix WhitePages nil return
 - Allow user to ignore individual results so they won't show up in results again
 - User authentication for socket
-- Refactor
+- Delete
   - Create better overview for each search
   - Use "name" instead of "biz" for search
-  - results.js to search.js
+  - results.js / result :show
 - Testing
   - Add unit testing for Project, Result, ResultCollection, User
   - Backends
@@ -43,6 +43,11 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - DRY refactor
   - phonify in SearchController
   - get_refer in numerous (i.e., ResultCollectionController)
+- Add documentation
+  - project.js especially
+  - Modules (backends not necessary)
+- Errata
+  - Changing href for link to results does not update DOM
 - Limit number of ResultCollection per Search
 
 ## v1.0 to do list
