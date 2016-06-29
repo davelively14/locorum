@@ -14,8 +14,6 @@ defmodule Locorum.ProjectChannel do
                         preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
     backends = Backend |> Repo.all
 
-
-    # TODO refactor to avoid transversing the searches map twice
     collections =
       searches
       |> Enum.map(&(&1.result_collections))
@@ -23,7 +21,6 @@ defmodule Locorum.ProjectChannel do
     first_collections =
       searches
       |> Enum.map(&(List.first(&1.result_collections)))
-    # TODO render backends as well
     if List.first(collections) do
       resp = %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
                collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
