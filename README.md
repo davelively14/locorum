@@ -1,12 +1,12 @@
 # Locorum
 
-Current version on GitHub: 0.4.2b
+Current version on GitHub: 0.4.2
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.5 to do list
 - Enhance persisted search results experience
