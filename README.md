@@ -78,6 +78,8 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ### v0.4.2
 - Socket authentication added
+- Updated CityGrid key to production value
+- Removed Searches from main menu
 
 ### v0.4.1
 - Bug fixes
