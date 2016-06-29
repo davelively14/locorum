@@ -19,7 +19,6 @@
             <li><%= link "Home", to: page_path(@conn, :index) %></li>
             <%= if @current_user do %>
               <li><%= link "Users", to: user_path(@conn, :index) %></li>
-              <li><%= link "Searches", to: search_path(@conn, :index) %></li>
               <li><%= link "Projects", to: project_path(@conn, :index) %></li>
               <li><%= link "Backend Admin", to: backend_path(@conn, :index) %></li>
               <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: "delete" %></li>
