@@ -14,7 +14,6 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Limit persisted data to 3 most recent ResultCollections
 - Fix broken Backends
   - WhitePages
-  - CityGrid
 - Allow user to ignore individual results so they won't show up in results again
 - Delete
   - Create better overview for each search
