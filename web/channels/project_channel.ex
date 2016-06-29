@@ -17,9 +17,12 @@ defmodule Locorum.ProjectChannel do
 
     # TODO refactor to avoid transversing the searches map twice
     collections =
-      Enum.map(searches, fn search -> search.result_collections end)
+      searches
+      |> Enum.map(&(&1.result_collections))
       |> List.flatten
-    first_collections = Enum.map(searches, fn search -> List.first(search.result_collections) end)
+    first_collections =
+      searches
+      |> Enum.map(&(List.first(&1.result_collections)))
     # TODO render backends as well
     if List.first(collections) do
       resp = %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),

@@ -11,6 +11,7 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.4.2 to do list
 - Replace geocode from Google to pull from a CSV with data
   - Use an Agent that loads when the app loads
+  - How do we make it available to all of the backends? Assign it to the scoket? :geocode_pid?
 
 ## v0.5 to do list
 - Enhance persisted search results experience
