@@ -6,10 +6,6 @@ defmodule Locorum.BackendSys do
 
   def join(_, _, _), do: nil
 
-  def start(_type, _args) do
-    Locorum.BackendSys.start_link()
-  end
-
   defmodule Result do
     defstruct biz: nil, address: nil, city: nil, state: nil, zip: nil,
               rating: nil, url: nil, phone: nil

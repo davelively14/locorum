@@ -59,14 +59,15 @@ defmodule Locorum.BackendSys.Helpers do
           phone: rate_same(phonify(result.phone), phonify(query.phone))}
         |> return_lowest
 
-      cond do
-        result.zip && (result.zip != query.zip) ->
-          rating = 0.2
-        result.phone && (phonify(result.phone) != phonify(query.phone)) ->
-          rating = 0.5
-        true ->
-          nil
-      end
+      rating =
+        cond do
+          result.zip && (result.zip != query.zip) ->
+            0.2
+          result.phone && (phonify(result.phone) != phonify(query.phone)) ->
+            0.5
+          true ->
+            rating
+        end
 
       # if (result.zip && (result.zip != query.zip)) || (result.phone && (phonify(result.phone) != phonify(query.phone)) do
       #   rating = 20

@@ -12,11 +12,14 @@ defmodule Locorum.SearchController do
   end
 
   def create(conn, %{"search" => search_params}) do
-    if search_params["address2"] && String.length(search_params["address2"]) > 0 do
-      search_params =
-        Map.update!(search_params, "address1", &(&1 <> ", #{search_params["address2"]}"))
-        |> Map.delete("address2")
-    end
+    search_params =
+      if search_params["address2"] && String.length(search_params["address2"]) > 0 do
+        search_params =
+          Map.update!(search_params, "address1", &(&1 <> ", #{search_params["address2"]}"))
+          |> Map.delete("address2")
+      else
+        search_params
+      end
     changeset = Search.changeset(%Search{}, search_params)
     case Repo.insert(changeset) do
       {:ok, search} ->
@@ -42,11 +45,14 @@ defmodule Locorum.SearchController do
   end
 
   def update(conn, %{"id" => id, "search" => search_params}) do
-    if search_params["address2"] && String.length(search_params["address2"]) > 0 do
-      search_params =
-        Map.update!(search_params, "address1", &(&1 <> ", #{search_params["address2"]}"))
-        |> Map.delete("address2")
-    end
+    search_params =
+      if search_params["address2"] && String.length(search_params["address2"]) > 0 do
+        search_params =
+          Map.update!(search_params, "address1", &(&1 <> ", #{search_params["address2"]}"))
+          |> Map.delete("address2")
+      else
+        search_params
+      end
     search = Repo.get(Search, id)
     changeset = Search.changeset(search, search_params)
 

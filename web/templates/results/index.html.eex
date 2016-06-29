@@ -5,7 +5,7 @@
   </small>
 </h2>
 
-<%= form_for @conn, csv_path(@conn, :export), [as: :export], fn f -> %>
+<%= form_for @conn, csv_path(@conn, :export), [as: :export], fn _f -> %>
   <div class="row">
     <div class="col-sm-6">
       <button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button>
