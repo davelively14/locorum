@@ -29,7 +29,7 @@ defmodule Locorum.Auth do
     |> configure_session(renew: true)
   end
 
-  def put_current_user(conn, user) do
+  defp put_current_user(conn, user) do
     token = Phoenix.Token.sign(conn, "user socket", user.id)
 
     conn
