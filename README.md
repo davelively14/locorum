@@ -1,17 +1,12 @@
 # Locorum
 
-Current version on GitHub: 0.4.2
+Current version on GitHub: 0.4.2b
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
-
-## v0.4.2 to do list
-- Replace geocode from Google to pull from a CSV with data
-  - Use an Agent that loads when the app loads
-  - How do we make it available to all of the backends? Assign it to the scoket? :geocode_pid?
 
 ## v0.5 to do list
 - Enhance persisted search results experience
@@ -56,7 +51,9 @@ For deployed v0.4.1, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - search :show
 
 ## Long term to do list
-
+- Replace geocode from Google to pull from a CSV with data
+  - Use an Agent that loads when the app loads
+  - How do we make it available to all of the backends? Assign it to the scoket? :geocode_pid?
 - Add more backends. Priorities: Acxiom, Foursquare, Superpages
 - Create an agent to manage results
   - First time a search is called, agent will load most recent. Every time search is run, the agent will store the most recent collection and save it to the repo.
