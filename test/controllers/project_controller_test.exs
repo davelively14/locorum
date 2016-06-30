@@ -5,7 +5,7 @@ defmodule Locorum.ProjectControllerTest do
   alias Locorum.TestHelpers
 
   @valid_attrs %{name: "New Project"}
-  @invalid_attrs %{name: nil, user_id: nil}
+  @invalid_attrs %{user_id: 1}
 
   setup %{conn: conn} = config do
     if config[:logged_in] do
@@ -50,8 +50,8 @@ defmodule Locorum.ProjectControllerTest do
 
   @tag :logged_in
   test "does not create a new project with invalid attributes", %{conn: conn} do
-    conn = post conn, project_path(conn, :create), project: %{name: nil}
+    conn = post conn, project_path(conn, :create), project: @invalid_attrs
     assert html_response(conn, 200) =~ "New Project"
-    refute Repo.get_by!(Project, %{name: "reals"})
+    refute Repo.get_by(Project, @invalid_attrs)
   end
 end

@@ -31,7 +31,7 @@ defmodule Locorum.ProjectController do
         |> put_flash(:info, "#{project.name} created")
         |> redirect(to: project_path(conn, :show, project.id))
       {:error, changeset} ->
-        render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
+        render conn, "new.html", changeset: changeset, cancel_action: project_path(conn, :index)
     end
   end
 
