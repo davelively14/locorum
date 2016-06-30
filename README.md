@@ -9,6 +9,19 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.5 to do list
+- Deprecate search:
+  - DEL: results.js
+  - DEL: SearchChannel
+  - DEL: search :index, :show
+  - DEL: results :show
+  - DEL: "results" button for each search on project :show
+  - DEL: "view results" button for modal on project :show
+  - DEL: "View this search in new tab" from results/project :index
+  - ADJ: remove portions of SearchControllerTest that reference search :index, :show
+  - ADJ: remove search :show link from the results/project :index, but keep name
+  - ADJ: search_controller :update redirect from search :show to project :show
+  - ADJ: search_controller :create redirect from results_path :show to project :show
+  - ADJ: SearchControllerTest "creates search and redirects to results page" redirect from results_path :show to project :show
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
   - Limit persisted data to 3 most recent ResultCollections
