@@ -3,7 +3,6 @@ defmodule Locorum.SearchControllerTest do
   alias Locorum.Search
   alias Locorum.TestHelpers
 
-  @valid_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121", user_id: 1}
   @need_user_attrs %{biz: "A Biz Name", zip: "34593", city: "Atlanta", state: "GA", address1: "369 James St SE", phone: "4042607121"}
   @invalid_attrs %{zip: "1234"}
 
