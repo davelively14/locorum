@@ -17,6 +17,8 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - DEL: "results" button for each search on project :show
   - DEL: "view results" button for modal on project :show
   - DEL: "View this search in new tab" from results/project :index
+  - DEL: get "/results/:id" from router :locate
+  - ADJ: resources "/search" in router to only: [:update, :delete, :create, :new, :edit]
   - ADJ: remove portions of SearchControllerTest that reference search :index, :show
   - ADJ: remove search :show link from the results/project :index, but keep name
   - ADJ: search_controller :update redirect from search :show to project :show
@@ -24,40 +26,42 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: SearchControllerTest "creates search and redirects to results page" redirect from results_path :show to project :show
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
-  - Limit persisted data to 3 most recent ResultCollections
+    - ADD: in router :locate, add -> resources get "/search/collections", ResultCollections, :show
+    - ADJ: in router, rename "results/project/:id" to "project/results/:id"
+    - ADJ: redo result_collection :index to display all available result collections for a particular project (controller and html)
+    - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
+  - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
 - Fix broken Backends
   - WhitePages
-- Allow user to ignore individual results so they won't show up in results again
-- Delete
-  - Create better overview for each search
-  - Use "name" instead of "biz" for search
-  - results.js / result :show
-- Testing
-  - Add unit testing for Project, Result, ResultCollection, User
-  - Backends
-- Error check CSV upload
-- Allow admin to disable backends from admin menu
-  - Implement show.html to Handle
-  - Migrate add "up" boolean, default to true
 - When a backend doesn't work, let the user know that it timed out
 - Check TODOs
 
 ## v0.6 to do list
-- Setup admin
-  - Can manage other users
-  - Can manage all projects
-- Add chat capabilities
-  - By search/results
-  - Link to #slack
+- Setup admin, manage:
+  - Users
+  - Backends
+    - Allow adman to disable some backends
+      - Implement show.html to Handle
+      - Migrate add "up" boolean, default to true
+  - All projects
+- Allow user to ignore individual results so they won't show up in results again
 - DRY refactor
   - phonify in SearchController
   - get_refer in numerous (i.e., ResultCollectionController)
 - Add documentation
   - project.js especially
   - Modules (backends not necessary)
+- Testing
+  - Add unit testing for Project, Result, ResultCollection, User
+  - Backends
+
+## v0.7 to do list
+- Add chat capabilities
+  - By search/results
+  - Link to #slack
+- Error check CSV upload
 - Errata
-  - Changing href for link to results does not update DOM
-- Limit number of ResultCollection per Search
+  - project.js, changing href for link to results does not update DOM
 
 ## v1.0 to do list
 - Deprecate
@@ -84,10 +88,14 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Update tests for:
   - Model: search (needs user to be logged in)
 - Find a new name
+- Use "name" instead of "biz" for search
 - Refactor backends to avoid n+1
   - Bing is a big violator
+- Create better overview for each search
 
 ## Changelog
+
+### v0.5
 
 ### v0.4.2
 - Socket authentication added
