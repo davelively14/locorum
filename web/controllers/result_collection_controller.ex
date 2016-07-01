@@ -5,7 +5,8 @@ defmodule Locorum.ResultCollectionController do
 
   def index(conn, %{"id" => search_id}) do
     collections = Repo.all from c in ResultCollection,
-                           where: c.search_id == ^search_id
+                           where: c.search_id == ^search_id,
+                           order_by: [desc: c.inserted_at]
     render conn, "index.html", collections: collections
   end
 

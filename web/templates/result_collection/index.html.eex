@@ -9,7 +9,7 @@
   <%= for collection <- @collections do %>
     <tr>
       <td><%= collection.id %></td>
-      <td><%= collection.search_id %></td>
+      <td><%= readable_date(collection.inserted_at) %></td>
       <td>
         <%= link "Delete", to: result_collection_path(@conn, :delete, collection.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
