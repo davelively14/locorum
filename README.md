@@ -11,10 +11,11 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.5 to do list
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
-    - ADD: in router :locate, add -> resources get "/search/collections", ResultCollections, :show
-    - ADJ: in router, rename "results/project/:id" to "project/results/:id"
-    - ADJ: redo result_collection :index to display all available result collections for a particular project (controller and html)
-    - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
+      - ADD: in router :locate, added -> get "/search/collections", ResultCollectionsController, :index
+      - ADJ: in router, removed :index from resources ResultCollectionsController
+      - ADJ: in router, rename "results/project/:id" to "project/results/:id"
+    - ADJ: redo result_collection :index to display all available result collections for a particular search (controller and html)
+      - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
   - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
 - Fix broken Backends
   - WhitePages

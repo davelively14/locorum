@@ -3,8 +3,9 @@ defmodule Locorum.ResultCollectionController do
   alias Locorum.Repo
   alias Locorum.ResultCollection
 
-  def index(conn, _params) do
-    collections = Repo.all(ResultCollection)
+  def index(conn, %{"id" => search_id}) do
+    collections = Repo.all from c in ResultCollection,
+                           where: c.search_id == ^search_id
     render conn, "index.html", collections: collections
   end
 

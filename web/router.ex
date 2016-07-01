@@ -29,14 +29,15 @@ defmodule Locorum.Router do
     resources "/project", ProjectController
     resources "/upload", CSVController, only: [:create]
     post "/csv", CSVController, :export
-    get "/results/project/:id", ResultsController, :index
+    get "/project/results/:id", ResultsController, :index
   end
 
   scope "/admin", Locorum do
     pipe_through [:browser, :authenticate_user]
 
     resources "/backend", BackendController, only: [:index, :new, :create, :delete]
-    resources "/collections", ResultCollectionController, only: [:index, :delete]
+    resources "/collections", ResultCollectionController, only: [:delete]
+    get "/search/collections/:id", ResultCollectionController, :index
   end
 
   # Other scopes may use custom stacks.
