@@ -30,7 +30,7 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Setup admin, manage:
   - Users
   - Backends
-    - Allow adman to disable some backends
+    - Allow admin to disable some backends
       - Implement show.html to Handle
       - Migrate add "up" boolean, default to true
   - All projects
