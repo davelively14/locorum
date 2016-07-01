@@ -54,9 +54,8 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - project.js, changing href for link to results does not update DOM
 
 ## v1.0 to do list
-- Deprecate
-  - search :index
-  - search :show
+- Check redirects after deletes
+  - Maybe AJAX to create objects? Prevents "cancel" from returning to new or edit page
 
 ## Long term to do list
 - Replace geocode from Google to pull from a CSV with data
