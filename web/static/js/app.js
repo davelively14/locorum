@@ -19,8 +19,6 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
-import Results from "./results"
 import Project from "./project"
 
-Results.init(socket, document.getElementById("results"))
 Project.init(socket, document.getElementById("searches"))

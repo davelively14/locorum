@@ -1182,10 +1182,6 @@ var _socket = require("./socket");
 
 var _socket2 = _interopRequireDefault(_socket);
 
-var _results = require("./results");
-
-var _results2 = _interopRequireDefault(_results);
-
 var _project = require("./project");
 
 var _project2 = _interopRequireDefault(_project);
@@ -1206,8 +1202,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
 
-
-_results2.default.init(_socket2.default, document.getElementById("results"));
 
 // Import local files
 //

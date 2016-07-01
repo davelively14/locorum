@@ -25,11 +25,10 @@ defmodule Locorum.Router do
   scope "/locate", Locorum do
     pipe_through [:browser, :authenticate_user]
 
-    resources "/search", SearchController
+    resources "/search", SearchController, only: [:update, :delete, :new, :create, :edit]
     resources "/project", ProjectController
     resources "/upload", CSVController, only: [:create]
     post "/csv", CSVController, :export
-    get "/results/:id", ResultsController, :show
     get "/results/project/:id", ResultsController, :index
   end
 

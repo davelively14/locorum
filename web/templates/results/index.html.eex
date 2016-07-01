@@ -22,7 +22,7 @@
   <div class="panel panel-info">
     <div class="panel-heading">
       <h4>
-        <%= link search.biz, to: search_path(@conn, :show, search.id) %>
+        <%= search.biz %>
         <div class="dropdown pull-right">
           <button class="btn btn-default dropdown-toggle" type="button" id="prev-results-<%= search.id %>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             Show Older Results
@@ -70,7 +70,7 @@
       </div>
     </div>
     <div class="panel-footer">
-      <%= link "View this search in new tab", to: results_path(@conn, :show, search.id), target: "_blank" %>
+      
     </div>
   </div>
 <% end %>

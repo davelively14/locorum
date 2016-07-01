@@ -9,23 +9,6 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.5 to do list
-- Create tests for project:
-  - project_controller_test
-- Deprecate search:
-  - DEL: results.js
-  - DEL: SearchChannel
-  - DEL: search :index, :show
-  - DEL: results :show
-  - DEL: "results" button for each search on project :show
-  - DEL: "view results" button for modal on project :show
-  - DEL: "View this search in new tab" from results/project :index
-  - DEL: get "/results/:id" from router :locate
-  - ADJ: resources "/search" in router to only: [:update, :delete, :create, :new, :edit]
-  - ADJ: remove portions of SearchControllerTest that reference search :index, :show
-  - ADJ: remove search :show link from the results/project :index, but keep name
-  - ADJ: search_controller :update redirect from search :show to project :show
-  - ADJ: search_controller :create redirect from results_path :show to project :show
-  - ADJ: SearchControllerTest "creates search and redirects to results page" redirect from results_path :show to project :show
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
     - ADD: in router :locate, add -> resources get "/search/collections", ResultCollections, :show
@@ -33,12 +16,18 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: redo result_collection :index to display all available result collections for a particular project (controller and html)
     - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
   - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
+- Fix SearchControllerTest (currently commented out)
 - Fix broken Backends
   - WhitePages
 - When a backend doesn't work, let the user know that it timed out
 - Check TODOs
 
 ## v0.6 to do list
+- Delete isolated files
+  - DEL: results.js
+  - DEL: SearchChannel
+  - DEL: search :index, :show
+  - DEL: results :show
 - Setup admin, manage:
   - Users
   - Backends
@@ -98,6 +87,19 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## Changelog
 
 ### v0.5
+- Created additional tests:
+  - project_controller_test
+- Deprecated search functionality. Source files still maintained until v0.6
+  - DEL: "results" button for each search on project :show
+  - DEL: "view results" button for modal on project :show
+  - DEL: "View this search in new tab" from results/project :index
+  - DEL: get "/results/:id" from router :locate
+  - ADJ: resources "/search" in router to only: [:update, :delete, :create, :new, :edit]
+  - ADJ: search_controller :update redirect from search :show to project :show
+  - ADJ: search_controller :create redirect from results_path :show to project :show
+  - ADJ: removed portions of SearchControllerTest that reference search :index, :show
+  - ADJ: removed search :show link from the results/project :index, but keep name
+  - ADJ: SearchControllerTest "creates search and redirects to results page" redirected from results_path :show to project :show
 
 ### v0.4.2
 - Socket authentication added

@@ -23,16 +23,9 @@ defmodule Locorum.SearchController do
     changeset = Search.changeset(%Search{}, search_params)
     case Repo.insert(changeset) do
       {:ok, search} ->
-        case search.project_id do
-          nil ->
-            conn
-            |> put_flash(:info, "Search created")
-            |> redirect(to: results_path(conn, :show, search))
-          id ->
-            conn
-            |> put_flash(:info, "Search created")
-            |> redirect(to: project_path(conn, :show, id))
-        end
+          conn
+          |> put_flash(:info, "Search created")
+          |> redirect(to: project_path(conn, :show, search.project_id))
       {:error, changeset} ->
         render conn, "new.html", changeset: changeset, cancel_action: get_refer(conn)
     end
@@ -60,7 +53,7 @@ defmodule Locorum.SearchController do
       {:ok, search} ->
         conn
         |> put_flash(:info, "Search updated")
-        |> redirect(to: search_path(conn, :show, search))
+        |> redirect(to: project_path(conn, :show, search.project_id))
       {:error, changeset} ->
         render(conn, "edit.html", search: search, changeset: changeset)
     end
