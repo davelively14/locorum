@@ -16,7 +16,6 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: redo result_collection :index to display all available result collections for a particular project (controller and html)
     - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
   - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
-- Fix SearchControllerTest (currently commented out)
 - Fix broken Backends
   - WhitePages
 - When a backend doesn't work, let the user know that it timed out
@@ -100,6 +99,7 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: removed portions of SearchControllerTest that reference search :index, :show
   - ADJ: removed search :show link from the results/project :index, but keep name
   - ADJ: SearchControllerTest "creates search and redirects to results page" redirected from results_path :show to project :show
+  - ADJ: SearchControllerTest to fixed SearchControllerTest
 
 ### v0.4.2
 - Socket authentication added

@@ -1,6 +1,7 @@
 defmodule Locorum.TestHelpers do
   alias Locorum.Repo
   alias Locorum.User
+  alias Locorum.Project
 
   def insert_user(attrs \\ %{}) do
     changes = Dict.merge(%{
@@ -11,6 +12,16 @@ defmodule Locorum.TestHelpers do
 
     %User{}
     |> User.registration_changeset(changes)
-    |> Repo.insert!()
+    |> Repo.insert!
+  end
+
+  def insert_project(attrs \\ %{}) do
+    changes = Dict.merge(%{
+      name: "New Project"
+    }, attrs)
+
+    %Project{}
+    |> Project.changeset(changes)
+    |> Repo.insert!
   end
 end

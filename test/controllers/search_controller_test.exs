@@ -9,8 +9,9 @@ defmodule Locorum.SearchControllerTest do
   setup %{conn: conn} = config do
     if _username = config[:logged_in] do
       user = TestHelpers.insert_user(username: "searcher")
+      project = TestHelpers.insert_project
       conn = assign(conn, :current_user, user)
-      {:ok, conn: conn, user: user}
+      {:ok, conn: conn, user: user, project: project}
     else
       :ok
     end
@@ -28,30 +29,29 @@ defmodule Locorum.SearchControllerTest do
       assert conn.halted
     end)
   end
-  # 
-  # @tag :logged_in
-  # test "creates search and redirects to project page", %{conn: conn, user: user} do
-  #   attrs =
-  #     @need_user_attrs
-  #     |> Map.put(:user_id, user.id)
-  #     |> Map.put(:project_id, 1)
-  #   conn = post conn, search_path(conn, :create), search: attrs
-  #   search = Repo.get_by!(Search, attrs)
-  #   assert redirected_to(conn) == project_path(conn, :show, search.project_id)
-  # end
-  #
-  # @tag :logged_in
-  # test "deletes search and redirects to index page", %{conn: conn} do
-  #   search = Repo.insert! %Search{}
-  #   conn = delete conn, search_path(conn, :delete, search)
-  #   assert redirected_to(conn) == search_path(conn, :index)
-  #   refute Repo.get(Search, search.id)
-  # end
-  #
-  # @tag :logged_in
-  # test "does not create a new search with invalid attributes", %{conn: conn} do
-  #   conn = post conn, search_path(conn, :create), search: @invalid_attrs
-  #   assert html_response(conn, 200) =~ "New Search"
-  #   refute Repo.get_by(Search, @invalid_attrs)
-  # end
+
+  @tag :logged_in
+  test "creates search and redirects to project page", %{conn: conn, user: user, project: project} do
+    attrs =
+      @need_user_attrs
+      |> Map.put(:user_id, user.id)
+      |> Map.put(:project_id, project.id)
+    conn = post conn, search_path(conn, :create), search: attrs
+    search = Repo.get_by!(Search, attrs)
+    assert redirected_to(conn) == project_path(conn, :show, search.project_id)
+  end
+
+  @tag :logged_in
+  test "deletes search", %{conn: conn} do
+    search = Repo.insert! %Search{}
+    conn = delete conn, search_path(conn, :delete, search)
+    refute Repo.get(Search, search.id)
+  end
+
+  @tag :logged_in
+  test "does not create a new search with invalid attributes", %{conn: conn} do
+    conn = post conn, search_path(conn, :create), search: @invalid_attrs
+    assert html_response(conn, 200) =~ "New Search"
+    refute Repo.get_by(Search, @invalid_attrs)
+  end
 end

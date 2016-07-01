@@ -96,7 +96,7 @@ defmodule Locorum.SearchController do
 
   # TODO DRY refactor
   defp get_refer(conn) do
-    {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, search_path(conn, :index)}
+    {_, referer} = List.keyfind(conn.req_headers, "referer", 0) || {0, project_path(conn, :index)}
     referer
   end
 end
