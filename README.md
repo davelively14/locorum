@@ -19,7 +19,7 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
 - Fix broken Backends
   - WhitePages
-- When a backend doesn't work, let the user know that it timed outap
+- When a backend doesn't work, let the user know that it timed out
 
 ## v0.6 to do list
 - Delete isolated files
