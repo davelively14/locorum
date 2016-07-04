@@ -100,7 +100,7 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: SearchControllerTest "creates search and redirects to results page" redirected from results_path :show to project :show
   - ADJ: SearchControllerTest to fixed SearchControllerTest
 - Enhanced persisted search results experience
-  - Now allows user to clear older results from search/edit menu
+  - User may now clear older results from search/edit menu
 
 ### v0.4.2
 - Socket authentication added
