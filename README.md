@@ -11,12 +11,6 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.5 to do list
 - Enhance persisted search results experience
   - Allow user to clear older results from search/edit menu
-    - ADD: in router :locate, added -> get "/search/collections", ResultCollectionsController, :index
-    - ADJ: in router, removed :index from resources ResultCollectionsController
-    - ADJ: in router, rename "results/project/:id" to "project/results/:id"
-    - ADJ: result_collection :index displays all available result collections for a particular search (controller and html)
-    - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
-  - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections, save last 10
 - Fix broken Backends
   - WhitePages
 - When a backend doesn't work, let the user know that it timed out
@@ -101,6 +95,12 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: SearchControllerTest to fixed SearchControllerTest
 - Enhanced persisted search results experience
   - User may now clear older results from search/edit menu
+    - ADD: router :locate, added -> get "/search/collections/:id", ResultCollectionsController, :index
+    - ADJ: in router, removed :index from resources ResultCollectionsController
+    - ADJ: in router, rename "results/project/:id" to "project/results/:id"
+    - ADJ: result_collection :index displays all available result collections for a particular search (controller and html)
+    - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
+    - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections
 
 ### v0.4.2
 - Socket authentication added

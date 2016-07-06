@@ -270,21 +270,29 @@ let Project = {
     // TODO handle excessive amount of result_collections (more than 5)
     collectionList.forEach(function(collection){
       let selectCollection = document.getElementById(`select-collection-${collection.search_id}`)
-      let newElement = document.createElement("li")
-      newElement.innerHTML = `
-      <a href="" data-id="${collection.result_collection_id}">${selectCollection.children.length - 1}: ${collection.created}</a>
-      `
-      selectCollection.appendChild(newElement)
-      newElement.addEventListener("click", e => {
-        e.preventDefault()
-        let payload = new Object()
-        let title = selectCollection.parentElement.firstElementChild
-        title.innerHTML = `
-        From ${collection.created} <span class="caret"></span>
+      if (selectCollection.children.length < 7) {
+        let newElement = document.createElement("li")
+        newElement.innerHTML = `
+        <a href="" data-id="${collection.result_collection_id}">${selectCollection.children.length - 1}: ${collection.created}</a>
         `
-        payload.collection_id = collection.result_collection_id
-        projectChannel.push("fetch_collection", payload)
-      })
+        selectCollection.appendChild(newElement)
+        newElement.addEventListener("click", e => {
+          e.preventDefault()
+          let payload = new Object()
+          let title = selectCollection.parentElement.firstElementChild
+          title.innerHTML = `
+          From ${collection.created} <span class="caret"></span>
+          `
+          payload.collection_id = collection.result_collection_id
+          projectChannel.push("fetch_collection", payload)
+        })
+      } else if (selectCollection.children.length == 7) {
+        let newElement = document.createElement("li")
+        newElement.innerHTML = `
+        <a>...</a>
+        `
+        selectCollection.appendChild(newElement)
+      }
     })
   },
 

@@ -1434,17 +1434,23 @@ var Project = {
     // TODO handle excessive amount of result_collections (more than 5)
     collectionList.forEach(function (collection) {
       var selectCollection = document.getElementById("select-collection-" + collection.search_id);
-      var newElement = document.createElement("li");
-      newElement.innerHTML = "\n      <a href=\"\" data-id=\"" + collection.result_collection_id + "\">" + (selectCollection.children.length - 1) + ": " + collection.created + "</a>\n      ";
-      selectCollection.appendChild(newElement);
-      newElement.addEventListener("click", function (e) {
-        e.preventDefault();
-        var payload = new Object();
-        var title = selectCollection.parentElement.firstElementChild;
-        title.innerHTML = "\n        From " + collection.created + " <span class=\"caret\"></span>\n        ";
-        payload.collection_id = collection.result_collection_id;
-        projectChannel.push("fetch_collection", payload);
-      });
+      if (selectCollection.children.length < 7) {
+        var newElement = document.createElement("li");
+        newElement.innerHTML = "\n        <a href=\"\" data-id=\"" + collection.result_collection_id + "\">" + (selectCollection.children.length - 1) + ": " + collection.created + "</a>\n        ";
+        selectCollection.appendChild(newElement);
+        newElement.addEventListener("click", function (e) {
+          e.preventDefault();
+          var payload = new Object();
+          var title = selectCollection.parentElement.firstElementChild;
+          title.innerHTML = "\n          From " + collection.created + " <span class=\"caret\"></span>\n          ";
+          payload.collection_id = collection.result_collection_id;
+          projectChannel.push("fetch_collection", payload);
+        });
+      } else if (selectCollection.children.length == 7) {
+        var _newElement = document.createElement("li");
+        _newElement.innerHTML = "\n        <a>...</a>\n        ";
+        selectCollection.appendChild(_newElement);
+      }
     });
   },
   renderCollection: function renderCollection(collection) {
