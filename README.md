@@ -100,7 +100,7 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: in router, rename "results/project/:id" to "project/results/:id"
     - ADJ: result_collection :index displays all available result collections for a particular search (controller and html)
     - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
-    - Limit dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections
+    - Limited dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections
 
 ### v0.4.2
 - Socket authentication added
