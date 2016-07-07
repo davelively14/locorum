@@ -2,12 +2,22 @@ defmodule Locorum.ResultCollectionController do
   use Locorum.Web, :controller
   alias Locorum.Repo
   alias Locorum.ResultCollection
+  alias Locorum.Search
 
   def index(conn, %{"id" => search_id}) do
+    project_id =
+      Search
+      |> Repo.get(search_id)
+      |> Map.get(:project_id)
+
+    return_path =
+      conn
+      |> results_path(:index, project_id)
+
     collections = Repo.all from c in ResultCollection,
                            where: c.search_id == ^search_id,
                            order_by: [desc: c.inserted_at]
-    render conn, "index.html", collections: collections
+    render conn, "index.html", collections: collections, return_path: return_path
   end
 
   def delete(conn, %{"id" => id}) do
