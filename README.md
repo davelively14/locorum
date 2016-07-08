@@ -1,6 +1,6 @@
 # Locorum
 
-Current version on GitHub: 0.4.2
+Current version on GitHub: 0.4.2b
 
 Check local listings, assess accuracy, fix issues.
 
