@@ -1,18 +1,31 @@
-<h2>All Result Collections</h2>
+<h2>
+  Results for <%= @search.biz %>
+  <small class="pull-right">
+    back to <%= link "results", to: results_path(@conn, :index, @search.project_id) %>
+  </small>
+</h2>
+
+<div class="container">
+  <div class="col-sm-4"><%= link "Clear All", to: result_collection_path(@conn, :delete, 13), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block" %></div>
+  <div class="col-sm-4"> <span class="btn btn-danger btn-block">Clear All But Five</span> </div>
+  <div class="col-sm-4"> <span class="btn btn-danger btn-block">Clear Selected</span> </div>
+</div>
 
 <table class="table">
   <tr class="text-center">
-    <th>ID</th>
-    <th>Search ID</th>
+    <th>Date</th>
+    <th># Results</th>
     <th></th>
   </tr>
   <%= for collection <- @collections do %>
     <tr>
-      <td><%= collection.id %></td>
       <td><%= readable_date(collection.inserted_at) %></td>
+      <td><%= length(collection.results) %></td>
       <td>
         <%= link "Delete", to: result_collection_path(@conn, :delete, collection.id), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
       </td>
     </tr>
   <% end %>
 </table>
+
+<%= link "Return to Results", to: results_path(@conn, :index, @search.project_id), class: "btn btn-warning" %>

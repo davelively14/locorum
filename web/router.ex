@@ -36,7 +36,7 @@ defmodule Locorum.Router do
     pipe_through [:browser, :authenticate_user]
 
     resources "/backend", BackendController, only: [:index, :new, :create, :delete]
-    resources "/collections", ResultCollectionController, only: [:delete]
+    delete "/collections/:id", ResultCollectionController, :delete
     get "/search/collections/:id", ResultCollectionController, :index
   end
 

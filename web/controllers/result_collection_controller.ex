@@ -5,31 +5,19 @@ defmodule Locorum.ResultCollectionController do
   alias Locorum.Search
 
   def index(conn, %{"id" => search_id}) do
-    project_id =
+    search =
       Search
       |> Repo.get(search_id)
-      |> Map.get(:project_id)
-
-    return_path =
-      conn
-      |> results_path(:index, project_id)
 
     collections = Repo.all from c in ResultCollection,
                            where: c.search_id == ^search_id,
-                           order_by: [desc: c.inserted_at]
-    render conn, "index.html", collections: collections, return_path: return_path
+                           order_by: [desc: c.inserted_at],
+                           preload: [:results]
+    render conn, "index.html", collections: collections, search: search
   end
 
   def delete(conn, %{"id" => id}) do
     collection = Repo.get(ResultCollection, id)
-    # collection =
-    #   ResultCollection
-    #   |> Repo.get(id)
-    #   |> Repo.preload([:results])
-    #
-    # for result <- collection.results do
-    #   Repo.delete result
-    # end
 
     Repo.delete collection
     redirect conn, external: get_refer(conn)
