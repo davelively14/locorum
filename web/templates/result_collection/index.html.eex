@@ -6,9 +6,9 @@
 </h2>
 
 <div class="container">
-  <div class="col-sm-4"><%= link "Clear All", to: result_collection_path(@conn, :delete, 13), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block" %></div>
-  <div class="col-sm-4"> <span class="btn btn-danger btn-block">Clear All But Five</span> </div>
-  <div class="col-sm-4"> <span class="btn btn-danger btn-block">Clear Selected</span> </div>
+  <div class="col-sm-4"><%= link "Clear All", to: result_collection_path(@conn, :delete, 13), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-block disabled" %></div>
+  <div class="col-sm-4"> <span class="btn btn-danger btn-block disabled">Clear All But Five</span> </div>
+  <div class="col-sm-4"> <span class="btn btn-danger btn-block disabled">Clear Selected</span> </div>
 </div>
 
 <table class="table">
