@@ -24,6 +24,7 @@ defmodule Locorum.Auth do
   def login(conn, user) do
     conn
     |> put_current_user(user)
+    # TODO do we need this assign? put_current_user does this same thing
     |> assign(:current_user, user)
     |> put_session(:user_id, user.id)
     |> configure_session(renew: true)
