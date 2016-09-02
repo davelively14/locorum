@@ -1,12 +1,12 @@
 # Locorum
 
-Current version on GitHub: 0.4.2b
+Current version on GitHub: 0.4.3
 
 Check local listings, assess accuracy, fix issues.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
+For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.5 to do list
 - Fix broken Backends
@@ -100,6 +100,9 @@ For deployed v0.4.2, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
     - Limited dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections
   - User may now clear older results from search/edit menu
+
+### v0.4.3
+- Fixed csv upload to account for new format
 
 ### v0.4.2
 - Socket authentication added
