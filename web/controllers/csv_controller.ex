@@ -21,6 +21,7 @@ defmodule Locorum.CSVController do
       end
     Enum.each searches, fn search ->
       changeset = Search.changeset(%Search{}, Map.from_struct(search))
+      IO.inspect(changeset)
       case Repo.insert(changeset) do
         {:ok, _} ->
           conn = put_flash(conn, :info, "Added some searches")
@@ -71,10 +72,10 @@ defmodule Locorum.CSVController do
         "" -> Enum.at(head, 2)
         _ -> "#{Enum.at(head, 2)}, #{Enum.at(head, 3)}"
       end
-    city = Enum.at(head, 4)
-    state = Enum.at(head, 6)
-    zip = Enum.at(head, 8)
-    phone = Enum.at(head, 9)
+    city = Enum.at(head, 8)
+    state = Enum.at(head, 9)
+    zip = Enum.at(head, 11)
+    phone = Enum.at(head, 12)
     [%Locorum.Search{biz: biz, address1: address1, city: city, state: state,
                      zip: zip, phone: phone, project_id: project_id,
                      user_id: user_id}|add_to_search(tail, [project_id, user_id])]
