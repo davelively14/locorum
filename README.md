@@ -14,7 +14,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - When a backend doesn't work, let the user know that it timed out
 
 ## v0.6 to do list
-- Delete isolated files
+- Delete deprecated files
   - DEL: results.js
   - DEL: SearchChannel
   - DEL: search :index, :show
