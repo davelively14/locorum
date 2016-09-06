@@ -1,6 +1,6 @@
 # Locorum
 
-Current version on GitHub: 0.4.3
+Current version on GitHub: 0.4.4a
 
 Check local listings, assess accuracy, fix issues.
 
@@ -8,7 +8,22 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
+## v0.4.4 to do list
+- Fix CSV export
+  - ERR: throws a 'Server internal error' when trying to export right after executing a new search
+  - FIX: Looking for specific results?
+- Fix supervision
+  - ERR: some backends work sometimes, other times they don't
+  - FIX: Better supervision and restart
+
 ## v0.5 to do list
+- Allow ignore/filtering features
+  - ADD: Ignore individual searches for future results
+  - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
+- Persist blank results
+  - ADD: Persist blank results in order to display properly
+  - ADD: Include blank results for each backend on export
+- Find something besides google for geocode
 - Fix broken Backends
   - WhitePages
 - When a backend doesn't work, let the user know that it timed out
@@ -19,6 +34,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - DEL: SearchChannel
   - DEL: search :index, :show
   - DEL: results :show
+- Improve CSV upload, reduce dependency on CSV formatting
+  - ADJ: add error management (React? JS?)
+  - ADJ: read files into an object, pull data from that object
 - Setup admin, manage:
   - Users
   - Backends
@@ -76,7 +94,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## Changelog
 
-### v0.5
+### v0.4.3
+- Fixed csv upload to account for new format
 - Created additional tests:
   - project_controller_test
 - Deprecated search functionality. Source files still maintained until v0.6
@@ -100,9 +119,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: adjust results/index.html "manage results" link to result_collection_path :index
     - Limited dropdown for "Show Older Results" persisted data to 5 most recent ResultCollections
   - User may now clear older results from search/edit menu
-
-### v0.4.3
-- Fixed csv upload to account for new format
 
 ### v0.4.2
 - Socket authentication added
