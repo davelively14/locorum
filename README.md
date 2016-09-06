@@ -20,6 +20,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
+    - IDEA: Click on any item (city, state, zip) on the main address to "lock" those results. Clicking on "city" would then only display results where city matches and set the other persisted data to ignore.
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
