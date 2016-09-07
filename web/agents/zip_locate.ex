@@ -16,9 +16,9 @@ defmodule Locorum.ZipLocate do
   end
 
   def get_data do
-    {:ok, result} = File.read("/Users/DavesMac/Projects/PEEPs/locorum/priv/static/zip/zip.csv")
+    {:ok, raw_data} = File.read("/Users/DavesMac/Projects/PEEPs/locorum/priv/static/zip/zip.csv")
 
-    result
+    raw_data
     |> String.split("\n")
     |> Enum.drop(1)
     |> build_map
@@ -28,7 +28,7 @@ defmodule Locorum.ZipLocate do
   defp build_map(list), do: build_map(list, %{})
   defp build_map([], map), do: map
   defp build_map([head|tail], map) do
-    coords = head |> String.split(",")
+    coords = head |> String.split(",") |> Enum.map(&String.lstrip(&1))
     map = map |> Map.put(Enum.at(coords, 0), {Enum.at(coords, 1), Enum.at(coords, 2)})
     build_map(tail, map)
   end

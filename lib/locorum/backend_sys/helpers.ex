@@ -77,13 +77,8 @@ defmodule Locorum.BackendSys.Helpers do
   end
 
   def geocode(zip) do
-    "https://maps.googleapis.com/maps/api/place/textsearch/json?key=#{get_key}&query=#{zip}"
-    |> fetch_json
-    |> Poison.decode!
-    |> Map.get("results")
-    |> List.first
-    |> Map.get("geometry")
-    |> Map.get("location")
+    Locorum.ZipLocate.get_data
+    |> Map.get(zip)
   end
 
   def get_key, do: Application.get_env(:locorum, :google)[:key]

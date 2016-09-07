@@ -21,9 +21,9 @@ defmodule Locorum.BackendSys.Facebook do
       query.biz
       |> Helpers.convert_to_utf("+")
     distance = @default_distance
-    geocode = Helpers.geocode(query.zip)
+    {lat, lng} = Helpers.geocode(query.zip)
 
-    "https://graph.facebook.com/v2.6/search?q=#{name}&type=place&center=#{geocode["lat"]},#{geocode["lng"]}&distance=#{distance}&fields=name,link,location,phone,category&#{get_token}"
+    "https://graph.facebook.com/v2.6/search?q=#{name}&type=place&center=#{lat},#{lng}&distance=#{distance}&fields=name,link,location,phone,category&#{get_token}"
   end
 
   def parse_data(body) do

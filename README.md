@@ -15,6 +15,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Fix supervision
   - ERR: some backends work sometimes, other times they don't
   - FIX: Better supervision and restart
+- Fix backend issues:
+  - ERR: Local not working
+  - ERR: White Pages not working
 
 ## v0.5 to do list
 - Allow ignore/filtering features
@@ -25,7 +28,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
-- Find something besides google for geocode
 - Fix broken Backends
   - WhitePages
 - When a backend doesn't work, let the user know that it timed out
@@ -93,8 +95,14 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Refactor backends to avoid n+1
   - Bing is a big violator
 - Create better overview for each search
+- Implement ZipLocate Agent.
 
 ## Changelog
+
+### v0.4.4
+- Geocode
+  - DEL: Google returns lat long
+  - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
 
 ### v0.4.3
 - Fixed csv upload to account for new format
