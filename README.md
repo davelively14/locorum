@@ -2,7 +2,7 @@
 
 Current version on GitHub: 0.4.4a
 
-Check local listings, assess accuracy, fix issues.
+Check local listings, assess accuracy, fix issues. Built with Elixir and Phoenix, utilizing a ES2015 JavaScript on the front end.
 
 For development, visit [`localhost:4000`](http://localhost:4000) from your browser.
 
