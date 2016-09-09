@@ -15,6 +15,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Fix supervision
   - ERR: some backends work sometimes, other times they don't
   - FIX: Better supervision and restart
+  - FIX: Write tests
 - Fix backend issues:
   - ERR: Local not working
   - ERR: White Pages not working
