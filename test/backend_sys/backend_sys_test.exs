@@ -24,10 +24,13 @@ defmodule Locorum.BackendSysTest do
   HTTPoison.start
 
   for backend <- @backends do
+    # Only way I've found to dynamically pass backend to the test. Setup doesn't really work.
+    @backend backend
+
     @tag :backends
     @tag :external
     test "backend #{backend.name_str} is running" do
-      assert 1 == 1
+      assert @backend.module
       # {:ok, _, socket} = socket |> subscribe_and_join("topic:test")
       # apply(String.to_existing_atom(backend.module), :fetch, [@query, nil, socket, nil])
       # Assert received the result?
