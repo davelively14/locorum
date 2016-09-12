@@ -13,6 +13,18 @@ defmodule Locorum.BackendSys.WhitePages do
     |> parse_data
     |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
+  
+  def get_url(query) do
+    city =
+      query.city
+      |> Helpers.convert_to_utf("-")
+    state = String.upcase(query.state)
+    biz =
+      query.biz
+      |> Helpers.convert_to_utf("-")
+
+    "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
+  end
 
   def parse_data(body) do
     name = parse_item(Floki.find(body, "p[itemprop=name]"))
@@ -24,18 +36,6 @@ defmodule Locorum.BackendSys.WhitePages do
     url = parse_url(Floki.find(body, "span[itemprop=shortId]"))
 
     add_to_result(List.zip([name, address, city, state, zip, phone, url]))
-  end
-
-  def get_url(query) do
-    city =
-      query.city
-      |> Helpers.convert_to_utf("-")
-    state = String.upcase(query.state)
-    biz =
-      query.biz
-      |> Helpers.convert_to_utf("-")
-
-    "http://www.whitepages.com/business/" <> state <> "/" <> city <> "/" <> biz
   end
 
   def parse_item([]), do: []

@@ -1,6 +1,9 @@
 defmodule Locorum.BackendSysTest do
-  use Locorum.ConnCase
+  use Locorum.ChannelCase
   alias Locorum.Backend
+  alias Locorum.BackendSys.Helpers
+  alias Locorum.BackendSys
+  alias Locorum.Search
 
   @backends [
     %Backend{module: "Elixir.Locorum.BackendSys.CityGrid", name: "city_grid", name_str: "CitySearch / CityGrid", url: "http://www.citysearch.com"},
@@ -16,11 +19,19 @@ defmodule Locorum.BackendSysTest do
     %Backend{module: "Elixir.Locorum.BackendSys.Mapquest", name: "mapquest", name_str: "MapQuest", url: "https://www.mapquest.com"}
   ]
 
+  @query %Search{id: 1, biz: "Lucas Group", address1: "950 E Paces Ferry Rd, Ste 2300", address2: nil, city: "Atlanta", state: "GA", zip: "30326", phone: "4042607121", project_id: 1, user_id: 3}
+
+  HTTPoison.start
+
   for backend <- @backends do
     @tag :backends
     @tag :external
     test "backend #{backend.name_str} is running" do
       assert 1 == 1
+      # {:ok, _, socket} = socket |> subscribe_and_join("topic:test")
+      # apply(String.to_existing_atom(backend.module), :fetch, [@query, nil, socket, nil])
+      # Assert received the result?
+      # Or just see what the result is...
     end
   end
 end

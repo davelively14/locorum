@@ -16,7 +16,7 @@ defmodule Locorum.BackendSys.Bing do
     |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
 
-  defp get_url(query) do
+  def get_url(query) do
     city =
       query.city
       |> Helpers.convert_to_utf("+")

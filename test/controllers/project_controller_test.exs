@@ -1,6 +1,5 @@
 defmodule Locorum.ProjectControllerTest do
   use Locorum.ConnCase
-  alias Locorum.Search
   alias Locorum.Project
   alias Locorum.TestHelpers
 

@@ -44,7 +44,7 @@ defmodule Locorum.SearchControllerTest do
   @tag :logged_in
   test "deletes search", %{conn: conn} do
     search = Repo.insert! %Search{}
-    conn = delete conn, search_path(conn, :delete, search)
+    _conn = delete conn, search_path(conn, :delete, search)
     refute Repo.get(Search, search.id)
   end
 
