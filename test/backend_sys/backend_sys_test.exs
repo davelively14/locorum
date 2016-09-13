@@ -1,5 +1,5 @@
 defmodule Locorum.BackendSysTest do
-  use Locorum.ChannelCase
+  use Locorum.ChannelCase, asynch: true
   alias Locorum.Backend
   alias Locorum.BackendSys.Helpers
   alias Locorum.BackendSys
@@ -30,9 +30,17 @@ defmodule Locorum.BackendSysTest do
     @tag :backends
     @tag :external
     test "backend #{backend.name_str} is running" do
-      assert @backend.module
-      # {:ok, _, socket} = socket |> subscribe_and_join("topic:test")
-      # apply(String.to_existing_atom(backend.module), :fetch, [@query, nil, socket, nil])
+      url = apply(String.to_existing_atom(@backend.module), :get_url, [@query])
+      result =
+        cond do
+          url =~ "/www" ->
+            Helpers.fetch_html(url)
+          true ->
+            Helpers.fetch_json(url)
+        end
+
+      assert result
+      # assert_raise UndefinedFunctionError, apply(String.to_existing_atom(@backend.module), :fetch, [@query, nil, %Phoenix.Socket{}, nil])
       # Assert received the result?
       # Or just see what the result is...
     end
