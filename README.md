@@ -12,15 +12,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Fix CSV export
   - ERR: throws a 'Server internal error' when trying to export right after executing a new search
   - FIX: Looking for specific results?
-- Fix supervision
-  - ERR: some backends work sometimes, other times they don't
-  - FIX: Better supervision and restart
-  - FIX: Write tests
-- Fix backend issues:
-  - ERR: Local not working
-  - ERR: White Pages not working
-
-## v0.5 to do list
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
@@ -29,9 +20,16 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
-- Fix broken Backends
-  - WhitePages
+
+## v0.5 to do list
 - When a backend doesn't work, let the user know that it timed out
+- Fix supervision
+  - ERR: some backends work sometimes, other times they don't
+  - FIX: Better supervision and restart
+  - FIX: Write tests
+- Fix backend issues:
+  - ERR: Local not working
+  - ERR: White Pages not working
 
 ## v0.6 to do list
 - Delete deprecated files
