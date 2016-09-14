@@ -10,6 +10,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4.4 to do list
 - Add React JS and Redux to the stack
+  - Create a new branch called react. `$ git branch react`
 - Fix CSV export
   - ERR: throws a 'Server internal error' when trying to export right after executing a new search
   - FIX: Looking for specific results?
