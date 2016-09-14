@@ -9,6 +9,7 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
+- Add React JS and Redux to the stack
 - Fix CSV export
   - ERR: throws a 'Server internal error' when trying to export right after executing a new search
   - FIX: Looking for specific results?
@@ -20,6 +21,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
+- NOTES:
+  - Need to implement a React JS w/ Redux for project.js. Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
+  - Honestly, just need to do all of project.js in React. Keep everything else HTML, but this has to be React.
 
 ## v0.5 to do list
 - When a backend doesn't work, let the user know that it timed out
