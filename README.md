@@ -12,6 +12,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Redo JavaScript for project.js in React JS and Redux
   -  Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
   - Can still keep HTML format everywhere, but the `results/index` should just contain the React app container.
+  - This may affect `Locorum.BackendSys.Helpers`, which broadcasts to the channel.
+    - No longer needs to prep results? Just know that it changes, then updates state, which will incorporate changes? Not sure.
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
