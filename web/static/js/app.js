@@ -21,4 +21,7 @@ import "phoenix_html"
 import socket from "./socket"
 import Project from "./project"
 
+// Load React components
+import "./react"
+
 Project.init(socket, document.getElementById("searches"))
