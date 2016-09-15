@@ -9,13 +9,14 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
-- Add React JS and Redux to the stack
-  - Create a new branch called react. `$ git branch react`
-  - Use [tutorial](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging) for help on branching if needed.
-  - Use [configs](https://github.com/davelively14/configs) for assistance with setting up React. Can we just disconnect brunch?
+- Redo JavaScript for project.js in React JS and Redux
+  -  Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
+  - Can still keep HTML format everywhere, but the `results/index` should just contain the React app container.
 - Fix CSV export
   - ERR: throws a 'Server internal error' when trying to export right after executing a new search
   - FIX: Looking for specific results?
+  - FIX: Don't show export button until searches all loaded.
+  - FIX: Display error when a backend doesn't respond so that the client is waiting on results that aren't going to show up.
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
@@ -24,9 +25,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
-- NOTES:
-  - Need to implement a React JS w/ Redux for project.js. Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
-  - Honestly, just need to do all of project.js in React. Keep everything else HTML, but this has to be React.
 
 ## v0.5 to do list
 - When a backend doesn't work, let the user know that it timed out
@@ -109,6 +107,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
+- Add React JS and Redux, Sass to the stack
+  - Bootstrap style is still included
+  - Original ES6 still works
 
 ### v0.4.3
 - Fixed csv upload to account for new format
