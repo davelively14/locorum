@@ -12,11 +12,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Redo JavaScript for project.js in React JS and Redux
   -  Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
   - Can still keep HTML format everywhere, but the `results/index` should just contain the React app container.
-- Fix CSV export
-  - ERR: throws a 'Server internal error' when trying to export right after executing a new search
-  - FIX: Looking for specific results?
-  - FIX: Don't show export button until searches all loaded.
-  - FIX: Display error when a backend doesn't respond so that the client is waiting on results that aren't going to show up.
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
@@ -25,6 +20,15 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Persist blank results
   - ADD: Persist blank results in order to display properly
   - ADD: Include blank results for each backend on export
+- Errata
+  - Fix 'view results in new tab' on backend results
+    - ERR: Links to the first result as opposed to the results of the get_url
+    - FIX: Use the get_url link, not the results first link
+  - Fix CSV export
+    - ERR: throws a 'Server internal error' when trying to export right after executing a new search
+    - FIX: Looking for specific results?
+    - FIX: Don't show export button until searches all loaded.
+    - FIX: Display error when a backend doesn't respond so that the client is waiting on results that aren't going to show up.
 
 ## v0.5 to do list
 - When a backend doesn't work, let the user know that it timed out
