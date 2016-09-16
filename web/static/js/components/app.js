@@ -1,9 +1,8 @@
 import React from 'react'
+import ProjectContainer from '../containers/project_container'
 
 const App = () => (
-  <div>
-    <h1>This is a test, React is working</h1>
-  </div>
+  <ProjectContainer />
 )
 
 export default App

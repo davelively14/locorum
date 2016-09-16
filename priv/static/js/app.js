@@ -24737,21 +24737,113 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _project_container = __webpack_require__(214);
+
+	var _project_container2 = _interopRequireDefault(_project_container);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var App = function App() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h1',
-	      null,
-	      'This is a test, React is working'
-	    )
-	  );
+	  return _react2.default.createElement(_project_container2.default, null);
 	};
 
 	exports.default = App;
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(182);
+
+	var _project = __webpack_require__(215);
+
+	var _project2 = _interopRequireDefault(_project);
+
+	var _index = __webpack_require__(216);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    export_button_visible: state.export_button_visible
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    showExportButton: function showExportButton() {
+	      dispatch((0, _index.showExportButton)());
+	    },
+	    hideExportButton: function hideExportButton() {
+	      dispatch((0, _index.hideExportButton)());
+	    }
+	  };
+	};
+
+	var ProjectContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_project2.default);
+
+	exports.default = ProjectContainer;
+
+/***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(11);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Project = _react2.default.createClass({
+	  displayName: 'Project',
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h3',
+	        null,
+	        'Project is wired up'
+	      )
+	    );
+	  }
+	});
+
+	exports.default = Project;
+
+/***/ },
+/* 216 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// For project.js
+	var showExportButton = exports.showExportButton = function showExportButton() {
+	  return {
+	    type: 'SHOW_EXPORT_BUTTON'
+	  };
+	};
+
+	var hideExportButton = exports.hideExportButton = function hideExportButton() {
+	  return {
+	    type: 'HIDE_EXPORT_BUTTON'
+	  };
+	};
 
 /***/ }
 /******/ ]);
