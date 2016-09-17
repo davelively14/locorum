@@ -24765,7 +24765,7 @@
 
 	var _project2 = _interopRequireDefault(_project);
 
-	var _index = __webpack_require__(216);
+	var _index = __webpack_require__(217);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24804,6 +24804,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _button = __webpack_require__(216);
+
+	var _button2 = _interopRequireDefault(_button);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Project = _react2.default.createClass({
@@ -24816,6 +24820,16 @@
 	        'h3',
 	        null,
 	        'Project is wired up'
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-6' },
+	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-success btn-block', content: 'This is the Rerun all Searches button' })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-sm-6' },
+	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-primary btn-block', content: 'This is the export CSV results' })
 	      )
 	    );
 	  }
@@ -24825,6 +24839,44 @@
 
 /***/ },
 /* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(11);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Button = _react2.default.createClass({
+	  displayName: "Button",
+
+	  // TODO the button has to listen for a click after mounting and then perform some action. Not sure how to define that action yet. Pass a function call?
+
+	  render: function render() {
+	    var btn_class = this.props.btn_class || "btn btn-primary";
+	    var content = this.props.content || "No content";
+
+	    if (this.props.visible == "false" || this.props.visible == false) {
+	      btn_class = btn_class + " hidden";
+	    }
+	    return _react2.default.createElement(
+	      "span",
+	      null,
+	      _react2.default.createElement("input", { className: btn_class, type: "submit", value: content })
+	    );
+	  }
+	});
+
+	exports.default = Button;
+
+/***/ },
+/* 217 */
 /***/ function(module, exports) {
 
 	'use strict';
