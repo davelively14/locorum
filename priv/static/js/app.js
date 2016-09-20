@@ -24812,6 +24812,12 @@
 
 	var Project = _react2.default.createClass({
 	  displayName: 'Project',
+	  handleSearchAll: function handleSearchAll() {
+	    console.log("Search");
+	  },
+	  handleCSVExport: function handleCSVExport() {
+	    console.log("CSV");
+	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
@@ -24824,12 +24830,12 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-success btn-block', content: 'This is the Rerun all Searches button' })
+	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-success btn-block', content: 'This is the Rerun all Searches button', action: this.handleSearchAll })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-primary btn-block', content: 'This is the export CSV results' })
+	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-primary btn-block', content: 'This is the export CSV results', action: this.handleCSVExport })
 	      )
 	    );
 	  }
@@ -24855,9 +24861,6 @@
 
 	var Button = _react2.default.createClass({
 	  displayName: "Button",
-
-	  // TODO the button has to listen for a click after mounting and then perform some action. Not sure how to define that action yet. Pass a function call?
-
 	  render: function render() {
 	    var btn_class = this.props.btn_class || "btn btn-primary";
 	    var content = this.props.content || "No content";
@@ -24865,10 +24868,11 @@
 	    if (this.props.visible == "false" || this.props.visible == false) {
 	      btn_class = btn_class + " hidden";
 	    }
+
 	    return _react2.default.createElement(
 	      "span",
 	      null,
-	      _react2.default.createElement("input", { className: btn_class, type: "submit", value: content })
+	      _react2.default.createElement("input", { className: btn_class, type: "button", value: content, onClick: this.props.action })
 	    );
 	  }
 	});
