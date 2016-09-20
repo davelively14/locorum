@@ -24859,6 +24859,12 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// Button component.
+	// btn_class: string, takes the class paramters to be used by the button.
+	//            Default is "btn btn-primary"
+	// content: string, this is the text to be displayed in the button. Default is
+	//          "No content"
+	// action: function, callback function for onClick action. No default
 	var Button = _react2.default.createClass({
 	  displayName: "Button",
 	  render: function render() {
