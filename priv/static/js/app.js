@@ -24808,15 +24808,25 @@
 
 	var _button2 = _interopRequireDefault(_button);
 
+	var _project = __webpack_require__(9);
+
+	var _project2 = _interopRequireDefault(_project);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Project = _react2.default.createClass({
 	  displayName: 'Project',
-	  handleSearchAll: function handleSearchAll() {
+	  handleSearchAll: function handleSearchAll(e) {
 	    console.log("Search");
 	  },
-	  handleCSVExport: function handleCSVExport() {
-	    console.log("CSV");
+	  handleCSVExport: function handleCSVExport(e) {
+	    console.log("in export");
+	    console.log(e);
+	    var hiddenInput = document.getElementById("export-results-ids");
+	    console.log(hiddenInput);
+	    var payload = _project2.default.getListedCollections();
+	    console.log(payload);
+	    hiddenInput.setAttribute("value", payload);
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -24830,12 +24840,20 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-success btn-block', content: 'This is the Rerun all Searches button', action: this.handleSearchAll })
+	        _react2.default.createElement('input', { type: 'hidden', id: 'export-results-ids', name: 'collection_ids', value: '' }),
+	        _react2.default.createElement(_button2.default, {
+	          btn_class: 'btn btn-success btn-block',
+	          content: 'This is the Rerun all Searches button',
+	          action: this.handleSearchAll })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, { btn_class: 'btn btn-primary btn-block', content: 'This is the export CSV results', action: this.handleCSVExport })
+	        _react2.default.createElement(_button2.default, {
+	          type: 'submit',
+	          btn_class: 'btn btn-primary btn-block',
+	          content: 'This is the export CSV results',
+	          action: this.handleCSVExport })
 	      )
 	    );
 	  }
@@ -24864,12 +24882,15 @@
 	//            Default is "btn btn-primary"
 	// content: string, this is the text to be displayed in the button. Default is
 	//          "No content"
-	// action: function, callback function for onClick action. No default
+	// visible: string/boolean, if set to "false" or false, will append " hidden" to
+	//          the btn_class string. No default value.
+	// action: function, callback function for onClick action. No default.
 	var Button = _react2.default.createClass({
 	  displayName: "Button",
 	  render: function render() {
 	    var btn_class = this.props.btn_class || "btn btn-primary";
 	    var content = this.props.content || "No content";
+	    var type = this.props.type || "button";
 
 	    if (this.props.visible == "false" || this.props.visible == false) {
 	      btn_class = btn_class + " hidden";
@@ -24878,7 +24899,7 @@
 	    return _react2.default.createElement(
 	      "span",
 	      null,
-	      _react2.default.createElement("input", { className: btn_class, type: "button", value: content, onClick: this.props.action })
+	      _react2.default.createElement("input", { className: btn_class, type: type, value: content, onClick: this.props.action })
 	    );
 	  }
 	});
