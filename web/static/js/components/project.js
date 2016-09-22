@@ -8,13 +8,11 @@ const Project = React.createClass({
   },
 
   handleCSVExport(e) {
-    console.log("in export");
-    console.log(e);
     var hiddenInput = document.getElementById("export-results-ids")
-    console.log(hiddenInput);
     var payload = OldProject.getListedCollections()
-    console.log(payload);
     hiddenInput.setAttribute("value", payload)
+    console.log(hiddenInput.value);
+    e.preventDefault()
   },
 
   render() {
