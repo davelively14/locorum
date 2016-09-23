@@ -24698,7 +24698,8 @@
 	  value: true
 	});
 	var initialState = {
-	  export_button_visible: false
+	  export_button_visible: false,
+	  active_results: []
 	};
 
 	var project = function project() {
@@ -24714,6 +24715,11 @@
 	    case 'HIDE_EXPORT_BUTTON':
 	      return Object.assign({}, state, {
 	        export_button_visible: false
+	      });
+
+	    case 'UPDATE_ACTIVE_RESULTS':
+	      return Object.assign({}, state, {
+	        active_results: action.results
 	      });
 
 	    default:
@@ -24771,7 +24777,8 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    export_button_visible: state.export_button_visible
+	    export_button_visible: state.export_button_visible,
+	    active_results: state.active_results
 	  };
 	};
 
@@ -24782,7 +24789,20 @@
 	    },
 	    hideExportButton: function hideExportButton() {
 	      dispatch((0, _index.hideExportButton)());
-	    }
+	    },
+	    updatedActiveResults: function (_updatedActiveResults) {
+	      function updatedActiveResults(_x) {
+	        return _updatedActiveResults.apply(this, arguments);
+	      }
+
+	      updatedActiveResults.toString = function () {
+	        return _updatedActiveResults.toString();
+	      };
+
+	      return updatedActiveResults;
+	    }(function (results) {
+	      dispatch(updatedActiveResults(results));
+	    })
 	  };
 	};
 
