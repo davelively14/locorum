@@ -12,7 +12,7 @@ const Project = React.createClass({
     var payload = OldProject.getListedCollections()
     hiddenInput.setAttribute("value", payload)
     console.log(hiddenInput.value);
-    e.preventDefault()
+    // e.preventDefault()
   },
 
   render() {
@@ -20,8 +20,8 @@ const Project = React.createClass({
       <div>
         <h3>Project is wired up</h3>
         <div className="col-sm-6">
-          <input type="hidden" id="export-results-ids" name="collection_ids" value="" />
           <Button
+            type="submit"
             btn_class="btn btn-success btn-block"
             content="This is the Rerun all Searches button"
             action={this.handleSearchAll} />

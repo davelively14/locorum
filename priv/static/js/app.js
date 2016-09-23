@@ -24844,7 +24844,7 @@
 	    var payload = _project2.default.getListedCollections();
 	    hiddenInput.setAttribute("value", payload);
 	    console.log(hiddenInput.value);
-	    e.preventDefault();
+	    // e.preventDefault()
 	  },
 	  render: function render() {
 	    return _react2.default.createElement(
@@ -24858,8 +24858,8 @@
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'col-sm-6' },
-	        _react2.default.createElement('input', { type: 'hidden', id: 'export-results-ids', name: 'collection_ids', value: '' }),
 	        _react2.default.createElement(_button2.default, {
+	          type: 'submit',
 	          btn_class: 'btn btn-success btn-block',
 	          content: 'This is the Rerun all Searches button',
 	          action: this.handleSearchAll })

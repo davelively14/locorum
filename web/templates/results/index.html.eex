@@ -5,9 +5,9 @@
   </small>
 </h2>
 
-<main id="react"></main>
 
 <%= form_for @conn, csv_path(@conn, :export), [as: :export], fn _f -> %>
+<main id="react"></main>
   <div class="row">
     <div class="col-sm-6">
       <button type="submit" id="run-search" class="btn btn-success btn-block">Run All Searches</button>
