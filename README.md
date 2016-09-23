@@ -14,6 +14,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Can still keep HTML throughout the app, but the `results/index` should just contain the React app container.
   - This may affect `Locorum.BackendSys.Helpers`, which broadcasts to the channel.
     - No longer needs to prep results? Just know that it changes, then updates state, which will incorporate changes? Not sure.
+  - Can't use old Project javascript with React, since the old one manipulates the DOM. React doesn't like that.
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
