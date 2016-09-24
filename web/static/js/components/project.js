@@ -11,17 +11,13 @@ const Project = React.createClass({
     var hiddenInput = document.getElementById("export-results-ids")
     var payload = OldProject.getListedCollections()
     hiddenInput.setAttribute("value", payload)
-    console.log(hiddenInput.value);
-    // e.preventDefault()
   },
 
   render() {
     return(
       <div>
-        <h3>Project is wired up</h3>
         <div className="col-sm-6">
           <Button
-            type="submit"
             btn_class="btn btn-success btn-block"
             content="This is the Rerun all Searches button"
             action={this.handleSearchAll} />
