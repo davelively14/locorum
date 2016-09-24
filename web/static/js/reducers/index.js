@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux'
 import project from './project'
+import search from './search'
 
 const projectApp = combineReducers({
-  project
+  project,
+  search
 })
 
 export default projectApp

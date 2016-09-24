@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './button'
+import SearchContainer from '../containers/search_container'
 import OldProject from '../project'
 
 const Project = React.createClass({
@@ -16,7 +17,7 @@ const Project = React.createClass({
   },
 
   render() {
-    return(
+    return (
       <div>
         <div className="col-sm-6">
           <Button
@@ -31,6 +32,7 @@ const Project = React.createClass({
             content="This is the export CSV results"
             action={this.handleCSVExport} />
         </div>
+        <SearchContainer />
       </div>
     )
   }

@@ -1,4 +1,4 @@
-var initialState ={
+var initialState = {
   export_button_visible: false,
   active_results: []
 }

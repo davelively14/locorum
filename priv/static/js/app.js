@@ -1506,7 +1506,7 @@
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _app = __webpack_require__(213);
+	var _app = __webpack_require__(214);
 
 	var _app2 = _interopRequireDefault(_app);
 
@@ -24680,10 +24680,15 @@
 
 	var _project2 = _interopRequireDefault(_project);
 
+	var _search = __webpack_require__(213);
+
+	var _search2 = _interopRequireDefault(_search);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var projectApp = (0, _redux.combineReducers)({
-	  project: _project2.default
+	  project: _project2.default,
+	  search: _search2.default
 	});
 
 	exports.default = projectApp;
@@ -24731,6 +24736,45 @@
 
 /***/ },
 /* 213 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var initialState = {
+	  // TODO pull data from db
+	  search_id: undefined,
+	  older_results: [],
+	  // TODO pull data from db
+	  search_info: []
+	};
+
+	var search = function search() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'CHANGE_SEARCH_ID':
+	      return Object.assign({}, state, {
+	        search_id: action.id
+	      });
+
+	    case 'ADD_OLDER_RESULT':
+	      return Object.assign({}, state, {
+	        older_results: state.older_results.push(action.older_result)
+	      });
+
+	    default:
+	      return state;
+	  }
+	};
+
+	exports.default = search;
+
+/***/ },
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24743,7 +24787,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _project_container = __webpack_require__(214);
+	var _project_container = __webpack_require__(215);
 
 	var _project_container2 = _interopRequireDefault(_project_container);
 
@@ -24756,7 +24800,7 @@
 	exports.default = App;
 
 /***/ },
-/* 214 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24767,18 +24811,17 @@
 
 	var _reactRedux = __webpack_require__(182);
 
-	var _project = __webpack_require__(215);
+	var _project = __webpack_require__(216);
 
 	var _project2 = _interopRequireDefault(_project);
 
-	var _index = __webpack_require__(217);
+	var _index = __webpack_require__(220);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    export_button_visible: state.export_button_visible,
-	    active_results: state.active_results
+	    state: state
 	  };
 	};
 
@@ -24811,7 +24854,7 @@
 	exports.default = ProjectContainer;
 
 /***/ },
-/* 215 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24824,9 +24867,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _button = __webpack_require__(216);
+	var _button = __webpack_require__(217);
 
 	var _button2 = _interopRequireDefault(_button);
+
+	var _search_container = __webpack_require__(218);
+
+	var _search_container2 = _interopRequireDefault(_search_container);
 
 	var _project = __webpack_require__(9);
 
@@ -24866,7 +24913,8 @@
 	          btn_class: 'btn btn-primary btn-block',
 	          content: 'This is the export CSV results',
 	          action: this.handleCSVExport })
-	      )
+	      ),
+	      _react2.default.createElement(_search_container2.default, null)
 	    );
 	  }
 	});
@@ -24874,7 +24922,7 @@
 	exports.default = Project;
 
 /***/ },
-/* 216 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24919,7 +24967,81 @@
 	exports.default = Button;
 
 /***/ },
-/* 217 */
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _reactRedux = __webpack_require__(182);
+
+	var _search = __webpack_require__(219);
+
+	var _search2 = _interopRequireDefault(_search);
+
+	var _index = __webpack_require__(220);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    state: state
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    changeSearchId: function changeSearchId() {
+	      dispatch((0, _index.changeSearchId)());
+	    },
+	    addOlderResult: function addOlderResult() {
+	      dispatch((0, _index.addOlderResult)());
+	    }
+	  };
+	};
+
+	var SearchContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_search2.default);
+
+	exports.default = SearchContainer;
+
+/***/ },
+/* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(11);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Search = _react2.default.createClass({
+	  displayName: "Search",
+	  render: function render() {
+	    return _react2.default.createElement(
+	      "div",
+	      { className: "panel panel-info" },
+	      _react2.default.createElement(
+	        "h2",
+	        null,
+	        "Search is Here"
+	      )
+	    );
+	  }
+	});
+
+	exports.default = Search;
+
+/***/ },
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';

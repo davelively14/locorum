@@ -4,8 +4,7 @@ import {hideExportButton, showExportButton} from '../actions/index'
 
 const mapStateToProps = (state) => {
   return {
-    export_button_visible: state.export_button_visible,
-    active_results: state.active_results
+    state
   }
 }
 
