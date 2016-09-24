@@ -24841,6 +24841,8 @@
 	  },
 	  handleCSVExport: function handleCSVExport(e) {
 	    var hiddenInput = document.getElementById("export-results-ids");
+
+	    // TODO need to replace this with managed state
 	    var payload = _project2.default.getListedCollections();
 	    hiddenInput.setAttribute("value", payload);
 	  },

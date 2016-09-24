@@ -9,6 +9,8 @@ const Project = React.createClass({
 
   handleCSVExport(e) {
     var hiddenInput = document.getElementById("export-results-ids")
+
+    // TODO need to replace this with managed state
     var payload = OldProject.getListedCollections()
     hiddenInput.setAttribute("value", payload)
   },
