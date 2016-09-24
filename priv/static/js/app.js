@@ -24899,21 +24899,26 @@
 	      null,
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, {
-	          btn_class: 'btn btn-success btn-block',
-	          content: 'This is the Rerun all Searches button',
-	          action: this.handleSearchAll })
+	        { className: 'row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          _react2.default.createElement(_button2.default, {
+	            btn_class: 'btn btn-success btn-block',
+	            content: 'This is the Rerun all Searches button',
+	            action: this.handleSearchAll })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-6' },
+	          _react2.default.createElement(_button2.default, {
+	            type: 'submit',
+	            btn_class: 'btn btn-primary btn-block',
+	            content: 'This is the export CSV results',
+	            action: this.handleCSVExport })
+	        )
 	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-sm-6' },
-	        _react2.default.createElement(_button2.default, {
-	          type: 'submit',
-	          btn_class: 'btn btn-primary btn-block',
-	          content: 'This is the export CSV results',
-	          action: this.handleCSVExport })
-	      ),
+	      _react2.default.createElement('br', null),
 	      _react2.default.createElement(_search_container2.default, null)
 	    );
 	  }
@@ -25030,10 +25035,20 @@
 	      "div",
 	      { className: "panel panel-info" },
 	      _react2.default.createElement(
-	        "h2",
-	        null,
-	        "Search is Here"
-	      )
+	        "div",
+	        { className: "panel-heading" },
+	        _react2.default.createElement(
+	          "h4",
+	          null,
+	          "New Search"
+	        )
+	      ),
+	      _react2.default.createElement(
+	        "div",
+	        { className: "panel-body" },
+	        "Some text here"
+	      ),
+	      _react2.default.createElement("div", { className: "panel-footer" })
 	    );
 	  }
 	});
