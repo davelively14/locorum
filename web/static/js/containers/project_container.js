@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Project from '../components/project'
-import {hideExportButton, showExportButton} from '../actions/index'
+import {hideExportButton, showExportButton, updatedActiveResults, setProjectId} from '../actions/index'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+
     showExportButton: () => {
       dispatch(showExportButton())
     },
@@ -18,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     updatedActiveResults: (results) => {
       dispatch(updatedActiveResults(results))
+    },
+    setProjectId: (id) => {
+      dispatch(setProjectId(id))
     }
   }
 }

@@ -24703,8 +24703,10 @@
 	  value: true
 	});
 	var initialState = {
+	  project_id: undefined,
 	  export_button_visible: false,
-	  active_results: []
+	  active_results: [],
+	  searches: []
 	};
 
 	var project = function project() {
@@ -24712,6 +24714,11 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
+	    case 'SET_PROJECT_ID':
+	      return Object.assign({}, state, {
+	        project_id: action.project_id
+	      });
+
 	    case 'SHOW_EXPORT_BUTTON':
 	      return Object.assign({}, state, {
 	        export_button_visible: true
@@ -24744,11 +24751,9 @@
 	  value: true
 	});
 	var initialState = {
-	  // TODO pull data from db
 	  search_id: undefined,
 	  older_results: [],
-	  // TODO pull data from db
-	  search_info: []
+	  search_info: {}
 	};
 
 	var search = function search() {
@@ -24756,14 +24761,14 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'CHANGE_SEARCH_ID':
+	    case 'SET_SEARCH_ID':
 	      return Object.assign({}, state, {
 	        search_id: action.id
 	      });
 
 	    case 'ADD_OLDER_RESULT':
 	      return Object.assign({}, state, {
-	        older_results: state.older_results.push(action.older_result)
+	        older_results: state.older_results.push(action.result)
 	      });
 
 	    default:
@@ -24827,25 +24832,19 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
+
 	    showExportButton: function showExportButton() {
 	      dispatch((0, _index.showExportButton)());
 	    },
 	    hideExportButton: function hideExportButton() {
 	      dispatch((0, _index.hideExportButton)());
 	    },
-	    updatedActiveResults: function (_updatedActiveResults) {
-	      function updatedActiveResults(_x) {
-	        return _updatedActiveResults.apply(this, arguments);
-	      }
-
-	      updatedActiveResults.toString = function () {
-	        return _updatedActiveResults.toString();
-	      };
-
-	      return updatedActiveResults;
-	    }(function (results) {
-	      dispatch(updatedActiveResults(results));
-	    })
+	    updatedActiveResults: function updatedActiveResults(results) {
+	      dispatch((0, _index.updatedActiveResults)(results));
+	    },
+	    setProjectId: function setProjectId(id) {
+	      dispatch((0, _index.setProjectId)(id));
+	    }
 	  };
 	};
 
@@ -24999,11 +24998,11 @@
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    changeSearchId: function changeSearchId() {
-	      dispatch((0, _index.changeSearchId)());
+	    setSearchId: function setSearchId(id) {
+	      dispatch((0, _index.setSearchId)(id));
 	    },
-	    addOlderResult: function addOlderResult() {
-	      dispatch((0, _index.addOlderResult)());
+	    addOlderResult: function addOlderResult(result) {
+	      dispatch((0, _index.addOlderResult)(result));
 	    }
 	  };
 	};
@@ -25074,6 +25073,35 @@
 	var hideExportButton = exports.hideExportButton = function hideExportButton() {
 	  return {
 	    type: 'HIDE_EXPORT_BUTTON'
+	  };
+	};
+
+	var setProjectId = exports.setProjectId = function setProjectId(id) {
+	  return {
+	    type: 'SET_PROJECT_ID',
+	    id: id
+	  };
+	};
+
+	var updatedActiveResults = exports.updatedActiveResults = function updatedActiveResults(results) {
+	  return {
+	    type: 'UPDATE_ACTIVE_RESULTS',
+	    results: results
+	  };
+	};
+
+	// For search.js
+	var setSearchId = exports.setSearchId = function setSearchId(id) {
+	  return {
+	    type: 'SET_SEARCH_ID',
+	    id: id
+	  };
+	};
+
+	var addOlderResult = exports.addOlderResult = function addOlderResult(result) {
+	  return {
+	    type: 'ADD_OLDER_RESULT',
+	    result: result
 	  };
 	};
 

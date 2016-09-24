@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Search from '../components/search'
-import {changeSearchId, addOlderResult} from '../actions/index'
+import {setSearchId, addOlderResult} from '../actions/index'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,11 +10,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changeSearchId: () => {
-      dispatch(changeSearchId())
+    setSearchId: (id) => {
+      dispatch(setSearchId(id))
     },
-    addOlderResult: () => {
-      dispatch(addOlderResult())
+    addOlderResult: (result) => {
+      dispatch(addOlderResult(result))
     }
   }
 }
