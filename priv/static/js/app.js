@@ -24705,7 +24705,6 @@
 	var initialState = {
 	  project_id: undefined,
 	  export_button_visible: false,
-	  active_results: [],
 	  searches: []
 	};
 
@@ -24727,11 +24726,6 @@
 	    case 'HIDE_EXPORT_BUTTON':
 	      return Object.assign({}, state, {
 	        export_button_visible: false
-	      });
-
-	    case 'UPDATE_ACTIVE_RESULTS':
-	      return Object.assign({}, state, {
-	        active_results: action.results
 	      });
 
 	    default:
@@ -24838,9 +24832,6 @@
 	    },
 	    hideExportButton: function hideExportButton() {
 	      dispatch((0, _index.hideExportButton)());
-	    },
-	    updatedActiveResults: function updatedActiveResults(results) {
-	      dispatch((0, _index.updatedActiveResults)(results));
 	    },
 	    setProjectId: function setProjectId(id) {
 	      dispatch((0, _index.setProjectId)(id));
@@ -25084,13 +25075,6 @@
 	  return {
 	    type: 'SET_PROJECT_ID',
 	    id: id
-	  };
-	};
-
-	var updatedActiveResults = exports.updatedActiveResults = function updatedActiveResults(results) {
-	  return {
-	    type: 'UPDATE_ACTIVE_RESULTS',
-	    results: results
 	  };
 	};
 

@@ -18,13 +18,6 @@ export const setProjectId = (id) => {
   }
 }
 
-export const updatedActiveResults = (results) => {
-  return {
-    type: 'UPDATE_ACTIVE_RESULTS',
-    results
-  }
-}
-
 // For search.js
 export const setSearchId = (id) => {
   return {

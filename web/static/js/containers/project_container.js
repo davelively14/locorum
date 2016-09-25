@@ -17,9 +17,6 @@ const mapDispatchToProps = (dispatch) => {
     hideExportButton: () => {
       dispatch(hideExportButton())
     },
-    updatedActiveResults: (results) => {
-      dispatch(updatedActiveResults(results))
-    },
     setProjectId: (id) => {
       dispatch(setProjectId(id))
     }

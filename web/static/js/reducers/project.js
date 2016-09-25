@@ -1,7 +1,6 @@
 var initialState = {
   project_id: undefined,
   export_button_visible: false,
-  active_results: [],
   searches: []
 }
 
@@ -20,11 +19,6 @@ const project = (state = initialState, action) => {
     case 'HIDE_EXPORT_BUTTON':
       return Object.assign({}, state, {
         export_button_visible: false
-      })
-
-    case 'UPDATE_ACTIVE_RESULTS':
-      return Object.assign({}, state, {
-        active_results: action.results
       })
 
     default:
