@@ -24728,6 +24728,11 @@
 	        export_button_visible: false
 	      });
 
+	    case 'SET_SEARCHES':
+	      return Object.assign({}, state, {
+	        searches: action.searches
+	      });
+
 	    default:
 	      return state;
 	  }
@@ -24835,6 +24840,9 @@
 	    },
 	    setProjectId: function setProjectId(id) {
 	      dispatch((0, _index.setProjectId)(id));
+	    },
+	    setSearches: function setSearches(searches) {
+	      dispatch((0, _index.setSearches)(searches));
 	    }
 	  };
 	};
@@ -25075,6 +25083,13 @@
 	  return {
 	    type: 'SET_PROJECT_ID',
 	    id: id
+	  };
+	};
+
+	var setSearches = exports.setSearches = function setSearches(searches) {
+	  return {
+	    type: 'SET_SEARCHES',
+	    searches: searches
 	  };
 	};
 

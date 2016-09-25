@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Project from '../components/project'
-import {hideExportButton, showExportButton, updatedActiveResults, setProjectId} from '../actions/index'
+import {hideExportButton, showExportButton, setSearches, setProjectId} from '../actions/index'
 
 const mapStateToProps = (state) => {
   return {
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     setProjectId: (id) => {
       dispatch(setProjectId(id))
+    },
+    setSearches: (searches) => {
+      dispatch(setSearches(searches))
     }
   }
 }

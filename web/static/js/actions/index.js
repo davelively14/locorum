@@ -18,6 +18,13 @@ export const setProjectId = (id) => {
   }
 }
 
+export const setSearches = (searches) => {
+  return {
+    type: 'SET_SEARCHES',
+    searches
+  }
+}
+
 // For search.js
 export const setSearchId = (id) => {
   return {

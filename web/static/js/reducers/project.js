@@ -21,6 +21,11 @@ const project = (state = initialState, action) => {
         export_button_visible: false
       })
 
+    case 'SET_SEARCHES':
+      return Object.assign({}, state, {
+        searches: action.searches
+      })
+
     default:
       return state
   }
