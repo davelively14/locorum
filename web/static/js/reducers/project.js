@@ -9,7 +9,7 @@ const project = (state = initialState, action) => {
   switch(action.type) {
     case 'SET_PROJECT_ID':
       return Object.assign({}, state, {
-        project_id: action.project_id
+        project_id: action.id
       })
 
     case 'SHOW_EXPORT_BUTTON':

@@ -24716,7 +24716,7 @@
 	  switch (action.type) {
 	    case 'SET_PROJECT_ID':
 	      return Object.assign({}, state, {
-	        project_id: action.project_id
+	        project_id: action.id
 	      });
 
 	    case 'SHOW_EXPORT_BUTTON':
@@ -24882,6 +24882,10 @@
 
 	var Project = _react2.default.createClass({
 	  displayName: 'Project',
+	  componentDidMount: function componentDidMount() {
+	    var project_id = document.getElementById("project").getAttribute("data-id");
+	    this.props.setProjectId(project_id);
+	  },
 	  handleSearchAll: function handleSearchAll(e) {
 	    console.log("Search");
 	  },

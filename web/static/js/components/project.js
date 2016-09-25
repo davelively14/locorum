@@ -4,6 +4,11 @@ import SearchContainer from '../containers/search_container'
 import OldProject from '../project'
 
 const Project = React.createClass({
+  componentDidMount() {
+    var project_id = document.getElementById("project").getAttribute("data-id")
+    this.props.setProjectId(project_id)
+  },
+
   handleSearchAll(e) {
     console.log("Search")
   },
