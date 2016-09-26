@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import Search from '../components/search'
-import {setSearchId, addOlderResult} from '../actions/index'
+import {setSearchId, addOlderResult, setSearchCritera} from '../actions/index'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     addOlderResult: (result) => {
       dispatch(addOlderResult(result))
+    },
+    setSearchCritera: (search_criteria) => {
+      dispatch(setSearchCritera(search_criteria))
     }
   }
 }

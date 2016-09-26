@@ -39,3 +39,10 @@ export const addOlderResult = (result) => {
     result
   }
 }
+
+export const setSearchCritera = (search_criteria) => {
+  return {
+    type: 'SET_SEARCH_CRITERIA',
+    search_criteria
+  }
+}

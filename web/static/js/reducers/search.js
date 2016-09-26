@@ -1,7 +1,7 @@
 var initialState = {
   search_id: undefined,
   older_results: [],
-  search_info: {}
+  search_criteria: {}
 }
 
 const search = (state = initialState, action) => {
@@ -14,6 +14,11 @@ const search = (state = initialState, action) => {
     case 'ADD_OLDER_RESULT':
       return Object.assign({}, state, {
         older_results: state.older_results.push(action.result)
+      })
+
+    case 'SET_SEARCH_CRITERIA':
+      return Object.assign({}, state, {
+        search_criteria: action.search_criteria
       })
 
     default:

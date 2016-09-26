@@ -24752,7 +24752,7 @@
 	var initialState = {
 	  search_id: undefined,
 	  older_results: [],
-	  search_info: {}
+	  search_criteria: {}
 	};
 
 	var search = function search() {
@@ -24768,6 +24768,11 @@
 	    case 'ADD_OLDER_RESULT':
 	      return Object.assign({}, state, {
 	        older_results: state.older_results.push(action.result)
+	      });
+
+	    case 'SET_SEARCH_CRITERIA':
+	      return Object.assign({}, state, {
+	        search_criteria: action.search_criteria
 	      });
 
 	    default:
@@ -25006,6 +25011,9 @@
 	    },
 	    addOlderResult: function addOlderResult(result) {
 	      dispatch((0, _index.addOlderResult)(result));
+	    },
+	    setSearchCritera: function setSearchCritera(search_criteria) {
+	      dispatch((0, _index.setSearchCritera)(search_criteria));
 	    }
 	  };
 	};
@@ -25105,6 +25113,13 @@
 	  return {
 	    type: 'ADD_OLDER_RESULT',
 	    result: result
+	  };
+	};
+
+	var setSearchCritera = exports.setSearchCritera = function setSearchCritera(search_criteria) {
+	  return {
+	    type: 'SET_SEARCH_CRITERIA',
+	    search_criteria: search_criteria
 	  };
 	};
 
