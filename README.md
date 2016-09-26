@@ -15,6 +15,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - This may affect `Locorum.BackendSys.Helpers`, which broadcasts to the channel.
     - No longer needs to prep results? Just know that it changes, then updates state, which will incorporate changes? Not sure.
   - Can't use old Project javascript with React, since the old one manipulates the DOM. React doesn't like that.
+- Added :httpoison to `application` in `mix.exs`
+  - Can we eliminate all the HTTPoison.start calls now?
 - Allow ignore/filtering features
   - ADD: Ignore individual searches for future results
   - ADD: Customizable filters results displayed (i.e. don't display non-matching city), but still persist all results
@@ -117,6 +119,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Add React JS and Redux, Sass to the stack
   - Bootstrap style is still included
   - Original ES6 still works
+- Added :httpoison to `application` in `mix.exs`
 
 ### v0.4.3
 - Fixed csv upload to account for new format
