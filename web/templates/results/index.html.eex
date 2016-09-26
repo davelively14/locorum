@@ -7,6 +7,7 @@
 
 
 <%= content_tag :div, id: "project", data: [id: @project.id] do %>
+<% end %>
 
 <%= form_for @conn, csv_path(@conn, :export), [as: :export], fn _f -> %>
 <main id="react"></main>
@@ -78,8 +79,6 @@
     </div>
   </div>
 <% end %>
-<% end %>
-
 <% end %>
 
 <div class="modal fade">

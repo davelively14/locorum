@@ -19,7 +19,7 @@ defmodule Locorum.Mixfile do
   def application do
     [mod: {Locorum, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :comeonin, :postgrex]]
+                    :phoenix_ecto, :comeonin, :postgrex, :httpoison]]
   end
 
   # Specifies which paths to compile per environment.
