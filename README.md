@@ -9,6 +9,25 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
+- Create a GenServer for each project channel to store ResultsCollections and interact with Repo
+  - ADD: Locorum.Project.ProjectChannelServer
+    - ADD: Receives requests to send data from ResultsCollections, sends back to calling process
+    - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
+    - ADD: adds ResultsCollections to the Repo - no other process will.
+      - ADD: notify channel when new ResultsCollections are added
+  - ADD: Locorum.Project.ProjectChannelSupervisor
+    - ADD: Supervise ProjectChannelServer
+    - ADD: trap exits for ProjectChannelServer, restart it on crash
+  - ADJ: Locorum.ProjectChannel
+    - DEL: No longer pulls data from the Repo
+      - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
+    - ADJ: handle_in("run_search"...) and handle_in("run_single_search") will still call Locorum.BackendSys, but will pass the ProjectChannelServer pid instead of "socket" and the calling pid
+      - NOTE: can we do that? Can we pass in the client pid so that it can receive the search once done?
+  - ADJ: Locorum.BackendSys and children
+    - DEL: No more broadcasts, but should instead send back to the server
+    - ADJ: init_frontend/3 to send instead of broadcast
+
+## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux
   -  Need that to reload when state changes, otherwise the export results option won't work properly. Right now, it will only work after a reload and won't capture any new searches.
   - Can still keep HTML throughout the app, but the `results/index` should just contain the React app container.
