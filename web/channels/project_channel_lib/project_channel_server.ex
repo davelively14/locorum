@@ -16,6 +16,7 @@ defmodule Locorum.ProjectChannelServer do
   #############
   # Callbacks #
   #############
+
   def init(:ok) do
     state = init_state()
     {:ok, state}

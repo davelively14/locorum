@@ -15,9 +15,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
     - ADD: adds ResultsCollections to the Repo - no other process will.
       - ADD: notify channel when new ResultsCollections are added
-  - ADD: Locorum.Project.ProjectChannelSupervisor
-    - ADD: Supervise ProjectChannelServer
-    - ADD: trap exits for ProjectChannelServer, restart it on crash
   - ADJ: Locorum.ProjectChannel
     - DEL: No longer pulls data from the Repo
       - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
@@ -132,6 +129,10 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## Changelog
 
 ### v0.4.4
+- Create a GenServer for each project channel to store ResultsCollections and interact with Repo
+  - ADD: Locorum.Project.ProjectChannelSupervisor
+    - ADD: Supervise ProjectChannelServer
+  - ADD: Locorum.Project.ProjectChannelServer
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
