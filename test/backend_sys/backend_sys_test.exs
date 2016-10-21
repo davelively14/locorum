@@ -2,7 +2,7 @@ defmodule Locorum.BackendSysTest do
   use Locorum.ChannelCase, asynch: true
   alias Locorum.Backend
   alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys
+  # alias Locorum.BackendSys
   alias Locorum.Search
 
   @backends [
