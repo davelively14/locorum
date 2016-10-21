@@ -34,7 +34,7 @@ defmodule Locorum.ProjectChannelServer do
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
   def init_state do
-    [0, 1]
+    [__MODULE__]
   end
 
   # Given a project_id, this will return the name of the channel server for
