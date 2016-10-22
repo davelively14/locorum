@@ -16,7 +16,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
       - ADD: get_result(id) - fetches a given result_collection
       - ADD: get_newest_result - fetches most recent result_collection
       - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to caller, notifies channel of new results
-      - ADD: init_state - returns %{collections: collections, collection_list: collection_list, backends: backends} for a given project_id
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
     - ADD: adds ResultsCollections to the Repo - no other process will.
       - ADD: notify channel when new ResultsCollections are added
@@ -137,6 +136,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - ADD: Locorum.Project.ProjectChannelSupervisor
     - ADD: Supervise ProjectChannelServer
+    - ADD: init_state - returns %{collections: collections, collection_list: collection_list, backends: backends} for a given project_id
   - ADD: Locorum.Project.ProjectChannelServer
 - Geocode
   - DEL: Google returns lat long

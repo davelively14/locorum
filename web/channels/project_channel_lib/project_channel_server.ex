@@ -23,13 +23,20 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.call(name(project_id), :get_dep_state)
   end
 
+  def is_online(project_id) do
+    if GenServer.whereis(name(project_id)) do
+      true
+    else
+      false
+    end
+  end
+
   #############
   # Callbacks #
   #############
 
   def init(project_id) do
     state = init_state(project_id)
-
     {:ok, state}
   end
 
