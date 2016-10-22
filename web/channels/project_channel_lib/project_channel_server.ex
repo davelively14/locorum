@@ -1,12 +1,17 @@
 defmodule Locorum.ProjectChannelServer do
   use GenServer
+  alias Locorum.Repo
+  alias Locorum.ResultCollection
+  alias Locorum.Backend
+  alias Locorum.Search
+  alias Locorum.Result
 
   #######
   # API #
   #######
 
   def start_link(project_id) do
-    GenServer.start_link(__MODULE__, :ok, name: :"Project#{project_id}Server")
+    GenServer.start_link(__MODULE__, project_id, name: :"Project#{project_id}Server")
   end
 
   def get_state(project_id) do
@@ -17,8 +22,9 @@ defmodule Locorum.ProjectChannelServer do
   # Callbacks #
   #############
 
-  def init(:ok) do
-    state = init_state()
+  def init(project_id) do
+    state = init_state(project_id)
+
     {:ok, state}
   end
 
@@ -33,8 +39,8 @@ defmodule Locorum.ProjectChannelServer do
   # TODO determine if we use GenServer state or :ets for data storage
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
-  def init_state do
-    [__MODULE__]
+  def init_state(project_id) do
+    [project_id]
   end
 
   # Given a project_id, this will return the name of the channel server for
