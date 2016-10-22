@@ -134,10 +134,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ### v0.4.4
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
-  - ADD: Locorum.Project.ProjectChannelSupervisor
-    - ADD: Supervise ProjectChannelServer
+  - ADD: Locorum.Project.ProjectChannelSupervisor, which supervises the ProjectChannelServer
+  - ADD: Locorum.Project.ProjectChannelServer, which holds state for all of the results for a given project and serves them to the channel.
     - ADD: init_state - returns %{collections: collections, collection_list: collection_list, backends: backends} for a given project_id
-  - ADD: Locorum.Project.ProjectChannelServer
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
