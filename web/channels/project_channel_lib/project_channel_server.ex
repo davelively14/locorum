@@ -51,7 +51,7 @@ defmodule Locorum.ProjectChannelServer do
 
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
-  def init_state(project_id) do
+  defp init_state(project_id) do
     # Write the queries for preloading ResultCollection and Result for all
     # searches for a given project. Used with Seach query below. Sorts are key
     # here, as they will order the results by most recent.
@@ -78,12 +78,15 @@ defmodule Locorum.ProjectChannelServer do
       searches
       |> Enum.map(&(List.first(&1.result_collections)))
 
-    # TODO convert all_collections to :ets
+    # Creates :ets table :all_collections if it does not already exist
+    if :ets.info(:all_collections) == :undefined, do: :ets.new(:all_collections, [:set, :private, :named_table])
+    collections |> Enum.each(&(:ets.insert(:all_collections, {&1.id, &1.search_id, &1.results})))
+
     # Uses JSON rendering from the views in order to construct the state as a
     # JSON object. If there are n collections, will return object with empty
     # values
     if List.first(collections) do
-      %{all_collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json"),
+      %{all_collections: :all_collections,
         newest_collections: Phoenix.View.render_many(newest_collections, Locorum.ResultCollectionView, "result_collection.json"),
         collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
         backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")}
@@ -94,7 +97,7 @@ defmodule Locorum.ProjectChannelServer do
 
   # Given a project_id, this will return the name of the channel server for
   # the project.
-  def name(project_id) do
+  defp name(project_id) do
     :"Project#{project_id}Server"
   end
 end
