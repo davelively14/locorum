@@ -5,7 +5,10 @@ defmodule Locorum.ProjectChannel do
   alias Locorum.Result
 
   def join("projects:" <> project_id, _params, socket) do
-    Locorum.ProjectChannelSupervisor.start_link(project_id)
+    if !Locorum.ProjectChannelServer.is_online(project_id) do
+      Locorum.ProjectChannelSupervisor.start_link(project_id)
+    end
+    
     {:ok, ProjectChannelServer.get_dep_state(project_id), assign(socket, :project_id, project_id)}
   end
 
