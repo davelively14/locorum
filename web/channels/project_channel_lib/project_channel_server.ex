@@ -1,5 +1,6 @@
 defmodule Locorum.ProjectChannelServer do
   use GenServer
+  import Ecto.Query, only: [from: 2]
   alias Locorum.Repo
   alias Locorum.ResultCollection
   alias Locorum.Backend
@@ -36,11 +37,33 @@ defmodule Locorum.ProjectChannelServer do
   # Private Functions #
   #####################
 
-  # TODO determine if we use GenServer state or :ets for data storage
+  # TODO convert to :ets for data storage
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
   def init_state(project_id) do
-    [project_id]
+    preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
+    preload_results = from r in Result, order_by: [desc: r.rating]
+    searches = Repo.all from s in Search,
+                        where: s.project_id == ^project_id,
+                        preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+    backends = Backend |> Repo.all
+
+    collections =
+      searches
+      |> Enum.map(&(&1.result_collections))
+      |> List.flatten
+
+    first_collections =
+      searches
+      |> Enum.map(&(List.first(&1.result_collections)))
+
+    if List.first(collections) do
+      %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
+        collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
+        backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")}
+    else
+      %{collections: [], collection_list: [], backends: []}
+    end
   end
 
   # Given a project_id, this will return the name of the channel server for
