@@ -41,28 +41,42 @@ defmodule Locorum.ProjectChannelServer do
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
   def init_state(project_id) do
+    # Write the queries for preloading ResultCollection and Result for all
+    # searches for a given project. Used with Seach query below. Sorts are key
+    # here, as they will order the results by most recent.
     preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
     preload_results = from r in Result, order_by: [desc: r.rating]
+
+    # Use preload queries written above to return all searches for a given
+    # project.
     searches = Repo.all from s in Search,
                         where: s.project_id == ^project_id,
                         preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+
+    # Loads all backends
     backends = Backend |> Repo.all
 
+    # Pulls all result_collections from t
     collections =
       searches
       |> Enum.map(&(&1.result_collections))
       |> List.flatten
 
-    first_collections =
+    # Pulls the most recent result collections for each search.
+    current_collections =
       searches
       |> Enum.map(&(List.first(&1.result_collections)))
 
+    # Uses JSON rendering from the views in order to construct the state as a
+    # JSON object. If there are n collections, will return object with empty
+    # values
     if List.first(collections) do
-      %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
+      %{all_collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json"),
+        current_collection: Phoenix.View.render_many(current_collections, Locorum.ResultCollectionView, "result_collection.json"),
         collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
         backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")}
     else
-      %{collections: [], collection_list: [], backends: []}
+      %{all_collections: [], current_collection: [], collection_list: [], backends: []}
     end
   end
 
