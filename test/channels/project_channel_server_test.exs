@@ -1,12 +1,11 @@
 defmodule Locorum.ProjectControllerServerTest do
   use Locorum.ConnCase
 
-  @project_id 1
+  @empty_project_id 1
 
   @tag :project_server
-  test "get_state returns [Locorum.ProjectChannelServerj]", %{conn: _conn} do
-    Locorum.ProjectChannelSupervisor.start_link(@project_id)
-    [result] = Locorum.ProjectChannelServer.get_state(@project_id)
-    assert result == @project_id && result |> is_integer
+  test "get_state on project with no results returns empty state", %{conn: _conn} do
+    Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
+    assert Locorum.ProjectChannelServer.get_state(@empty_project_id) == %{backends: [], collection_list: [], collections: []}
   end
 end
