@@ -50,7 +50,7 @@ defmodule Locorum.ProjectChannelServer do
   #####################
 
   # This will pull all results_collections, backends, and associations and store
-  # in state. Or should it be :ets?
+  # in state and :ets
   defp init_state(project_id) do
     # Write the queries for preloading ResultCollection and Result for all
     # searches for a given project. Used with Seach query below. Sorts are key
@@ -80,6 +80,8 @@ defmodule Locorum.ProjectChannelServer do
 
     # Creates :ets table :all_collections if it does not already exist
     if :ets.info(:all_collections) == :undefined, do: :ets.new(:all_collections, [:set, :private, :named_table])
+
+    # Stores each collection in an :ets table
     collections |> Enum.each(&(:ets.insert(:all_collections, {&1.id, &1.search_id, &1.results})))
 
     # Uses JSON rendering from the views in order to construct the state as a
