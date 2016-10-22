@@ -24,11 +24,7 @@ defmodule Locorum.ProjectChannelServer do
   end
 
   def is_online(project_id) do
-    if GenServer.whereis(name(project_id)) do
-      true
-    else
-      false
-    end
+    if GenServer.whereis(name(project_id)), do: true, else: false
   end
 
   #############
