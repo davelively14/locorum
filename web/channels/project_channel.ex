@@ -1,35 +1,12 @@
 defmodule Locorum.ProjectChannel do
   use Locorum.Web, :channel
+  alias Locorum.ProjectChannelServer
   alias Locorum.ResultCollection
-  alias Locorum.Backend
-  alias Locorum.Search
   alias Locorum.Result
 
   def join("projects:" <> project_id, _params, socket) do
-    project_id = String.to_integer(project_id)
-    preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
-    preload_results = from r in Result, order_by: [desc: r.rating]
-    searches = Repo.all from s in Search,
-                        where: s.project_id == ^project_id,
-                        preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
-    backends = Backend |> Repo.all
-
-    collections =
-      searches
-      |> Enum.map(&(&1.result_collections))
-      |> List.flatten
-    first_collections =
-      searches
-      |> Enum.map(&(List.first(&1.result_collections)))
-    if List.first(collections) do
-      resp = %{collections: Phoenix.View.render_many(first_collections, Locorum.ResultCollectionView, "result_collection.json"),
-               collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
-               backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")
-             }
-      {:ok, resp, assign(socket, :project_id, project_id)}
-    else
-      {:ok, nil, assign(socket, :project_id, project_id)}
-    end
+    Locorum.ProjectChannelSupervisor.start_link(project_id)
+    {:ok, ProjectChannelServer.get_dep_state(project_id), assign(socket, :project_id, project_id)}
   end
 
   def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)

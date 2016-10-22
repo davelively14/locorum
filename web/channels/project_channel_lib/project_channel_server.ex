@@ -19,6 +19,10 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.call(name(project_id), :get_state)
   end
 
+  def get_dep_state(project_id) do
+    GenServer.call(name(project_id), :get_dep_state)
+  end
+
   #############
   # Callbacks #
   #############
@@ -31,6 +35,11 @@ defmodule Locorum.ProjectChannelServer do
 
   def handle_call(:get_state, _from, state) do
     {:reply, state, state}
+  end
+
+  def handle_call(:get_dep_state, _from, %{newest_collections: collections, collection_list: collection_list, backends: backends} = state ) do
+    dep_state = %{collections: collections, collection_list: collection_list, backends: backends}
+    {:reply, dep_state, state}
   end
 
   #####################
