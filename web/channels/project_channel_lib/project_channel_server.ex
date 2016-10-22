@@ -37,7 +37,6 @@ defmodule Locorum.ProjectChannelServer do
   # Private Functions #
   #####################
 
-  # TODO convert to :ets for data storage
   # This will pull all results_collections, backends, and associations and store
   # in state. Or should it be :ets?
   def init_state(project_id) do
@@ -63,20 +62,21 @@ defmodule Locorum.ProjectChannelServer do
       |> List.flatten
 
     # Pulls the most recent result collections for each search.
-    current_collections =
+    newest_collections =
       searches
       |> Enum.map(&(List.first(&1.result_collections)))
 
+    # TODO convert all_collections to :ets
     # Uses JSON rendering from the views in order to construct the state as a
     # JSON object. If there are n collections, will return object with empty
     # values
     if List.first(collections) do
       %{all_collections: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection.json"),
-        current_collection: Phoenix.View.render_many(current_collections, Locorum.ResultCollectionView, "result_collection.json"),
+        newest_collections: Phoenix.View.render_many(newest_collections, Locorum.ResultCollectionView, "result_collection.json"),
         collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
         backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")}
     else
-      %{all_collections: [], current_collection: [], collection_list: [], backends: []}
+      %{all_collections: [], newest_collections: [], collection_list: [], backends: []}
     end
   end
 
