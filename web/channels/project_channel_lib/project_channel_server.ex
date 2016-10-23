@@ -27,6 +27,10 @@ defmodule Locorum.ProjectChannelServer do
     if GenServer.whereis(name(project_id)), do: true, else: false
   end
 
+  def get_searches(project_id) do
+    GenServer.call(name(project_id), :get_searches)
+  end
+
   #############
   # Callbacks #
   #############
@@ -43,6 +47,10 @@ defmodule Locorum.ProjectChannelServer do
   def handle_call(:get_dep_state, _from, %{newest_collections: collections, collection_list: collection_list, backends: backends} = state ) do
     dep_state = %{collections: collections, collection_list: collection_list, backends: backends}
     {:reply, dep_state, state}
+  end
+
+  def handle_call(:get_searches, _from, %{searches: searches} = state) do
+    {:reply, searches, state}
   end
 
   #####################
