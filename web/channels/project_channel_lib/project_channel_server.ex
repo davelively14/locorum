@@ -60,9 +60,10 @@ defmodule Locorum.ProjectChannelServer do
   # This will pull all results_collections, backends, and associations and store
   # in state and :ets
   defp init_state(project_id) do
+
     # Write the queries for preloading ResultCollection and Result for all
-    # searches for a given project. Used with Seach query below. Sorts are key
-    # here, as they will order the results by most recent.
+    # searches for a given project. Sorts are key here, as they will order the
+    # results by most recent.
     preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
     preload_results = from r in Result, order_by: [desc: r.rating]
 
