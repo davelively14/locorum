@@ -12,6 +12,7 @@ defmodule Locorum.ProjectChannel do
     {:ok, ProjectChannelServer.get_dep_state(project_id), assign(socket, :project_id, project_id)}
   end
 
+  # TODO remove this function...doesn't seem to be used
   def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)
   defp add_search_id([], _search_id), do: []
   defp add_search_id([head|tail], search_id), do: [Map.put_new(head, :search_id, search_id) | add_search_id(tail, search_id)]
