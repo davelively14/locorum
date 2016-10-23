@@ -8,7 +8,7 @@ defmodule Locorum.ProjectChannel do
     if !Locorum.ProjectChannelServer.is_online(project_id) do
       Locorum.ProjectChannelSupervisor.start_link(project_id)
     end
-    
+
     {:ok, ProjectChannelServer.get_dep_state(project_id), assign(socket, :project_id, project_id)}
   end
 
@@ -18,10 +18,7 @@ defmodule Locorum.ProjectChannel do
   defp add_search_id([head|tail], search_id), do: [Map.put_new(head, :search_id, search_id) | add_search_id(tail, search_id)]
 
   def handle_in("run_search", _params, socket) do
-    project = Repo.get!(Locorum.Project, socket.assigns.project_id)
-    searches =
-      assoc(project, :searches)
-      |> Repo.all
+    searches = ProjectChannelServer.get_searches(socket.assigns.project_id)
 
     for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
     {:reply, :ok, socket}
