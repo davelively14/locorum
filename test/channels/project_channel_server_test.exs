@@ -7,7 +7,7 @@ defmodule Locorum.ProjectControllerServerTest do
   @tag :project_server
   test "get_state on project with no results returns empty state", %{conn: _conn} do
     Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
-    assert Locorum.ProjectChannelServer.get_state(@empty_project_id) == %{all_collections: [], newest_collections: [], collection_list: [], backends: []}
+    assert Locorum.ProjectChannelServer.get_state(@empty_project_id) == %{all_collections: [], newest_collections: [], collection_list: [], backends: [], searches: []}
   end
 
   @tag :project_server

@@ -58,24 +58,27 @@ defmodule Locorum.ProjectChannelServer do
     preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
     preload_results = from r in Result, order_by: [desc: r.rating]
 
-    # Use preload queries written above to return all searches for a given
-    # project.
-    searches = Repo.all from s in Search,
-                        where: s.project_id == ^project_id,
-                        preload: [result_collections: ^preload_collections, result_collections: [results: ^preload_results, results: :backend]]
+    # We don't preload here in order to capture searches for storage separately
+    # in the server's state.
+    searches = Repo.all from s in Search, where: s.project_id == ^project_id
 
-    # Loads all backends
+    # Now we preload all the searches to eventually store them in state.
+    preloaded_searches =
+      searches
+      |> Repo.preload([result_collections: preload_collections, result_collections: [results: preload_results, results: :backend]])
+
+    # Loads all backends to store in state.
     backends = Backend |> Repo.all
 
     # Pulls all result_collections from t
     collections =
-      searches
+      preloaded_searches
       |> Enum.map(&(&1.result_collections))
       |> List.flatten
 
     # Pulls the most recent result collections for each search.
     newest_collections =
-      searches
+      preloaded_searches
       |> Enum.map(&(List.first(&1.result_collections)))
 
     # Creates :ets table :all_collections if it does not already exist
@@ -91,9 +94,10 @@ defmodule Locorum.ProjectChannelServer do
       %{all_collections: :all_collections,
         newest_collections: Phoenix.View.render_many(newest_collections, Locorum.ResultCollectionView, "result_collection.json"),
         collection_list: Phoenix.View.render_many(collections, Locorum.ResultCollectionView, "result_collection_list.json"),
+        searches: searches,
         backends: Phoenix.View.render_many(backends, Locorum.BackendView, "backend.json")}
     else
-      %{all_collections: [], newest_collections: [], collection_list: [], backends: []}
+      %{all_collections: [], searches: [], newest_collections: [], collection_list: [], backends: []}
     end
   end
 
