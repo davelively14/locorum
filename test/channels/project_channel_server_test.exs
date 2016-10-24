@@ -1,9 +1,18 @@
 defmodule Locorum.ProjectControllerServerTest do
   use Locorum.ConnCase
+  alias Locorum.TestHelpers
 
   @empty_project_id 1
   @down_project_id 111
 
+  setup %{conn: conn} = config do
+    if config[:full_project] do
+      project = TestHelpers.insert_full_project
+      {:ok, conn: conn, project_id: project.id}
+    else
+      :ok
+    end
+  end
 
 
   @tag :project_server
@@ -25,8 +34,10 @@ defmodule Locorum.ProjectControllerServerTest do
     refute Locorum.ProjectChannelServer.is_online(@down_project_id)
   end
 
+  @tag :full_project
   @tag :project_server
-  test "get_searches returns number of searches for a project" do
-    assert true
+  test "get_searches returns all searches for a project", %{conn: _conn, project_id: project_id} do
+    Locorum.ProjectChannelSupervisor.start_link(project_id)
+    assert length(Locorum.ProjectChannelServer.get_searches(project_id)) == 2
   end
 end
