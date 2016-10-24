@@ -82,4 +82,12 @@ defmodule Locorum.ProjectControllerServerTest do
     state_to_fetch = ProjectChannelServer.get_searches(project_id) |> List.first
     assert ProjectChannelServer.get_single_search(project_id, state_to_fetch.id) == state_to_fetch
   end
+
+  @tag :full_project
+  @tag :project_server
+  test "get_updated_results returns the newest collections", %{project_id: project_id} do
+    ProjectChannelSupervisor.start_link(project_id)
+    collections_to_fetch = ProjectChannelServer.get_state(project_id) |> Map.get(:newest_collections)
+    assert ProjectChannelServer.get_updated_results(project_id) == collections_to_fetch
+  end
 end
