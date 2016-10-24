@@ -65,8 +65,13 @@ defmodule Locorum.ProjectChannelServer do
     {:reply, searches, state}
   end
 
-  def handle_call({:get_single_search, search_id}, _from, %{searches: searches} = state) do
+  def handle_call({:get_single_search, search_id}, _from, %{searches: searches} = state) when is_integer(search_id) do
     search = searches |> Enum.find(&(&1.id == search_id))
+    {:reply, search, state}
+  end
+
+  def handle_call({:get_single_search, search_id}, _from, %{searches: searches} = state) do
+    search = searches |> Enum.find(&(&1.id == String.to_integer(search_id)))
     {:reply, search, state}
   end
 

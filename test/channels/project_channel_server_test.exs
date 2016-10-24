@@ -81,6 +81,7 @@ defmodule Locorum.ProjectControllerServerTest do
     ProjectChannelSupervisor.start_link(project_id)
     search_to_check = ProjectChannelServer.get_searches(project_id) |> List.first
     assert ProjectChannelServer.get_single_search(project_id, search_to_check.id) == search_to_check
+    assert ProjectChannelServer.get_single_search(project_id, Integer.to_string(search_to_check.id)) == search_to_check
   end
 
   @tag :full_project

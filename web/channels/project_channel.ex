@@ -25,7 +25,8 @@ defmodule Locorum.ProjectChannel do
   end
 
   def handle_in("run_single_search", params, socket) do
-    search = Repo.get!(Locorum.Search, params["search_id"])
+    # search = Repo.get!(Locorum.Search, params["search_id"])
+    search = ProjectChannelServer.get_single_search(socket.assigns.project_id, params["search_id"])
     Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
 
     {:reply, :ok, socket}
