@@ -1,6 +1,10 @@
 defmodule Locorum.ProjectControllerServerTest do
   use Locorum.ConnCase
-  alias Locorum.TestHelpers
+  alias Locorum.{TestHelpers, ProjectChannelSupervisor, ProjectChannelServer}
+
+  #########
+  # Setup #
+  #########
 
   @empty_project_id 1
   @not_started_project_id 111
@@ -14,18 +18,25 @@ defmodule Locorum.ProjectControllerServerTest do
     end
   end
 
+  #########
+  # Tests #
+  #########
+
+  # Tags used:
+  # :project_server -> Every test related to the server
+  # :full_project -> Setup config with a full project in the Test Repo
 
   @tag :project_server
   test "get_state on project with no results returns empty state" do
-    Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
-    assert Locorum.ProjectChannelServer.get_state(@empty_project_id) == %{all_collections: [], newest_collections: [], collection_list: [], backends: [], searches: []}
+    ProjectChannelSupervisor.start_link(@empty_project_id)
+    assert ProjectChannelServer.get_state(@empty_project_id) == %{all_collections: [], newest_collections: [], collection_list: [], backends: [], searches: []}
   end
 
   @tag :full_project
   @tag :project_server
   test "get_state on full project returns correct results", %{project_id: project_id} do
-    Locorum.ProjectChannelSupervisor.start_link(project_id)
-    state = Locorum.ProjectChannelServer.get_state(project_id)
+    ProjectChannelSupervisor.start_link(project_id)
+    state = ProjectChannelServer.get_state(project_id)
 
     assert state.backends |> List.first |> Map.fetch(:backend) == {:ok, "Google"}
     assert state.all_collections == :all_collections
@@ -36,15 +47,15 @@ defmodule Locorum.ProjectControllerServerTest do
 
   @tag :project_server
   test "get_dep_state on project with no results returns empty state in deprecated format" do
-    Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
-    assert Locorum.ProjectChannelServer.get_dep_state(@empty_project_id) == %{collections: [], collection_list: [], backends: []}
+    ProjectChannelSupervisor.start_link(@empty_project_id)
+    assert ProjectChannelServer.get_dep_state(@empty_project_id) == %{collections: [], collection_list: [], backends: []}
   end
 
   @tag :full_project
   @tag :project_server
   test "get_dep_state on full project returns correct results", %{project_id: project_id} do
-    Locorum.ProjectChannelSupervisor.start_link(project_id)
-    state = Locorum.ProjectChannelServer.get_dep_state(project_id)
+    ProjectChannelSupervisor.start_link(project_id)
+    state = ProjectChannelServer.get_dep_state(project_id)
 
     assert state.backends |> List.first |> Map.fetch(:backend) == {:ok, "Google"}
     assert state.collections |> List.first |> Map.fetch(:id) == state.collection_list |> List.first |> Map.fetch(:result_collection_id)
@@ -52,15 +63,15 @@ defmodule Locorum.ProjectControllerServerTest do
 
   @tag :project_server
   test "is_online returns accurate online status for server" do
-    Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
-    assert Locorum.ProjectChannelServer.is_online(@empty_project_id)
-    refute Locorum.ProjectChannelServer.is_online(@not_started_project_id)
+    ProjectChannelSupervisor.start_link(@empty_project_id)
+    assert ProjectChannelServer.is_online(@empty_project_id)
+    refute ProjectChannelServer.is_online(@not_started_project_id)
   end
 
   @tag :full_project
   @tag :project_server
   test "get_searches returns all searches for a project", %{project_id: project_id} do
-    Locorum.ProjectChannelSupervisor.start_link(project_id)
-    assert length(Locorum.ProjectChannelServer.get_searches(project_id)) == 2
+    ProjectChannelSupervisor.start_link(project_id)
+    assert length(ProjectChannelServer.get_searches(project_id)) == 2
   end
 end
