@@ -1,11 +1,7 @@
 defmodule Locorum.ProjectChannelServer do
   use GenServer
   import Ecto.Query, only: [from: 2]
-  alias Locorum.Repo
-  alias Locorum.ResultCollection
-  alias Locorum.Backend
-  alias Locorum.Search
-  alias Locorum.Result
+  alias Locorum.{Repo, ResultCollection, Backend, Search, Result}
 
   #######
   # API #
