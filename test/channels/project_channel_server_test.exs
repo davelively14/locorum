@@ -3,7 +3,7 @@ defmodule Locorum.ProjectControllerServerTest do
   alias Locorum.TestHelpers
 
   @empty_project_id 1
-  @down_project_id 111
+  @not_started_project_id 111
 
   setup %{conn: conn} = config do
     if config[:full_project] do
@@ -16,7 +16,7 @@ defmodule Locorum.ProjectControllerServerTest do
 
 
   @tag :project_server
-  test "get_state on project with no results returns empty state", %{conn: _conn} do
+  test "get_state on project with no results returns empty state" do
     Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
     assert Locorum.ProjectChannelServer.get_state(@empty_project_id) == %{all_collections: [], newest_collections: [], collection_list: [], backends: [], searches: []}
   end
@@ -40,16 +40,26 @@ defmodule Locorum.ProjectControllerServerTest do
     assert Locorum.ProjectChannelServer.get_dep_state(@empty_project_id) == %{collections: [], collection_list: [], backends: []}
   end
 
+  @tag :full_project
+  @tag :project_server
+  test "get_dep_state on full project returns correct results", %{project_id: project_id} do
+    Locorum.ProjectChannelSupervisor.start_link(project_id)
+    state = Locorum.ProjectChannelServer.get_dep_state(project_id)
+
+    assert state.backends |> List.first |> Map.fetch(:backend) == {:ok, "Google"}
+    assert state.collections |> List.first |> Map.fetch(:id) == state.collection_list |> List.first |> Map.fetch(:result_collection_id)
+  end
+
   @tag :project_server
   test "is_online returns accurate online status for server" do
     Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
     assert Locorum.ProjectChannelServer.is_online(@empty_project_id)
-    refute Locorum.ProjectChannelServer.is_online(@down_project_id)
+    refute Locorum.ProjectChannelServer.is_online(@not_started_project_id)
   end
 
   @tag :full_project
   @tag :project_server
-  test "get_searches returns all searches for a project", %{conn: _conn, project_id: project_id} do
+  test "get_searches returns all searches for a project", %{project_id: project_id} do
     Locorum.ProjectChannelSupervisor.start_link(project_id)
     assert length(Locorum.ProjectChannelServer.get_searches(project_id)) == 2
   end
