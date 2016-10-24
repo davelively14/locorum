@@ -39,6 +39,10 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.call(name(project_id), :get_newest_collections)
   end
 
+  def get_updated_result(project_id, search_id) do
+    GenServer.call(name(project_id), {:get_updated_result, search_id})
+  end
+
   #############
   # Callbacks #
   #############
@@ -68,6 +72,11 @@ defmodule Locorum.ProjectChannelServer do
 
   def handle_call(:get_newest_collections, _from, %{newest_collections: collections} = state) do
     {:reply, collections, state}
+  end
+
+  def handle_call({:get_updated_result, search_id}, _from, %{newest_collections: collections} = state) do
+    collection = collections |> Enum.find(&(&1.search_id == search_id))
+    {:reply, collection, state}
   end
 
   #####################
