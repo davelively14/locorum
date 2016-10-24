@@ -15,7 +15,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
       - ADD: get_result_dates - fetches all result_collection dates
       - ADD: get_result(id) - fetches a given result_collection
       - ADD: get_newest_result - fetches most recent result_collection
-      - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to caller, notifies channel of new results
+      - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to caller, notifies channel of new results. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted.
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
     - ADD: adds ResultsCollections to the Repo - no other process will.
       - ADD: notify channel when new ResultsCollections are added
