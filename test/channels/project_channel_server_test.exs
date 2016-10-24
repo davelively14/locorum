@@ -4,6 +4,8 @@ defmodule Locorum.ProjectControllerServerTest do
   @empty_project_id 1
   @down_project_id 111
 
+
+
   @tag :project_server
   test "get_state on project with no results returns empty state", %{conn: _conn} do
     Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
@@ -21,5 +23,10 @@ defmodule Locorum.ProjectControllerServerTest do
     Locorum.ProjectChannelSupervisor.start_link(@empty_project_id)
     assert Locorum.ProjectChannelServer.is_online(@empty_project_id)
     refute Locorum.ProjectChannelServer.is_online(@down_project_id)
+  end
+
+  @tag :project_server
+  test "get_searches returns number of searches for a project" do
+    assert true
   end
 end
