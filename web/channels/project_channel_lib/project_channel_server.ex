@@ -79,8 +79,13 @@ defmodule Locorum.ProjectChannelServer do
     {:reply, collections, state}
   end
 
-  def handle_call({:get_updated_result, search_id}, _from, %{newest_collections: collections} = state) do
+  def handle_call({:get_updated_result, search_id}, _from, %{newest_collections: collections} = state) when is_integer(search_id) do
     collection = collections |> Enum.find(&(&1.search_id == search_id))
+    {:reply, collection, state}
+  end
+
+  def handle_call({:get_updated_result, search_id}, _from, %{newest_collections: collections} = state) do
+    collection = collections |> Enum.find(&(&1.search_id == String.to_integer(search_id)))
     {:reply, collection, state}
   end
 

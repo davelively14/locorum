@@ -98,5 +98,6 @@ defmodule Locorum.ProjectControllerServerTest do
     ProjectChannelServer.start_link(project_id)
     results_to_check = ProjectChannelServer.get_updated_results(project_id) |> List.first
     assert ProjectChannelServer.get_updated_result(project_id, results_to_check.search_id) == results_to_check
+    assert ProjectChannelServer.get_updated_result(project_id, Integer.to_string(results_to_check.search_id)) == results_to_check
   end
 end
