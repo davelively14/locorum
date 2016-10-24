@@ -36,7 +36,7 @@ defmodule Locorum.ProjectChannelServer do
   end
 
   def get_updated_results(project_id) do
-    GenServer.call(name(project_id), :get_newest_collections)
+    GenServer.call(name(project_id), :get_updated_results)
   end
 
   def get_updated_result(project_id, search_id) do
@@ -75,7 +75,7 @@ defmodule Locorum.ProjectChannelServer do
     {:reply, search, state}
   end
 
-  def handle_call(:get_newest_collections, _from, %{newest_collections: collections} = state) do
+  def handle_call(:get_updated_results, _from, %{newest_collections: collections} = state) do
     {:reply, collections, state}
   end
 
