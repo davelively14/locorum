@@ -74,4 +74,12 @@ defmodule Locorum.ProjectControllerServerTest do
     ProjectChannelSupervisor.start_link(project_id)
     assert length(ProjectChannelServer.get_searches(project_id)) == 2
   end
+
+  @tag :full_project
+  @tag :project_server
+  test "get_single_search returns a single search", %{project_id: project_id} do
+    ProjectChannelSupervisor.start_link(project_id)
+    state_to_fetch = ProjectChannelServer.get_searches(project_id) |> List.first
+    assert ProjectChannelServer.get_single_search(project_id, state_to_fetch.id) == state_to_fetch
+  end
 end
