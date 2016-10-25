@@ -39,6 +39,10 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.call(name(project_id), {:get_updated_result, search_id})
   end
 
+  def get_collection(project_id, collection_id) do
+    GenServer.call(name(project_id), {:get_collection, collection_id})
+  end
+
   #############
   # Callbacks #
   #############
@@ -85,6 +89,11 @@ defmodule Locorum.ProjectChannelServer do
     {:reply, collection, state}
   end
 
+  def handle_call({:get_collection, collection_id}, _from, %{all_collections: collections} = state) do
+    [{_, collection}] = :ets.lookup(collections, collection_id)
+    {:reply, collection, state}
+  end
+
   #####################
   # Private Functions #
   #####################
@@ -126,7 +135,9 @@ defmodule Locorum.ProjectChannelServer do
     if :ets.info(:all_collections) == :undefined, do: :ets.new(:all_collections, [:set, :private, :named_table])
 
     # Stores each collection in an :ets table
-    collections |> Enum.each(&(:ets.insert(:all_collections, {&1.id, &1.search_id, &1.results})))
+    # collections |> Enum.each(&(:ets.insert(:all_collections, {&1.id, &1.search_id, &1.results})))
+    collections
+    |> Enum.each(&store_collection(&1, :all_collections))
 
     # Uses JSON rendering from the views in order to construct the state as a
     # JSON object. If there are n collections, will return object with empty
@@ -146,5 +157,10 @@ defmodule Locorum.ProjectChannelServer do
   # the project.
   defp name(project_id) do
     :"Project#{project_id}Server"
+  end
+
+  defp store_collection(collection, table_name) do
+    collection = Phoenix.View.render(Locorum.ResultCollectionView, "result_collection.json", result_collection: collection)
+    :ets.insert(table_name, {collection.id, collection})
   end
 end

@@ -95,9 +95,18 @@ defmodule Locorum.ProjectControllerServerTest do
   @tag :full_project
   @tag :project_server
   test "get_updated_result/2 returns most recent collection for a given search", %{project_id: project_id} do
-    ProjectChannelServer.start_link(project_id)
+    ProjectChannelSupervisor.start_link(project_id)
     results_to_check = ProjectChannelServer.get_updated_results(project_id) |> List.first
     assert ProjectChannelServer.get_updated_result(project_id, results_to_check.search_id) == results_to_check
     assert ProjectChannelServer.get_updated_result(project_id, Integer.to_string(results_to_check.search_id)) == results_to_check
+  end
+
+  @tag :current_test
+  @tag :full_project
+  @tag :project_server
+  test "get_collection returns the correct collection", %{project_id: project_id} do
+    ProjectChannelSupervisor.start_link(project_id)
+    collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
+    assert ProjectChannelServer.get_collection(project_id, collection.id) == collection
   end
 end

@@ -13,7 +13,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADD: Locorum.Project.ProjectChannelServer
     - Create API functions to get data and store data
       - ADD: get_result_dates - fetches all result_collection dates
-      - ADD: get_result(id) - fetches a given result_collection
       - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to caller, notifies channel of new results. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted.
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
     - ADD: adds ResultsCollections to the Repo - no other process will.
@@ -138,6 +137,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: init_state - returns %{collections: collections, collection_list: collection_list, backends: backends} for a given project_id
     - ADD: get_updated_results - fetches most recent result_collections for all searches
     - ADD: get_updated_result - fetches most recent result_collection for a given search
+    - ADD: get_collection(collection_id) - fetches a given result_collection
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
