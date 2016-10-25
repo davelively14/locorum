@@ -11,10 +11,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.4.4 to do list
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - ADD: Locorum.Project.ProjectChannelServer
-    - Create API functions to get data and store data
-      - ADD: get_result_dates - fetches all result_collection dates
-      - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to channel NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
-    - ADD: adds ResultsCollections to the Repo - no other process will.
+    - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to channel NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
   - ADJ: Locorum.ProjectChannel
     - DEL: no longer interacts with BackendSys
   - ADJ: Locorum.BackendSys and children
