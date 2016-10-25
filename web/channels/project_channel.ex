@@ -23,7 +23,6 @@ defmodule Locorum.ProjectChannel do
   end
 
   def handle_in("run_single_search", params, socket) do
-    # search = Repo.get!(Locorum.Search, params["search_id"])
     search = ProjectChannelServer.get_single_search(socket.assigns.project_id, params["search_id"])
     Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
 
@@ -31,13 +30,8 @@ defmodule Locorum.ProjectChannel do
   end
 
   def handle_in("fetch_collection", params, socket) do
-    preload_results = from r in Result, order_by: [desc: r.rating]
-    collection = Repo.one from c in ResultCollection,
-                          where: c.id == ^params["collection_id"],
-                          preload: [results: ^preload_results, results: :backend]
-
-    resp = %{collection: Phoenix.View.render(Locorum.ResultCollectionView, "result_collection.json", result_collection: collection)}
-
+    resp = %{collection: ProjectChannelServer.get_collection(socket.assigns.project_id, params["collection_id"])}
+    IO.inspect resp
     broadcast!(socket, "render_collection", resp)
 
     {:noreply, socket}
