@@ -13,16 +13,16 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADD: Locorum.Project.ProjectChannelServer
     - Create API functions to get data and store data
       - ADD: get_result_dates - fetches all result_collection dates
-      - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to caller, notifies channel of new results. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted.
-    - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
+      - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to channel NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
     - ADD: adds ResultsCollections to the Repo - no other process will.
-      - ADD: notify channel when new ResultsCollections are added
   - ADJ: Locorum.ProjectChannel
     - DEL: no longer interacts with BackendSys
   - ADJ: Locorum.BackendSys and children
     - DEL: No more broadcasts, but should instead send back to the server
     - ADJ: init_frontend/3 to send instead of broadcast
     - ADJ: Supervisor should supervise the backends, not BackendSys
+  - ADJ: project.js
+    - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux
@@ -136,6 +136,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: get_updated_results - fetches most recent result_collections for all searches
     - ADD: get_updated_result - fetches most recent result_collection for a given search
     - ADD: get_collection(collection_id) - fetches a given result_collection
+    - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
   - ADJ: Locorum.ProjectChannel
     - DEL: No longer pulls data from the Repo
       - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
