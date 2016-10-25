@@ -7,6 +7,8 @@ defmodule Locorum.ProjectChannelServer do
   # API #
   #######
 
+  # TODO add docs for each function
+
   def start_link(project_id) do
     GenServer.start_link(__MODULE__, project_id, name: :"Project#{project_id}Server")
   end
