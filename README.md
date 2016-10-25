@@ -18,13 +18,11 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: adds ResultsCollections to the Repo - no other process will.
       - ADD: notify channel when new ResultsCollections are added
   - ADJ: Locorum.ProjectChannel
-    - DEL: No longer pulls data from the Repo
-      - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
-    - ADJ: handle_in("run_search"...) and handle_in("run_single_search") will still call Locorum.BackendSys, but will pass the ProjectChannelServer pid instead of "socket" and the calling pid
-      - NOTE: can we do that? Can we pass in the client pid so that it can receive the search once done?
+    - DEL: no longer interacts with BackendSys
   - ADJ: Locorum.BackendSys and children
     - DEL: No more broadcasts, but should instead send back to the server
     - ADJ: init_frontend/3 to send instead of broadcast
+    - ADJ: Supervisor should supervise the backends, not BackendSys
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux
@@ -138,6 +136,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: get_updated_results - fetches most recent result_collections for all searches
     - ADD: get_updated_result - fetches most recent result_collection for a given search
     - ADD: get_collection(collection_id) - fetches a given result_collection
+  - ADJ: Locorum.ProjectChannel
+    - DEL: No longer pulls data from the Repo
+      - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
