@@ -1,6 +1,5 @@
 defmodule Locorum.ProjectChannelServer do
   use GenServer
-  use Phoenix.Channel, only: [broadcast: 3]
   import Ecto.Query, only: [from: 2]
   alias Locorum.{Repo, ResultCollection, Backend, Search, Result}
 
@@ -104,7 +103,7 @@ defmodule Locorum.ProjectChannelServer do
   end
 
   def handle_cast({:fetch_new_results, user_id, socket}, state) do
-    broadcast! socket, "new_results:#{user_id}", %{
+    Phoenix.Channel.broadcast! socket, "new_results", %{
       user_id: user_id
     }
 
