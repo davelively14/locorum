@@ -1,6 +1,7 @@
 defmodule Locorum.ProjectControllerServerTest do
   use Locorum.ConnCase
-  alias Locorum.{TestHelpers, ProjectChannelSupervisor, ProjectChannelServer}
+  use Locorum.ChannelCase
+  alias Locorum.{TestHelpers, ProjectChannelSupervisor, ProjectChannelServer, ProjectChannel}
 
   #########
   # Setup #
@@ -10,11 +11,27 @@ defmodule Locorum.ProjectControllerServerTest do
   @not_started_project_id 111
 
   setup %{conn: conn} = config do
-    if config[:full_project] do
-      project = TestHelpers.insert_full_project
-      {:ok, conn: conn, project_id: project.id}
-    else
-      :ok
+    cond do
+      config[:full_project] ->
+        project = TestHelpers.insert_full_project
+        {:ok, conn: conn, project_id: project.id}
+      config[:full_project_user] ->
+        project = TestHelpers.insert_full_project
+        user = TestHelpers.insert_user
+        conn = assign(conn, :current_user, user)
+        {:ok, conn: conn, project_id: project.id}
+      config[:full_project_join] ->
+        project = TestHelpers.insert_full_project
+        user = TestHelpers.insert_user
+        {:ok, _, socket} =
+          socket("", %{})
+          |> subscribe_and_join(ProjectChannel, "projects:#{project.id}")
+        conn =
+          assign(conn, :current_user, user)
+          |> assign(:socket, socket)
+        {:ok, conn: conn, project_id: project.id, socket: socket}
+      true ->
+        :ok
     end
   end
 
@@ -101,12 +118,23 @@ defmodule Locorum.ProjectControllerServerTest do
     assert ProjectChannelServer.get_updated_result(project_id, Integer.to_string(results_to_check.search_id)) == results_to_check
   end
 
-  @tag :current_test
   @tag :full_project
   @tag :project_server
   test "get_collection returns the correct collection", %{project_id: project_id} do
     ProjectChannelSupervisor.start_link(project_id)
     collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
     assert ProjectChannelServer.get_collection(project_id, collection.id) == collection
+  end
+
+  @tag :current_test
+  @tag :full_project_join
+  @tag :project_server
+  test "fetch_new_results receives new results", %{project_id: project_id, conn: conn} do
+    ProjectChannelSupervisor.start_link(project_id)
+    user_id = conn.assigns.current_user.id
+    socket = conn.assigns.socket
+
+    assert is_integer(user_id)
+    assert is_integer(project_id)
   end
 end

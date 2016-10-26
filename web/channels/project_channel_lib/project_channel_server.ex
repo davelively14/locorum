@@ -8,6 +8,8 @@ defmodule Locorum.ProjectChannelServer do
   #######
 
   # TODO add docs for each function
+  # Any function starting with "get" is a synchronous call. Any function
+  # starting with "fetch" is an asynchronous call.
 
   def start_link(project_id) do
     GenServer.start_link(__MODULE__, project_id, name: :"Project#{project_id}Server")
@@ -43,6 +45,10 @@ defmodule Locorum.ProjectChannelServer do
 
   def get_collection(project_id, collection_id) do
     GenServer.call(name(project_id), {:get_collection, collection_id})
+  end
+
+  def fetch_new_results(project_id, user_id, socket) do
+    GenServer.call(name(project_id), {:fetch_new_results, user_id, socket})
   end
 
   #############
@@ -94,6 +100,11 @@ defmodule Locorum.ProjectChannelServer do
   def handle_call({:get_collection, collection_id}, _from, %{all_collections: collections} = state) do
     [{_, collection}] = :ets.lookup(collections, collection_id)
     {:reply, collection, state}
+  end
+
+  def handle_cast({:fetch_new_results, user_id, socket}, _from, state) do
+    _temp = {user_id, socket}
+    {:noreply, state}
   end
 
   #####################
