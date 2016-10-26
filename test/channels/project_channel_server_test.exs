@@ -134,7 +134,10 @@ defmodule Locorum.ProjectControllerServerTest do
     user_id = conn.assigns.current_user.id
     socket = conn.assigns.socket
 
-    assert is_integer(user_id)
-    assert is_integer(project_id)
+    ProjectChannelServer.fetch_new_results(project_id, user_id, socket)
+    event = "new_results:#{user_id}"
+
+    assert_broadcast(event, _, 5_000)
+    leave socket
   end
 end
