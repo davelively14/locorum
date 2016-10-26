@@ -133,11 +133,17 @@ defmodule Locorum.ProjectControllerServerTest do
     ProjectChannelSupervisor.start_link(project_id)
     user_id = conn.assigns.current_user.id
     socket = conn.assigns.socket
+    expected_event = "new_results:#{user_id}"
+
+    # If we don't do this, we get erroneous warnings that expected_event isn't used
+    _ = expected_event
 
     ProjectChannelServer.fetch_new_results(project_id, user_id, socket)
-    event = "new_results:#{user_id}"
+    assert_broadcast(expected_event, _, 5_000)
 
-    assert_broadcast(event, _, 5_000)
+    # If we don't do this, we get erroneous warnings that expected_event isn't used
+    _ = expected_event
+    
     leave socket
   end
 end
