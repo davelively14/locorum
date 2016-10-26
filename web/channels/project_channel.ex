@@ -11,9 +11,9 @@ defmodule Locorum.ProjectChannel do
   end
 
   # TODO remove this function...doesn't seem to be used
-  def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)
-  defp add_search_id([], _search_id), do: []
-  defp add_search_id([head|tail], search_id), do: [Map.put_new(head, :search_id, search_id) | add_search_id(tail, search_id)]
+  # def add_search_id(collection), do: add_search_id(collection.results, collection.search_id)
+  # defp add_search_id([], _search_id), do: []
+  # defp add_search_id([head|tail], search_id), do: [Map.put_new(head, :search_id, search_id) | add_search_id(tail, search_id)]
 
   def handle_in("run_search", _params, socket) do
     searches = ProjectChannelServer.get_searches(socket.assigns.project_id)
