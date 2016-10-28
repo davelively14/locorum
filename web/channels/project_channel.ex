@@ -1,6 +1,6 @@
 defmodule Locorum.ProjectChannel do
   use Locorum.Web, :channel
-  alias Locorum.ProjectChannelServer
+  alias Locorum.{ProjectChannelServer, ProjectChannelSupervisor}
 
   def join("projects:" <> project_id, _params, socket) do
     if !ProjectChannelServer.is_online(project_id) do
