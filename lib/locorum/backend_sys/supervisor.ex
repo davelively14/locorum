@@ -21,7 +21,7 @@ defmodule Locorum.BackendSys.Supervisor do
     # children = [
     #   worker(Locorum.BackendSys, [], restart: :transient)
     # ]
-
+    
     supervise children, strategy: :one_for_one
   end
 end
