@@ -5,10 +5,14 @@ defmodule Locorum.BackendSys.Bing do
   @fixed_url "https://www.bingplaces.com/DashBoard/Home"
 
   def start_link(query, query_ref, owner, limit) do
+    IO.inspect owner
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
   end
 
   def fetch(query, _query_ref, owner, _limit) do
+    IO.puts "Query:"
+    IO.inspect owner
+    
     query
     |> get_url
     |> Helpers.fetch_html

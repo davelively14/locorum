@@ -5,8 +5,8 @@ defmodule Locorum.BackendSys.Supervisor do
   # API #
   #######
 
-  def start_link(project_id, search, socket, backends) do
-    Supervisor.start_link(__MODULE__, [search, socket, backends], name: :"BackendSysSupervisor#{project_id}")
+  def start_link(project_id, query, socket, backends) do
+    Supervisor.start_link(__MODULE__, [query, socket, backends], name: :"BackendSysSupervisor#{project_id}")
   end
 
   #############
@@ -16,8 +16,8 @@ defmodule Locorum.BackendSys.Supervisor do
   # TODO change supervisor to call the backends
   # So I think this should work now. Eliminates the need for start_link in
   # BackendSys
-  def init([search, socket, backends]) do
-    children = backends |> Enum.map(&worker(&1, [search, nil, socket, nil], restart: :permanent))
+  def init([query, socket, backends]) do
+    children = backends |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :permanent))
     # children = [
     #   worker(Locorum.BackendSys, [], restart: :transient)
     # ]

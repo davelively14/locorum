@@ -72,11 +72,12 @@ defmodule Locorum.BackendSys do
   # So this does tell supervisor to start this. When it does start it, it will
   # execute start_link, which then start each backend. Not sure why we don't
   # just start the backends from the Supervisor.
-  defp spawn_query(backend, query, socket, limit) do
-    query_ref = make_ref()
-    opts = [backend, query, query_ref, socket, limit]
-    {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
-    monitor_ref = Process.monitor(pid)
-    {pid, monitor_ref, query_ref}
-  end
+  # TODO delete this
+  # defp spawn_query(backend, query, socket, limit) do
+  #   query_ref = make_ref()
+  #   opts = [backend, query, query_ref, socket, limit]
+  #   {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
+  #   monitor_ref = Process.monitor(pid)
+  #   {pid, monitor_ref, query_ref}
+  # end
 end
