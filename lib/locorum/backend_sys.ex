@@ -40,12 +40,18 @@ defmodule Locorum.BackendSys do
       end
 
     socket = assign(socket, :result_collection_id, result_collection_id)
-    user_id = socket.assign.user.id || nil
+    project_id = socket.assigns.project_id
+    # TODO fix user_id, just using a known temp right now
+    user_id = 1
 
     backends |> Enum.each(&(Repo.get_by!(Backend, module: Atom.to_string(&1)) |> init_frontend(query, user_id, socket)))
 
-    backends
-    |> Enum.map(&spawn_query(&1, query, socket, limit))
+    # TODO remove
+    # Don't think we need spawn_query any more, we're just going to call the
+    # Supervise function for everything.
+    # backends
+    # |> Enum.map(&spawn_query(&1, query, socket, limit))
+    Locorum.BackendSys.Supervisor.start_link(project_id, query, socket, backends)
   end
 
   # Added for_user to allow the client to identify if the broadcast is meant for
