@@ -21,6 +21,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
       - ADJ: Identify what to pass
   - ADJ: project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
+  - FIX: Backends
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux
