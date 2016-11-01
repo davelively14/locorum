@@ -11,7 +11,7 @@ defmodule Locorum.BackendSys.Bing do
 
   def fetch(query, _query_ref, owner, _limit) do
     # TODO remove these
-    IO.puts "Query:"
+    IO.puts "Owner:"
     IO.inspect owner
 
     query
