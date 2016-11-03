@@ -6,7 +6,7 @@ defmodule Locorum.BackendSys.Supervisor do
   #######
 
   def start_link(project_id, query, socket, backends) do
-    Supervisor.start_link(__MODULE__, [query, socket, backends], name: :"BackendSysSupervisor#{project_id}")
+    Supervisor.start_link(__MODULE__, [query, socket, backends], name: :"BackendSysSupervisor#{project_id}-#{query.id}")
   end
 
   #############
@@ -18,10 +18,12 @@ defmodule Locorum.BackendSys.Supervisor do
   # BackendSys
   def init([query, socket, backends]) do
     children = backends |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :permanent))
+
+    # TODO delete the old one
     # children = [
     #   worker(Locorum.BackendSys, [], restart: :transient)
     # ]
-    
+
     supervise children, strategy: :one_for_one
   end
 end
