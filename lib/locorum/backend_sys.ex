@@ -25,7 +25,10 @@ defmodule Locorum.BackendSys do
   def compute(query, socket, opts \\ []) do
 
     limit = opts[:limit] || 10
-    backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
+
+    # TODO uncomment this and delete the line that sets it to Bing only
+    # backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
+    backends = [Locorum.BackendSys.Bing]
 
     # TODO delete. Start the app in mix.exs now
     # HTTPoison.start

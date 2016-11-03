@@ -12,7 +12,7 @@ config :locorum, Locorum.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: ["node_modules/webpack/bin/webpack.js", "--watch", "--color"]
+    node: ["node_modules/webpack/bin/webpack.js", "--watch-stdin", "--color"]
   ]
 
 # Watch static and templates for browser reloading.
