@@ -54,7 +54,7 @@ defmodule Locorum.BackendSys do
     # Supervise function for everything.
     # backends
     # |> Enum.map(&spawn_query(&1, query, socket, limit))
-    Locorum.BackendSys.Supervisor.start_link(project_id, query, socket, backends)
+    Locorum.BackendSys.BackendsSupervisor.start_link(project_id, query, socket, backends)
   end
 
   # Added for_user to allow the client to identify if the broadcast is meant for
@@ -79,7 +79,7 @@ defmodule Locorum.BackendSys do
   # defp spawn_query(backend, query, socket, limit) do
   #   query_ref = make_ref()
   #   opts = [backend, query, query_ref, socket, limit]
-  #   {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
+  #   {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.BackendsSupervisor, opts)
   #   monitor_ref = Process.monitor(pid)
   #   {pid, monitor_ref, query_ref}
   # end
