@@ -24,9 +24,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - FIX: backends
     - FIX: Supervisor -> will be called by ProjectChannel initially, but eventually by the server, and will supervise a BackendSys instance for each search to be conducted.
     - ADD: BackendsSupervisor -> will be called by BackendSys to supervise each backend
-  - OR: backends
-    - FIX: BackendSys is a GenServer that spawns, computes results, and sends back to channel
-    - FIX: BackendSys traps exits? 
+    - FIX: The secret is in Locorum.BackendSys.spawn_query/4
+      - I think what we do is 
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux

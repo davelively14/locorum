@@ -72,14 +72,15 @@ defmodule Locorum.BackendSys do
   end
 
   # TODO So...what does this do? Originally, the Supervisor would just monitor this process for some reason
-  # So this does tell supervisor to start this. When it does start it, it will
-  # execute start_link, which then start each backend. Not sure why we don't
-  # just start the backends from the Supervisor.
+  # Originally, Locorum.BackendSys.Supervisor would only supervise one type of
+  # worker (BackendSys module), which allowed us to use :simple_one_for_one IOT
+  # allow for dynamic creation of workers. This won't work for backends, but it
+  # does work for the BackendSys portion of our supervision.
   # TODO delete this
   # defp spawn_query(backend, query, socket, limit) do
   #   query_ref = make_ref()
   #   opts = [backend, query, query_ref, socket, limit]
-  #   {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.BackendsSupervisor, opts)
+  #   {:ok, pid} = Supervisor.start_child(Locorum.BackendSys.Supervisor, opts)
   #   monitor_ref = Process.monitor(pid)
   #   {pid, monitor_ref, query_ref}
   # end
