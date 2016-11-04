@@ -18,7 +18,8 @@ defmodule Locorum.ProjectChannel do
   def handle_in("run_search", _params, socket) do
     searches = ProjectChannelServer.get_searches(socket.assigns.project_id)
 
-    for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
+    # for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
+    Locorum.BackendSysSupervisor.start_link(searches, socket)
     {:reply, :ok, socket}
   end
 

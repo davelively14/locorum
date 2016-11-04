@@ -19,7 +19,7 @@ defmodule Locorum.BackendSysSupervisor do
     # Locorum.BackendSys.compute(search, socket)
     children =
       searches
-      |> Enum.map(&worker(Locorum.BackendSys, [&1, socket], [function: :compute, restart: :transient]))
+      |> Enum.map(&worker(Locorum.BackendSys, [&1, socket], [function: :compute, restart: :transient, id: &1.id]))
 
     options = [
       strategy: :one_for_one,
