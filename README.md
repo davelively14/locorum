@@ -22,8 +22,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
   - FIX: backends
-    - FIX: Supervisor -> will be called by ProjectChannel initially, but eventually by the server, and will supervise a BackendSys instance for each search to be conducted.
-    - ADD: BackendsSupervisor -> will be called by BackendSys to supervise each backend
+    - FIX: need to track and monitor the supervisor so we can see what's going on, similar to what was done in BackendSys.spawn_query/4
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux

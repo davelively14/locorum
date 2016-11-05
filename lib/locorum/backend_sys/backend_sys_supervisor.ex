@@ -19,11 +19,11 @@ defmodule Locorum.BackendSysSupervisor do
     # Locorum.BackendSys.compute(search, socket)
     children =
       searches
-      |> Enum.map(&worker(Locorum.BackendSys, [&1, socket], [function: :compute, restart: :transient, id: &1.id]))
+      |> Enum.map(&worker(Locorum.BackendSys, [&1, socket], [function: :compute, restart: :temporary, id: &1.id]))
 
     options = [
       strategy: :one_for_one,
-      max_restarts: 2
+      max_restarts: 0
     ]
 
     supervise(children, options)
