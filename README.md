@@ -21,8 +21,10 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
       - ADJ: Identify what to pass
   - ADJ: project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
-  - FIX: backends
-    - FIX: need to track and monitor the supervisor so we can see what's going on, similar to what was done in BackendSys.spawn_query/4
+  - Fix when a backend throws an error, it stops the entire operation in its tracks
+    - FIX: busted backends shutdown the entire operation.
+  - Fix busted backends
+    - FIX: YP, Local
 
 ## v0.4.5 to do list
 - Redo JavaScript for project.js in React JS and Redux
@@ -50,6 +52,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - FIX: Looking for specific results?
     - FIX: Don't show export button until searches all loaded.
     - FIX: Display error when a backend doesn't respond so that the client is waiting on results that aren't going to show up.
+  - Fix link to results in new tab when no results
+    - FIX: throws a where: p.id == ^"undefined"
 
 ## v0.5 to do list
 - When a backend doesn't work, let the user know that it timed out

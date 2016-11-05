@@ -27,7 +27,8 @@ defmodule Locorum.BackendSys do
     limit = opts[:limit] || 10
 
     backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
-    # backends = [Locorum.BackendSys.Bing]
+    # TODO remove this
+    backends = [Locorum.BackendSys.Yelp, Locorum.BackendSys.Mapquest, Locorum.BackendSys.Neustar, Locorum.BackendSys.Google, Locorum.BackendSys.Facebook, Locorum.BackendSys.Yahoo, Locorum.BackendSys.Bing, Locorum.BackendSys.CityGrid]
 
     # TODO delete. Start the app in mix.exs now
     # HTTPoison.start
@@ -53,7 +54,9 @@ defmodule Locorum.BackendSys do
     # Supervise function for everything.
     # backends
     # |> Enum.map(&spawn_query(&1, query, socket, limit))
-    Locorum.BackendSys.BackendsSupervisor.start_link(project_id, query, socket, backends)
+    # {:ok, pid} =
+      Locorum.BackendSys.BackendsSupervisor.start_link(project_id, query, socket, backends)
+    # Process.monitor(pid)
   end
 
   # Added for_user to allow the client to identify if the broadcast is meant for

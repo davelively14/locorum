@@ -21,7 +21,7 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
     # been implemented in the backends.
     children =
       backends
-      |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :permanent))
+      |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :transient))
 
     options = [
       restart: :transient
