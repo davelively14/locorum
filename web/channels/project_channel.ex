@@ -17,16 +17,6 @@ defmodule Locorum.ProjectChannel do
 
   def handle_in("run_search", _params, socket) do
     searches = ProjectChannelServer.get_searches(socket.assigns.project_id)
-
-    # for search <- searches, do: Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
-    # case Locorum.BackendSysSupervisor.start_link(searches, socket) do
-    #   {:ok, pid} ->
-    #     Process.monitor(pid)
-    #     {:reply, :ok, socket}
-    #   _ ->
-    #     IO.puts "Error"
-    #     {:reply, :error, socket}
-    # end
     {:ok, pid} = Locorum.BackendSysSupervisor.start_link(searches, socket)
     Process.monitor(pid)
     {:reply, :ok, socket}
@@ -41,7 +31,6 @@ defmodule Locorum.ProjectChannel do
 
   def handle_in("fetch_collection", params, socket) do
     resp = %{collection: ProjectChannelServer.get_collection(socket.assigns.project_id, params["collection_id"])}
-    IO.inspect resp
     broadcast!(socket, "render_collection", resp)
 
     {:noreply, socket}
