@@ -23,7 +23,8 @@ defmodule Locorum.BackendSys do
   # the Supervisor to run the backends.
   def compute(query, socket, opts \\ []) do
 
-    limit = opts[:limit] || 10
+    # TODO eventually remove. Unless we're going to implement limits.
+    # limit = opts[:limit] || 10
 
     backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
 
