@@ -23,10 +23,6 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
       backends
       |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :transient))
 
-    options = [
-      restart: :transient
-    ]
-
     # TODO delete the old one
     # children = [
     #   worker(Locorum.BackendSys, [], restart: :transient)

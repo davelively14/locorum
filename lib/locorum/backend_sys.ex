@@ -28,7 +28,7 @@ defmodule Locorum.BackendSys do
 
     backends = opts[:backends] || Repo.all(Backend) |> Enum.map(&(Map.get(&1, :module) |> String.to_atom))
     # TODO remove this
-    backends = [Locorum.BackendSys.Yelp, Locorum.BackendSys.Mapquest, Locorum.BackendSys.Neustar, Locorum.BackendSys.Google, Locorum.BackendSys.Facebook, Locorum.BackendSys.Yahoo, Locorum.BackendSys.Bing, Locorum.BackendSys.CityGrid]
+    # backends = [Locorum.BackendSys.Yelp, Locorum.BackendSys.Mapquest, Locorum.BackendSys.Neustar, Locorum.BackendSys.Google, Locorum.BackendSys.Facebook, Locorum.BackendSys.Yahoo, Locorum.BackendSys.Bing, Locorum.BackendSys.CityGrid]
 
     # TODO delete. Start the app in mix.exs now
     # HTTPoison.start
