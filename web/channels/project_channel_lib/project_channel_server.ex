@@ -11,42 +11,59 @@ defmodule Locorum.ProjectChannelServer do
   # Any function starting with "get" is a synchronous call. Any function
   # starting with "fetch" is an asynchronous call.
 
+  # Starts the server
   def start_link(project_id) do
     GenServer.start_link(__MODULE__, project_id, name: :"Project#{project_id}Server")
   end
 
+  # Returns the entire state of the server. Used for diagnostics and testing.
   def get_state(project_id) do
     GenServer.call(name(project_id), :get_state)
   end
 
+  # Gets the "deprecated" version of the state. Basically, returns the info we
+  # used to want in our older version (straight to Repo).
+  # TODO rename this. We'll still need to use it for this version
   def get_dep_state(project_id) do
     GenServer.call(name(project_id), :get_dep_state)
   end
 
+  # Confirms that a server for a given project_id is online and running.
   def is_online(project_id) do
     if GenServer.whereis(name(project_id)), do: true, else: false
   end
 
+  # Returns a list of Search objects for a given project
   def get_searches(project_id) do
     GenServer.call(name(project_id), :get_searches)
   end
 
+  # Provided a project_id and search_id, will return a single Search object
   def get_single_search(project_id, search_id) do
     GenServer.call(name(project_id), {:get_single_search, search_id})
   end
 
+  # Retrieves the most recent search results for a given project. Once a user
+  # is notified that updated resutls for a given project exist, this will allow
+  # the user to retrieve all of the updates for a given project.
   def get_updated_results(project_id) do
     GenServer.call(name(project_id), :get_updated_results)
   end
 
+  # Like get_updated_results, but instead only returns updated results for a
+  # single search.
   def get_updated_result(project_id, search_id) do
     GenServer.call(name(project_id), {:get_updated_result, search_id})
   end
 
+  # Returns a specific ResultsCollection. Used to retrieve older results.
+  # TODO make this fetch instead of get. Requires adding user_id arg.
   def get_collection(project_id, collection_id) do
     GenServer.call(name(project_id), {:get_collection, collection_id})
   end
 
+  # Asynchronously runs searches on the entire project and broadcasts results
+  # back to the socket.
   def fetch_new_results(project_id, user_id, socket) do
     GenServer.cast(name(project_id), {:fetch_new_results, user_id, socket})
   end
