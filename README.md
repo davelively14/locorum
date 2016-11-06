@@ -14,15 +14,10 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, stores them in REPO, sends to channel NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
   - ADJ: Locorum.ProjectChannel
     - DEL: no longer interacts with BackendSys
-  - ADJ: Locorum.BackendSys and children
-    - DEL: No more broadcasts, but should instead send back to the server
-    - ADJ: init_frontend/3 to send instead of broadcast
+  - ADJ: Locorum.BackendSys
     - ADJ: Supervisor should supervise the backends, not BackendSys
-      - ADJ: Identify what to pass
   - ADJ: project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
-  - Fix when a backend throws an error, it stops the entire operation in its tracks
-    - FIX: busted backends shutdown the entire operation.
   - Fix busted backends
     - FIX: YP, Local
 
@@ -144,6 +139,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: Locorum.ProjectChannel
     - DEL: No longer pulls data from the Repo
       - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
+  - ADJ: Locorum.BackendSys
+    - ADJ: Reconfigured supervision tree. Separate supervisors for BackendSys and Backends.
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
