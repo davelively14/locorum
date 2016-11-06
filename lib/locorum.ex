@@ -13,10 +13,6 @@ defmodule Locorum do
       supervisor(Locorum.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Locorum.Worker, [arg1, arg2, arg3]),
-      # TODO remove this, don't think we need it
-      # I have no idea why we started this when the app started. We needed it
-      # for Rumbl because we didn't explicity call it.
-      # supervisor(Locorum.BackendSys.Supervisor, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
