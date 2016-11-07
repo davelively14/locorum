@@ -3,7 +3,7 @@ defmodule Locorum.ProjectChannel do
   alias Locorum.{ProjectChannelServer, ProjectChannelSupervisor}
 
   def join("projects:" <> project_id, _params, socket) do
-    if !ProjectChannelServer.is_online(project_id) do
+    unless ProjectChannelServer.is_online(project_id) do
       ProjectChannelSupervisor.start_link(project_id)
     end
 
@@ -26,7 +26,7 @@ defmodule Locorum.ProjectChannel do
 
   def handle_in("fetch_collection", params, socket) do
     ProjectChannelServer.fetch_collection(socket, params["collection_id"])
-    
+
     {:noreply, socket}
   end
 end
