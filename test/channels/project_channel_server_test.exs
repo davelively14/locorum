@@ -43,6 +43,7 @@ defmodule Locorum.ProjectControllerServerTest do
   # Tags used:
   # :project_server -> Every test related to the server
   # :full_project -> Setup config with a full project in the Test Repo
+  # :full_project_join -> Same as :full_project, plus joins a ProjectChannel
 
   @tag :project_server
   test "get_state on project with no results returns empty state" do
