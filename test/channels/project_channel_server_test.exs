@@ -26,6 +26,7 @@ defmodule Locorum.ProjectControllerServerTest do
         {:ok, _, socket} =
           socket("", %{})
           |> subscribe_and_join(ProjectChannel, "projects:#{project.id}")
+        socket = Phoenix.Socket.assign(socket, :user_id, user.id)
         conn =
           assign(conn, :current_user, user)
           |> assign(:socket, socket)
@@ -118,17 +119,19 @@ defmodule Locorum.ProjectControllerServerTest do
     assert ProjectChannelServer.get_updated_result(project_id, Integer.to_string(results_to_check.search_id)) == results_to_check
   end
 
-  @tag :full_project
-  @tag :project_server
-  test "get_collection returns the correct collection", %{project_id: project_id} do
-    ProjectChannelSupervisor.start_link(project_id)
-    collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
-    assert ProjectChannelServer.get_collection(project_id, collection.id) == collection
-  end
-
-  @tag :current_test
   @tag :full_project_join
   @tag :project_server
+  test "fetch_collection returns the correct collection", %{socket: socket} do
+    project_id = String.to_integer(socket.assigns.project_id)
+    ProjectChannelSupervisor.start_link(project_id)
+    collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
+    ProjectChannelServer.fetch_collection(socket, collection.id)
+    assert_broadcast("render_collection", %{collection: ^collection}, 1_000)
+  end
+
+  @tag :full_project_join
+  @tag :project_server
+  @tag :current_test
   test "fetch_new_results receives new results", %{project_id: project_id, conn: conn} do
     ProjectChannelSupervisor.start_link(project_id)
     user_id = conn.assigns.current_user.id

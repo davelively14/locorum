@@ -58,12 +58,13 @@ defmodule Locorum.ProjectChannelServer do
 
   # Returns a specific ResultsCollection. Used to retrieve older results.
   # TODO make this fetch instead of get. Requires adding user_id arg.
-  def get_collection(project_id, collection_id) do
-    GenServer.call(name(project_id), {:get_collection, collection_id})
+  def fetch_collection(socket, collection_id) do
+    GenServer.cast(name(socket.assigns.project_id), {:fetch_collection, socket, collection_id})
   end
 
   # Asynchronously runs searches on the entire project and broadcasts results
   # back to the socket.
+  # TODO only pass socket, which will have both user_id and project_id
   def fetch_new_results(project_id, user_id, socket) do
     GenServer.cast(name(project_id), {:fetch_new_results, user_id, socket})
   end
@@ -114,9 +115,11 @@ defmodule Locorum.ProjectChannelServer do
     {:reply, collection, state}
   end
 
-  def handle_call({:get_collection, collection_id}, _from, %{all_collections: collections} = state) do
+  def handle_cast({:fetch_collection, socket, collection_id}, %{all_collections: collections} = state) do
     [{_, collection}] = :ets.lookup(collections, collection_id)
-    {:reply, collection, state}
+    resp = %{collection: collection, user_id: socket.assigns.user_id}
+    Phoenix.Channel.broadcast!(socket, "render_collection", resp)
+    {:noreply, state}
   end
 
   def handle_cast({:fetch_new_results, user_id, socket}, state) do

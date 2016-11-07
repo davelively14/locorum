@@ -25,9 +25,8 @@ defmodule Locorum.ProjectChannel do
   end
 
   def handle_in("fetch_collection", params, socket) do
-    resp = %{collection: ProjectChannelServer.get_collection(socket.assigns.project_id, params["collection_id"])}
-    broadcast!(socket, "render_collection", resp)
-
+    ProjectChannelServer.fetch_collection(socket, params["collection_id"])
+    
     {:noreply, socket}
   end
 end
