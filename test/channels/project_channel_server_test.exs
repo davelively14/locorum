@@ -124,10 +124,11 @@ defmodule Locorum.ProjectControllerServerTest do
   @tag :project_server
   test "fetch_collection returns the correct collection", %{socket: socket} do
     project_id = String.to_integer(socket.assigns.project_id)
+    user_id = socket.assigns.user_id
     ProjectChannelSupervisor.start_link(project_id)
     collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
     ProjectChannelServer.fetch_collection(socket, collection.id)
-    assert_broadcast("render_collection", %{collection: ^collection}, 1_000)
+    assert_broadcast("render_collection", %{collection: ^collection, user_id: ^user_id}, 1_000)
     leave socket
   end
 
