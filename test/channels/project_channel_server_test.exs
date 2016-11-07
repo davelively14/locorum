@@ -127,11 +127,14 @@ defmodule Locorum.ProjectControllerServerTest do
     collection = ProjectChannelServer.get_updated_results(project_id) |> List.first
     ProjectChannelServer.fetch_collection(socket, collection.id)
     assert_broadcast("render_collection", %{collection: ^collection}, 1_000)
+    leave socket
   end
 
+  # The best I can do for now is just confirm that it receives something back.
+  # Not exactly sure how to test for content that is dynamically provided.
+  # Probably have to setup a dummy backend.
   @tag :full_project_join
   @tag :project_server
-  @tag :current_test
   test "fetch_new_results receives new results", %{project_id: project_id, conn: conn} do
     ProjectChannelSupervisor.start_link(project_id)
     user_id = conn.assigns.current_user.id
