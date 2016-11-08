@@ -10,12 +10,12 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4.4 to do list
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
-  - ADD: Locorum.Project.ProjectChannelServer
+  - Locorum.Project.ProjectChannelServer
     - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, broadcasts to channel. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
     - ADJ: BackendSys.Helpers -> no longer broadcasts directly to the channel. Instead, it will store results in Repo and then send as a message back to the server.
-  - ADJ: Locorum.ProjectChannel
+  - Locorum.ProjectChannel
     - DEL: no longer interacts with BackendSys
-  - ADJ: project.js
+  - project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 - Handle frontend search results better
   - FIX: report back when one of the backends is down
