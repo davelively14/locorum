@@ -1,9 +1,6 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel
-  alias Locorum.Result
-  alias Locorum.Repo
-  alias Locorum.Backend
-  alias Locorum.BackendSys.Header
+  alias Locorum.{Result, Repo, Backend, BackendSys.Header}
   require Logger
 
   @max_stored_results 3
