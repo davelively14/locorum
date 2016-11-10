@@ -1,6 +1,5 @@
 defmodule Locorum.BackendSys.Neustar do
-  alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.{Helpers, Result}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])

@@ -1,6 +1,5 @@
 defmodule Locorum.BackendSys.WhitePages do
-  alias Locorum.BackendSys.Result
-  alias Locorum.BackendSys.Helpers
+  alias Locorum.BackendSys.{Helpers, Result}
 
   def start_link(query, query_ref, owner, limit) do
     Task.start_link(__MODULE__, :fetch, [query, query_ref, owner, limit])
@@ -13,7 +12,7 @@ defmodule Locorum.BackendSys.WhitePages do
     |> parse_data
     |> Helpers.display_results(__MODULE__, owner, query, get_url(query))
   end
-  
+
   def get_url(query) do
     city =
       query.city

@@ -1,6 +1,5 @@
 defmodule Locorum.BackendSys.Facebook do
-  alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.{Helpers, Result}
 
   @default_distance 30_000
 

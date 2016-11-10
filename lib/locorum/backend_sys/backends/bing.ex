@@ -1,6 +1,5 @@
 defmodule Locorum.BackendSys.Bing do
-  alias Locorum.BackendSys.Helpers
-  alias Locorum.BackendSys.Result
+  alias Locorum.BackendSys.{Helpers, Result}
 
   @fixed_url "https://www.bingplaces.com/DashBoard/Home"
 
