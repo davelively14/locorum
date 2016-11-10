@@ -1,5 +1,5 @@
 defmodule Locorum.BackendSys.Helpers do
-  use Phoenix.Channel
+  use Phoenix.Channel, only: [broadcast!: 3]
   alias Locorum.{Result, Repo, Backend, BackendSys.Header}
   require Logger
 
