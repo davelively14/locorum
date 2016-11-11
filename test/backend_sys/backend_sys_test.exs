@@ -1,9 +1,6 @@
 defmodule Locorum.BackendSysTest do
   use Locorum.ChannelCase, asynch: true
-  alias Locorum.Backend
-  alias Locorum.BackendSys.Helpers
-  # alias Locorum.BackendSys
-  alias Locorum.Search
+  alias Locorum.{Backend, BackendSys.Helpers, Search}
 
   @backends [
     %Backend{module: "Elixir.Locorum.BackendSys.CityGrid", name: "city_grid", name_str: "CitySearch / CityGrid", url: "http://www.citysearch.com"},

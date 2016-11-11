@@ -1,7 +1,5 @@
 defmodule Locorum.SearchChannel do
-  alias Locorum.Search
-  alias Locorum.Repo
-  alias Locorum.ResultCollection
+  alias Locorum.{Search, Repo, ResultCollection}
   use Locorum.Web, :channel
 
   def join("searches:" <> search_id, _params, socket) do

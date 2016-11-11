@@ -1,7 +1,6 @@
 defmodule Locorum.ProjectControllerTest do
   use Locorum.ConnCase
-  alias Locorum.Project
-  alias Locorum.TestHelpers
+  alias Locorum.{Project, TestHelpers}
 
   @valid_attrs %{name: "New Project"}
   @invalid_attrs %{user_id: 1}

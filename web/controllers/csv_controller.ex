@@ -1,8 +1,6 @@
 defmodule Locorum.CSVController do
   use Locorum.Web, :controller
-  alias Locorum.Repo
-  alias Locorum.Search
-  alias Locorum.Result
+  alias Locorum.{Repo, Search, Result}
 
   plug :scrub_params, "upload" when action in [:create, :update]
 

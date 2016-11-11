@@ -1,7 +1,6 @@
 defmodule Locorum.ResultsController do
   use Locorum.Web, :controller
-  alias Locorum.Search
-  alias Locorum.Project
+  alias Locorum.{Search, Project}
 
   def show(conn, %{"id" => id}) do
     search = Repo.get!(Search, id)

@@ -1,8 +1,6 @@
 defmodule Locorum.ProjectController do
   use Locorum.Web, :controller
-  alias Locorum.Project
-  alias Locorum.Search
-  alias Locorum.Repo
+  alias Locorum.{Project, Search, Repo}
 
   plug :scrub_params, "project" when action in [:create, :update]
 

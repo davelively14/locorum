@@ -2,8 +2,7 @@
 #
 #     mix run priv/repo/seeds.exs
 
-alias Locorum.Repo
-alias Locorum.Backend
+alias Locorum.{Repo, Backend}
 
 backends = [
   %Backend{module: "Elixir.Locorum.BackendSys.CityGrid", name: "city_grid", name_str: "CitySearch / CityGrid", url: "http://www.citysearch.com"},

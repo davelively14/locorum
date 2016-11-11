@@ -1,8 +1,6 @@
 defmodule Locorum.ResultCollectionController do
   use Locorum.Web, :controller
-  alias Locorum.Repo
-  alias Locorum.ResultCollection
-  alias Locorum.Search
+  alias Locorum.{Repo, ResultCollection, Search}
 
   def index(conn, %{"id" => search_id}) do
     search =

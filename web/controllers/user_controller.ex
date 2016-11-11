@@ -1,7 +1,6 @@
 defmodule Locorum.UserController do
   use Locorum.Web, :controller
-  alias Locorum.User
-  alias Locorum.Repo
+  alias Locorum.{User, Repo}
 
   plug :scrub_params, "user" when action in [:create]
 
