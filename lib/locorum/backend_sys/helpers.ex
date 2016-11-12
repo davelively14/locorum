@@ -1,6 +1,6 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel, only: [broadcast!: 3]
-  alias Locorum.{Result, Repo, Backend, BackendSys.Header}
+  alias Locorum.{Result, Repo, Backend, BackendSys.Header, ProjectChannelServer}
   require Logger
 
   def join(_,_,_), do: nil
@@ -90,15 +90,21 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
+  # Stores each result in the Repo and then sends the results back to the
+  # ProjectChannelServer, which will distribute them to the channel.
   defp send_results_to_server(results, backend, socket, query, url) do
 
+    # Get header information.
     header = set_header(url, backend, query)
 
     if results != [] do
 
+      # Store and collect the results to be added to the payload sent to the
+      # server. Will return a list of result objects
       return_results =
         for result <- results do
 
+          # Calls store_result/3, which will put result in the repo
           store_result(result, header, socket.assigns.result_collection_id)
 
           %{
@@ -116,6 +122,7 @@ defmodule Locorum.BackendSys.Helpers do
           }
         end
 
+      # Formulates the message to be sent to the channel with a results summary
       loaded_message = %{
         user_id: socket.assigns.user_id,
         backend: header.backend,
@@ -129,7 +136,7 @@ defmodule Locorum.BackendSys.Helpers do
 
       payload = %{results: return_results, loaded_message: loaded_message}
 
-      GenServer.cast(Locorum.ProjectChannelServer.name(socket.assigns.project_id), {:receive_result, socket, payload})
+      GenServer.cast(ProjectChannelServer.name(socket.assigns.project_id), {:receive_result, socket, payload})
     else
       no_result = %{
         user_id: socket.assigns.user_id,
@@ -149,10 +156,11 @@ defmodule Locorum.BackendSys.Helpers do
 
       payload = %{no_result: no_result, loaded_message: loaded_message}
 
-      GenServer.cast(Locorum.ProjectChannelServer.name(socket.assigns.project_id), {:no_result, socket, payload})
+      GenServer.cast(ProjectChannelServer.name(socket.assigns.project_id), {:no_result, socket, payload})
     end
   end
 
+  # Sets header information to be used in the results sent back to the server.
   defp set_header(url, backend, query) do
     %Header{
       backend: backend.name,
