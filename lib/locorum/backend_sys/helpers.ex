@@ -3,8 +3,6 @@ defmodule Locorum.BackendSys.Helpers do
   alias Locorum.{Result, Repo, Backend, BackendSys.Header}
   require Logger
 
-  @max_stored_results 3
-
   def join(_,_,_), do: nil
 
   def get_backend(mod) do
@@ -18,33 +16,11 @@ defmodule Locorum.BackendSys.Helpers do
     |> broadcast_results(get_backend(mod), socket, query, url)
   end
 
-  # def init_json(url, mod, socket, query) do
-  #   set_header(url, get_backend(mod), query)
-  #   |> init_frontend(socket)
-  #   |> fetch_json
-  # end
-  #
-  # def init_html(url, mod, socket, query) do
-  #   set_header(url, get_backend(mod), query)
-  #   |> init_frontend(socket)
-  #   |> fetch_html
-  # end
-  #
-  # def send_results(results, mod, socket, query) do
-  #   rate_results(results, query)
-  #   |> sort_results
-  #   |> broadcast_results(get_backend(mod), socket, query, nil)
-  # end
-
   def convert_to_utf(text, output) do
     String.downcase(text)
     |> String.replace("'", "%27")
     |> String.replace(~r/[^\w-'^%]+/, output)
   end
-
-  # TODO delete this?Added TODO
-  def pop_first([_head|tail], current) when current > 0, do: pop_first(tail, current - 1)
-  def pop_first(remaining, _current), do: remaining
 
   def rate_results(results, query) do
     address = single_address(query.address1, query.address2)
