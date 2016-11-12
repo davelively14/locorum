@@ -12,7 +12,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, broadcasts to channel. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
-    - ADJ: BackendSys.Helpers -> no longer broadcasts directly to the channel. Instead, it will store results in Repo and then send as a message back to the server.
   - Locorum.ProjectChannel
     - DEL: no longer interacts with BackendSys
   - project.js
@@ -128,13 +127,14 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ### v0.4.4
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
-  - ADD: Locorum.Project.ProjectChannelSupervisor, which supervises the ProjectChannelServer
-  - ADD: Locorum.Project.ProjectChannelServer, which holds state for all of the results for a given project and serves them to the channel.
+  - Created Locorum.Project.ProjectChannelSupervisor, which supervises the ProjectChannelServer
+  - Created Locorum.Project.ProjectChannelServer, which holds state for all of the results for a given project and serves them to the channel.
     - ADD: init_state - returns %{collections: collections, collection_list: collection_list, backends: backends} for a given project_id
     - ADD: get_updated_results - fetches most recent result_collections for all searches
     - ADD: get_updated_result - fetches most recent result_collection for a given search
     - ADD: get_collection(collection_id) - fetches a given result_collection
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
+    - ADJ: BackendSys.Helpers -> no longer broadcasts directly to the channel. Instead, it will store results in Repo and then send as a message back to the server.
   - ADJ: Locorum.ProjectChannel
     - DEL: No longer pulls data from the Repo
       - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
