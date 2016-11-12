@@ -133,8 +133,21 @@ defmodule Locorum.ProjectChannelServer do
   # Handles responses from the individual backends, updates the state, and then
   # broadcasts to the socket.
   def handle_cast({:receive_result, socket, result}, state) do
-    
 
+
+    {:noreply, state}
+  end
+
+  # If there is not a result, this will let the channel know.
+  def handle_cast({:no_result, socket}, state) do
+
+    {:noreply, state}
+  end
+
+  # TODO implement backend crash handling
+  # Not impelemented yet. If a backend crashes, the supervisor will notifiy the
+  # server that it failed and the server will notify the channel.
+  def handle_cast({:backend_error, socket}, state) do
     {:noreply, state}
   end
 
