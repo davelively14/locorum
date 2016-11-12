@@ -13,7 +13,7 @@ defmodule Locorum.BackendSys.Helpers do
   def display_results(results, mod, socket, query, url) do
     rate_results(results, query)
     |> sort_results
-    |> broadcast_results(get_backend(mod), socket, query, url)
+    |> send_results_to_server(get_backend(mod), socket, query, url)
   end
 
   def convert_to_utf(text, output) do
@@ -90,28 +90,32 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp broadcast_results(results, backend, socket, query, url) do
+  defp send_results_to_server(results, backend, socket, query, url) do
+
     header = set_header(url, backend, query)
+
     if results != [] do
-      for result <- results do
 
-        store_result(result, header, socket.assigns.result_collection_id)
+      return_results =
+        for result <- results do
 
-        broadcast! socket, "result", %{
-          backend: header.backend,
-          biz: result.biz,
-          address: result.address,
-          city: result.city,
-          state: result.state,
-          zip: result.zip,
-          rating: result.rating,
-          url: result.url,
-          phone: result.phone,
-          search_id: query.id
-        }
-      end
+          store_result(result, header, socket.assigns.result_collection_id)
 
-      broadcast! socket, "loaded_results", %{
+          %{
+            backend: header.backend,
+            biz: result.biz,
+            address: result.address,
+            city: result.city,
+            state: result.state,
+            zip: result.zip,
+            rating: result.rating,
+            url: result.url,
+            phone: result.phone,
+            search_id: query.id
+          }
+        end
+
+      loaded_message = %{
         backend: header.backend,
         backend_str: header.backend_str,
         results_url: url,
@@ -120,12 +124,17 @@ defmodule Locorum.BackendSys.Helpers do
         high_rating: Integer.to_string(List.first(results).rating),
         low_rating: Integer.to_string(List.last(results).rating)
       }
+
+      payload = %{results: return_results, loaded_message: loaded_message}
+
+      GenServer.cast(Locorum.ProjectChannelServer.name(socket.assigns.project_id), {:receive_result, socket, payload})
     else
-      broadcast! socket, "no_result", %{
-        backend: header.backend,
-        search_id: query.id
+      no_result = %{
+          backend: header.backend,
+          search_id: query.id
       }
-      broadcast! socket, "loaded_results", %{
+
+      loaded_message = %{
         backend: header.backend,
         backend_str: header.backend_str,
         search_id: query.id,
@@ -133,6 +142,10 @@ defmodule Locorum.BackendSys.Helpers do
         high_rating: "--",
         low_rating: "--"
       }
+
+      payload = %{no_result: no_result, loaded_message: loaded_message}
+
+      GenServer.cast(Locorum.ProjectChannelServer.name(socket.assigns.project_id), {:no_result, socket, payload})
     end
   end
 

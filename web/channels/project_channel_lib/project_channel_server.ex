@@ -1,5 +1,6 @@
 defmodule Locorum.ProjectChannelServer do
   use GenServer
+  use Phoenix.Channel, only: [broadcast!: 3]
   import Ecto.Query, only: [from: 2]
   alias Locorum.{Repo, ResultCollection, Backend, Search, Result}
 
@@ -69,6 +70,12 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.cast(name(project_id), {:fetch_new_results, user_id, socket})
   end
 
+  # Given a project_id, this will return the name of the channel server for
+  # the project.
+  def name(project_id) do
+    :"Project#{project_id}Server"
+  end
+
   #############
   # Callbacks #
   #############
@@ -132,14 +139,20 @@ defmodule Locorum.ProjectChannelServer do
 
   # Handles responses from the individual backends, updates the state, and then
   # broadcasts to the socket.
-  def handle_cast({:receive_result, socket, result}, state) do
+  def handle_cast({:receive_result, socket, payload}, state) do
+    for result <- payload.results do
+      broadcast! socket, "result", result
+    end
 
+    broadcast! socket, "loaded_results", payload.loaded_message
 
     {:noreply, state}
   end
 
   # If there is not a result, this will let the channel know.
-  def handle_cast({:no_result, socket}, state) do
+  def handle_cast({:no_result, socket, payload}, state) do
+    broadcast! socket, "no_result", payload.no_result
+    broadcast! socket, "loaded_results", payload.loaded_message
 
     {:noreply, state}
   end
@@ -208,12 +221,6 @@ defmodule Locorum.ProjectChannelServer do
     else
       %{all_collections: [], searches: [], newest_collections: [], collection_list: [], backends: []}
     end
-  end
-
-  # Given a project_id, this will return the name of the channel server for
-  # the project.
-  defp name(project_id) do
-    :"Project#{project_id}Server"
   end
 
   defp store_collection(collection, table_name) do
