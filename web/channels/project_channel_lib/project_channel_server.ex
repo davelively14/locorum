@@ -130,6 +130,14 @@ defmodule Locorum.ProjectChannelServer do
     {:noreply, state}
   end
 
+  # Handles responses from the individual backends, updates the state, and then
+  # broadcasts to the socket.
+  def handle_cast({:receive_result, socket, result}, state) do
+    
+
+    {:noreply, state}
+  end
+
   #####################
   # Private Functions #
   #####################
