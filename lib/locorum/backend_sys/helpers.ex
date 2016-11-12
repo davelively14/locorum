@@ -42,13 +42,11 @@ defmodule Locorum.BackendSys.Helpers do
             rating
         end
 
-      # if (result.zip && (result.zip != query.zip)) || (result.phone && (phonify(result.phone) != phonify(query.phone)) do
-      #   rating = 20
-      # end
       Map.put(result, :rating, round(rating * 100))
     end
   end
 
+  # Gets a geolocation based on a zip code.
   def geocode(zip) do
     Locorum.ZipLocate.get_data
     |> Map.get(zip)
@@ -96,7 +94,8 @@ defmodule Locorum.BackendSys.Helpers do
     header = set_header(url, backend, query)
     if results != [] do
       for result <- results do
-        collect_result(result, header, socket.assigns.result_collection_id)
+
+        store_result(result, header, socket.assigns.result_collection_id)
 
         broadcast! socket, "result", %{
           backend: header.backend,
@@ -186,7 +185,7 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
-  defp collect_result(result, header, collection_id) do
+  defp store_result(result, header, collection_id) do
     backend = Repo.get_by(Backend, name: header.backend)
 
     changeset = Result.changeset(%Result{backend_id: backend.id, result_collection_id: collection_id}, %{
