@@ -1,6 +1,6 @@
 defmodule Locorum.BackendSys do
   alias Locorum.{ResultCollection, Repo, Backend}
-  use Phoenix.Channel
+  use Phoenix.Channel, only: [broadcast!: 3]
 
   def join(_, _, _), do: nil
 
