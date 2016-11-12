@@ -102,6 +102,7 @@ defmodule Locorum.BackendSys.Helpers do
           store_result(result, header, socket.assigns.result_collection_id)
 
           %{
+            user_id: socket.assigns.user_id,
             backend: header.backend,
             biz: result.biz,
             address: result.address,
@@ -116,6 +117,7 @@ defmodule Locorum.BackendSys.Helpers do
         end
 
       loaded_message = %{
+        user_id: socket.assigns.user_id,
         backend: header.backend,
         backend_str: header.backend_str,
         results_url: url,
@@ -130,11 +132,13 @@ defmodule Locorum.BackendSys.Helpers do
       GenServer.cast(Locorum.ProjectChannelServer.name(socket.assigns.project_id), {:receive_result, socket, payload})
     else
       no_result = %{
-          backend: header.backend,
-          search_id: query.id
+        user_id: socket.assigns.user_id,
+        backend: header.backend,
+        search_id: query.id
       }
 
       loaded_message = %{
+        user_id: socket.assigns.user_id,
         backend: header.backend,
         backend_str: header.backend_str,
         search_id: query.id,
