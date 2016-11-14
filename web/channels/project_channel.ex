@@ -11,22 +11,17 @@ defmodule Locorum.ProjectChannel do
   end
 
   def handle_in("run_search", _params, socket) do
-    searches = ProjectChannelServer.get_searches(socket.assigns.project_id)
-    {:ok, pid} = Locorum.BackendSysSupervisor.start_link(searches, socket)
-    Process.monitor(pid)
+    ProjectChannelServer.fetch_new_results(socket)
     {:reply, :ok, socket}
   end
 
   def handle_in("run_single_search", params, socket) do
-    search = ProjectChannelServer.get_single_search(socket.assigns.project_id, params["search_id"])
-    Task.start_link(fn -> Locorum.BackendSys.compute(search, socket) end)
-
+    ProjectChannelServer.fetch_new_results(socket, params["search_id"])
     {:reply, :ok, socket}
   end
 
   def handle_in("fetch_collection", params, socket) do
     ProjectChannelServer.fetch_collection(socket, params["collection_id"])
-
     {:noreply, socket}
   end
 end

@@ -2,7 +2,7 @@ defmodule Locorum.ProjectChannelServer do
   use GenServer
   use Phoenix.Channel, only: [broadcast!: 3]
   import Ecto.Query, only: [from: 2]
-  alias Locorum.{Repo, ResultCollection, Backend, Search, Result}
+  alias Locorum.{Repo, ResultCollection, Backend, Search, Result, BackendSysSupervisor}
 
   #######
   # API #
@@ -63,11 +63,9 @@ defmodule Locorum.ProjectChannelServer do
     GenServer.cast(name(socket.assigns.project_id), {:fetch_collection, socket, collection_id})
   end
 
-  # Asynchronously runs searches on the entire project and broadcasts results
-  # back to the socket.
-  # TODO only pass socket, which will have both user_id and project_id
-  def fetch_new_results(project_id, user_id, socket) do
-    GenServer.cast(name(project_id), {:fetch_new_results, user_id, socket})
+  # Asynchronously runs one or all searches for a project via BackendSys.
+  def fetch_new_results(socket, search_id \\ nil) do
+    GenServer.cast(name(socket.assigns.project_id), {:fetch_new_results, socket, search_id})
   end
 
   # Given a project_id, this will return the name of the channel server for
@@ -104,7 +102,7 @@ defmodule Locorum.ProjectChannelServer do
   end
 
   def handle_call({:get_single_search, search_id}, _from, %{searches: searches} = state) do
-    search = searches |> Enum.find(&(&1.id == String.to_integer(search_id)))
+    search = get_search(searches, search_id)
     {:reply, search, state}
   end
 
@@ -129,10 +127,21 @@ defmodule Locorum.ProjectChannelServer do
     {:noreply, state}
   end
 
-  def handle_cast({:fetch_new_results, user_id, socket}, state) do
-    Phoenix.Channel.broadcast! socket, "new_results", %{
-      user_id: user_id
-    }
+  def handle_cast({:fetch_new_results, socket, search_id}, %{searches: searches} = state) do
+
+    # Returns all searches if search_id is nil, otherwise it will call the
+    # private function get_search/3 and return the result inside a list. We
+    # return it in a list because that's what compute expects.
+    searches =
+      case search_id do
+        nil ->
+          searches
+        _ ->
+          [get_search(searches, search_id)]
+      end
+
+    {:ok, pid} = BackendSysSupervisor.start_link(searches, socket)
+    Process.monitor(pid)
 
     {:noreply, state}
   end
@@ -161,6 +170,7 @@ defmodule Locorum.ProjectChannelServer do
   # Not impelemented yet. If a backend crashes, the supervisor will notifiy the
   # server that it failed and the server will notify the channel.
   def handle_cast({:backend_error, socket}, state) do
+    _ = socket
     {:noreply, state}
   end
 
@@ -227,4 +237,8 @@ defmodule Locorum.ProjectChannelServer do
     collection = Phoenix.View.render(Locorum.ResultCollectionView, "result_collection.json", result_collection: collection)
     :ets.insert(table_name, {collection.id, collection})
   end
+
+  # Given a list of searches, will return the search matching search_id
+  defp get_search(searches, search_id) when is_bitstring(search_id), do: searches |> Enum.find(&(&1.id == String.to_integer(search_id)))
+  defp get_search(searches, search_id) when is_integer(search_id), do: searches |> Enum.find(&(&1.id == search_id))
 end

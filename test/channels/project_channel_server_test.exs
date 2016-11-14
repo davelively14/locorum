@@ -137,6 +137,7 @@ defmodule Locorum.ProjectControllerServerTest do
   # Probably have to setup a dummy backend.
   @tag :full_project_join
   @tag :project_server
+  @tag :current_test
   test "fetch_new_results receives new results", %{project_id: project_id, conn: conn} do
     ProjectChannelSupervisor.start_link(project_id)
     user_id = conn.assigns.current_user.id
