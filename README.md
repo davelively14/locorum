@@ -15,6 +15,11 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - BackendSys needs to let the server know when it's done
     - Report when all backends are complete
     - Track when backends are down, notify server. Can we track when a backend is down? In other words, a search run on 11/15 returns results for 9 of 10 backends, but one of the backends is down. It should not report as "no results". It should report as "down".
+    - ResultCollection: add backends_down: String
+      - Will be a comma delineated list of backends that are down, i.e. "Locorum.BackendSys.Bing,Locorum.BackendSys.Google"
+      - During ProjectChannelServer.init, it will have to broadcast which ones were down (if any) for most recent results
+      - Update ResultCollectionView to include the new backends_down variable
+      - String.split(test, ",") |> Enum.map(&String.to_atom(&1)) is how to recover the data in list form
   - project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 - Handle frontend search results better
