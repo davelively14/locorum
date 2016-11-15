@@ -1,6 +1,7 @@
 defmodule Locorum.ResultCollectionView do
   use Locorum.Web, :view
 
+  # TODO add c.backends_down
   def render("result_collection.json", %{result_collection: c}) do
     %{
       search_id: c.search_id,
