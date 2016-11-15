@@ -6,6 +6,7 @@ defmodule Locorum.ResultCollectionView do
     %{
       search_id: c.search_id,
       id: c.id,
+      backends_down: c.backends_down,
       results: render_many(c.results, Locorum.ResultsView, "result.json")
     }
   end
