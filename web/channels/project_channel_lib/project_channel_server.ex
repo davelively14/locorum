@@ -169,6 +169,7 @@ defmodule Locorum.ProjectChannelServer do
   # TODO implement backend crash handling
   # Not impelemented yet. If a backend crashes, the supervisor will notifiy the
   # server that it failed and the server will notify the channel.
+  # We need to do this from BackendsSupervisor
   def handle_cast({:backend_error, socket}, state) do
     _ = socket
     {:noreply, state}
