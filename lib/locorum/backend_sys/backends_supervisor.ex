@@ -23,11 +23,15 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
       backends
       |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :transient))
 
-    # TODO delete the old one
-    # children = [
-    #   worker(Locorum.BackendSys, [], restart: :transient)
-    # ]
+    # We use "shutdown: 7_000" to ensure that even the other processes can
+    # finish. Otherwise, one backend failing will interrupt all the others. At
+    # least, I think so. But maybe not, because that's what one_for_one should
+    # do: only restarts the terminated process.
+    options = [
+      strategy: :one_for_one,
+      shutdown: 7_000
+    ]
 
-    supervise children, strategy: :one_for_one
+    supervise children, options
   end
 end
