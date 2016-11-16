@@ -3,6 +3,9 @@ defmodule Locorum.ProjectChannel do
   alias Locorum.{ProjectChannelServer, ProjectChannelSupervisor}
 
   def join("projects:" <> project_id, _params, socket) do
+
+    # Starts the ProjectChannelSupervisor for the given project_id if it's not
+    # already started.
     unless ProjectChannelServer.is_online(project_id) do
       ProjectChannelSupervisor.start_link(project_id)
     end
