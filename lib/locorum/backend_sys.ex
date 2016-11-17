@@ -38,20 +38,19 @@ defmodule Locorum.BackendSys do
       end
 
     socket = assign(socket, :result_collection_id, result_collection_id)
-    project_id = socket.assigns.project_id
     user_id = socket.assigns.user_id
 
-    backends |> Enum.each(&(Repo.get_by!(Backend, module: Atom.to_string(&1)) |> init_frontend(query, user_id, socket)))
+    backends |> Enum.each(&(Repo.get_by!(Backend, module: Atom.to_string(&1)) |> init_frontend(query, socket)))
 
-    Locorum.BackendSys.BackendsSupervisor.start_link(project_id, query, socket, backends)
+    Locorum.BackendSys.BackendsSupervisor.start_link(query, socket, backends)
   end
 
   # Added for_user to allow the client to identify if the broadcast is meant for
   # them or not. Otherwise, this allows the client to initialize each frontend.
   # TODO determine if we need to do this, or if the client will load all backends
-  defp init_frontend(backend, query, user_id, socket) do
+  defp init_frontend(backend, query, socket) do
     broadcast! socket, "backend", %{
-      for_user: user_id,
+      for_user: socket.assigns.user_id,
       backend: backend.name,
       backend_str: backend.name_str,
       url_site: backend.url,
