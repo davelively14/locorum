@@ -22,6 +22,8 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
     children =
       backends
       |> Enum.map(&worker(&1, [query, nil, socket, nil], restart: :transient))
+      # Add in a worker server to capture exits.
+      # |> :erlang.++(worker(MODULE, args, opts))
 
     # We use "shutdown: 7_000" to ensure that even the other processes can
     # finish. Otherwise, one backend failing will interrupt all the others. At
