@@ -5,8 +5,8 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
   # API #
   #######
 
-  def start_link(project_id, query, socket, backends) do
-    Supervisor.start_link(__MODULE__, [query, socket, backends], name: :"BackendsSupervisor#{project_id}-#{query.id}")
+  def start_link(query, socket, backends) do
+    Supervisor.start_link(__MODULE__, [query, socket, backends], name: :"BackendsSupervisor#{socket.assigns.project_id}-#{query.id}")
   end
 
   #############
@@ -25,10 +25,14 @@ defmodule Locorum.BackendSys.BackendsSupervisor do
       # Add in a worker server to capture exits.
       # |> :erlang.++(worker(MODULE, args, opts))
 
-    # We use "shutdown: 7_000" to ensure that even the other processes can
-    # finish. Otherwise, one backend failing will interrupt all the others. At
-    # least, I think so. But maybe not, because that's what one_for_one should
-    # do: only restarts the terminated process.
+    # TODO delete this. Can't get it to work
+    # children = [
+    #   worker(Locorum.BackendSys.BackendsServer, [self, query, socket, backends])
+    # ]
+
+    # :one_for_all ensure that if the BackendsServer goes down, we restart it
+    # all. Ensures that we don't get partial results form any search. Not sure
+    # if this is the right thing to do, though. Will need to experiment.
     options = [
       strategy: :one_for_one,
       shutdown: 7_000

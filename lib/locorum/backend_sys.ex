@@ -38,7 +38,6 @@ defmodule Locorum.BackendSys do
       end
 
     socket = assign(socket, :result_collection_id, result_collection_id)
-    user_id = socket.assigns.user_id
 
     backends |> Enum.each(&(Repo.get_by!(Backend, module: Atom.to_string(&1)) |> init_frontend(query, socket)))
 
