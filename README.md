@@ -19,6 +19,9 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
       - During ProjectChannelServer.init, it will have to broadcast which ones were down (if any) for most recent results
       - String.split(test, ",") |> Enum.map(&String.to_atom(&1)) is how to recover the data in list form
       - REMOVE this. Instead, we need to store a result that is "no result", or store a result that is "backend down".
+    - BackendsSupervisor: will only launch a new module (BackendsServer)
+      - BackendsServer will launch each backend
+      - Look at PoolServer from the Pooly project
   - project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 - Handle frontend search results better
