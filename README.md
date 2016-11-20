@@ -22,7 +22,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - BackendsSupervisor: will only launch a new module (BackendsServer)
       - BackendsServer will launch each backend
       - Look at PoolServer from the Pooly project
-      - Don't think it's going to work...
   - project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 - Handle frontend search results better
