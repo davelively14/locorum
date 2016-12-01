@@ -4,6 +4,7 @@ defmodule Locorum.ResultCollection do
   schema "result_collections" do
     belongs_to :search, Locorum.Search
     has_many :results, Locorum.Result, on_delete: :fetch_and_delete
+    has_many :no_results, Locorum.NoResult, on_delete: :fetch_and_delete
 
     timestamps
   end
