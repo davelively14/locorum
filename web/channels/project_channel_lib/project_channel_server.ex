@@ -58,7 +58,6 @@ defmodule Locorum.ProjectChannelServer do
   end
 
   # Returns a specific ResultsCollection. Used to retrieve older results.
-  # TODO make this fetch instead of get. Requires adding user_id arg.
   def fetch_collection(socket, collection_id) do
     GenServer.cast(name(socket.assigns.project_id), {:fetch_collection, socket, collection_id})
   end
