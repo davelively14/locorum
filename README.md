@@ -9,8 +9,12 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
-* Create a new Model for no results (NoResult)
-  - Will have two fields: :backend (links to a Backend) and :reason (either "down" or "no_results")
+- Implement NoResult to handle situations where there are no results
+  - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
+  - ADJ: BackendSys.BackendsServer -> store NoResult as if it's a regular result?
+- Implement NoResult to handle situations where backends crash
+  - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
+  - ADJ: BackendSys.BackendsServer -> store NoResult as if it's a regular result? 
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, broadcasts to channel. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
@@ -163,6 +167,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Bootstrap style is still included
   - Original ES6 still works
 - Added :httpoison to `application` in `mix.exs`
+- Created a new Model for no results (NoResult)
+  - Has three fields: :backend_id (refs Backend), :result_collection_id (refs ResultCollection) and :reason (either "down" or "no_results")
 
 ### v0.4.3
 - Fixed csv upload to account for new format
