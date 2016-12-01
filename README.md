@@ -9,6 +9,8 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
+* Create a new Model for no results (NoResult)
+  - Will have two fields: :backend (links to a Backend) and :status (either "down" or "no_result")
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, broadcasts to channel. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
