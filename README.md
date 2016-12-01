@@ -11,13 +11,13 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.4.4 to do list
 - Implement NoResult to handle situations where there are no results
   - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
-  - ADJ: BackendSys.BackendsServer -> store NoResult as if it's a regular result?
+  - ADJ: ProjectChannelServer -> store NoResult as if it's a regular result?
 - Implement NoResult to handle situations where backends crash
   - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
-  - ADJ: BackendSys.BackendsServer -> store NoResult as if it's a regular result? 
+  - ADJ: ProjectChannelServer -> store NoResult as if it's a regular result?
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
-    - ADD: get_new_results - runs BackendSys, collects results, stores them in :ets, broadcasts to channel. NOTE!!! Updating "newest_collections" with ONLY the new results if single search conducted. Don't overwrite collections from searches that have not been re-run.
+    - ADJ: fetch_new_results - update state with new results. NOTE: if only one search run, ensure newest_collections is only updated with the new results for that particular search. Do not overwrite collections from searches that have not been re-run
   - BackendSys needs to let the server know when it's done
     - Report when all backends are complete
     - Track when backends are down, notify server. Can we track when a backend is down? In other words, a search run on 11/15 returns results for 9 of 10 backends, but one of the backends is down. It should not report as "no results". It should report as "down".
@@ -150,6 +150,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADD: get_collection(collection_id) - fetches a given result_collection
     - ADD: uses :ets (Erlang Term Storage) to store all ResultsCollections for a given Project
     - ADJ: BackendSys.Helpers -> no longer broadcasts directly to the channel. Instead, it will store results in Repo and then send as a message back to the server.
+    - ADJ: added fetch_new_results to get new data from BackendSys
   - ADJ: Locorum.ProjectChannel
     - DEL: No longer pulls data from the Repo
       - ADD: Asks for most recent ResultsCollections from ProjectChannelServer and returns that to joining call. This should allow for minimum amount of refactoring.
