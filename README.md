@@ -10,11 +10,10 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 
 ## v0.4.4 to do list
 - Implement NoResult to handle situations where there are no results
-  - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
-  - ADJ: ProjectChannelServer -> store NoResult as if it's a regular result?
+  - ADJ: ProjectChannelServer -> load NoResult as if it's a regular result
 - Implement NoResult to handle situations where backends crash
   - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
-  - ADJ: ProjectChannelServer -> store NoResult as if it's a regular result?
+  - ADJ: ProjectChannelServer -> load NoResult as if it's a regular result
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADJ: fetch_new_results - update state with new results. NOTE: if only one search run, ensure newest_collections is only updated with the new results for that particular search. Do not overwrite collections from searches that have not been re-run
@@ -157,10 +156,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
     - ADJ: send new search requests to the ProjectChannelServer instead of BackendSys
   - ADJ: Locorum.BackendSys
     - ADJ: Reconfigured supervision tree. Separate supervisors for BackendSys and Backends.
-- ResultCollections
-  - ADD: backends_down value, which will store a comma delineated string of backends that are down.
-- ResultCollectionView
-  - ADD: backends_down to JSON return
 - Geocode
   - DEL: Google returns lat long
   - ADD: Use Locorum.ZipLocate.get_data(zip) to access csv file on server side. This is a temporary fix. In order to reduce call time, will eventually make this an Agent task that can be accessed by clients.
@@ -170,6 +165,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Added :httpoison to `application` in `mix.exs`
 - Created a new Model for no results (NoResult)
   - Has three fields: :backend_id (refs Backend), :result_collection_id (refs ResultCollection) and :reason (either "down" or "no_results")
+- Implement NoResult to handle situations where there are no results
+  - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
 
 ### v0.4.3
 - Fixed csv upload to account for new format
