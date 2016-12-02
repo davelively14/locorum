@@ -256,15 +256,4 @@ defmodule Locorum.BackendSys.Helpers do
         end
     end
   end
-
-  # defp init_frontend(header, socket) do
-  #   broadcast! socket, "backend", %{
-  #     backend: header.backend,
-  #     backend_str: header.backend_str,
-  #     backend_url: header.url_site,
-  #     url: header.url_search,
-  #     search_id: header.search_id
-  #   }
-  #   header.url_search
-  # end
 end
