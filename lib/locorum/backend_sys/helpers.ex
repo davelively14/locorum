@@ -1,6 +1,6 @@
 defmodule Locorum.BackendSys.Helpers do
   use Phoenix.Channel, only: [broadcast!: 3]
-  alias Locorum.{Result, Repo, Backend, BackendSys.Header, ProjectChannelServer}
+  alias Locorum.{Result, Repo, Backend, BackendSys.Header, ProjectChannelServer, NoResult}
   require Logger
 
   def join(_,_,_), do: nil
@@ -138,6 +138,9 @@ defmodule Locorum.BackendSys.Helpers do
 
       GenServer.cast(ProjectChannelServer.name(socket.assigns.project_id), {:receive_result, socket, payload})
     else
+
+      store_no_result(header.backend, socket.assigns.result_collection_id)
+
       no_result = %{
         user_id: socket.assigns.user_id,
         backend: header.backend,
@@ -210,6 +213,7 @@ defmodule Locorum.BackendSys.Helpers do
     end
   end
 
+  # Stores all the results in the Repo
   defp store_result(result, header, collection_id) do
     backend = Repo.get_by(Backend, name: header.backend)
 
@@ -222,6 +226,25 @@ defmodule Locorum.BackendSys.Helpers do
         rating: Integer.to_string(result.rating),
         phone: result.phone,
         url: result.url
+      })
+
+    case Repo.insert(changeset) do
+      {:ok, _result} ->
+        nil
+      {:error, changeset} ->
+        for error <- changeset.errors do
+          IO.inspect(error)
+        end
+    end
+  end
+
+  # Records a no_result event for a given backend.
+  defp store_no_result(backend, collection_id) do
+    backend = Repo.get_by(Backend, name: backend)
+
+    changeset =
+      NoResult.changeset(%NoResult{backend_id: backend.id, result_collection_id: collection_id}, %{
+        reason: "no_result"
       })
 
     case Repo.insert(changeset) do
