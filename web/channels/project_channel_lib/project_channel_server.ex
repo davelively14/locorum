@@ -2,7 +2,7 @@ defmodule Locorum.ProjectChannelServer do
   use GenServer
   use Phoenix.Channel, only: [broadcast!: 3]
   import Ecto.Query, only: [from: 2]
-  alias Locorum.{Repo, ResultCollection, Backend, Search, Result, BackendSysSupervisor}
+  alias Locorum.{Repo, ResultCollection, Backend, Search, Result, BackendSysSupervisor, NoResult}
 
   #######
   # API #
@@ -187,6 +187,7 @@ defmodule Locorum.ProjectChannelServer do
     # results by most recent.
     preload_collections = from rc in ResultCollection, order_by: [desc: rc.inserted_at]
     preload_results = from r in Result, order_by: [desc: r.rating]
+    preload_no_results = from nr in NoResult, order_by: [desc: nr.inserted_at]
 
     # We don't preload here in order to capture searches for storage separately
     # in the server's state.
@@ -195,7 +196,7 @@ defmodule Locorum.ProjectChannelServer do
     # Now we preload all the searches to eventually store them in state.
     preloaded_searches =
       searches
-      |> Repo.preload([result_collections: preload_collections, result_collections: [results: preload_results, results: :backend]])
+      |> Repo.preload([result_collections: preload_collections, result_collections: [results: preload_results, results: :backend, no_results: preload_no_results, no_results: :backend]])
 
     # Loads all backends to store in state.
     backends = Backend |> Repo.all
