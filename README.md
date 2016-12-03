@@ -158,8 +158,8 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - Has three fields: :backend_id (refs Backend), :result_collection_id (refs ResultCollection) and :reason (either "down" or "no_results")
 - Implement NoResult to handle situations where there are no results
   - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
-  - ADJ: ResultCollectionView -> add render_many(c.no_results, Locorum.NoResultView, "no_result.json")
-  - ADD: NoResultView -> create a render/3 function "no_result.json" to return no_results in JSON format
+  - ADJ: ResultCollectionView -> added no_results: render_many(c.no_results, Locorum.NoResultView, "no_result.json")
+  - ADD: NoResultView -> created a render/3 function "no_result.json" to return no_results in JSON format
 
 ### v0.4.3
 - Fixed csv upload to account for new format
