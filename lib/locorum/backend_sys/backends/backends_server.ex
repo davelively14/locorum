@@ -33,6 +33,7 @@ defmodule Locorum.BackendSys.BackendsServer do
   #####################
 
   defp start_backends(supe, backends, query, socket) do
+    # TODO why is this commented out?
     # for backend <- backends do
       backend = List.first backends
       IO.inspect Atom.to_string(backend)
