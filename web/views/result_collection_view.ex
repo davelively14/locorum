@@ -5,7 +5,8 @@ defmodule Locorum.ResultCollectionView do
     %{
       search_id: c.search_id,
       id: c.id,
-      results: render_many(c.results, Locorum.ResultsView, "result.json")
+      results: render_many(c.results, Locorum.ResultsView, "result.json"),
+      no_result: render_many(c.no_results, Locorum.NoResultsView, "no_result.json")
     }
   end
 
