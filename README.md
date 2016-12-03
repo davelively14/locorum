@@ -14,8 +14,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Implement NoResult to handle situations where backends crash
   - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
   - ADJ: ProjectChannelServer -> load NoResult as if it's a regular result
-- Check BackendsSupervisor
-  - Why does start_backends/4 only do the first backend??
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADJ: fetch_new_results - update state with new results. NOTE: if only one search run, ensure newest_collections is only updated with the new results for that particular search. Do not overwrite collections from searches that have not been re-run
