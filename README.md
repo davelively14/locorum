@@ -14,19 +14,13 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Implement NoResult to handle situations where backends crash
   - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
   - ADJ: ProjectChannelServer -> load NoResult as if it's a regular result
+- Check BackendsSupervisor
+  - Why does start_backends/4 only do the first backend??
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADJ: fetch_new_results - update state with new results. NOTE: if only one search run, ensure newest_collections is only updated with the new results for that particular search. Do not overwrite collections from searches that have not been re-run
   - BackendSys needs to let the server know when it's done
     - Report when all backends are complete
-    - Track when backends are down, notify server. Can we track when a backend is down? In other words, a search run on 11/15 returns results for 9 of 10 backends, but one of the backends is down. It should not report as "no results". It should report as "down".
-    - ResultCollection: add backends_down: String
-      - During ProjectChannelServer.init, it will have to broadcast which ones were down (if any) for most recent results
-      - String.split(test, ",") |> Enum.map(&String.to_atom(&1)) is how to recover the data in list form
-      - REMOVE this. Instead, we need to store a result that is "no result", or store a result that is "backend down".
-    - BackendsSupervisor: will only launch a new module (BackendsServer)
-      - BackendsServer will launch each backend
-      - Look at PoolServer from the Pooly project
   - project.js
     - ADJ: Sends user_id with request for new_searches. The backends will send results to channel with user_id. Backends that match the user_id will immediately clear and list updated result. Other backends will track that a particular search has new results able to fetch.
 - Handle frontend search results better
