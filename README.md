@@ -9,10 +9,12 @@ For development, visit [`localhost:4000`](http://localhost:4000) from your brows
 For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/) from your browser.
 
 ## v0.4.4 to do list
-- Implement NoResult to handle situations where there are no results
+- Implement NoResult to handle situations where there are no results or when a backend crashes
   - ADJ: project.js -> look at TODOs and add code to handle no_results
-- Implement NoResult to handle situations where backends crash
-  - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
+  - ADJ: BackendSys.Helpers -> when broadcasting no_results with reason :no_results
+  - Handle situations where backends crash
+    - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
+    - ADJ: BackendSys.Helpers -> broadcast a no_results with reason :down
 - Create a GenServer for each project channel to store ResultsCollections and interact with Repo
   - Locorum.Project.ProjectChannelServer
     - ADJ: fetch_new_results - update state with new results. NOTE: if only one search run, ensure newest_collections is only updated with the new results for that particular search. Do not overwrite collections from searches that have not been re-run
@@ -156,7 +158,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 - Added :httpoison to `application` in `mix.exs`
 - Created a new Model for no results (NoResult)
   - Has three fields: :backend_id (refs Backend), :result_collection_id (refs ResultCollection) and :reason (either "down" or "no_results")
-- Implement NoResult to handle situations where there are no results
+- Implement NoResult to handle situations where there are no results or when a backend crashes
   - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
   - ADJ: ResultCollectionView -> added no_results: render_many(c.no_results, Locorum.NoResultView, "no_result.json")
   - ADD: NoResultView -> created a render/3 function "no_result.json" to return no_results in JSON format
