@@ -22,7 +22,7 @@ defmodule Locorum.BackendSys.BackendsServer do
     {:ok, backends}
   end
 
-  def handle_info({:EXIT, pid, reason}, state) do
+  def handle_info({:EXIT, _pid, reason}, state) do
     IO.inspect reason
 
     {:noreply, state}
@@ -33,13 +33,11 @@ defmodule Locorum.BackendSys.BackendsServer do
   #####################
 
   defp start_backends(supe, backends, query, socket) do
-    # TODO why is this commented out?
-    # for backend <- backends do
-      backend = List.first backends
-      IO.inspect Atom.to_string(backend)
+    for backend <- backends do
+      IO.inspect Atom.to_string(List.first backend)
       child_spec = worker(backend, [query, nil, socket, nil], [restart: :transient])
       IO.inspect child_spec
       Supervisor.start_child(supe, child_spec)
-    # end
+    end
   end
 end
