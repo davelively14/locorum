@@ -234,6 +234,7 @@ let Project = {
     })
   },
 
+  // TODO renderNoResult when it's either no result, or backend is down
   renderNoResult(resp){
     let dropContent = document.getElementById(`dropdown-${this.esc(resp.backend)}-${this.esc(resp.search_id)}`)
     let newContent = document.createElement("div")
@@ -324,6 +325,9 @@ let Project = {
       }
       Project.renderResult(result)
     })
+
+    // TODO render no_results here. Something like:
+    // collection.no_results.forEach(function(no_result){...})
 
     loadStatsContainer.setAttribute("class", "text-success load-status")
     loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends"
