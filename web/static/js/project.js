@@ -328,6 +328,18 @@ let Project = {
 
     // TODO render no_results here. Something like:
     // collection.no_results.forEach(function(no_result){...})
+    collection.no_results.forEach(function(no_result){
+      no_result.search_id = collection.search_id
+      Project.renderBackend(no_result)
+
+      loadedBackends[no_result.backend] = {}
+      loadedBackends[no_result.backend].total = 0
+      loadedBackends[no_result.backend].backend_str = no_result.backend_str
+      loadedBackends[no_result.backend].high_rating = "--"
+      loadedBackends[no_result.backend].low_rating = "--"
+
+      Project.renderNoResult(no_result)
+    })
 
     loadStatsContainer.setAttribute("class", "text-success load-status")
     loadStatsContainer.innerHTML = "Loaded all " + Object.keys(loadedBackends).length + " backends"
