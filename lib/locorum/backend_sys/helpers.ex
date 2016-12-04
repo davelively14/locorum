@@ -3,6 +3,8 @@ defmodule Locorum.BackendSys.Helpers do
   alias Locorum.{Result, Repo, Backend, BackendSys.Header, ProjectChannelServer, NoResult}
   require Logger
 
+  @no_result_str "no_result"
+
   def join(_,_,_), do: nil
 
   def get_backend(mod) do
@@ -144,6 +146,7 @@ defmodule Locorum.BackendSys.Helpers do
       no_result = %{
         user_id: socket.assigns.user_id,
         backend: header.backend,
+        reason: @no_result_str,
         search_id: query.id
       }
 
@@ -244,7 +247,7 @@ defmodule Locorum.BackendSys.Helpers do
 
     changeset =
       NoResult.changeset(%NoResult{backend_id: backend.id, result_collection_id: collection_id}, %{
-        reason: "no_result"
+        reason: @no_result_str
       })
 
     case Repo.insert(changeset) do
