@@ -146,6 +146,7 @@ defmodule Locorum.BackendSys.Helpers do
       no_result = %{
         user_id: socket.assigns.user_id,
         backend: header.backend,
+        backend_str: header.backend_str,
         reason: @no_result_str,
         search_id: query.id
       }
