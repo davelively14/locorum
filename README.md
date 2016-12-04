@@ -11,7 +11,6 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
 ## v0.4.4 to do list
 - Implement NoResult to handle situations where there are no results or when a backend crashes
   - ADJ: project.js -> look at TODOs and add code to handle no_results
-  - ADJ: BackendSys.Helpers -> when broadcasting no_results with reason :no_results
   - Handle situations where backends crash
     - ADJ: BackendSys.BackendsSupervisor -> when a child fails, persist a no_result with "down" reason
     - ADJ: BackendSys.Helpers -> broadcast a no_results with reason :down
@@ -162,6 +161,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - ADJ: BackendSys.Helpers -> when "no_results" triggers, have it persist a no_result with "no_result" reason
   - ADJ: ResultCollectionView -> added no_results: render_many(c.no_results, Locorum.NoResultView, "no_result.json")
   - ADD: NoResultView -> created a render/3 function "no_result.json" to return no_results in JSON format
+  - ADJ: BackendSys.Helpers -> when broadcasting no_results with reason :no_result
 
 ### v0.4.3
 - Fixed csv upload to account for new format
