@@ -78,7 +78,7 @@ For deployed v0.4.3, visit [Locorum](https://boiling-beach-47326.herokuapp.com/)
   - All projects
 - Allow user to ignore individual results so they won't show up in results again
 - DRY refactor
-  - phonify in SearchController
+  - phonify in SearchController (maybe)
   - get_refer in numerous (i.e., ResultCollectionController)
 - Add documentation
   - project.js especially
