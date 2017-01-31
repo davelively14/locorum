@@ -36,8 +36,12 @@ defmodule Locorum.BackendSys.Helpers do
 
       rating =
         cond do
+          rating < 0.2 ->
+            rating
           result.zip && (result.zip != query.zip) ->
             0.2
+          rating < 0.5 ->
+            rating
           result.phone && (phonify(result.phone) != phonify(query.phone)) ->
             0.5
           true ->
